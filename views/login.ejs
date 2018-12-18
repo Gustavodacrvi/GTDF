@@ -23,13 +23,18 @@
                             <input type='password' autocomplete='off' name='Password' placeholder='<%= __("loginPassword") %>:' class='login--input login__password'/>
                             <span class='eye login__open__eye' onclick='eye.toggleEye()'><i class="fas fa-eye"></i></span>
                             <span class='eye login__close__eye' onclick='eye.toggleEye()'><i class="fas fa-eye-slash"></i></span>
-                            <span class='alert--status' style='opacity: 0;'> wrong </span>
                         </div>
                     </div>
                 </div>
+                <div class='loginSignUpBox__alert'>
+                    <span class='alert--status'> {{ }}</span>
+                </div>
+                <div class='loginSignUpBox__alert' style='height: 10%;padding:0 30px;display:flex;align-items:flex-end'>
+                    <a class='link' href='#'>Esqueceu a senha ou o usuário?</a>
+                </div>
                 <div class='login__button'>
                     <div class='login__button__tags'>
-                        <div class='login__enter'> 
+                        <div class='login__enter'>
                             <button type='submit' value='Enter' class='form--button'><%= __("loginEnterButton") %></button>
                             <a class='link' href='signup'><%= __("loginSignUpMessage") %></a>
                         </div>

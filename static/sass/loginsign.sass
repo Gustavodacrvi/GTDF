@@ -1,53 +1,60 @@
 @import main
     
+
+
+.loginSignUpBackground,
+.loginSignUp__title,
+.login__input,
+.login__input__tags,
+.login__button,
+.sign__input,
+.sign__button,
+.sign__button__tags
+    display: flex
+    justify-content: center
+
+.loginSignUpBox,
+.login__input__tags,
+.login__input__tags div,
+.sign__input__tags,
+.sign__input__tags div,
+    display: flex
+    flex-direction: column
+
+
 .loginSignUpBackground
     width: 100%
     height: 100%
     position: absolute
-    display: flex
-    justify-content: center
     align-items: center
 
 .loginSignUpBox
     width: 350px
     height: 450px
     background-color: $gray--light
-    display: flex
-    flex-direction: column
 
 .loginSignUp__title
     height: 25%
-    display: flex
-    justify-content: center
     align-items: center
 
 .login__input
     height: 30%
-    display: flex
-    justify-content: center
 
 .login__input__tags
-    display: flex
     width: 320px
-    height: 130px
-    flex-direction: column
+    height: 110px
     justify-content: space-between
     div
-        display: flex
         position: relative
-        flex-direction: column
 
 .login__button
-    height: 45%
-    display: flex
-    justify-content: center
-    align-items: center
+    height: 35%
+    align-items: flex-end
 
 .login__button__tags
-    display: flex
-    height: 155px
+    height: 120px
     width: 250px
-    flex-direction: column
+    margin-bottom: 15px
     justify-content: space-between
 
 .eye
@@ -56,7 +63,7 @@
     cursor: pointer  
     right: 0
     bottom: 0
-    margin-bottom: 25px
+    margin-bottom: 10px
     margin-right: 8px
 
 .login__open__eye
@@ -67,38 +74,27 @@
 .login__close__eye
     color: $gray
 
-.sign__input
-    display: flex
-    justify-content: center
-
 .sign__input__tags
-    display: flex
     width: 320px
-    height: 250px
-    flex-direction: column
+    height: 215px
     justify-content: space-between
     div
-        display: flex
         position: relative
-        flex-direction: column
 
 .sign__input
-    height: 80%
-    display: flex
-    justify-content: center
+    height: 75%
     align-items: center
 
 .sign__button
     height: 30%
-    display: flex
-    justify-content: center
-    align-items: center
 
 .sign__button__tags
     width: 250px
-    display: flex
-    justify-content: center
-    align-items: center
+    height: 100px
+    margin-top: 25px
+    align-items: flex-start
 
-.sign__top__eye
-    margin-bottom: 8px
+.loginSignUpBox__alert
+    height: 5%
+    margin-left: 20px
+    margin-right: 20px
