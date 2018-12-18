@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 
-<html lang='pt=br'>
+<html>
 
 <head>
     <title>Login</title>
     <% include partials/head %>
 
-    <link rel='stylesheet' href='css/loginsign.css' type='text/css'/>
+    <link rel='stylesheet' href='/css/loginsign.css' type='text/css'/>
 </head>
 
 <body>
@@ -14,13 +14,15 @@
         <form>
             <div class='login'>
                 <div class='login__title'>
-                    <h1 class='h1--title'>LOGIN</h1>
+                    <h1 class='h1--title'><%= __('loginTitle') %></h1>
                 </div>
                 <div class='login__input'>
                     <div class='login__input__tags'>
-                        <input name='Username' placeholder='Username:' class='login--input' />
+                        <input autocomplete='off' name='Username' placeholder='<%= __("loginUsername") %>:' class='login--input' />
                         <div>
-                            <input name='Password' placeholder='Password:' class='login--input'/>
+                            <input type='password' autocomplete='off' name='Password' placeholder='<%= __("loginPassword") %>:' class='login--input login__password'/>
+                            <span class='eye login__open__eye' onclick='eye.toggleEye()'><i class="fas fa-eye"></i></span>
+                            <span class='eye login__close__eye' onclick='eye.toggleEye()'><i class="fas fa-eye-slash"></i></span>
                             <span class='alert--status'>{{ wrong }}</span>
                         </div>
                     </div>
@@ -28,10 +30,10 @@
                 <div class='login__button'>
                     <div class='login__button__tags'>
                         <div class='login__enter'> 
-                            <button type='submit' value='Enter' class='form--button'>Enter</button>
-                            <a class='link' href='#'>Doesn't have an account? Signup!</a>
+                            <button type='submit' value='Enter' class='form--button'><%= __("loginEnterButton") %></button>
+                            <a class='link' href='signup'><%= __("loginSignUpMessage") %></a>
                         </div>
-                        <button type='submit' value='Guest' class='form--button'>Enter as a guest</button>
+                        <button type='submit' value='Guest' class='form--button'><%= __("loginGuestButton") %></button>
                     </div>
                 </div>
             </div>
@@ -39,7 +41,7 @@
     </div>
 
     <% include partials/footer %>
-    <script src='js/loginsign.js'></script>
+    <script src='/js/loginsign.js'></script>
 </body>
 
 </html>

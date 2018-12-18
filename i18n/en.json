@@ -1,0 +1,8 @@
+{
+    "loginTitle": "LOGIN",
+    "loginUsername": "Username",
+    "loginPassword": "Password",
+    "loginEnterButton": "Enter",
+    "loginSignUpMessage": "Doesn't gave an account? Sign up!",
+    "loginGuestButton": "Enter as a guest"
+}

@@ -7,7 +7,6 @@
     display: flex
     justify-content: center
     align-items: center
-    background-color: $background--color
 
 .login
     width: 350px
@@ -30,11 +29,12 @@
 .login__input__tags
     display: flex
     width: 320px
-    height: 130px
+    height: 110px
     flex-direction: column
     justify-content: space-between
     div
         display: flex
+        position: relative
         flex-direction: column
 
 .login__button
@@ -45,7 +45,24 @@
 
 .login__button__tags
     display: flex
-    height: 140px
+    height: 155px
     width: 250px
     flex-direction: column
     justify-content: space-between
+
+.eye
+    position: absolute
+    font-size: 20px
+    cursor: pointer  
+    right: 0
+    bottom: 0
+    margin-bottom: 8px
+    margin-right: 8px
+
+.login__open__eye
+    visibility: hidden
+    opacity: 0
+    color: $gray--light--light
+
+.login__close__eye
+    color: $gray

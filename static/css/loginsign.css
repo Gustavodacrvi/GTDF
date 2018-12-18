@@ -3,7 +3,8 @@
   src: url("/Fontes/WorkSans/WorkSans-Light.otf"); }
 body {
   margin: 0;
-  font-family: "Work Sans Light"; }
+  font-family: "Work Sans Light";
+  background-color: #201F1F; }
 
 .login--input {
   background-color: #575656;
@@ -14,9 +15,12 @@ body {
   outline: none;
   color: #D9D9D9; }
 
+.login--input:focus {
+  border-bottom: 1px solid #0077FF; }
+
 .h1--title {
   font-size: 40px;
-  color: #006FFF; }
+  color: #0077FF; }
 
 .alert--status {
   color: #E99708; }
@@ -24,7 +28,7 @@ body {
 .form--button {
   border: none;
   width: 100%;
-  background-color: #006FFF;
+  background-color: #0077FF;
   font-family: "Work Sans Light";
   color: #D9D9D9;
   text-align: center;
@@ -37,7 +41,7 @@ body {
   color: #D9D9D9; }
 
 .link {
-  color: #006FFF;
+  color: #0077FF;
   text-decoration: none; }
 
 .link:hover {
@@ -49,8 +53,7 @@ body {
   position: absolute;
   display: flex;
   justify-content: center;
-  align-items: center;
-  background-color: #201F1F; }
+  align-items: center; }
 
 .login {
   width: 350px;
@@ -73,11 +76,12 @@ body {
 .login__input__tags {
   display: flex;
   width: 320px;
-  height: 130px;
+  height: 110px;
   flex-direction: column;
   justify-content: space-between; }
   .login__input__tags div {
     display: flex;
+    position: relative;
     flex-direction: column; }
 
 .login__button {
@@ -88,9 +92,26 @@ body {
 
 .login__button__tags {
   display: flex;
-  height: 140px;
+  height: 155px;
   width: 250px;
   flex-direction: column;
   justify-content: space-between; }
+
+.eye {
+  position: absolute;
+  font-size: 20px;
+  cursor: pointer;
+  right: 0;
+  bottom: 0;
+  margin-bottom: 8px;
+  margin-right: 8px; }
+
+.login__open__eye {
+  visibility: hidden;
+  opacity: 0;
+  color: #D9D9D9; }
+
+.login__close__eye {
+  color: #707070; }
 
 /*# sourceMappingURL=loginsign.css.map */

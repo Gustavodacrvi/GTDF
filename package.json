@@ -17,7 +17,9 @@
   },
   "homepage": "https://github.com/Gustavodacrvi/Projeto-GTD#readme",
   "dependencies": {
+    "cookie-parser": "^1.4.3",
     "ejs": "^2.6.1",
-    "express": "^4.16.4"
+    "express": "^4.16.4",
+    "i18n": "^0.8.3"
   }
 }

@@ -3,7 +3,7 @@ $gray--light: #575656
 $gray--light--light: #D9D9D9
 $gray: #707070
 $alert--color: #E99708
-$blue: #006FFF
+$blue: #0077FF
 $yellow: #E99708
 
 @font-face
@@ -13,6 +13,7 @@ $yellow: #E99708
 body
     margin: 0
     font-family: 'Work Sans Light'
+    background-color: $background--color
 
 .login--input
     background-color: $gray--light
@@ -22,6 +23,9 @@ body
     font-size: 1.1em
     outline: none
     color: $gray--light--light
+
+.login--input:focus
+    border-bottom: 1px solid $blue
 
 .h1--title
     font-size: 40px
