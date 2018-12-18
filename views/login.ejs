@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+
+<html lang='pt=br'>
+
+<head>
+    <title>Login</title>
+    <% include partials/head %>
+
+    <link rel='stylesheet' href='css/loginsign.css' type='text/css'/>
+</head>
+
+<body>
+    <div class='loginBack'>
+        <form>
+            <div class='login'>
+                <div class='login__title'>
+                    <h1 class='h1--title'>LOGIN</h1>
+                </div>
+                <div class='login__input'>
+                    <div class='login__input__tags'>
+                        <input name='Username' placeholder='Username:' class='login--input' />
+                        <div>
+                            <input name='Password' placeholder='Password:' class='login--input'/>
+                            <span class='alert--status'>{{ wrong }}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class='login__button'>
+                    <div class='login__button__tags'>
+                        <div class='login__enter'> 
+                            <button type='submit' value='Enter' class='form--button'>Enter</button>
+                            <a class='link' href='#'>Doesn't have an account? Signup!</a>
+                        </div>
+                        <button type='submit' value='Guest' class='form--button'>Enter as a guest</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <% include partials/footer %>
+    <script src='js/loginsign.js'></script>
+</body>
+
+</html>

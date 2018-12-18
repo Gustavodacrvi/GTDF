@@ -8,9 +8,24 @@ var app = express()
 
 
 
+// VIEW ENGINE
+app.set('views', path.join(__dirname, 'views'))
+app.set('view engine', 'ejs')
+
+
+
+// STATIC
+app.use(express.static(path.join(__dirname, 'static')))
+
+
+
 
 app.get('/', function(req, res) {
-    res.send('hello')
+    res.render('index')
+})
+
+app.get('/login', function(req, res){
+    res.render('login')
 })
 
 
