@@ -4,5 +4,8 @@
     "loginPassword": "Password",
     "loginEnterButton": "Enter",
     "loginSignUpMessage": "Doesn't gave an account? Sign up!",
-    "loginGuestButton": "Enter as a guest"
+    "loginGuestButton": "Enter as a guest",
+    "signTitle": "SIGN UP",
+    "loginPasswordConfirm": "Confirm password",
+    "signButton": "Create account"
 }

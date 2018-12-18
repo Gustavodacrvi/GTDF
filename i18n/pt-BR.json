@@ -4,5 +4,8 @@
 	"loginPassword": "Senha",
 	"loginEnterButton": "Entrar",
 	"loginSignUpMessage": "Não tem uma conta? Inscreva-se!",
-	"loginGuestButton": "Entrar como convidado"
+    "loginGuestButton": "Entrar como convidado",
+    "signTitle": "INSCREVER-SE",
+    "loginPasswordConfirm": "Confirmar senha",
+    "signButton": "Criar conta"
 }
