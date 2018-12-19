@@ -7,5 +7,6 @@
     "loginGuestButton": "Entrar como convidado",
     "signTitle": "INSCREVER-SE",
     "loginPasswordConfirm": "Confirmar senha",
-    "signButton": "Criar conta"
+    "signButton": "Criar conta",
+    "loginForgotPassEMai": "Esqueceu a senha ou o usuário"
 }

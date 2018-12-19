@@ -7,5 +7,6 @@
     "loginGuestButton": "Enter as a guest",
     "signTitle": "SIGN UP",
     "loginPasswordConfirm": "Confirm password",
-    "signButton": "Create account"
+    "signButton": "Create account",
+    "loginForgotPassEMai": "Forgot password or username"
 }

@@ -30,7 +30,7 @@
                     <span class='alert--status'> {{ }}</span>
                 </div>
                 <div class='loginSignUpBox__alert' style='height: 10%;padding:0 30px;display:flex;align-items:flex-end'>
-                    <a class='link' href='#'>Esqueceu a senha ou o usuário?</a>
+                    <a class='link' href='#'><%= __('loginForgotPassEMai') %>?</a>
                 </div>
                 <div class='login__button'>
                     <div class='login__button__tags'>
@@ -38,7 +38,7 @@
                             <button type='submit' value='Enter' class='form--button'><%= __("loginEnterButton") %></button>
                             <a class='link' href='signup'><%= __("loginSignUpMessage") %></a>
                         </div>
-                        <button type='submit' value='Guest' class='form--button'><%= __("loginGuestButton") %></button>
+                        <button style='margin-top:5px' type='submit' value='Guest' class='form--button'><%= __("loginGuestButton") %></button>
                     </div>
                 </div>
             </div>
