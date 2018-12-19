@@ -6,47 +6,61 @@
     <title>Login</title>
     <% include partials/head %>
 
-    <link rel='stylesheet' href='/css/loginsign.css' type='text/css'/>
+    <link rel='stylesheet' href='/css/loginsignup.css' type='text/css'/>
+    <link rel='stylesheet' href='/css/login.css' type='text/css'/>
 </head>
 
 <body>
+    <form>
     <div class='loginSignUpBackground'>
-        <form>
-            <div class='loginSignUpBox'>
-                <div class='loginSignUp__title'>
-                    <h1 class='h1--title'><%= __('loginTitle') %></h1>
-                </div>
-                <div class='login__input'>
-                    <div class='login__input__tags'>
-                        <input autocomplete='off' name='Username' placeholder='<%= __("loginUsername") %>:' class='login--input' />
-                        <div>
-                            <input type='password' autocomplete='off' name='Password' placeholder='<%= __("loginPassword") %>:' class='login--input login__password'/>
-                            <span class='eye login__open__eye' onclick='eye.toggleEye()'><i class="fas fa-eye"></i></span>
-                            <span class='eye login__close__eye' onclick='eye.toggleEye()'><i class="fas fa-eye-slash"></i></span>
-                        </div>
+        <div class='loginSignUp__formBox'>
+            <div class='loginSignUp__title'>
+                <h1 class='h1--title'><%= __('loginTitle') %></h1>
+            </div>
+            <div class='login__input'>
+                <div class='loginInput__box'>
+                    <div class='loginSignUp__input'>
+                        <input class='login--input' autocomplete='off' type='text' name='username' placeholder='<%= __("username") %>:'/>
                     </div>
-                </div>
-                <div class='loginSignUpBox__alert'>
-                    <span class='alert--status'> {{ }}</span>
-                </div>
-                <div class='loginSignUpBox__alert' style='height: 10%;padding:0 30px;display:flex;align-items:flex-end'>
-                    <a class='link' href='#'><%= __('loginForgotPassEMai') %>?</a>
-                </div>
-                <div class='login__button'>
-                    <div class='login__button__tags'>
-                        <div class='login__enter'>
-                            <button type='submit' value='Enter' class='form--button'><%= __("loginEnterButton") %></button>
-                            <a class='link' href='signup'><%= __("loginSignUpMessage") %></a>
-                        </div>
-                        <button style='margin-top:5px' type='submit' value='Guest' class='form--button'><%= __("loginGuestButton") %></button>
+                    <div class='loginSignUp__input'>
+                        <input class='login--input password' autocomplete='off' type='password' name='password' placeholder='<%= __("password") %>:'/>
+                        <span class='loginSignUp__eye' onclick='eye.toggleEye()'>
+                            <i class="fas fa-eye-slash"></i>
+                            <i class="fas fa-eye"></i>
+                        </span>
                     </div>
                 </div>
             </div>
-        </form>
+            <div class='login__submit'>
+                <div class='loginSubmit__box'>
+                    <div class='loginSubmitBox__info'>
+                        <div class='loginSubmitBoxInfo'>
+                            <span class='alert--status'>{{ }}</span>
+                        </div>
+                        <div class='loginSubmitBoxInfo'>
+                            <input type='checkbox' name='remember'/>
+                            <label class='text'><%= __('rememberMe') %></label>
+                        </div>
+                        <div class='loginSubmitBoxInfo'>
+                            <a class='link' href="/signup"><%= __('doesntHaveAccount') %></a>
+                        </div>
+                    </div>
+                    <div class='loginSubmitBox__button'>
+                        <div class='loginSubmitBoxButton'>
+                            <button class='form--button' type='submit'><%= __('enter') %></button>
+                        </div>
+                        <div class='loginSubmitBoxButton'>
+                            <button style='margin-bottom:7px' class='form--button' type='submit'><%= __('enterAsGuest') %></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+    </form>
 
     <% include partials/footer %>
-    <script src='/js/loginsign.js'></script>
+    <script src='/js/loginsignup.js'></script>
 </body>
 
 </html>

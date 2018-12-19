@@ -1,12 +1,11 @@
 {
-	"loginTitle": "Entrar",
-	"loginUsername": "Usuário",
-	"loginPassword": "Senha",
-	"loginEnterButton": "Entrar",
-	"loginSignUpMessage": "Não tem uma conta? Inscreva-se!",
-    "loginGuestButton": "Entrar como convidado",
-    "signTitle": "INSCREVER-SE",
-    "loginPasswordConfirm": "Confirmar senha",
-    "signButton": "Criar conta",
-    "loginForgotPassEMai": "Esqueceu a senha ou o usuário"
+	"signTitle": "INSCREVER-SE",
+	"loginTitle": "ENTRAR",
+	"username": "Usuário",
+	"password": "Senha",
+	"confirmPassword": "Confirmar senha",
+	"rememberMe": "Lembrar-se de mim",
+    "doesntHaveAccount": "Não tem uma conta? Inscreva-se!",
+    "enter": "Entrar",
+    "enterAsGuest": "Entrar como convidado"
 }

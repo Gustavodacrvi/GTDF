@@ -6,46 +6,55 @@
     <title>Login</title>
     <% include partials/head %>
 
-    <link rel='stylesheet' href='/css/loginsign.css' type='text/css'/>
+    <link rel='stylesheet' href='/css/loginsignup.css' type='text/css'/>
+    <link rel='stylesheet' href='/css/sign.css' type='text/css'/>
 </head>
 
 <body>
     <div class='loginSignUpBackground'>
-        <form>
-            <div class='loginSignUpBox'>
-                <div class='loginSignUp__title'>
-                    <h1 class='h1--title'><%= __('signTitle') %></h1>
-                </div>
-                <div class='sign__input'>
-                    <div class='sign__input__tags'>
-                        <input autocomplete='off' name='Email' placeholder='Email:' class='login--input' />
-                        <input autocomplete='off' name='Username' placeholder='<%= __("loginUsername") %>:' class='login--input' />
-                        <div>
-                            <input type='password' autocomplete='off' name='Password' placeholder='<%= __("loginPassword") %>:' class='login--input login__password'/>
-                            <span class='eye login__open__eye' onclick='eye.toggleEye()' ><i class="fas fa-eye"></i></span>
-                            <span class='eye login__close__eye' onclick='eye.toggleEye()'><i class="fas fa-eye-slash"></i></span>
-                        </div>
-                        <div>
-                            <input type='password' autocomplete='off' name='ConfirmPassword' placeholder='<%= __("loginPasswordConfirm") %>:' class='login--input login__password'/>
-                            <span class='eye login__open__eye' onclick='eye.toggleEye()'><i class="fas fa-eye"></i></span>
-                            <span class='eye login__close__eye' onclick='eye.toggleEye()'><i class="fas fa-eye-slash"></i></span>
-                        </div>
+        <div class='loginSignUp__formBox'>
+            <div class='loginSignUp__title'>
+                <h1 class='h1--title'><%= __('signTitle') %></h1>
+            </div>
+            <div class='signUp__input'>
+                <div class='signUpInput__box'>
+                    <div class='loginSignUp__input'>
+                        <input class='login--input' autocomplete='off' type='text' name='email' placeholder='Email:'/>
                     </div>
-                </div>
-                <div class='loginSignUpBox__alert'>
-                    <span class='alert--status'> {{ }}</span>
-                </div>
-                <div class='sign__button'>
-                    <div class='sign__button__tags'>
-                        <button type='submit' value='Enter' class='form--button'><%= __("signButton") %></button>
+                    <div class='loginSignUp__input'>
+                        <input class='login--input' autocomplete='off' type='text' name='username' placeholder='<%= __("username") %>:'/>
+                    </div>
+                    <div class='loginSignUp__input'>
+                        <input class='login--input password' autocomplete='off' type='password' name='password' placeholder='<%= __("password") %>:'/>
+                        <span class='loginSignUp__eye' onclick='eye.toggleEye()'>
+                            <i class="fas fa-eye-slash"></i>
+                            <i class="fas fa-eye"></i>
+                        </span>
+                    </div>
+                        <div class='loginSignUp__input'>
+                        <input class='login--input password' autocomplete='off' type='password' name='password' placeholder='<%= __("confirmPassword") %>:'/>
+                        <span class='loginSignUp__eye' onclick='eye.toggleEye()'>
+                            <i class="fas fa-eye-slash"></i>
+                            <i class="fas fa-eye"></i>
+                        </span>
                     </div>
                 </div>
             </div>
-        </form>
+            <div class='signUp__submit'>
+                <div class='signUpSubmit__box'>
+                    <div class='signUpSubmitBox__info'>
+                        <span class='alert--status'>{{ }}</span>
+                    </div>
+                    <div class='signUpSubmitBox__button'>
+                        <button class='form--button' type='submit'>asdfa</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <% include partials/footer %>
-    <script src='/js/loginsign.js'></script>
+    <script src='/js/loginsignup.js'></script>
 </body>
 
 </html>

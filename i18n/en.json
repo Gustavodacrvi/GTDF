@@ -1,12 +1,11 @@
 {
-    "loginTitle": "LOGIN",
-    "loginUsername": "Username",
-    "loginPassword": "Password",
-    "loginEnterButton": "Enter",
-    "loginSignUpMessage": "Doesn't gave an account? Sign up!",
-    "loginGuestButton": "Enter as a guest",
     "signTitle": "SIGN UP",
-    "loginPasswordConfirm": "Confirm password",
-    "signButton": "Create account",
-    "loginForgotPassEMai": "Forgot password or username"
+    "loginTitle": "LOGIN",
+    "username": "Username",
+    "password": "Password",
+    "confirmPassword": "Confirm password",
+    "rememberMe": "Remember me",
+    "doesntHaveAccount": "Doesn't have an account? Sign up!",
+    "enter": "Enter",
+    "enterAsGuest": "Enter as a guest"
 }
