@@ -11,6 +11,7 @@
 </head>
 
 <body>
+    <form method='post' action='/users/signup'>
     <div class='loginSignUpBackground'>
         <div class='loginSignUp__formBox'>
             <div class='loginSignUp__title'>
@@ -22,17 +23,17 @@
                         <input class='login--input' autocomplete='off' type='text' name='email' placeholder='Email:'/>
                     </div>
                     <div class='loginSignUp__input'>
-                        <input class='login--input' autocomplete='off' type='text' name='username' placeholder='<%= __("username") %>:'/>
+                        <input class='login--input' autocomplete='off' type='text' name='username' placeholder='<%= __("loginUsername") %>:'/>
                     </div>
                     <div class='loginSignUp__input'>
-                        <input class='login--input password' autocomplete='off' type='password' name='password' placeholder='<%= __("password") %>:'/>
+                        <input class='login--input password' autocomplete='off' type='password' name='password' placeholder='<%= __("loginSignUpPassword") %>:'/>
                         <span class='loginSignUp__eye' onclick='eye.toggleEye()'>
                             <i class="fas fa-eye-slash"></i>
                             <i class="fas fa-eye"></i>
                         </span>
                     </div>
                         <div class='loginSignUp__input'>
-                        <input class='login--input password' autocomplete='off' type='password' name='password' placeholder='<%= __("confirmPassword") %>:'/>
+                        <input class='login--input password' autocomplete='off' type='password' name='password2' placeholder='<%= __("loginPasswordConfirm") %>'/>
                         <span class='loginSignUp__eye' onclick='eye.toggleEye()'>
                             <i class="fas fa-eye-slash"></i>
                             <i class="fas fa-eye"></i>
@@ -43,15 +44,16 @@
             <div class='signUp__submit'>
                 <div class='signUpSubmit__box'>
                     <div class='signUpSubmitBox__info'>
-                        <span class='alert--status'>{{ }}</span>
+                        <span class='alert--status'><%= __(errors[0].msg) %></span>
                     </div>
                     <div class='signUpSubmitBox__button'>
-                        <button class='form--button' type='submit'>asdfa</button>
+                        <button style='margin-bottom: 20px' class='form--button' type='submit'><%= __('createAccount') %></button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    </form>
 
     <% include partials/footer %>
     <script src='/js/loginsignup.js'></script>

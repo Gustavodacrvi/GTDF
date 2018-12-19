@@ -25,6 +25,9 @@ body {
 .alert--status {
   color: #E99708; }
 
+.success--status {
+  color: #01ff00; }
+
 .form--button {
   border: none;
   width: 100%;
@@ -51,7 +54,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 30%; }
+  height: 20%; }
 
 .loginInput__box {
   display: flex;
@@ -64,7 +67,7 @@ body {
   flex-basis: 100%; }
 
 .login__submit {
-  height: 50%;
+  height: 60%;
   display: flex;
   justify-content: center;
   align-items: center; }
@@ -73,19 +76,19 @@ body {
   display: flex;
   flex-direction: column;
   flex-basis: 275px;
-  height: 210px; }
+  height: 250px; }
 
 .loginSubmitBox__info {
-  height: 50%;
   flex-basis: 100%;
   display: flex;
+  flex-grow: 10;
   flex-direction: column;
   justify-content: space-between; }
 
 .loginSubmitBox__button {
-  height: 50%;
   flex-basis: 100%;
   display: flex;
+  flex-grow: 1;
   flex-direction: column;
   justify-content: space-between; }
 
