@@ -20,5 +20,7 @@
     "createAccount": "Create account",
     "lang": "en",
     "usernameTaken": "Username not available.",
-    "emailTaken": "Email not available."
+    "emailTaken": "Email not available.",
+    "unknownUsername": "Unknown username.",
+    "wrongPassword": "Wrong password"
 }

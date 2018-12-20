@@ -37,9 +37,14 @@
                         <div class='loginSubmitBoxInfo'>
                         <% if (success_msg == "youAreRegistered") { %>
                             <span class='success--status'><%= __('youAreRegistered') %></span>
-                        <% } else {%>
-                            <span style='opacity: 0'>d</span>
                         <% } %>
+                        <% if (error == 'Unknown username.') {%>
+                            <span class='alert--status'><%= __('unknownUsername') %></span>
+                        <% } %>
+                        <% if (error == 'Wrong password.') {%>
+                            <span class='alert--status'><%= __('wrongPassword') %>
+                        <% } %>
+                        <span style='opacity: 0'>asdf</span>
                         </div>
                         <div class='loginSubmitBoxInfo'>
                             <input type='checkbox' name='remember'/>

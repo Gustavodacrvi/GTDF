@@ -37,24 +37,36 @@ var app = express()
 app.use(cookieParser())
 app.use(i18n.init)
 
-
-// VIEW ENGINE
-app.set('views', path.join(__dirname, 'views'))
-app.set('view engine', 'ejs')
-
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: false }))
-app.use(cookieParser())
-
-// STATIC
-app.use(express.static(path.join(__dirname, 'static')))
-
 // EXPRESS SECTION
 app.use(session({
     secret: 'secret',
     saveUninitialized: true,
     resave: true
 }))
+
+// CONNECT FLASH
+app.use(flash())
+
+// GLOBAL VARS
+app.use(function (req, res, next){
+    res.locals.success_msg = req.flash('success_msg')
+    res.locals.error_msg = req.flash('error_msg')
+    res.locals.error = req.flash('error')
+    res.locals.user = req.user || null
+    next()
+})
+
+// VIEW ENGINE
+app.set('views', path.join(__dirname, 'views'))
+app.set('view engine', 'ejs')
+
+//BODY PARSER
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(cookieParser())
+
+// STATIC
+app.use(express.static(path.join(__dirname, 'static')))
 
 // PASSPORT INIT
 app.use(passport.initialize())
@@ -77,16 +89,6 @@ app.use(expressValidator({
     }
 }))
 
-// CONNECT FLASH
-app.use(flash())
-
-// GLOBAL VARS
-app.use(function (req, res, next){
-    res.locals.success_msg = req.flash('success_msg')
-    res.locals.error_msg = req.flash('error_msg')
-    res.locals.error = req.flash('error')
-    next()
-})
 
 app.use('/', routes)
 app.use('/users', users)
@@ -107,7 +109,9 @@ app.get('/signup', function(req, res){
         errors: [{msg: ''}]
     })
 })
-
+app.get('/user', function(req, res){
+    res.render('user')
+})
 
 
 

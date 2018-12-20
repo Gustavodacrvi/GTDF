@@ -21,5 +21,7 @@
 	"lang": "pt-BR",
 	"usernameTaken": "Usuário indisponível.",
 	"emailTaken": "Email insdisponível.",
+	"unknownUsername": "Usuário desconhecido.",
+	"wrongPassword": "Senha errada.",
 	"": ""
 }

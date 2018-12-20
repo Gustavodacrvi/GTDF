@@ -24,3 +24,19 @@ module.exports.createUser = function(newUser, caLLback){
         })
     })
 }
+
+module.exports.getUserByUsername = function(username, caLLback){
+    var query = {username: username}
+    User.findOne(query, caLLback)
+}
+
+module.exports.getUserById = function(id, caLLback){
+    User.findById(id, caLLback)
+}
+
+module.exports.comparePassword = function(candidatePassword, hash, caLLback){
+    bcrypt.compare(candidatePassword, hash, function(err, isMatch){
+        if(err) throw err
+        caLLback(null, isMatch)
+    })
+}
