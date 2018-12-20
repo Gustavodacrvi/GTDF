@@ -16,19 +16,22 @@ body {
   color: #D9D9D9; }
 
 .login--input:focus {
-  border-bottom: 1px solid #0077FF; }
+  border-bottom: 1px solid #8c11fc; }
 
 .h1--title {
   font-size: 40px;
-  color: #0077FF; }
+  color: #8c11fc; }
 
 .alert--status {
   color: #E99708; }
 
+.success--status {
+  color: #01ff00; }
+
 .form--button {
   border: none;
   width: 100%;
-  background-color: #0077FF;
+  background-color: #8c11fc;
   font-family: "Work Sans Light";
   color: #D9D9D9;
   text-align: center;
@@ -41,7 +44,7 @@ body {
   color: #D9D9D9; }
 
 .link {
-  color: #0077FF;
+  color: #0e8fee;
   text-decoration: none; }
 
 .link:hover {
@@ -56,8 +59,8 @@ body {
 .loginInput__box {
   display: flex;
   flex-basis: 325px;
-  height: 100px;
   flex-direction: column;
+  height: 100px;
   justify-content: space-between; }
 
 .loginInput__input input {
@@ -73,19 +76,19 @@ body {
   display: flex;
   flex-direction: column;
   flex-basis: 275px;
-  height: 210px; }
+  height: 220px; }
 
 .loginSubmitBox__info {
-  height: 50%;
   flex-basis: 100%;
   display: flex;
+  flex-grow: 10;
   flex-direction: column;
   justify-content: space-between; }
 
 .loginSubmitBox__button {
-  height: 50%;
   flex-basis: 100%;
   display: flex;
+  flex-grow: 1;
   flex-direction: column;
   justify-content: space-between; }
 

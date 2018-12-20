@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html>
+<html lang='<%= __("lang") %>'>
 
 <head>
     <title>Login</title>
@@ -11,7 +11,7 @@
 </head>
 
 <body>
-    <form>
+    <form method='post' action='/users/login'>
     <div class='loginSignUpBackground'>
         <div class='loginSignUp__formBox'>
             <div class='loginSignUp__title'>
@@ -20,10 +20,10 @@
             <div class='login__input'>
                 <div class='loginInput__box'>
                     <div class='loginSignUp__input'>
-                        <input class='login--input' autocomplete='off' type='text' name='username' placeholder='<%= __("username") %>:'/>
+                        <input class='login--input' autocomplete='off' type='text' name='username' placeholder='<%= __("loginUsername") %>:'/>
                     </div>
                     <div class='loginSignUp__input'>
-                        <input class='login--input password' autocomplete='off' type='password' name='password' placeholder='<%= __("password") %>:'/>
+                        <input class='login--input password' autocomplete='off' type='password' name='password' placeholder='<%= __("loginSignUpPassword") %>:'/>
                         <span class='loginSignUp__eye' onclick='eye.toggleEye()'>
                             <i class="fas fa-eye-slash"></i>
                             <i class="fas fa-eye"></i>
@@ -35,22 +35,33 @@
                 <div class='loginSubmit__box'>
                     <div class='loginSubmitBox__info'>
                         <div class='loginSubmitBoxInfo'>
-                            <span class='alert--status'>{{ }}</span>
+                            <% if (success_msg == "youAreRegistered") { %>
+                                <span class='success--status'><%= __('youAreRegistered') %></span>
+                            <% } %>
+                            <% if (success_msg == "loggedOut") { %>
+                                <span class='success--status'><%= __('loggedOut') %></span>
+                            <% } %>
+                            <% if (error == 'Unknown username.') {%>
+                                <span class='alert--status'><%= __('unknownUsername') %></span>
+                            <% } %>
+                            <% if (error == 'Wrong password.') {%>
+                                <span class='alert--status'><%= __('wrongPassword') %>
+                            <% } %>
+                            <span style='opacity: 0'>asfd</span>
                         </div>
                         <div class='loginSubmitBoxInfo'>
-                            <input type='checkbox' name='remember'/>
-                            <label class='text'><%= __('rememberMe') %></label>
+                            <a class='link' href="/resetpass"><%= __('forgotPassword') %></a>
                         </div>
                         <div class='loginSubmitBoxInfo'>
-                            <a class='link' href="/signup"><%= __('doesntHaveAccount') %></a>
+                            <a class='link' href="/signup"><%= __('loginSignUpMessage') %></a>
                         </div>
                     </div>
                     <div class='loginSubmitBox__button'>
                         <div class='loginSubmitBoxButton'>
-                            <button class='form--button' type='submit'><%= __('enter') %></button>
+                            <button class='form--button' type='submit'><%= __('loginEnter') %></button>
                         </div>
                         <div class='loginSubmitBoxButton'>
-                            <button style='margin-bottom:7px' class='form--button' type='submit'><%= __('enterAsGuest') %></button>
+                            <button style='margin-bottom: 14px' class='form--button' type='submit'><%= __('loginEnterAsGuest') %></button>
                         </div>
                     </div>
                 </div>
