@@ -72,6 +72,7 @@ app.use(express.static(path.join(__dirname, 'static')))
 app.use(passport.initialize())
 app.use(passport.session())
 
+
 // EXPRESS VALIDATOR
 app.use(expressValidator({
     errorFormatter: function(param, msg, value){
@@ -110,7 +111,11 @@ app.get('/signup', function(req, res){
     })
 })
 app.get('/user', function(req, res){
-    res.render('user')
+    if (req.isAuthenticated()){
+        res.render('user')
+    } else {
+        res.redirect('/login')
+    }
 })
 
 

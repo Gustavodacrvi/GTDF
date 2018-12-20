@@ -35,20 +35,18 @@
                 <div class='loginSubmit__box'>
                     <div class='loginSubmitBox__info'>
                         <div class='loginSubmitBoxInfo'>
-                        <% if (success_msg == "youAreRegistered") { %>
-                            <span class='success--status'><%= __('youAreRegistered') %></span>
-                        <% } %>
-                        <% if (error == 'Unknown username.') {%>
-                            <span class='alert--status'><%= __('unknownUsername') %></span>
-                        <% } %>
-                        <% if (error == 'Wrong password.') {%>
-                            <span class='alert--status'><%= __('wrongPassword') %>
-                        <% } %>
-                        <span style='opacity: 0'>asdf</span>
-                        </div>
-                        <div class='loginSubmitBoxInfo'>
-                            <input type='checkbox' name='remember'/>
-                            <label class='text'><%= __('rememberMe') %></label>
+                            <% if (success_msg == "youAreRegistered") { %>
+                                <span class='success--status'><%= __('youAreRegistered') %></span>
+                            <% } %>
+                            <% if (success_msg == "loggedOut") { %>
+                                <span class='success--status'><%= __('loggedOut') %></span>
+                            <% } %>
+                            <% if (error == 'Unknown username.') {%>
+                                <span class='alert--status'><%= __('unknownUsername') %></span>
+                            <% } %>
+                            <% if (error == 'Wrong password.') {%>
+                                <span class='alert--status'><%= __('wrongPassword') %>
+                            <% } %>
                         </div>
                         <div class='loginSubmitBoxInfo'>
                             <a class='link' href="/signup"><%= __('loginSignUpMessage') %></a>
@@ -58,7 +56,7 @@
                         <div class='loginSubmitBoxButton'>
                             <button class='form--button' type='submit'><%= __('loginEnter') %></button>
                         </div>
-                        <div class='loginSubmitBoxButton' style='margin-bottom: 7px'>
+                        <div class='loginSubmitBoxButton' style='margin-bottom: 20px'>
                             <button class='form--button' type='submit'><%= __('loginEnterAsGuest') %></button>
                         </div>
                     </div>

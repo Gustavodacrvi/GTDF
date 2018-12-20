@@ -23,5 +23,6 @@
 	"emailTaken": "Email insdisponível.",
 	"unknownUsername": "Usuário desconhecido.",
 	"wrongPassword": "Senha errada.",
+	"loggedOut": "Você saiu.",
 	"": ""
 }

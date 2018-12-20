@@ -15,6 +15,14 @@ router.get('/login', function(req, res){
     res.render('login')
 })
 
+
+// LOGOUT
+router.get('/logout', function(req, res){
+    req.logOut()
+    req.flash('success_msg', 'loggedOut')
+    res.redirect('login')
+})
+
 // LOGIN
 router.post('/signup', function(req, res){
     const username = req.body.username
@@ -93,6 +101,7 @@ passport.use(new LocalStrategy(
     }
 ))
 
+
 passport.serializeUser(function(user, done){
     done(null, user.id)
 })
@@ -107,6 +116,7 @@ router.post('/login',
     passport.authenticate('local', {successRedirect:'/user', failureRedirect:'/users/login', failureFlash: true}),
     function(req, res){
         res.redirect('/user')
-    })
+})
+
 
 module.exports = router

@@ -54,7 +54,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 20%; }
+  height: 25%; }
 
 .loginInput__box {
   display: flex;
@@ -67,7 +67,7 @@ body {
   flex-basis: 100%; }
 
 .login__submit {
-  height: 60%;
+  height: 55%;
   display: flex;
   justify-content: center;
   align-items: center; }
