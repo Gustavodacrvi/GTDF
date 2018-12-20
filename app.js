@@ -110,6 +110,9 @@ app.get('/signup', function(req, res){
         errors: [{msg: ''}]
     })
 })
+app.get('/resetpass', function(req, res){
+    res.render('resetpass')
+})
 app.get('/user', function(req, res){
     if (req.isAuthenticated()){
         res.render('user')

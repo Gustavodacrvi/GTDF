@@ -23,5 +23,6 @@
     "emailTaken": "Email not available.",
     "unknownUsername": "Unknown username.",
     "wrongPassword": "Wrong password",
-    "loggedOut": "You are not logged in."
+    "loggedOut": "You are not logged in.",
+    "forgotPassword": "Forgot password?"
 }

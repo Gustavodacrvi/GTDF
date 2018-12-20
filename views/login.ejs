@@ -47,6 +47,10 @@
                             <% if (error == 'Wrong password.') {%>
                                 <span class='alert--status'><%= __('wrongPassword') %>
                             <% } %>
+                            <span style='opacity: 0'>asfd</span>
+                        </div>
+                        <div class='loginSubmitBoxInfo'>
+                            <a class='link' href="/resetpass"><%= __('forgotPassword') %></a>
                         </div>
                         <div class='loginSubmitBoxInfo'>
                             <a class='link' href="/signup"><%= __('loginSignUpMessage') %></a>
@@ -56,8 +60,8 @@
                         <div class='loginSubmitBoxButton'>
                             <button class='form--button' type='submit'><%= __('loginEnter') %></button>
                         </div>
-                        <div class='loginSubmitBoxButton' style='margin-bottom: 20px'>
-                            <button class='form--button' type='submit'><%= __('loginEnterAsGuest') %></button>
+                        <div class='loginSubmitBoxButton'>
+                            <button style='margin-bottom: 14px' class='form--button' type='submit'><%= __('loginEnterAsGuest') %></button>
                         </div>
                     </div>
                 </div>
