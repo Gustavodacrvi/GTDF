@@ -17,5 +17,8 @@
 	"passwordDoesntMatch": "Passwords do not match.",
 	"youAreRegistered": "You are registered and can now login.",
     "rememberMe": "Remember me",
-    "createAccount": "Create account"    
+    "createAccount": "Create account",
+    "lang": "en",
+    "usernameTaken": "Username not available.",
+    "emailTaken": "Email not available."
 }

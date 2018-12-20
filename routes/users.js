@@ -27,28 +27,49 @@ router.post('/signup', function(req, res){
     req.checkBody('password2', 'confirmPassword').notEmpty()
     req.checkBody('password2', 'passwordDoesntMatch').equals(password)
 
-    const errors = req.validationErrors()
+    var errors = req.validationErrors()
 
-    if (errors){
-        res.render('signup', {
-            errors:errors
+    let usernameTaken = false
+    let emailTaken = false
+    User.countDocuments({username: username}, function(err, count){
+        if (count > 0){
+            usernameTaken = true
+        }
+        User.countDocuments({email: email}, function(err, count){
+            if (count > 0){
+                emailTaken = true
+            }
+
+            
+            if (errors){
+                res.render('signup', {
+                    errors:errors
+                })
+            } else if (usernameTaken){
+                res.render('signup', {
+                    errors: [{msg: 'usernameTaken'}]
+                })
+            } else if (emailTaken){
+                res.render('signup', {
+                    errors: [{msg: 'emailTaken'}]
+                })
+            } else{
+                var newUser = new User({
+                    username: username,
+                    password: password,
+                    email: email
+                })
+        
+                User.createUser(newUser, function(err, user){
+                    if (err) throw err
+                })
+        
+                req.flash('success_msg', 'youAreRegistered')
+        
+                res.redirect('/users/login')
+            }
         })
-    } else{
-        var newUser = new User({
-            username: username,
-            password: password,
-            email: email
-        })
-
-        User.createUser(newUser, function(err, user){
-            if (err) throw err
-            console.log(user)
-        })
-
-        req.flash('success_msg', 'youAreRegistered')
-
-        res.redirect('/users/login')
-    }
+    })
 })
 
 module.exports = router

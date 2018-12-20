@@ -18,5 +18,8 @@
 	"youAreRegistered": "Você está registrado e agora pode entrar.",
 	"rememberMe": "Lembrar-se de mim",
 	"createAccount": "Criar conta",
+	"lang": "pt-BR",
+	"usernameTaken": "Usuário indisponível.",
+	"emailTaken": "Email insdisponível.",
 	"": ""
 }
