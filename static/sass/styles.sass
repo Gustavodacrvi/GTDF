@@ -10,13 +10,6 @@ $green: #0ED600
     font-family: 'Work Sans Light'
     src: url('../fontes/Work Sans/WorkSans-Light.otf')
 
-a
-    color: $blue
-    text-decoration: none
-
-a:hover
-    text-decoration: underline
-
 body
     margin: 0
     font-family: 'Work Sans Light'
@@ -40,9 +33,18 @@ body
 .status--alert
     color: $orange
 
+.hided
+    opacity: 0
+    visibility: hidden
 
-/* MODIFIERS */
+/* ---------- MODIFIERS */
 
+a
+    color: $blue
+    text-decoration: none
+
+a:hover
+    text-decoration: underline
 
 .form--button, .link--button
     border: 1px solid $green
@@ -86,8 +88,20 @@ body
     position: relative
     top: -30px
 
-/* USER SECTION */
-// BLOCKS
+.form--eye
+    position: absolute
+    right: 0
+    top: 9px
+    font-size: 22px
+    cursor: pointer
+
+.fa-eye
+    color: $gray--light--light
+
+.fa-eye-slash
+    color: $gray--light
+
+/* ---------- BLOCKS */
 
 
 .form
@@ -99,7 +113,7 @@ body
     margin: 0 30px
 
 
-// ELEMENTS
+/* ---------- ELEMENTS */
 
 
 .form__element

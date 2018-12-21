@@ -42,7 +42,9 @@ app.get('/user/initial', function(req, res){
 app.get('/user/login', function(req, res){
     res.render('user/login')
 })
-
+app.get('/user/signup', function(req, res){
+    res.render('user/signup')
+})
 
 
 

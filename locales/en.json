@@ -7,5 +7,6 @@
     "Password": "Password",
     "Create_account": "Criar account",
     "Enter": "Enter",
-    "Forgot_password_or_username": "Forgot password or username"
+    "Forgot_password_or_username": "Forgot password or username",
+    "Confirm_password": "Confirm password"
 }

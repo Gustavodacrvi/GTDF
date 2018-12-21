@@ -1,13 +1,6 @@
 @font-face {
   font-family: "Work Sans Light";
   src: url("../fontes/Work Sans/WorkSans-Light.otf"); }
-a {
-  color: #0080FF;
-  text-decoration: none; }
-
-a:hover {
-  text-decoration: underline; }
-
 body {
   margin: 0;
   font-family: "Work Sans Light";
@@ -31,7 +24,18 @@ body {
 .status--alert {
   color: #FF6F00; }
 
-/* MODIFIERS */
+.hided {
+  opacity: 0;
+  visibility: hidden; }
+
+/* ---------- MODIFIERS */
+a {
+  color: #0080FF;
+  text-decoration: none; }
+
+a:hover {
+  text-decoration: underline; }
+
 .form--button, .link--button {
   border: 1px solid #0ED600;
   color: #0ED600;
@@ -74,7 +78,20 @@ body {
   position: relative;
   top: -30px; }
 
-/* USER SECTION */
+.form--eye {
+  position: absolute;
+  right: 0;
+  top: 9px;
+  font-size: 22px;
+  cursor: pointer; }
+
+.fa-eye {
+  color: #B9B9B9; }
+
+.fa-eye-slash {
+  color: #6A6A6A; }
+
+/* ---------- BLOCKS */
 .form {
   background-color: #474747;
   width: 350px;
@@ -83,6 +100,7 @@ body {
 .form > div {
   margin: 0 30px; }
 
+/* ---------- ELEMENTS */
 .form__element {
   margin-bottom: 25px;
   position: relative;

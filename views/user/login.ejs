@@ -14,8 +14,12 @@
             <div class='form__element'>
                 <input class='form--input--text' name='username' type='text' autocomplete='off' placeholder='<%= __("Username") %>:' />
             </div>
-            <div class='form__element'>
-                <input class='form--input--text' name='username' type='text' autocomplete='off' placeholder='<%= __("Password") %>:' />
+            <div class='form__element passwordEye'>
+                <input class='form--input--text' name='password' type='password' autocomplete='off' placeholder='<%= __("Password") %>:' />
+                <span onclick='formEyes.toggleEyes("0.4s")'>
+                    <i class="fas fa-eye form--eye hided"></i>
+                    <i class="fas fa-eye-slash form--eye"></i>
+                </span>
             </div>
             <div class='form__element'>
                 <span class='status--alert'>Wrong Password</span>
