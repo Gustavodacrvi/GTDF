@@ -29,6 +29,9 @@ body {
   visibility: hidden; }
 
 /* ---------- MODIFIERS */
+.text {
+  color: #B9B9B9; }
+
 a {
   color: #0080FF;
   text-decoration: none; }

@@ -8,5 +8,7 @@
     "Create_account": "Criar account",
     "Enter": "Enter",
     "Forgot_password_or_username": "Forgot password or username",
-    "Confirm_password": "Confirm password"
+    "Confirm_password": "Confirm password",
+    "Enter_the_email_used_to_create_your_account": "Enter the email used to create your account",
+    "Send_email": "Send email"    
 }

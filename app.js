@@ -45,6 +45,9 @@ app.get('/user/login', function(req, res){
 app.get('/user/signup', function(req, res){
     res.render('user/signup')
 })
+app.get('/user/send-email', function(req, res){
+    res.render('user/send-email')
+})
 
 
 

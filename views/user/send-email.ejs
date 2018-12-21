@@ -1,0 +1,33 @@
+<!doctype html>
+
+<html lang='<%= __("_lang") %>'>
+
+<head>
+    <title>login</title>
+    <% include ../partials/head %>
+</head>
+
+<body>
+<div id='background' class='centralizeContent'>
+    <div class='form slide--effect'>
+        <div>
+            <div class='form__element'>
+                <span class='text'><%= __('Enter_the_email_used_to_create_your_account') %>.</span>
+            </div>
+            <div class='form__element'>
+                <input class='form--input--text' name='email' type='text' autocomplete='off' placeholder='Email:' />
+            </div>
+            <div class='form__element'>
+                <span class='status--alert'>Wrong Password</span>
+            </div>
+            <div class='form__element centralizeContent'>
+                <button class='form--button'><%= __('Send_email') %></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<% include ../partials/footer %>
+</body>
+
+</html>
