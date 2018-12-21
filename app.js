@@ -2,8 +2,22 @@ var express = require('express')
 var ejs = require('ejs')
 var path = require('path')
 var i18n = require('i18n')
+var bodyParser = require('body-parser')
+var mongo = require('mongodb')
+var mongoose = require('mongoose')
+var flash = require('connect-flash')
+var session = require('express-session')
+var expressValidator = require('express-validator')
+var passport = require('passport')
 var cookieParser = require('cookie-parser')
 
+
+// MONGOOSE
+mongoose.connect('mongodb://localhost/GTD', { useNewUrlParser: true})
+var mongoose = mongoose.connection
+
+// ROUTES
+var users = require('./routes/users')
 
 // I18N
 i18n.configure({
@@ -22,12 +36,59 @@ app.use(cookieParser())
 // I18N
 app.use(i18n.init)
 
+// EXPRESS SESSION
+app.use(session({
+    secret: 'secret',
+    saveUninitialized: true,
+    resave: true
+}))
+
+// CONNECT FLASH
+app.use(flash())
+
+// GLOBAL VARS
+app.use(function (req, res, next){
+    res.locals.success_msg = req.flash('success_msg')
+    res.locals.error_msg = req.flash('error_msg')
+    res.locals.error = req.flash('error')
+    res.locals.user = req.user || null
+    next()
+})
+
 // VIEW ENGINE
 app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, 'views'))
 
+// BODY PARSER
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(cookieParser())
+
 // STATIC
 app.use(express.static(path.join(__dirname, 'static')))
+
+// PASSPORT
+app.use(passport.initialize())
+app.use(passport.session())
+
+// EXPRESS VALIDATOR
+app.use(expressValidator({
+    errorFormatter: function(param, msg, value){
+        var namespace = param.split('.')
+        , root = namespace.shift()
+        , formParam = root
+        while(namespace.length){
+            formParam = '[' + namespace.shift() + ']'
+        }
+        return {
+            param: formParam,
+            msg: msg,
+            value: value
+        }
+    }
+}))
+
+app.use('/users', users)
 
 
 
@@ -48,6 +109,14 @@ app.get('/user/signup', function(req, res){
 app.get('/user/send-email', function(req, res){
     res.render('user/send-email')
 })
+app.get('/user', function(req, res){
+    if (req.isAuthenticated()){
+        res.render('user')
+    } else {
+        res.redirect('user/login')
+    }
+})
+
 
 
 

@@ -8,6 +8,7 @@
 </head>
 
 <body>
+<form method='post' action='/users/signup'>
 <div id='background' class='centralizeContent'>
     <div class='form slide--effect'>
         <div>
@@ -32,14 +33,17 @@
                 </span>
             </div>
             <div class='form__element'>
-                <span class='status--alert'>Wrong Password</span>
+                <% if (locals.errors) {%>
+                    <span class='status--alert'><%= __(errors[0].msg) %>.</span>
+                <% } %>
             </div>
             <div class='form__element centralizeContent'>
-                <button class='form--button'><%= __('Create_account') %></button>
+                <button class='form--button' type='submit'><%= __('Create_account') %></button>
             </div>
         </div>
     </div>
 </div>
+</form>
 
 
 

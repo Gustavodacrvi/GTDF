@@ -30,14 +30,28 @@ body
 .centralizeContentColumn
     flex-direction: column
 
+.form--button, .link--button
+    transition-duration: 0.2s
+
+.slide--effect
+    transition-duration: 1.2s
+
 .status--alert
     color: $orange
+
+.status--success
+    color: $green
 
 .hided
     opacity: 0
     visibility: hidden
 
 /* ---------- MODIFIERS */
+
+
+
+
+
 
 .text
     color: $gray--light--light
@@ -53,7 +67,6 @@ a:hover
     border: 1px solid $green
     color: $green
     padding: 12px
-    transition-duration: 0.2s
     font-size: 1em
 
 .form--button:hover, .link--button:hover
@@ -87,7 +100,6 @@ a:hover
 .slide--effect
     opacity: 0
     visibility: hidden
-    transition-duration: 1.2s
     position: relative
     top: -30px
 

@@ -21,8 +21,17 @@ body {
 .centralizeContentColumn {
   flex-direction: column; }
 
+.form--button, .link--button {
+  transition-duration: 0.2s; }
+
+.slide--effect {
+  transition-duration: 1.2s; }
+
 .status--alert {
   color: #FF6F00; }
+
+.status--success {
+  color: #0ED600; }
 
 .hided {
   opacity: 0;
@@ -43,7 +52,6 @@ a:hover {
   border: 1px solid #0ED600;
   color: #0ED600;
   padding: 12px;
-  transition-duration: 0.2s;
   font-size: 1em; }
 
 .form--button:hover, .link--button:hover {
@@ -77,7 +85,6 @@ a:hover {
 .slide--effect {
   opacity: 0;
   visibility: hidden;
-  transition-duration: 1.2s;
   position: relative;
   top: -30px; }
 
