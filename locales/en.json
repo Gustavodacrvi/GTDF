@@ -1,3 +1,6 @@
 {
-	"LANGUAGE": "LANGUAGE"
+    "LANGUAGE": "LANGUAGE",
+    "_lang": "en",
+    "Enter_as_a_guest": "Enter as a guest",
+    "_login": "Login"
 }

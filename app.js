@@ -36,6 +36,9 @@ app.use(express.static(path.join(__dirname, 'static')))
 app.get('/', function(req, res){
     res.render('index')
 })
+app.get('/user/initial', function(req, res){
+    res.render('user/initial')
+})
 
 
 

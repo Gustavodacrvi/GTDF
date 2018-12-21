@@ -1,3 +1,60 @@
+@font-face {
+  font-family: "Work Sans Light";
+  src: url("../fontes/Work Sans/WorkSans-Light.otf"); }
+body {
+  margin: 0;
+  font-family: "Work Sans Light";
+  background-color: #191919;
+  color: #B9B9B9; }
 
+#background {
+  position: absolute;
+  width: 100%;
+  height: 100%; }
+
+.centralizeContent,
+.centralizeContentColumn {
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+
+.centralizeContentColumn {
+  flex-direction: column; }
+
+/* MODIFIERS */
+.form--button, .link--button {
+  border: 1px solid #0ED600;
+  color: #0ED600;
+  padding: 12px;
+  transition-duration: 0.2s;
+  font-size: 1em; }
+
+.form--button:hover, .link--button:hover {
+  color: white;
+  background-color: #0ED600; }
+
+.form--button {
+  background-color: transparent;
+  width: 250px;
+  cursor: pointer;
+  font-family: "Work Sans Light"; }
+
+.link--button {
+  display: inline-block;
+  width: 225px;
+  text-align: center;
+  text-decoration: none; }
+
+/* USER SECTION */
+.form {
+  background-color: #474747;
+  width: 350px;
+  padding-top: 25px; }
+
+.form > div {
+  margin: 0 30px; }
+
+.form__element {
+  margin-bottom: 25px; }
 
 /*# sourceMappingURL=styles.css.map */
