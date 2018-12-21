@@ -1,0 +1,39 @@
+<!doctype html>
+
+<html lang='<%= __("_lang") %>'>
+
+<head>
+    <title>login</title>
+    <% include ../partials/head %>
+</head>
+
+<body>
+<div id='background' class='centralizeContent'>
+    <div class='form slide--effect'>
+        <div>
+            <div class='form__element'>
+                <input class='form--input--text' name='username' type='text' autocomplete='off' placeholder='<%= __("Username") %>:' />
+            </div>
+            <div class='form__element'>
+                <input class='form--input--text' name='username' type='text' autocomplete='off' placeholder='<%= __("Password") %>:' />
+            </div>
+            <div class='form__element'>
+                <span class='status--alert'>Wrong Password</span>
+            </div>
+            <div class='form__element'>
+                <a href='/user/signup'><%= __("Create_account") %></a>
+            </div>
+            <div class='form__element centralizeContent'>
+                <button class='form--button'><%= __('Enter') %></button>
+            </div>
+            <div class='form__element'>
+                <a href='/user/reset-password'><%= __("Forgot_password_or_username") %>?</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<% include ../partials/footer %>
+</body>
+
+</html>

@@ -1,11 +1,21 @@
 $back--color: #191919
 $gray--light--light: #B9B9B9
+$gray--light: #6A6A6A
+$orange: #FF6F00
 $gray: #474747
+$blue: #0080FF
 $green: #0ED600
     
 @font-face
     font-family: 'Work Sans Light'
     src: url('../fontes/Work Sans/WorkSans-Light.otf')
+
+a
+    color: $blue
+    text-decoration: none
+
+a:hover
+    text-decoration: underline
 
 body
     margin: 0
@@ -27,7 +37,8 @@ body
 .centralizeContentColumn
     flex-direction: column
 
-
+.status--alert
+    color: $orange
 
 
 /* MODIFIERS */
@@ -43,12 +54,24 @@ body
 .form--button:hover, .link--button:hover
     color: white
     background-color: $green
+    text-decoration: none
 
 .form--button
     background-color: transparent
     width: 250px
     cursor: pointer
     font-family: 'Work Sans Light'
+    outline: none
+
+.form--input--text
+    background-color: $gray
+    border: none
+    border-bottom: 1px solid $gray--light
+    width: 275px
+    padding: 10px
+    outline: none
+    color: $gray--light--light
+    font-size: 1.1em
 
 .link--button
     display: inline-block
@@ -59,7 +82,7 @@ body
 .slide--effect
     opacity: 0
     visibility: hidden
-    transition-duration: 1s
+    transition-duration: 1.2s
     position: relative
     top: -30px
 
@@ -81,4 +104,5 @@ body
 
 .form__element
     margin-bottom: 25px
-
+    position: relative
+    width: 100%

@@ -1,6 +1,13 @@
 @font-face {
   font-family: "Work Sans Light";
   src: url("../fontes/Work Sans/WorkSans-Light.otf"); }
+a {
+  color: #0080FF;
+  text-decoration: none; }
+
+a:hover {
+  text-decoration: underline; }
+
 body {
   margin: 0;
   font-family: "Work Sans Light";
@@ -21,6 +28,9 @@ body {
 .centralizeContentColumn {
   flex-direction: column; }
 
+.status--alert {
+  color: #FF6F00; }
+
 /* MODIFIERS */
 .form--button, .link--button {
   border: 1px solid #0ED600;
@@ -31,13 +41,25 @@ body {
 
 .form--button:hover, .link--button:hover {
   color: white;
-  background-color: #0ED600; }
+  background-color: #0ED600;
+  text-decoration: none; }
 
 .form--button {
   background-color: transparent;
   width: 250px;
   cursor: pointer;
-  font-family: "Work Sans Light"; }
+  font-family: "Work Sans Light";
+  outline: none; }
+
+.form--input--text {
+  background-color: #474747;
+  border: none;
+  border-bottom: 1px solid #6A6A6A;
+  width: 275px;
+  padding: 10px;
+  outline: none;
+  color: #B9B9B9;
+  font-size: 1.1em; }
 
 .link--button {
   display: inline-block;
@@ -48,7 +70,7 @@ body {
 .slide--effect {
   opacity: 0;
   visibility: hidden;
-  transition-duration: 1s;
+  transition-duration: 1.2s;
   position: relative;
   top: -30px; }
 
@@ -62,6 +84,8 @@ body {
   margin: 0 30px; }
 
 .form__element {
-  margin-bottom: 25px; }
+  margin-bottom: 25px;
+  position: relative;
+  width: 100%; }
 
 /*# sourceMappingURL=styles.css.map */

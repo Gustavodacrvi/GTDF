@@ -39,6 +39,9 @@ app.get('/', function(req, res){
 app.get('/user/initial', function(req, res){
     res.render('user/initial')
 })
+app.get('/user/login', function(req, res){
+    res.render('user/login')
+})
 
 
 

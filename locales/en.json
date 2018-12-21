@@ -2,5 +2,10 @@
     "LANGUAGE": "LANGUAGE",
     "_lang": "en",
     "Enter_as_a_guest": "Enter as a guest",
-    "_login": "Login"
+    "_login": "Login",
+    "Username": "Username",
+    "Password": "Password",
+    "Create_account": "Criar account",
+    "Enter": "Enter",
+    "Forgot_password_or_username": "Forgot password or username"
 }

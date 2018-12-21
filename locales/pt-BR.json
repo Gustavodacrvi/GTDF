@@ -2,5 +2,10 @@
     "LANGUAGE": "LINGUAGEM",
     "_lang": "pt-BR",
     "Enter_as_a_guest": "Entrar como convidado",
-    "_login": "Fazer login"
+    "_login": "Fazer login",
+    "Username": "Usuário",
+    "Password": "Senha",
+    "Create_account": "Criar conta",
+    "Enter": "Entrar",
+    "Forgot_password_or_username": "Esqueceu a senha ou o usuário"
 }
