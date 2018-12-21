@@ -1,0 +1,22 @@
+{
+  "name": "projeto-gtd",
+  "version": "1.0.0",
+  "description": "Sistema de organização baseado no livro \"\"\u001b[DGetting Things Done\".",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Gustavodacrvi/Projeto-GTD.git"
+  },
+  "author": "Gustavo da Cruz Vieira",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Gustavodacrvi/Projeto-GTD/issues"
+  },
+  "homepage": "https://github.com/Gustavodacrvi/Projeto-GTD#readme",
+  "dependencies": {
+    "express": "^4.16.4"
+  }
+}
