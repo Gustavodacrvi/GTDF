@@ -15,8 +15,13 @@ function show(el, time){
 function slideEffect(){
     show($('.slide--effect').css('top', '0'), '1.2s')
 }
-
-
+function dropdownEffect(){
+    $('.dropdown').on('mouseenter', function(){
+        show($(this).children('div'), 300)
+    }).on('mouseleave', function(){
+        hide($(this).children('div'), 300)
+    })
+}
 
 let formEyes = {
     opened: false,
@@ -34,5 +39,9 @@ let formEyes = {
     }
 }
 
+
+
 // SLIDE EFFECT
 slideEffect()
+dropdownEffect()
+

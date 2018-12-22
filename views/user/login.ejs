@@ -8,9 +8,35 @@
 </head>
 
 <body>
+<div id='navBar' class='alignContent'>
+    <div class='alignContent' class='navBar__left'>
+        <div class='navBar__element'>
+            <a href='/' class='noUnderline--link'><%= __('home') %></a>
+        </div>
+        <div class='navBar__element'>
+            <a href='/user/login' class='noUnderline--link'><%= ('login') %></a>
+        </div>
+    </div>
+    <div class='navBar__right rowReversed'>
+        <div class='navBar__element dropdown'>
+            <a class='noUnderline--link' href='#'><%= __('_current_language') %></a>
+            <div class='card align--text hided'>
+                <div class='dropdown__element'>
+                    <a class='noUnderline--link' href='/en'>english</a>
+                </div>
+                <div class='dropdown__element'>
+                    <a class='noUnderline--link' href='/pt-BR'>português (Brasil)</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div></div>
+
+
 <form method='post' action='/users/login'>
 <div id='background' class='centralizeContent'>
-    <div class='form slide--effect'>
+    <div class='form slide--effect card'>
         <div>
             <div class='form__element'>
                 <input class='form--input--text' name='username' type='text' autocomplete='off' placeholder='<%= __("Username") %>:' />
