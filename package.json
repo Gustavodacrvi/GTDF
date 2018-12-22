@@ -1,7 +1,7 @@
 {
   "name": "projeto-gtd",
   "version": "1.0.0",
-  "description": "Aplicativo baseado no sistema de organização apresentado no livro \"Getting Things Done\".",
+  "description": "Sistema de organização baseado no livro \"\"\u001b[DGetting Things Done\".",
   "main": "app.js",
   "scripts": {
     "start": "node app"

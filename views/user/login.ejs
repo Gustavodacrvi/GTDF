@@ -1,0 +1,51 @@
+<!doctype html>
+
+<html lang='<%= __("_lang") %>'>
+
+<head>
+    <title>login</title>
+    <% include ../partials/head %>
+</head>
+
+<body>
+<form method='post' action='/users/login'>
+<div id='background' class='centralizeContent'>
+    <div class='form slide--effect'>
+        <div>
+            <div class='form__element'>
+                <input class='form--input--text' name='username' type='text' autocomplete='off' placeholder='<%= __("Username") %>:' />
+            </div>
+            <div class='form__element passwordEye'>
+                <input class='form--input--text' name='password' type='password' autocomplete='off' placeholder='<%= __("Password") %>:' />
+                <span onclick='formEyes.toggleEyes("0.4s")'>
+                    <i class="fas fa-eye form--eye hided"></i>
+                    <i class="fas fa-eye-slash form--eye"></i>
+                </span>
+            </div>
+            <div class='form__element'>
+            <% if (locals.success_msg) { %>
+                <span class='status--success'><%= __(String(success_msg)) %></span>
+            <% } %>
+            <% if (locals.error) { %>
+                <span class='status--success'><%= __(String(error)) %></span>
+            <% } %>
+            
+            </div>
+            <div class='form__element'>
+                <a href='/user/signup'><%= __("Create_account") %></a>
+            </div>
+            <div class='form__element centralizeContent'>
+                <button class='form--button' type='submit'><%= __('Enter') %></button>
+            </div>
+            <div class='form__element'>
+                <a href='/user/send-email'><%= __("Forgot_password_or_username") %>?</a>
+            </div>
+        </div>
+    </div>
+</div>
+</form>
+
+<% include ../partials/footer %>
+</body>
+
+</html>

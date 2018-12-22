@@ -1,20 +1,34 @@
 const mongoose = require('mongoose')
 const bcrypt = require('bcryptjs')
 
-var UserSchema = mongoose.Schema({
+var userSchema = mongoose.Schema({
     username: {
         type: String,
+        required: true,
+        unique: true,
         index: true
     },
+    email: {
+        type: String,
+        required: true,
+        unique: true
+    },
     password: {
+        type: String,
+        required: true,
+        unique: true
+    },
+    resetPasswordToken: {
         type: String
     },
-    email: {
-        type: String
+    resetPasswordExpires: {
+        type: Date
     }
 })
 
-var User = module.exports = mongoose.model('User', UserSchema)
+var User = module.exports = mongoose.model('User', userSchema)
+
+
 
 module.exports.createUser = function(newUser, caLLback){
     bcrypt.genSalt(10, function(err, salt){

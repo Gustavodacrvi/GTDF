@@ -1,0 +1,119 @@
+@font-face {
+  font-family: "Work Sans Light";
+  src: url("../fontes/Work Sans/WorkSans-Light.otf"); }
+body {
+  margin: 0;
+  font-family: "Work Sans Light";
+  background-color: #191919;
+  color: #B9B9B9; }
+
+#background {
+  position: absolute;
+  width: 100%;
+  height: 100%; }
+
+.centralizeContent,
+.centralizeContentColumn {
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+
+.centralizeContentColumn {
+  flex-direction: column; }
+
+.form--button, .link--button {
+  transition-duration: 0.2s; }
+
+.slide--effect {
+  transition-duration: 1.2s; }
+
+.status--alert {
+  color: #FF6F00; }
+
+.status--success {
+  color: #FF2121; }
+
+.hided {
+  opacity: 0;
+  visibility: hidden; }
+
+/* ---------- MODIFIERS */
+.text {
+  color: #B9B9B9; }
+
+a {
+  color: #0080FF;
+  text-decoration: none; }
+
+a:hover {
+  text-decoration: underline; }
+
+.form--button, .link--button {
+  border: 1px solid #FF2121;
+  color: #FF2121;
+  padding: 12px;
+  font-size: 1em; }
+
+.form--button:hover, .link--button:hover {
+  color: white;
+  background-color: #FF2121;
+  text-decoration: none; }
+
+.form--button {
+  background-color: transparent;
+  width: 250px;
+  cursor: pointer;
+  font-family: "Work Sans Light";
+  outline: none; }
+
+.form--input--text {
+  background-color: #474747;
+  border: none;
+  border-bottom: 1px solid #6A6A6A;
+  width: 275px;
+  padding: 10px;
+  outline: none;
+  color: #B9B9B9;
+  font-size: 1.1em; }
+
+.link--button {
+  display: inline-block;
+  width: 225px;
+  text-align: center;
+  text-decoration: none; }
+
+.slide--effect {
+  opacity: 0;
+  visibility: hidden;
+  position: relative;
+  top: -30px; }
+
+.form--eye {
+  position: absolute;
+  right: 0;
+  top: 9px;
+  font-size: 22px;
+  cursor: pointer; }
+
+.fa-eye {
+  color: #B9B9B9; }
+
+.fa-eye-slash {
+  color: #6A6A6A; }
+
+/* ---------- BLOCKS */
+.form {
+  background-color: #474747;
+  width: 350px;
+  padding-top: 25px; }
+
+.form > div {
+  margin: 0 30px; }
+
+/* ---------- ELEMENTS */
+.form__element {
+  margin-bottom: 25px;
+  position: relative;
+  width: 100%; }
+
+/*# sourceMappingURL=styles.css.map */

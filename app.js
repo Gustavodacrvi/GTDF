@@ -1,43 +1,42 @@
-const express = require('express')
-const cookieParser = require('cookie-parser')
-const bodyParser = require('body-parser')
-const expressValidator = require('express-validator')
-const flash = require('connect-flash')
-const session = require('express-session')
-const passport = require('passport')
-const LocalStrategy = require('passport-local').Strategy
-const mongo = require('mongodb')
-const mongoose = require('mongoose')
-const path = require('path')
-const i18n = require('i18n')
-
-
-
+var express = require('express')
+var ejs = require('ejs')
+var path = require('path')
+var i18n = require('i18n')
+var bodyParser = require('body-parser')
+var mongo = require('mongodb')
+var mongoose = require('mongoose')
+var flash = require('connect-flash')
+var session = require('express-session')
+var expressValidator = require('express-validator')
+var passport = require('passport')
+var cookieParser = require('cookie-parser')
 
 
 // MONGOOSE
-mongoose.connect('mongodb://localhost/GTD', { useNewUrlParser: true })
-const db = mongoose.connection
+mongoose.connect('mongodb://localhost/GTD', { useNewUrlParser: true})
+var mongoose = mongoose.connection
 
 // ROUTES
-const routes = require('./routes/index')
-const users = require('./routes/users')
+var users = require('./routes/users')
 
 // I18N
 i18n.configure({
     locales: ['en', 'pt-BR'],
-    defaultLocale: 'en',
+    cookie: 'localeCookie',
+    directory: path.join(__dirname, 'locales'),
     queryParameter: 'lang',
-    cookie: 'langCookie',
-    directory: path.join(__dirname, 'i18n'),
-})
+    defaultLocale: 'en',
+});
 
 var app = express()
-// I18N
+
+// COOKIE PARSER
 app.use(cookieParser())
+
+// I18N
 app.use(i18n.init)
 
-// EXPRESS SECTION
+// EXPRESS SESSION
 app.use(session({
     secret: 'secret',
     saveUninitialized: true,
@@ -57,10 +56,10 @@ app.use(function (req, res, next){
 })
 
 // VIEW ENGINE
-app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')
+app.set('views', path.join(__dirname, 'views'))
 
-//BODY PARSER
+// BODY PARSER
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cookieParser())
@@ -68,10 +67,9 @@ app.use(cookieParser())
 // STATIC
 app.use(express.static(path.join(__dirname, 'static')))
 
-// PASSPORT INIT
+// PASSPORT
 app.use(passport.initialize())
 app.use(passport.session())
-
 
 // EXPRESS VALIDATOR
 app.use(expressValidator({
@@ -80,7 +78,7 @@ app.use(expressValidator({
         , root = namespace.shift()
         , formParam = root
         while(namespace.length){
-            formParam += '[' + namespace.shift() + ']'
+            formParam = '[' + namespace.shift() + ']'
         }
         return {
             param: formParam,
@@ -90,39 +88,38 @@ app.use(expressValidator({
     }
 }))
 
-
-app.use('/', routes)
 app.use('/users', users)
 
 
 
 
 
-
-app.get('/', function(req, res) {
+app.get('/', function(req, res){
     res.render('index')
 })
-app.get('/login', function(req, res){
-    res.render('login')
+app.get('/user/initial', function(req, res){
+    res.render('user/initial')
 })
-app.get('/signup', function(req, res){
-    res.render('signup', {
-        errors: [{msg: ''}]
-    })
+app.get('/user/login', function(req, res){
+    res.render('user/login')
 })
-app.get('/resetpass', function(req, res){
-    res.render('resetpass')
+app.get('/user/signup', function(req, res){
+    res.render('user/signup')
+})
+app.get('/user/send-email', function(req, res){
+    res.render('user/send-email')
 })
 app.get('/user', function(req, res){
     if (req.isAuthenticated()){
         res.render('user')
     } else {
-        res.redirect('/login')
+        res.redirect('user/login')
     }
 })
 
 
 
-app.listen(3000, '0.0.0.0', function(){
+
+app.listen(3000, '0.0.0.0', function(req, res){
     console.log('Server started at port 3000...')
 })
