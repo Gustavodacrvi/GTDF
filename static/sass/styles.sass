@@ -4,7 +4,6 @@ $gray--light: #6A6A6A
 $orange: #FF6F00
 $gray: #474747
 $blue: #0080FF
-$red: #FF2121
     
 @font-face
     font-family: 'Work Sans Light'
@@ -20,16 +19,40 @@ body
     position: absolute
     width: 100%
     height: 100%
+    z-index: -1
 
+#navBar
+    position: fixed
+    height: 8%
+    width: 90%
+    padding: 0 5%
+    background-color: $gray
+
+#navBar > div
+    width: 50%
+
+
+
+.rowReversed
+    display: flex
+    flex-direction: row-reverse
+
+.alignContent,
 .centralizeContent,
 .centralizeContentColumn
     display: flex
-    justify-content: center
     align-items: center
+
+.centralizeContent,
+.centralizeContentColumn
+    justify-content: center
 
 .centralizeContentColumn
     flex-direction: column
 
+
+
+    
 .form--button, .link--button
     transition-duration: 0.2s
 
@@ -40,7 +63,7 @@ body
     color: $orange
 
 .status--success
-    color: $red
+    color: $blue
 
 .hided
     opacity: 0
@@ -57,21 +80,25 @@ body
     color: $gray--light--light
 
 a
+    color: $gray--light--light
+    text-decoration: underline
+
+a:hover
     color: $blue
     text-decoration: none
 
-a:hover
-    text-decoration: underline
+.noUnderline--link
+    text-decoration: none
 
 .form--button, .link--button
-    border: 1px solid $red
-    color: $red
+    border: 1px solid $blue
+    color: $blue
     padding: 12px
     font-size: 1em
 
 .form--button:hover, .link--button:hover
     color: white
-    background-color: $red
+    background-color: $blue
     text-decoration: none
 
 .form--button
@@ -135,3 +162,6 @@ a:hover
     margin-bottom: 25px
     position: relative
     width: 100%
+
+.navBar__element
+    margin: 8px
