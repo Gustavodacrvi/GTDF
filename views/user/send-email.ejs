@@ -8,6 +8,7 @@
 </head>
 
 <body>
+<form method='post' action='/users/forgot'>
 <div id='background' class='centralizeContent'>
     <div class='form slide--effect'>
         <div>
@@ -18,14 +19,20 @@
                 <input class='form--input--text' name='email' type='text' autocomplete='off' placeholder='Email:' />
             </div>
             <div class='form__element'>
-                <span class='status--alert'>Wrong Password</span>
+                <% if (locals.error) { %>
+                    <span class='status--alert'><%= __(String(error)) %></span>
+                <% } %>
+                <% if (locals.success_msg) { %>
+                    <span class='status--alert'><%= __(String(success_msg)) %></span>
+                <% } %>
             </div>
             <div class='form__element centralizeContent'>
-                <button class='form--button'><%= __('Send_email') %></button>
+                <button class='form--button' type='submit'><%= __('Send_email') %></button>
             </div>
         </div>
     </div>
 </div>
+</form>
 
 <% include ../partials/footer %>
 </body>

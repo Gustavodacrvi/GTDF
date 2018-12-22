@@ -21,5 +21,7 @@
     "You_created_an_account_and_can_now_login": "You created an account and can now login.",
     "Unknown_username": "Unknown username.",
     "Wrong_password": "Wrong password.",
-    "_You_logged_out": "You logged out."
+    "_You_logged_out": "You logged out.",
+    "No_account_with_that_email_address_exists": "No account with that email address exists.",
+    "An_email_has_been_sent_with_further_instructions": "An email has been sent with further insctructions."
 }

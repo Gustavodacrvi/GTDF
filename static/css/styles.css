@@ -31,7 +31,7 @@ body {
   color: #FF6F00; }
 
 .status--success {
-  color: #0ED600; }
+  color: #FF2121; }
 
 .hided {
   opacity: 0;
@@ -49,14 +49,14 @@ a:hover {
   text-decoration: underline; }
 
 .form--button, .link--button {
-  border: 1px solid #0ED600;
-  color: #0ED600;
+  border: 1px solid #FF2121;
+  color: #FF2121;
   padding: 12px;
   font-size: 1em; }
 
 .form--button:hover, .link--button:hover {
   color: white;
-  background-color: #0ED600;
+  background-color: #FF2121;
   text-decoration: none; }
 
 .form--button {

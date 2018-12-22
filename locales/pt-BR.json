@@ -22,5 +22,7 @@
 	"Unknown_username": "Usuário desconhecido.",
 	"Wrong_password": "Senha errada.",
 	"": "",
-	"_You_logged_out": "Você saiu."
+	"_You_logged_out": "Você saiu.",
+	"No_account_with_that_email_address_exists": "Nenhuma conta com esse email existe.",
+	"An_email_has_been_sent_with_further_instructions": "Um email foi mandado contendo instruções para mudar sua senha."
 }

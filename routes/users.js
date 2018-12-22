@@ -1,19 +1,21 @@
-const express = require('express')
-const router = express.Router()
-const passport = require('passport')
-const LocalStrategy = require('passport-local').Strategy
+var express = require('express')
+var router = express.Router()
+var passport = require('passport')
+var LocalStrategy = require('passport-local').Strategy
 
 var User = require('../models/user')
-
-// SIGN_UP
-router.get('/signup', function(req, res){
-    res.render('user/signup')
-})
 
 // LOGIN
 router.get('/login', function(req, res){
     res.render('user/login')
 })
+
+router.post('/login',
+    passport.authenticate('local', {successRedirect:'/user', failureRedirect:'/users/login', failureFlash: true}),
+    function(req, res){
+        res.redirect('/user')
+})
+
 
 // LOGOUT
 router.get('/logout', function(req, res){
@@ -23,16 +25,12 @@ router.get('/logout', function(req, res){
     res.redirect('/user/login')
 })
 
-
-router.post('/login',
-    passport.authenticate('local', {successRedirect:'/user', failureRedirect:'/users/login', failureFlash: true}),
-    function(req, res){
-        res.redirect('/user')
+// SIGN_UP
+router.get('/signup', function(req, res){
+    res.render('user/signup')
 })
 
 
-
-// LOGIN
 router.post('/signup', function(req, res){
     var username = req.body.username
     var email = req.body.email
