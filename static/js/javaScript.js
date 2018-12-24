@@ -21,6 +21,20 @@ function dropdownEffect(){
     }).on('mouseleave', function(){
         hide($(this).children('div'), 300)
     })
+    $('.dropdown__mobile').on('mouseenter', function(){
+        show($(this).children('div'), 300)
+    }).on('mouseleave', function(){
+        hide($(this).children('div'), 300)
+    })
+    $('.subdropdown__mobile').on('click', function(){
+        if ($(this).data('clicked') == 0 || $(this).data('clicked') == undefined) {
+            show($(this).children('div'), 300)
+            $(this).data('clicked', 1)
+        } else {
+            hide($(this).children('div'), 300)
+            $(this).data('clicked', 0)
+        }
+    })
 }
 
 let formEyes = {

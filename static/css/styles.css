@@ -18,7 +18,7 @@ body {
   padding: 0 5%;
   border-bottom: 0.5px solid #6A6A6A; }
 
-#navBar > div {
+#navBar > div > div {
   width: 50%; }
 
 #navBar + div {
@@ -33,8 +33,28 @@ body {
 .dropdown__element {
   margin: 14px; }
 
+.main__menu__dropdown__element {
+  margin: 14px; }
+
 .dropdown > div {
   top: 35px; }
+
+.main__menu__dropdown__element > div {
+  top: 20px; }
+
+.subdropdown__element {
+  margin: 14px;
+  top: 15px; }
+
+#navBar__mobile__button {
+  position: relative; }
+
+#navBar__mobile__button > .fa-bars {
+  position: absolute;
+  right: 0; }
+
+.navBar__mobile__content {
+  right: 0; }
 
 .form {
   width: 350px;
@@ -57,7 +77,10 @@ body {
   color: #6A6A6A; }
 
 @media screen and (min-width: 980px) {
-  #navBar > div > button {
+  #navBar #navBar__mobile {
+    display: none; } }
+@media screen and (max-width: 979px) {
+  #navBar__desktop {
     display: none; } }
 .text,
 a,
@@ -93,11 +116,14 @@ a:hover,
 
 .slide--effect,
 .form__element,
-.dropdown {
+.dropdown,
+.subdropdown__mobile {
   position: relative; }
 
 .form--eye,
 .dropdown > div,
+.dropdown__mobile > div,
+.subdropdown__mobile > div,
 #background {
   position: absolute; }
 
@@ -105,8 +131,7 @@ a:hover,
 .alignContent,
 .centralizeContent,
 .centralizeContentColumn,
-.rowReversed,
-#main--menu--button {
+.rowReversed {
   display: flex; }
 
 .alignContent,
@@ -126,7 +151,8 @@ a:hover,
   flex-direction: column; }
 
 .form--button, .link--button,
-.dropdown > div {
+.dropdown > div,
+.dropdown__mobile > div {
   transition-duration: 0.2s; }
 
 .slide--effect {
@@ -168,7 +194,8 @@ a {
 
 .reset--button {
   border: none;
-  cursor: pointer; }
+  cursor: pointer;
+  outline: none; }
 
 .icon {
   font-size: 30px; }
