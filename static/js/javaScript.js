@@ -36,19 +36,19 @@ function dropdowns(){
         rotate(360, '0.3s', $('button > .fa-times'))
     }
 
-    $('.dropdown').on('mouseenter', function(){
+    $('.dropdownDesktop').on('mouseenter', function(){
         show($(this).children('div'), 300)
     }).on('mouseleave', function(){
         hide($(this).children('div'), 300)
     })
-    $('.dropdown__mobile').on('mouseenter', function(){
+    $('#navBarMobile__toggle').on('mouseenter', function(){
         show($(this).children('div'), '0.3s')
         abrirIcone()
     }).on('mouseleave', function(){
         hide($(this).children('div'), '0.3s')
         fecharIcone()
     })
-    $('.subdropdown__mobile').on('click', function(){
+    $('.navBarMobile__subDropdown').on('click', function(){
         if ($(this).data('clicked') == 0 || $(this).data('clicked') == undefined) {
             show($(this).children('div'), 300)
             $(this).data('clicked', 1)

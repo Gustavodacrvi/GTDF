@@ -1,18 +1,18 @@
 <div id='navBar' class='slide--effect'>
     <div id='navBar__desktop' class='alignContent'>
-        <div class='alignContent navBar__left'>
+        <div class='alignContent'>
             <div class='navBar__element'>
                 <a href='/' class='noUnderline--link'><%= __('home') %></a>
             </div>
         </div>
-        <div class='navBar__right rowReversed alignContent'>
-            <div class='navBar__element dropdown'>
+        <div class='alignContent rowReversed'>
+            <div class='navBar__element dropdownDesktop'>
                 <a class='noUnderline--link' href='#'><%= __('_current_language') %></a>
                 <div class='card align--text hided'>
-                    <div class='dropdown__element'>
+                    <div class='dropdownDesktop__element'>
                         <a class='noUnderline--link' href='/en'>english</a>
                     </div>
-                    <div class='dropdown__element'>
+                    <div class='dropdownDesktop__element'>
                         <a class='noUnderline--link' href='/pt-BR'>português (Brasil)</a>
                     </div>
                 </div>
@@ -35,36 +35,36 @@
         </div>
     </div>
     <div id='navBar__mobile' class='alignContent'>
-        <div class='alignContent navBar__left' >
+        <div class='alignContent' >
             <div class='navBar__element'>
                 <div>
                 </div>
             </div>
         </div>
-        <div class='navBar__right rowReversed alignContent'>
-            <div class='dropdown__mobile'>
-                <button id='navBar__mobile__button' class='reset--button'><i class="fas fa-bars icon"></i><i class="fas fa-times icon mobile--rotated"></i></button>
-                <div class='card hided navBar__mobile__content'>
-                    <div class='main__menu__dropdown__element subdropdown__mobile'>
+        <div class='rowReversed alignContent'>
+            <div id='navBarMobile__toggle' class='navBar__element'>
+                <button id='navBarMobileButton' class='reset--button'><i class="fas fa-bars icon"></i><i class="fas fa-times icon mobile--rotated"></i></button>
+                <div class='card hided navBarMobile__content'>
+                    <div class='navBarMobileDropdown__element navBarMobile__subDropdown'>
                         <a class='noUnderline--link' href='#'><%= __('_current_language') %></a>
                         <div class='card align--text hided'>
-                            <div class='subdropdown__element'>
+                            <div class='navBarMobileSubDropdown__element'>
                                 <a class='noUnderline--link' href='/en'>english</a>
                             </div>
-                            <div class='subdropdown__element'>
+                            <div class='navBarMobileSubDropdown__element'>
                                 <a class='noUnderline--link' href='/pt-BR'>português (Brasil)</a>
                             </div>
                         </div>
                     </div>
                     <% if (!locals.isLogged) {%>
-                    <div class='main__menu__dropdown__element'>
+                    <div class='navBarMobileDropdown__element'>
                         <a href='/user/login' class='noUnderline--link'><%= ('login') %></a>
                     </div>
                     <% } else {%>
-                    <div class='main__menu__dropdown__element'>
+                    <div class='navBarMobileDropdown__element'>
                         <a href='/users/logout' class='noUnderline--link'><%= ('logout') %></a>
                     </div>
-                    <div class='main__menu__dropdown__element'>
+                    <div class='navBarMobileDropdown__element'>
                         <a href='/user' class='noUnderline--link'><%= __('user') %></a>
                     </div>  
                 <% } %>

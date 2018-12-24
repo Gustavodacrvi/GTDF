@@ -11,12 +11,13 @@ body {
   height: 100%;
   z-index: -1; }
 
+#navBar,
+#navBar + div,
 #navBar > div > div {
   height: 50px; }
 
 #navBar {
   position: fixed;
-  height: 50px;
   width: 90%;
   padding: 0 5%;
   border-bottom: 0.5px solid #6A6A6A; }
@@ -25,7 +26,6 @@ body {
   width: 50%; }
 
 #navBar + div {
-  height: 50px;
   z-index: 12;
   width: 10px; }
 
@@ -33,30 +33,24 @@ body {
   margin: 8px;
   padding: 8px; }
 
-.dropdown__element {
+.dropdownDesktop__element,
+.navBarMobileDropdown__element {
   margin: 14px; }
 
-.main__menu__dropdown__element {
-  margin: 14px; }
-
-.dropdown > div {
+.dropdownDesktop > div {
   top: 35px; }
 
-.main__menu__dropdown__element > div {
+.navBarMobileDropdown__element > div {
   top: 20px; }
 
-.subdropdown__element {
+.navBarMobileSubDropdown__element {
   margin: 14px;
   top: 15px; }
 
-#navBar__mobile__button {
-  position: relative; }
-
-#navBar__mobile__button > .fa-bars {
-  position: absolute;
+#navBarMobileButton > .fa-bars {
   right: 3px; }
 
-.navBar__mobile__content {
+.navBarMobile__content {
   right: 0; }
 
 .mobile--rotated {
@@ -88,6 +82,11 @@ body {
 @media screen and (max-width: 979px) {
   #navBar__desktop {
     display: none; } }
+.form--button,
+.reset--button {
+  cursor: pointer;
+  outline: none; }
+
 .text,
 a,
 .form--input--text,
@@ -122,15 +121,17 @@ a:hover,
 
 .slide--effect,
 .form__element,
-.dropdown,
-.subdropdown__mobile {
+.dropdownDesktop,
+.navBarMobile__subDropdown,
+#navBarMobileButton {
   position: relative; }
 
 .form--eye,
-.dropdown > div,
-.dropdown__mobile > div,
-.subdropdown__mobile > div,
-#background {
+.dropdownDesktop > div,
+#navBarMobile__toggle > div,
+.navBarMobile__subDropdown > div,
+#background,
+#navBarMobileButton > .fa-bars {
   position: absolute; }
 
 .justifyContent,
@@ -157,8 +158,8 @@ a:hover,
   flex-direction: column; }
 
 .form--button, .link--button,
-.dropdown > div,
-.dropdown__mobile > div {
+.dropdownDesktop > div,
+#navBarMobile__toggle > div {
   transition-duration: 0.2s; }
 
 .slide--effect {
@@ -186,9 +187,7 @@ a {
 .form--button {
   background-color: transparent;
   width: 250px;
-  cursor: pointer;
-  font-family: "Work Sans Light";
-  outline: none; }
+  font-family: "Work Sans Light"; }
 
 .form--input--text {
   border: none;
@@ -199,9 +198,7 @@ a {
   font-size: 1.1em; }
 
 .reset--button {
-  border: none;
-  cursor: pointer;
-  outline: none; }
+  border: none; }
 
 .icon {
   font-size: 30px; }
