@@ -23,6 +23,9 @@ body
 
 // ---------- MENU
 
+#navBar > div > div 
+    height: 50px
+
 #navBar
     position: fixed
     height: 50px
@@ -63,10 +66,14 @@ body
 
 #navBar__mobile__button > .fa-bars
     position: absolute
-    right: 0
+    right: 3px
 
 .navBar__mobile__content
     right: 0
+
+.mobile--rotated
+    @extend .hided
+    transform: rotate(360deg)
 
 // ---------- LOGIN/SIGNUP
 

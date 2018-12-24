@@ -12,19 +12,41 @@ function show(el, time){
         'opacity': '1',
     })
 }
+function rotate(deg, time, el){
+    el.css({
+        'transition-duration': time,
+        'transform': 'rotate(' + deg + 'deg)'
+    })
+}
+
 function slideEffect(){
     show($('.slide--effect').css('top', '0'), '1.2s')
 }
-function dropdownEffect(){
+function dropdowns(){
+    function abrirIcone(){
+        show($('button > .fa-times'), '0.4s')
+        hide($('button > .fa-bars'), '0.4s')
+        rotate(0, '0.3s', $('button > .fa-times'))
+        rotate(180, '0.3s', $('button > .fa-bars'))
+    }
+    function fecharIcone(){
+        show($('button > .fa-bars'), '0.4s')
+        hide($('button > .fa-times'), '0.4s')
+        rotate(0, '0.3s', $('button > .fa-bars'))
+        rotate(360, '0.3s', $('button > .fa-times'))
+    }
+
     $('.dropdown').on('mouseenter', function(){
         show($(this).children('div'), 300)
     }).on('mouseleave', function(){
         hide($(this).children('div'), 300)
     })
     $('.dropdown__mobile').on('mouseenter', function(){
-        show($(this).children('div'), 300)
+        show($(this).children('div'), '0.3s')
+        abrirIcone()
     }).on('mouseleave', function(){
-        hide($(this).children('div'), 300)
+        hide($(this).children('div'), '0.3s')
+        fecharIcone()
     })
     $('.subdropdown__mobile').on('click', function(){
         if ($(this).data('clicked') == 0 || $(this).data('clicked') == undefined) {
@@ -36,6 +58,7 @@ function dropdownEffect(){
         }
     })
 }
+
 
 let formEyes = {
     opened: false,
@@ -61,6 +84,5 @@ let menu = {
 
 
 slideEffect()
-dropdownEffect()
-
+dropdowns()
 

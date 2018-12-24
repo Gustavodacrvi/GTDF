@@ -11,6 +11,9 @@ body {
   height: 100%;
   z-index: -1; }
 
+#navBar > div > div {
+  height: 50px; }
+
 #navBar {
   position: fixed;
   height: 50px;
@@ -51,10 +54,13 @@ body {
 
 #navBar__mobile__button > .fa-bars {
   position: absolute;
-  right: 0; }
+  right: 3px; }
 
 .navBar__mobile__content {
   right: 0; }
+
+.mobile--rotated {
+  transform: rotate(360deg); }
 
 .form {
   width: 350px;
@@ -97,7 +103,7 @@ a:hover,
 .link--button {
   text-decoration: none; }
 
-.hided,
+.hided, .mobile--rotated,
 .slide--effect {
   opacity: 0;
   visibility: hidden; }
