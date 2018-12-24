@@ -5,12 +5,23 @@
 <head>
     <title>GTD</title>
     <% include partials/head %>
+
+    <link rel="prefetch" href="/user/initial">
+    <link rel="prerender" href="/user/initial"> 
+    <link rel="prefetch" href="/user/login">
+    <link rel="prerender" href="/user/login">
 </head>
 
 <body>
-<a href='/user/initial'>COMEÇAR</a>
+<div id='background'>
+<% include partials/menu %>
+
+    <a href='/user/initial'><%= __('BEGIN!') %></a>
+
+
 
 <% include partials/footer %>
+</div>
 <body>
 
 </html>

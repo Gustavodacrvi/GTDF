@@ -4,11 +4,18 @@
 
 <head>
     <% include ../partials/head %>
+
+    <link rel="prefetch" href="/user/login">
+    <link rel="prerender" href="/user/login">
+    <link rel="prefetch" href="/user/signup">
+    <link rel="prerender" href="/user/signup">
 </head>
 
 <body>
 <div id='background' class='centralizeContent'>
-    <div class='form slide--effect'>
+
+    <% include ../partials/menu %>
+    <div class='form slide--effect card'>
         <div>
             <div class='form__element centralizeContent'>
                 <a href='#' class='link--button'><%= __('Enter_as_a_guest') %></a>
@@ -18,11 +25,15 @@
             </div>
         </div>
     </div>
+
+
+
+
+
+
+
+
 </div>
-
-
-
-
 <% include ../partials/footer %>
 </body>
 

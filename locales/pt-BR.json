@@ -24,5 +24,11 @@
 	"": "",
 	"_You_logged_out": "Você saiu.",
 	"No_account_with_that_email_address_exists": "Nenhuma conta com esse email existe.",
-	"An_email_has_been_sent_with_further_instructions": "Um email foi mandado contendo instruções para mudar sua senha."
+	"An_email_has_been_sent_with_further_instructions": "Um email foi mandado contendo instruções para mudar sua senha.",
+	"BEGIN!": "COMEÇAR!",
+	"home": "início",
+	"login": "entrar",
+	"_current_language": "Português (Brasil)",
+	"logout": "sair",
+	"user": "usuário"
 }

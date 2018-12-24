@@ -4,7 +4,7 @@ $gray--light: #6A6A6A
 $orange: #FF6F00
 $gray: #474747
 $blue: #0080FF
-$red: #FF2121
+$min--desktop--width: 979px
     
 @font-face
     font-family: 'Work Sans Light'
@@ -14,124 +14,230 @@ body
     margin: 0
     font-family: 'Work Sans Light'
     background-color: $back--color
-    color: $gray--light--light
 
 #background
-    position: absolute
     width: 100%
     height: 100%
-
-.centralizeContent,
-.centralizeContentColumn
-    display: flex
-    justify-content: center
-    align-items: center
-
-.centralizeContentColumn
-    flex-direction: column
-
-.form--button, .link--button
-    transition-duration: 0.2s
-
-.slide--effect
-    transition-duration: 1.2s
-
-.status--alert
-    color: $orange
-
-.status--success
-    color: $red
-
-.hided
-    opacity: 0
-    visibility: hidden
-
-/* ---------- MODIFIERS */
+    z-index: -1
 
 
+// ---------- MENU
+
+#navBar,
+#navBar + div,
+#navBar > div > div 
+    height: 50px
 
 
+#navBar
+    position: fixed
+    width: 90%
+    padding: 0 5%
+    border-bottom: 0.5px solid $gray--light
 
+#navBar > div > div
+    width: 50%
 
-.text
-    color: $gray--light--light
+#navBar + div
+    z-index: 12
+    width: 10px
 
-a
-    color: $blue
-    text-decoration: none
+.navBar__element
+    margin: 8px
+    padding: 8px
 
-a:hover
-    text-decoration: underline
+.dropdownDesktop__element,
+.navBarMobileDropdown__element
+    margin: 14px
 
-.form--button, .link--button
-    border: 1px solid $red
-    color: $red
-    padding: 12px
-    font-size: 1em
+.dropdownDesktop > div
+    top: 35px
 
-.form--button:hover, .link--button:hover
-    color: white
-    background-color: $red
-    text-decoration: none
+.navBarMobileDropdown__element > div
+    top: 20px
 
-.form--button
-    background-color: transparent
-    width: 250px
-    cursor: pointer
-    font-family: 'Work Sans Light'
-    outline: none
+.navBarMobileSubDropdown__element
+    margin: 14px
+    top: 15px
 
-.form--input--text
-    background-color: $gray
-    border: none
-    border-bottom: 1px solid $gray--light
-    width: 275px
-    padding: 10px
-    outline: none
-    color: $gray--light--light
-    font-size: 1.1em
+#navBarMobileButton > .fa-bars
+    right: 3px
 
-.link--button
-    display: inline-block
-    width: 225px
-    text-align: center
-    text-decoration: none
-
-.slide--effect
-    opacity: 0
-    visibility: hidden
-    position: relative
-    top: -30px
-
-.form--eye
-    position: absolute
+.navBarMobile__content
     right: 0
-    top: 9px
-    font-size: 22px
-    cursor: pointer
 
-.fa-eye
-    color: $gray--light--light
+.mobile--rotated
+    @extend .hided
+    transform: rotate(360deg)
 
-.fa-eye-slash
-    color: $gray--light
-
-/* ---------- BLOCKS */
-
+// ---------- LOGIN/SIGNUP
 
 .form
-    background-color: $gray
     width: 350px
     padding-top: 25px
 
 .form > div
     margin: 0 30px
 
-
-/* ---------- ELEMENTS */
-
-
 .form__element
     margin-bottom: 25px
-    position: relative
     width: 100%
+
+.form--eye
+    right: 0
+    top: 9px
+    font-size: 22px
+    cursor: pointer
+
+.fa-eye-slash
+    color: $gray--light
+
+
+@media screen and (min-width: $min--desktop--width + 1)
+    // MENU
+    #navBar #navBar__mobile
+        display: none
+    
+@media screen and (max-width: $min--desktop--width)
+    // MENU
+    #navBar__desktop
+        display: none
+
+
+
+
+.form--button,
+.reset--button
+    cursor: pointer
+    outline: none
+
+.text,
+a,
+.form--input--text,
+.fa-eye,
+body,
+.icon
+    color: $gray--light--light
+
+a:hover,
+.noUnderline--link,
+.form--button:hover, 
+.link--button:hover,
+.link--button
+    text-decoration: none
+
+.hided,
+.slide--effect
+    opacity: 0
+    visibility: hidden
+
+.status--success,
+a:hover,
+.form--button,
+.link--button
+    color: $blue
+
+#navBar,
+.card,
+.form--input--text,
+.reset--button
+    background-color: $gray
+
+.slide--effect,
+.form__element,
+.dropdownDesktop,
+.navBarMobile__subDropdown,
+#navBarMobileButton
+    position: relative
+
+.form--eye,
+.dropdownDesktop > div,
+#navBarMobile__toggle > div,
+.navBarMobile__subDropdown > div,
+#background,
+#navBarMobileButton > .fa-bars
+    position: absolute
+
+.justifyContent,
+.alignContent,
+.centralizeContent,
+.centralizeContentColumn,
+.rowReversed,
+    display: flex
+
+.alignContent,
+.centralizeContent,
+.centralizeContentColumn
+    align-items: center
+
+.rowReversed
+    flex-direction: row-reverse
+    
+.centralizeContent,
+.centralizeContentColumn,
+.justifyContent
+    justify-content: center
+
+.centralizeContentColumn
+    flex-direction: column
+
+.form--button, .link--button,
+.dropdownDesktop > div,
+#navBarMobile__toggle > div,
+    transition-duration: 0.2s
+
+.slide--effect
+    transition-duration: 1.2s
+
+
+    
+.status--alert
+    color: $orange
+
+.card
+    border: 0.5px solid $gray--light
+    border-radius: 2px
+
+a
+    text-decoration: underline
+
+.form--button, .link--button
+    border: 1px solid $blue
+    padding: 12px
+    font-size: 1em
+
+.form--button:hover, .link--button:hover
+    color: white
+    background-color: $blue
+
+.form--button
+    background-color: transparent
+    width: 250px
+    font-family: 'Work Sans Light'
+
+.form--input--text
+    border: none
+    border-bottom: 1px solid $gray--light
+    width: 275px
+    padding: 10px
+    outline: none
+    font-size: 1.1em
+
+.reset--button
+    border: none
+
+.icon
+    font-size: 30px
+
+
+.link--button
+    display: inline-block
+    width: 225px
+    text-align: center
+
+.slide--effect
+    top: -30px
+
+
+.align--text
+    text-align: center

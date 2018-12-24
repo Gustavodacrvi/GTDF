@@ -52,6 +52,7 @@ app.use(function (req, res, next){
     res.locals.error_msg = req.flash('error_msg')
     res.locals.error = req.flash('error')
     res.locals.user = req.user || null
+
     next()
 })
 
@@ -93,28 +94,57 @@ app.use('/users', users)
 
 
 
+function check_and_change_locale(req, res){
+    if (req.session.chosen_locale)
+        i18n.setLocale(res, req.session.chosen_locale)
+}
+function check_authentication(req, res){
+    res.locals.isLogged = req.isAuthenticated()
+}
+
+
 
 app.get('/', function(req, res){
+    check_and_change_locale(req, res)
+    check_authentication(req, res)
     res.render('index')
 })
 app.get('/user/initial', function(req, res){
+    check_and_change_locale(req, res)
+    check_authentication(req, res)
     res.render('user/initial')
 })
 app.get('/user/login', function(req, res){
+    check_and_change_locale(req, res)
+    check_authentication(req, res)
     res.render('user/login')
 })
 app.get('/user/signup', function(req, res){
+    check_and_change_locale(req, res)
+    check_authentication(req, res)
     res.render('user/signup')
 })
 app.get('/user/send-email', function(req, res){
+    check_and_change_locale(req, res)
+    check_authentication(req, res)
     res.render('user/send-email')
 })
 app.get('/user', function(req, res){
+    check_authentication(req, res)    
     if (req.isAuthenticated()){
+        check_and_change_locale(req, res)
         res.render('user')
     } else {
         res.redirect('user/login')
     }
+})
+app.get('/en', function(req, res){
+    req.session.chosen_locale = 'en'
+    res.redirect('/')
+})
+app.get('/pt-BR', function(req, res){
+    req.session.chosen_locale = 'pt-BR'
+    res.redirect('/')
 })
 
 

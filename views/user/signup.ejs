@@ -8,9 +8,11 @@
 </head>
 
 <body>
-<form method='post' action='/users/signup'>
 <div id='background' class='centralizeContent'>
-    <div class='form slide--effect'>
+    <% include ../partials/menu %>
+
+    <form method='post' action='/users/signup'>
+    <div class='form slide--effect card'>
         <div>
             <div class='form__element'>
                 <input class='form--input--text' name='username' type='text' autocomplete='off' placeholder='<%= __("Username") %>:' />
@@ -42,11 +44,10 @@
             </div>
         </div>
     </div>
+    </form>
+
+
 </div>
-</form>
-
-
-
 <% include ../partials/footer %>
 </body>
 

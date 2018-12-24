@@ -12,10 +12,52 @@ function show(el, time){
         'opacity': '1',
     })
 }
+function rotate(deg, time, el){
+    el.css({
+        'transition-duration': time,
+        'transform': 'rotate(' + deg + 'deg)'
+    })
+}
+
 function slideEffect(){
     show($('.slide--effect').css('top', '0'), '1.2s')
 }
+function dropdowns(){
+    function abrirIcone(){
+        show($('button > .fa-times'), '0.4s')
+        hide($('button > .fa-bars'), '0.4s')
+        rotate(0, '0.3s', $('button > .fa-times'))
+        rotate(180, '0.3s', $('button > .fa-bars'))
+    }
+    function fecharIcone(){
+        show($('button > .fa-bars'), '0.4s')
+        hide($('button > .fa-times'), '0.4s')
+        rotate(0, '0.3s', $('button > .fa-bars'))
+        rotate(360, '0.3s', $('button > .fa-times'))
+    }
 
+    $('.dropdownDesktop').on('mouseenter', function(){
+        show($(this).children('div'), 300)
+    }).on('mouseleave', function(){
+        hide($(this).children('div'), 300)
+    })
+    $('#navBarMobile__toggle').on('mouseenter', function(){
+        show($(this).children('div'), '0.3s')
+        abrirIcone()
+    }).on('mouseleave', function(){
+        hide($(this).children('div'), '0.3s')
+        fecharIcone()
+    })
+    $('.navBarMobile__subDropdown').on('click', function(){
+        if ($(this).data('clicked') == 0 || $(this).data('clicked') == undefined) {
+            show($(this).children('div'), 300)
+            $(this).data('clicked', 1)
+        } else {
+            hide($(this).children('div'), 300)
+            $(this).data('clicked', 0)
+        }
+    })
+}
 
 
 let formEyes = {
@@ -34,5 +76,13 @@ let formEyes = {
     }
 }
 
-// SLIDE EFFECT
+let menu = {
+    minDesktopWidth: 979,
+    isDesktop: function() {return $(window).width() >= this.minDesktopWidth}
+}
+
+
+
 slideEffect()
+dropdowns()
+

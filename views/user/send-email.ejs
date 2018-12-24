@@ -8,9 +8,13 @@
 </head>
 
 <body>
-<form method='post' action='/users/forgot'>
+
+
 <div id='background' class='centralizeContent'>
-    <div class='form slide--effect'>
+    <% include ../partials/menu %>
+
+    <form method='post' action='/users/forgot'>
+    <div class='form slide--effect card'>
         <div>
             <div class='form__element'>
                 <span class='text'><%= __('Enter_the_email_used_to_create_your_account') %>.</span>
@@ -31,9 +35,9 @@
             </div>
         </div>
     </div>
-</div>
-</form>
+    </form>
 
+</div>
 <% include ../partials/footer %>
 </body>
 

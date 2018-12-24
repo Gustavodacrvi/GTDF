@@ -5,12 +5,19 @@
 <head>
     <title>login</title>
     <% include ../partials/head %>
+
+    <link rel="prefetch" href="/user/signup">
+    <link rel="prerender" href="/user/signup">
+    <link rel="prefetch" href="/user/send-email">
+    <link rel="prerender" href="/user/send-email">
 </head>
 
 <body>
-<form method='post' action='/users/login'>
 <div id='background' class='centralizeContent'>
-    <div class='form slide--effect'>
+    <% include ../partials/menu %>
+
+    <form method='post' action='/users/login'>
+    <div class='form slide--effect card'>
         <div>
             <div class='form__element'>
                 <input class='form--input--text' name='username' type='text' autocomplete='off' placeholder='<%= __("Username") %>:' />
@@ -27,7 +34,7 @@
                 <span class='status--success'><%= __(String(success_msg)) %></span>
             <% } %>
             <% if (locals.error) { %>
-                <span class='status--success'><%= __(String(error)) %></span>
+                <span class='status--alert'><%= __(String(error)) %></span>
             <% } %>
             
             </div>
@@ -42,9 +49,9 @@
             </div>
         </div>
     </div>
-</div>
-</form>
+    </form>
 
+</div>
 <% include ../partials/footer %>
 </body>
 
