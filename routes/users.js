@@ -19,7 +19,6 @@ router.post('/login',
 
 // LOGOUT
 router.get('/logout', function(req, res){
-    console.log('asdf')
     req.logOut()
     req.flash('success_msg', '_You_logged_out')
     res.redirect('/user/login')

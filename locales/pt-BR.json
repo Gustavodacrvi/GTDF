@@ -28,5 +28,7 @@
 	"BEGIN!": "COMEÇAR!",
 	"home": "início",
 	"login": "entrar",
-	"_current_language": "Português (Brasil)"
+	"_current_language": "Português (Brasil)",
+	"logout": "sair",
+	"user": "usuário"
 }

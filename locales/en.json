@@ -28,5 +28,7 @@
 	"BEGIN!": "BEGIN!",
 	"home": "home",
 	"login": "login",
-	"_current_language": "English"
+	"_current_language": "English",
+	"logout": "logout",
+	"user": "user"
 }

@@ -39,9 +39,14 @@ let formEyes = {
     }
 }
 
+let menu = {
+    minDesktopWidth: 979,
+    isDesktop: function() {return $(window).width() >= this.minDesktopWidth}
+}
 
 
-// SLIDE EFFECT
+
 slideEffect()
 dropdownEffect()
+
 

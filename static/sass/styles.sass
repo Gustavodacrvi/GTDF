@@ -4,6 +4,7 @@ $gray--light: #6A6A6A
 $orange: #FF6F00
 $gray: #474747
 $blue: #0080FF
+$min--desktop--width: 979px
     
 @font-face
     font-family: 'Work Sans Light'
@@ -13,20 +14,20 @@ body
     margin: 0
     font-family: 'Work Sans Light'
     background-color: $back--color
-    color: $gray--light--light
 
 #background
-    position: absolute
     width: 100%
     height: 100%
     z-index: -1
+
+
+// ---------- MENU
 
 #navBar
     position: fixed
     height: 50px
     width: 90%
     padding: 0 5%
-    background-color: $gray
     border-bottom: 0.5px solid $gray--light
 
 #navBar > div
@@ -37,16 +38,96 @@ body
     z-index: 12
     width: 10px
 
+.navBar__element
+    margin: 8px
+    padding: 8px
+
+.dropdown__element
+    margin: 14px
+
+.dropdown > div
+    top: 35px
+    
+// ---------- LOGIN/SIGNUP
+
+.form
+    width: 350px
+    padding-top: 25px
+
+.form > div
+    margin: 0 30px
+
+.form__element
+    margin-bottom: 25px
+    width: 100%
+
+.form--eye
+    right: 0
+    top: 9px
+    font-size: 22px
+    cursor: pointer
+
+.fa-eye-slash
+    color: $gray--light
 
 
-.rowReversed
-    display: flex
-    flex-direction: row-reverse
+@media screen and (min-width: $min--desktop--width + 1)
+    // MENU
+    #navBar > div > button
+        display: none
+    
+@media screen and (max-width: $min--desktop--width)
+
+
+
+.text,
+a,
+.form--input--text,
+.fa-eye,
+body,
+.icon
+    color: $gray--light--light
+
+a:hover,
+.noUnderline--link,
+.form--button:hover, 
+.link--button:hover,
+.link--button
+    text-decoration: none
+
+.hided,
+.slide--effect
+    opacity: 0
+    visibility: hidden
+
+.status--success,
+a:hover,
+.form--button,
+.link--button
+    color: $blue
+
+#navBar,
+.card,
+.form--input--text,
+.reset--button
+    background-color: $gray
+
+.slide--effect,
+.form__element,
+.dropdown
+    position: relative
+
+.form--eye,
+.dropdown > div,
+#background
+    position: absolute
 
 .justifyContent,
 .alignContent,
 .centralizeContent,
-.centralizeContentColumn
+.centralizeContentColumn,
+.rowReversed,
+#main--menu--button
     display: flex
 
 .alignContent,
@@ -54,6 +135,9 @@ body
 .centralizeContentColumn
     align-items: center
 
+.rowReversed
+    flex-direction: row-reverse
+    
 .centralizeContent,
 .centralizeContentColumn,
 .justifyContent
@@ -62,9 +146,6 @@ body
 .centralizeContentColumn
     flex-direction: column
 
-
-
-
 .form--button, .link--button,
 .dropdown > div
     transition-duration: 0.2s
@@ -72,47 +153,26 @@ body
 .slide--effect
     transition-duration: 1.2s
 
+
+    
 .status--alert
     color: $orange
 
-.status--success
-    color: $blue
-
-.hided
-    opacity: 0
-    visibility: hidden
-
-/* ---------- MODIFIERS */
-
 .card
-    background-color: $gray
     border: 0.5px solid $gray--light
     border-radius: 2px
 
-.text
-    color: $gray--light--light
-
 a
-    color: $gray--light--light
     text-decoration: underline
-
-a:hover
-    color: $blue
-    text-decoration: none
-
-.noUnderline--link
-    text-decoration: none
 
 .form--button, .link--button
     border: 1px solid $blue
-    color: $blue
     padding: 12px
     font-size: 1em
 
 .form--button:hover, .link--button:hover
     color: white
     background-color: $blue
-    text-decoration: none
 
 .form--button
     background-color: transparent
@@ -122,72 +182,29 @@ a:hover
     outline: none
 
 .form--input--text
-    background-color: $gray
     border: none
     border-bottom: 1px solid $gray--light
     width: 275px
     padding: 10px
     outline: none
-    color: $gray--light--light
     font-size: 1.1em
+
+.reset--button
+    border: none
+    cursor: pointer
+
+.icon
+    font-size: 30px
+
 
 .link--button
     display: inline-block
     width: 225px
     text-align: center
-    text-decoration: none
 
 .slide--effect
-    opacity: 0
-    visibility: hidden
-    position: relative
     top: -30px
 
-.form--eye
-    position: absolute
-    right: 0
-    top: 9px
-    font-size: 22px
-    cursor: pointer
-
-.fa-eye
-    color: $gray--light--light
-
-.fa-eye-slash
-    color: $gray--light
 
 .align--text
     text-align: center
-
-/* ---------- BLOCKS */
-
-
-.form
-    width: 350px
-    padding-top: 25px
-
-.form > div
-    margin: 0 30px
-
-
-/* ---------- ELEMENTS */
-
-
-.form__element
-    margin-bottom: 25px
-    position: relative
-    width: 100%
-
-.navBar__element
-    margin: 8px
-    padding: 8px
-
-.dropdown__element
-    margin: 14px
-
-.dropdown
-    position: relative
-
-.dropdown > div
-    position: absolute
-    top: 35px

@@ -5,38 +5,23 @@
 <head>
     <title>GTD</title>
     <% include partials/head %>
+
+    <link rel="prefetch" href="/user/initial">
+    <link rel="prerender" href="/user/initial"> 
+    <link rel="prefetch" href="/user/login">
+    <link rel="prerender" href="/user/login">
 </head>
 
 <body>
-<div id='navBar' class='alignContent'>
-    <div class='alignContent' class='navBar__left'>
-        <div class='navBar__element'>
-            <a href='/' class='noUnderline--link'><%= __('home') %></a>
-        </div>
-        <div class='navBar__element'>
-            <a href='/user/login' class='noUnderline--link'><%= ('login') %></a>
-        </div>
-    </div>
-    <div class='navBar__right rowReversed'>
-        <div class='navBar__element dropdown'>
-            <a class='noUnderline--link' href='#'><%= __('_current_language') %></a>
-            <div class='card align--text hided'>
-                <div class='dropdown__element'>
-                    <a class='noUnderline--link' href='/en'>english</a>
-                </div>
-                <div class='dropdown__element'>
-                    <a class='noUnderline--link' href='/pt-BR'>português (Brasil)</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div></div>
+<div id='background'>
+<% include partials/menu %>
 
-<a href='/user/initial'><%= __('BEGIN!') %></a>
+    <a href='/user/initial'><%= __('BEGIN!') %></a>
+
 
 
 <% include partials/footer %>
+</div>
 <body>
 
 </html>
