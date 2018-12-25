@@ -1,4 +1,4 @@
-<div id='navBar' class='slide--effect'>
+<nav id='navBar' class='slide--effect'>
     <div id='navBar__desktop' class='alignContent'>
         <div class='alignContent'>
             <div class='navBar__element'>
@@ -29,9 +29,6 @@
                     <a href='/user' class='noUnderline--link'><%= __('user') %></a>
                 </div>  
             <% } %>
-            <div class='navBar__element'>
-                <a class='noUnderline--link' href='#'>contato</a>
-            </div>
         </div>
     </div>
     <div id='navBar__mobile' class='alignContent'>
@@ -44,17 +41,9 @@
         <div class='rowReversed alignContent'>
             <div id='navBarMobile__toggle' class='navBar__element'>
                 <button id='navBarMobileButton' class='reset--button'><i class="fas fa-bars icon"></i><i class="fas fa-times icon mobile--rotated"></i></button>
-                <div class='card hided navBarMobile__content'>
-                    <div class='navBarMobileDropdown__element navBarMobile__subDropdown'>
-                        <a class='noUnderline--link' href='#'><%= __('_current_language') %></a>
-                        <div class='card align--text hided'>
-                            <div class='navBarMobileSubDropdown__element'>
-                                <a class='noUnderline--link' href='/en'>english</a>
-                            </div>
-                            <div class='navBarMobileSubDropdown__element'>
-                                <a class='noUnderline--link' href='/pt-BR'>português (Brasil)</a>
-                            </div>
-                        </div>
+                <div class='card hided navBarMobile__content centralizeContentColumn' style='width:200px'>
+                    <div class='navBarMobileDropdown__element'>
+                        <a href='/' class='noUnderline--link'><%= __('home') %></a>
                     </div>
                     <% if (!locals.isLogged) {%>
                     <div class='navBarMobileDropdown__element'>
@@ -68,9 +57,19 @@
                         <a href='/user' class='noUnderline--link'><%= __('user') %></a>
                     </div>  
                 <% } %>
+                    <div class='navBarMobileDropdown__element navBarMobile__subDropdown'>
+                        <a class='noUnderline--link' href='#'><%= __('_current_language') %></a>
+                        <div class='card align--text hided'>
+                            <div class='navBarMobileSubDropdown__element'>
+                                <a class='noUnderline--link' href='/en'>english</a>
+                            </div>
+                            <div class='navBarMobileSubDropdown__element'>
+                                <a class='noUnderline--link' href='/pt-BR'>português (Brasil)</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<div></div>
+</nav>

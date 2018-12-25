@@ -16,7 +16,13 @@
 <div id='background'>
 <% include partials/menu %>
 
-    <a href='/user/initial'><%= __('BEGIN!') %></a>
+<section id='body'>
+    <% include partials/menu-horizontal %>
+
+    <div id='content'>
+        <a href='/user/initial'><%= __('BEGIN!') %></a>
+    </div>
+</section>
 
 
 
