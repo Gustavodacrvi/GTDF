@@ -81,7 +81,7 @@ body {
   height: 100%; }
 
 #body > #navColumn {
-  flex-basis: 350px;
+  flex-basis: 250px;
   border-right: 0.5px solid #B9B9B9;
   background-color: #474747;
   z-index: 0; }
