@@ -25,16 +25,28 @@ function slideEffect(){
 }
 function dropdowns(){
     function abrirIcone(){
-        show($('button > .fa-times'), '0.4s')
-        hide($('button > .fa-bars'), '0.4s')
-        rotate(0, '0.3s', $('button > .fa-times'))
-        rotate(180, '0.3s', $('button > .fa-bars'))
+        show($('#navBarMobile__toggle > button > .fa-times'), '0.4s')
+        hide($('#navBarMobile__toggle > button > .fa-bars'), '0.4s')
+        rotate(0, '0.3s', $('#navBarMobile__toggle > button > .fa-times'))
+        rotate(180, '0.3s', $('#navBarMobile__toggle > button > .fa-bars'))
     }
     function fecharIcone(){
-        show($('button > .fa-bars'), '0.4s')
-        hide($('button > .fa-times'), '0.4s')
-        rotate(0, '0.3s', $('button > .fa-bars'))
-        rotate(360, '0.3s', $('button > .fa-times'))
+        show($('#navBarMobile__toggle > button > .fa-bars'), '0.4s')
+        hide($('#navBarMobile__toggle > button > .fa-times'), '0.4s')
+        rotate(0, '0.3s', $('#navBarMobile__toggle > button > .fa-bars'))
+        rotate(360, '0.3s', $('#navBarMobile__toggle > button > .fa-times'))
+    }
+    function abrirIconeLeft(){
+        show($('#navBarMobile__toggle__left > button > .fa-times'), '0.4s')
+        hide($('#navBarMobile__toggle__left > button > .fa-user'), '0.4s')
+        rotate(0, '0.3s', $('#navBarMobile__toggle__left > button > .fa-times'))
+        rotate(180, '0.3s', $('#navBarMobile__toggle__left > button > .fa-user'))
+    }
+    function fecharIconeLeft(){
+        show($('#navBarMobile__toggle__left > button > .fa-user'), '0.4s')
+        hide($('#navBarMobile__toggle__left > button > .fa-times'), '0.4s')
+        rotate(0, '0.3s', $('#navBarMobile__toggle__left > button > .fa-user'))
+        rotate(360, '0.3s', $('#navBarMobile__toggle__left > button > .fa-times'))
     }
 
     $('.dropdownDesktop').on('mouseenter', function(){
@@ -48,6 +60,25 @@ function dropdowns(){
     }).on('mouseleave', function(){
         hide($(this).children('div'), '0.3s')
         fecharIcone()
+    })
+    $('#navBarMobile__toggle__left').on('mouseenter', function(){
+        show($('#navColumn'), '0.3s')
+        abrirIconeLeft()
+    })
+    $('#navColumn').on('mouseenter', function(){
+        show($(this))
+        abrirIconeLeft()
+    })
+    if (!menu.isDesktop()){
+        hide($('#navColumn'), '0s')
+        $('#navBarMobile__toggle__left').on('mouseleave', function(){
+            hide($('#navColumn'))
+            fecharIconeLeft()
+        })
+    }
+    $('#navColumn').on('mouseleave', function(){
+        hide($(this), '0.3s')
+        fecharIconeLeft()
     })
     $('.navBarMobile__subDropdown').on('click', function(){
         if ($(this).data('clicked') == 0 || $(this).data('clicked') == undefined) {
@@ -78,7 +109,7 @@ let formEyes = {
 }
 
 let menu = {
-    minDesktopWidth: 979,
+    minDesktopWidth: 768,
     isDesktop: function() {return $(window).width() >= this.minDesktopWidth}
 }
 
@@ -87,3 +118,19 @@ let menu = {
 slideEffect()
 dropdowns()
 
+if (menu.isDesktop()){
+    $('#navColumn').off('mouseleave')
+} 
+
+$(window).on('resize', function(){
+    if (menu.isDesktop()){
+        show($('#navColumn'), '0s')
+        $('#navColumn').off('mouseleave')
+    } else {
+        hide($('#navColumn'), '0s')
+        $('#navColumn').on('mouseleave', function(){
+            hide($(this), '0.3s')
+            fecharIconeLeft()
+        })
+    }
+})

@@ -136,7 +136,10 @@ app.get('/user/gtd/basket', function(req, res){
     if (req.isAuthenticated()){
         check_and_change_locale(req, res)
         res.locals.activeLink = 'basket'
-        res.render('user/gtd/basket')
+        res.render('user/gtd/basket', {
+            username: req.user.username,
+            displayUserMenu: true
+        })
     } else {
         res.redirect('/user/login')
     }
@@ -146,7 +149,10 @@ app.get('/user/gtd/calendar', function(req,res){
     if (req.isAuthenticated()){
         check_and_change_locale(req, res)
         res.locals.activeLink = 'calendar'
-        res.render('user/gtd/calendar')
+        res.render('user/gtd/calendar', {
+            username: req.user.username,
+            displayUserMenu: true
+        })
     } else {
         res.redirect('/user/login')
     }
@@ -156,7 +162,10 @@ app.get('/user/gtd/next-actions', function(req,res){
     if (req.isAuthenticated()){
         check_and_change_locale(req, res)
         res.locals.activeLink = 'next actions'
-        res.render('user/gtd/next-actions')
+        res.render('user/gtd/next-actions', {
+            username: req.user.username,
+            displayUserMenu: true
+        })
     } else {
         res.redirect('/user/login')
     }
@@ -166,7 +175,10 @@ app.get('/user/gtd/projects', function(req,res){
     if (req.isAuthenticated()){
         check_and_change_locale(req, res)
         res.locals.activeLink = 'projects'
-        res.render('user/gtd/projects')
+        res.render('user/gtd/projects', {
+            username: req.user.username,
+            displayUserMenu: true
+        })
     } else {
         res.redirect('/user/login')
     }
@@ -176,7 +188,10 @@ app.get('/user/gtd/someday', function(req,res){
     if (req.isAuthenticated()){
         check_and_change_locale(req, res)
         res.locals.activeLink = 'someday'
-        res.render('user/gtd/someday')
+        res.render('user/gtd/someday', {
+            username: req.user.username,
+            displayUserMenu: true
+        })
     } else {
         res.redirect('/user/login')
     }
@@ -186,7 +201,10 @@ app.get('/user/gtd/waiting', function(req,res){
     if (req.isAuthenticated()){
         check_and_change_locale(req, res)
         res.locals.activeLink = 'waiting'
-        res.render('user/gtd/waiting')
+        res.render('user/gtd/waiting', {
+            username: req.user.username,
+            displayUserMenu: true
+        })
     } else {
         res.redirect('/user/login')
     }
