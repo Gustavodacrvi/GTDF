@@ -11,9 +11,9 @@ router.get('/login', function(req, res){
 })
 
 router.post('/login',
-    passport.authenticate('local', {successRedirect:'/user', failureRedirect:'/users/login', failureFlash: true}),
+    passport.authenticate('local', {successRedirect:'/user/gtd/basket', failureRedirect:'/users/login', failureFlash: true}),
     function(req, res){
-        res.redirect('/user')
+        res.redirect('/user/gtd/basket')
 })
 
 

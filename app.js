@@ -52,6 +52,7 @@ app.use(function (req, res, next){
     res.locals.error_msg = req.flash('error_msg')
     res.locals.error = req.flash('error')
     res.locals.user = req.user || null
+    res.locals.activeLink = ''
 
     next()
 })
@@ -129,15 +130,68 @@ app.get('/user/send-email', function(req, res){
     check_authentication(req, res)
     res.render('user/send-email')
 })
-app.get('/user', function(req, res){
+
+app.get('/user/gtd/basket', function(req, res){
     check_authentication(req, res)    
     if (req.isAuthenticated()){
         check_and_change_locale(req, res)
-        res.render('user')
+        res.locals.activeLink = 'basket'
+        res.render('user/gtd/basket')
     } else {
-        res.redirect('user/login')
+        res.redirect('/user/login')
     }
 })
+app.get('/user/gtd/calendar', function(req,res){
+    check_authentication(req, res)
+    if (req.isAuthenticated()){
+        check_and_change_locale(req, res)
+        res.locals.activeLink = 'calendar'
+        res.render('user/gtd/calendar')
+    } else {
+        res.redirect('/user/login')
+    }
+})
+app.get('/user/gtd/next-actions', function(req,res){
+    check_authentication(req, res)
+    if (req.isAuthenticated()){
+        check_and_change_locale(req, res)
+        res.locals.activeLink = 'next actions'
+        res.render('user/gtd/next-actions')
+    } else {
+        res.redirect('/user/login')
+    }
+})
+app.get('/user/gtd/projects', function(req,res){
+    check_authentication(req, res)
+    if (req.isAuthenticated()){
+        check_and_change_locale(req, res)
+        res.locals.activeLink = 'projects'
+        res.render('user/gtd/projects')
+    } else {
+        res.redirect('/user/login')
+    }
+})
+app.get('/user/gtd/someday', function(req,res){
+    check_authentication(req, res)
+    if (req.isAuthenticated()){
+        check_and_change_locale(req, res)
+        res.locals.activeLink = 'someday'
+        res.render('user/gtd/someday')
+    } else {
+        res.redirect('/user/login')
+    }
+})
+app.get('/user/gtd/waiting', function(req,res){
+    check_authentication(req, res)
+    if (req.isAuthenticated()){
+        check_and_change_locale(req, res)
+        res.locals.activeLink = 'waiting'
+        res.render('user/gtd/waiting')
+    } else {
+        res.redirect('/user/login')
+    }
+})
+
 app.get('/en', function(req, res){
     req.session.chosen_locale = 'en'
     res.redirect('/')
