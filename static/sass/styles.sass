@@ -34,6 +34,7 @@ body
     width: 90%
     padding: 0 5%
     border-bottom: 0.5px solid $gray--light
+    z-index: 1
 
 #navBar > div > div
     width: 50%
@@ -73,7 +74,7 @@ body
 
 // ---------- LOGIN/SIGNUP
 
-.form
+.form,
     width: 350px
     padding-top: 25px
 
@@ -102,6 +103,7 @@ body
     flex-basis: 350px
     border-right: 0.5px solid $gray--light--light
     background-color: $gray
+    z-index: 0
 
 #body > #content
     flex-basis: 1570px
@@ -150,14 +152,16 @@ a:hover,
     text-decoration: none
 
 .hided,
-.slide--effect
+.slide--effect,
+.slide--effect--left
     opacity: 0
     visibility: hidden
 
 .status--success,
 a:hover,
 .form--button,
-.link--button
+.link--button,
+.active--link
     color: $blue
 
 #navBar,
@@ -167,6 +171,7 @@ a:hover,
     background-color: $gray
 
 .slide--effect,
+.slide--effect--left,
 .form__element,
 .dropdownDesktop,
 .navBarMobile__subDropdown,
@@ -212,7 +217,8 @@ a:hover,
 #navBarMobile__toggle > div,
     transition-duration: 0.2s
 
-.slide--effect
+.slide--effect,
+.slide--effect--left
     transition-duration: 1.2s
 
 
@@ -224,8 +230,11 @@ a:hover,
     border: 0.5px solid $gray--light
     border-radius: 2px
 
+
+    
 a
     text-decoration: underline
+
 
 .form--button, .link--button
     border: 1px solid $blue
@@ -264,6 +273,8 @@ a
 .slide--effect
     top: -30px
 
+.slide--effect--left
+    left: -30px
 
 .align--text
     text-align: center

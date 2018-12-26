@@ -17,18 +17,6 @@
                     </div>
                 </div>
             </div>
-            <% if (!locals.isLogged) {%>
-                <div class='navBar__element'>
-                    <a href='/user/login' class='noUnderline--link'><%= ('login') %></a>
-                </div>
-            <% } else {%>
-                <div class='navBar__element'>
-                    <a href='/users/logout' class='noUnderline--link'><%= ('logout') %></a>
-                </div>
-                <div class='navBar__element'>
-                    <a href='/user' class='noUnderline--link'><%= __('user') %></a>
-                </div>  
-            <% } %>
         </div>
     </div>
     <div id='navBar__mobile' class='alignContent'>

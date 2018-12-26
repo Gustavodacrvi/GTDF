@@ -21,6 +21,7 @@ function rotate(deg, time, el){
 
 function slideEffect(){
     show($('.slide--effect').css('top', '0'), '1.2s')
+    show($('.slide--effect--left').css('left', '0'), '1,2s')
 }
 function dropdowns(){
     function abrirIcone(){
