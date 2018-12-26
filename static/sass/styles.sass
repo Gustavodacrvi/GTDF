@@ -4,7 +4,7 @@ $gray--light: #6A6A6A
 $orange: #FF6F00
 $gray: #474747
 $blue: #0080FF
-$min--desktop--width: 979px
+$min--desktop--width: 768px
     
 @font-face
     font-family: 'Work Sans Light'
@@ -62,7 +62,8 @@ body
     margin: 14px
     top: 15px
 
-#navBarMobileButton > .fa-bars
+#navBarMobileButton > .fa-bars,
+#navBArMobileButton__left > .fa-user
     right: 3px
 
 .navBarMobile__content
@@ -127,6 +128,11 @@ body
     // MENU
     #navBar__desktop
         display: none
+    #navColumn
+        position: fixed
+        left: 0
+        height: 100%
+        width: 250px
 
 
 
@@ -175,7 +181,8 @@ a:hover,
 .form__element,
 .dropdownDesktop,
 .navBarMobile__subDropdown,
-#navBarMobileButton
+#navBarMobileButton,
+#navBArMobileButton__left
     position: relative
 
 .form--eye,
@@ -183,7 +190,8 @@ a:hover,
 #navBarMobile__toggle > div,
 .navBarMobile__subDropdown > div,
 #background,
-#navBarMobileButton > .fa-bars
+#navBarMobileButton > .fa-bars,
+#navBArMobileButton__left > .fa-user
     position: absolute
 
 .justifyContent,

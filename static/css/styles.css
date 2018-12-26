@@ -48,7 +48,8 @@ body {
   margin: 14px;
   top: 15px; }
 
-#navBarMobileButton > .fa-bars {
+#navBarMobileButton > .fa-bars,
+#navBArMobileButton__left > .fa-user {
   right: 3px; }
 
 .navBarMobile__content {
@@ -99,12 +100,18 @@ body {
   margin-bottom: 35px;
   width: 200px; }
 
-@media screen and (min-width: 980px) {
+@media screen and (min-width: 769px) {
   #navBar #navBar__mobile {
     display: none; } }
-@media screen and (max-width: 979px) {
+@media screen and (max-width: 768px) {
   #navBar__desktop {
-    display: none; } }
+    display: none; }
+
+  #navColumn {
+    position: fixed;
+    left: 0;
+    height: 100%;
+    width: 250px; } }
 .form--button,
 .reset--button {
   cursor: pointer;
@@ -149,7 +156,8 @@ a:hover,
 .form__element,
 .dropdownDesktop,
 .navBarMobile__subDropdown,
-#navBarMobileButton {
+#navBarMobileButton,
+#navBArMobileButton__left {
   position: relative; }
 
 .form--eye,
@@ -157,7 +165,8 @@ a:hover,
 #navBarMobile__toggle > div,
 .navBarMobile__subDropdown > div,
 #background,
-#navBarMobileButton > .fa-bars {
+#navBarMobileButton > .fa-bars,
+#navBArMobileButton__left > .fa-user {
   position: absolute; }
 
 .justifyContent,
