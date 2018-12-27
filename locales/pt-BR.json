@@ -41,5 +41,9 @@
 	"_logout": "sair",
 	"_delete_action": "deletar ação",
 	"_edit_action": "editar ação",
-	"add/edit_tag": "adicionar/editar tag"
+	"add/edit_tag": "adicionar/editar tag",
+	"ADD_ACTION": "ADICIONAR AÇÃO",
+	"Title": "Título",
+	"Description": "Descrição",
+	"Add_action": "Adicionar ação"
 }

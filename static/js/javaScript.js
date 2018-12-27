@@ -23,6 +23,7 @@ function rotate(deg, time, el){
 function slideEffect(){
     show($('.slide--effect').css('top', '0'), '1.2s')
     show($('.slide--effect--left').css('left', '0'), '1,2s')
+    show($('.slide--effect--right').css('right', '0'), '1,2s')
 }
 function abrirIconeLeft(){
     show($('#navBarMobile__toggle__left > button > .fa-times'), '0.4s')
@@ -158,25 +159,30 @@ let actions = {
     hideAllActionContentAndApplyEventHandler: function(){
         this.actions().children('.action__content').slideUp(0)
         for (let i = 0;i < this.actions().length;i++)
-            this.actions().eq(i).on('click', function(){
-                $(this).children('.action__content').slideToggle()
+            this.actions().find('.action__title').eq(i).on('click', function(){
+                $(this).parent().parent().children('.action__content').slideToggle()
             })
     },
     hideAllUserForms: function(){
         hide(this.userForms())
+        hide($('#userForms > div'))
     },
     applyEventHandlersUserForms: function(){
         for (let i = 0;i < this.closeIcons().length;i++)
             this.closeIcons().eq(i).on('click', function(){
                 hide($(this).parent().parent(), '0.2s')
+                hide($('#userForms > div'))
             })
     },
     openUserForm: function(id){
         this.hideAllUserForms()
         show($('#' + id), '0.2s')
+        show($('#userForms > div'))
     }
 }
+
 
 actions.addActionIconsEffect()
 actions.hideAllActionContentAndApplyEventHandler()
 actions.applyEventHandlersUserForms()
+actions.hideAllUserForms()

@@ -41,5 +41,9 @@
     "_logout": "logout",
     "_delete_action": "delete action",
     "_edit_action": "edit action",
-    "add/edit_tag": "add/edit tag"
+    "add/edit_tag": "add/edit tag",
+    "ADD_ACTION": "ADD ACTION",
+    "Title": "Title",
+    "Description": "Description",
+    "Add_action": "Add action"
 }
