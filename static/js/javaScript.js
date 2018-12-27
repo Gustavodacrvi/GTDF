@@ -23,6 +23,18 @@ function slideEffect(){
     show($('.slide--effect').css('top', '0'), '1.2s')
     show($('.slide--effect--left').css('left', '0'), '1,2s')
 }
+function abrirIconeLeft(){
+    show($('#navBarMobile__toggle__left > button > .fa-times'), '0.4s')
+    hide($('#navBarMobile__toggle__left > button > .fa-user'), '0.4s')
+    rotate(0, '0.3s', $('#navBarMobile__toggle__left > button > .fa-times'))
+    rotate(180, '0.3s', $('#navBarMobile__toggle__left > button > .fa-user'))
+}
+function fecharIconeLeft(){
+    show($('#navBarMobile__toggle__left > button > .fa-user'), '0.4s')
+    hide($('#navBarMobile__toggle__left > button > .fa-times'), '0.4s')
+    rotate(0, '0.3s', $('#navBarMobile__toggle__left > button > .fa-user'))
+    rotate(360, '0.3s', $('#navBarMobile__toggle__left > button > .fa-times'))
+}
 function dropdowns(){
     function abrirIcone(){
         show($('#navBarMobile__toggle > button > .fa-times'), '0.4s')
@@ -35,18 +47,6 @@ function dropdowns(){
         hide($('#navBarMobile__toggle > button > .fa-times'), '0.4s')
         rotate(0, '0.3s', $('#navBarMobile__toggle > button > .fa-bars'))
         rotate(360, '0.3s', $('#navBarMobile__toggle > button > .fa-times'))
-    }
-    function abrirIconeLeft(){
-        show($('#navBarMobile__toggle__left > button > .fa-times'), '0.4s')
-        hide($('#navBarMobile__toggle__left > button > .fa-user'), '0.4s')
-        rotate(0, '0.3s', $('#navBarMobile__toggle__left > button > .fa-times'))
-        rotate(180, '0.3s', $('#navBarMobile__toggle__left > button > .fa-user'))
-    }
-    function fecharIconeLeft(){
-        show($('#navBarMobile__toggle__left > button > .fa-user'), '0.4s')
-        hide($('#navBarMobile__toggle__left > button > .fa-times'), '0.4s')
-        rotate(0, '0.3s', $('#navBarMobile__toggle__left > button > .fa-user'))
-        rotate(360, '0.3s', $('#navBarMobile__toggle__left > button > .fa-times'))
     }
 
     $('.dropdownDesktop').on('mouseenter', function(){
