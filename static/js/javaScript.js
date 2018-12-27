@@ -138,30 +138,45 @@ $(window).on('resize', function(){
 })();
 
 // CONTENT
-(function() {
-    let actions = {
-        actionIcons: function() {return $('.action--icon')},
-        actions: function() {return $('.action')},
+let actions = {
+    actionIcons: function() {return $('.action--icon')},
+    closeIcons: function() {return $('.close--icon')},
+    userIcons: function() {return $('.user--icon')},
+    actions: function() {return $('.action')},
+    userForms: function() {return $('.userForm')},
 
-        addActionIconsEffect: function(){
-            for (let i = 0;i < this.actionIcons().length;i++)
-                this.actionIcons().eq(i).on('mouseenter', function(){
-                    rotate(15, '0.2s', $(this))
-                    $(this).css('font-size', '35px')
-                }).on('mouseleave', function(){
-                    rotate(0, '0.2s', $(this))
-                    $(this).css('font-size', '30px')
-                })
-        },
-        hideAllActionContentAndApplyEventHandler: function(){
-            this.actions().children('.action__content').slideUp(0)
-            for (let i = 0;i < this.actions().length;i++)
-                this.actions().eq(i).on('click', function(){
-                    $(this).children('.action__content').slideToggle()
-                })
-        }
+    addActionIconsEffect: function(){
+        for (let i = 0;i < this.userIcons().length;i++)
+            this.userIcons().eq(i).on('mouseenter', function(){
+                rotate(15, '0.2s', $(this))
+                $(this).css('font-size', '35px')
+            }).on('mouseleave', function(){
+                rotate(0, '0.2s', $(this))
+                $(this).css('font-size', '30px')
+            })
+    },
+    hideAllActionContentAndApplyEventHandler: function(){
+        this.actions().children('.action__content').slideUp(0)
+        for (let i = 0;i < this.actions().length;i++)
+            this.actions().eq(i).on('click', function(){
+                $(this).children('.action__content').slideToggle()
+            })
+    },
+    hideAllUserForms: function(){
+        hide(this.userForms())
+    },
+    applyEventHandlersUserForms: function(){
+        for (let i = 0;i < this.closeIcons().length;i++)
+            this.closeIcons().eq(i).on('click', function(){
+                hide($(this).parent().parent(), '0.2s')
+            })
+    },
+    openUserForm: function(id){
+        this.hideAllUserForms()
+        show($('#' + id), '0.2s')
     }
+}
 
-    actions.addActionIconsEffect()
-    actions.hideAllActionContentAndApplyEventHandler()
-})()
+actions.addActionIconsEffect()
+actions.hideAllActionContentAndApplyEventHandler()
+actions.applyEventHandlersUserForms()

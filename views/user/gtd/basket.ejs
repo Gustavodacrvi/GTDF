@@ -11,22 +11,35 @@
 <body>
 <section id='background'>
 
+<section style='width: 100%; height: 100%; position: absolute' class='centralizeContent'>
+    <div style='position: relative; width: 350px'>
+        <div class='form card userForm hided' id='addSimpleActionForm'>
+            <button class='reset--button user__form__close'><i class='fa fa-times icon close--icon user--icon'></i></button>
+            <div>
+                asdfasdsdfasdfasfdsa fsa fasd fasd f
+            </div>
+        </div>
+    </div>
+</section>
+
 <div id='body'>
     <% include ../../partials/menu %>
     <% include ../../partials/menu-vertical %>
     <div id='content'>
         <div id='content__cards'>
             <div style='height: 50px'></div>
-            <div class='card action--bar alignContent'></div>
+            <div class='card action--bar alignContent'>
+                <button class='reset--button' style='z-index: 5' onclick='actions.openUserForm("addSimpleActionForm")'><i class='fa fa-plus icon action--icon user--icon'></i></button>
+            </div>
             <div class='action'>
                 <div class='card action__header alignContent'>
                     <div class='action__title'>
                         <span class='text'>Limpar computador.</span>
                     </div>
                     <div class='action__buttons rowReversed'>
-                        <button class='reset--button' title='<%= __("_delete_action") %>'><i class='fa fa-times icon action--icon'></i></button>
-                        <button class='reset--button' title='<%= __("_edit_action") %>'><i class='fa fa-edit icon action--icon'></i></button>
-                        <button class='reset--button' title='<%= __("add/edit_tag") %>'><i class='fa fa-tag icon action--icon'></i></button>
+                        <button class='reset--button' title='<%= __("_delete_action") %>'><i class='fa fa-times icon action--icon user--icon'></i></button>
+                        <button class='reset--button' title='<%= __("_edit_action") %>'><i class='fa fa-edit icon action--icon user--icon'></i></button>
+                        <button class='reset--button' title='<%= __("add/edit_tag") %>'><i class='fa fa-tag icon action--icon user--icon'></i></button>
                     </div>
                 </div>
                 <div class='action__content card'>

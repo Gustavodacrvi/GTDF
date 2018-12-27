@@ -7,14 +7,7 @@ body {
   background-color: #191919; }
 
 #background {
-  width: 100%;
-  height: 100%;
   z-index: -1; }
-
-#navBar,
-#navBar + div,
-#navBar > div > div {
-  height: 50px; }
 
 #navBar {
   position: fixed;
@@ -22,9 +15,6 @@ body {
   padding: 0 5%;
   border-bottom: 0.5px solid #6A6A6A;
   z-index: 2; }
-
-#navBar > div > div {
-  width: 50%; }
 
 #navBar + div {
   z-index: 12;
@@ -62,12 +52,8 @@ body {
   width: 350px;
   padding-top: 25px; }
 
-.form > div {
-  margin: 0 30px; }
-
 .form__element {
-  margin-bottom: 25px;
-  width: 100%; }
+  margin-bottom: 25px; }
 
 .form--eye {
   right: 0;
@@ -78,9 +64,6 @@ body {
 .fa-eye-slash {
   color: #6A6A6A; }
 
-#body {
-  height: 100%; }
-
 #body > #navColumn {
   position: fixed;
   flex-basis: 250px;
@@ -88,7 +71,6 @@ body {
   background-color: #474747;
   z-index: 1;
   left: 0;
-  height: 100%;
   width: 250px; }
 
 #body > #content {
@@ -124,27 +106,24 @@ body {
     flex-direction: column-reverse; }
 
   #content__cards {
-    width: 100%;
     height: 100%; }
 
   #content__ads {
-    width: 100%;
-    height: 250px; } }
-.action--bar,
-.action__header {
-  height: 50px; }
+    height: 250px; }
 
-.action--bar,
-.action__header,
-.action__content {
-  margin: 0 30px; }
-
+  #content__cards,
+  #content__ads {
+    width: 100%; } }
 .action--bar {
+  margin: 0 30px;
   margin-top: 40px;
   margin-bottom: 80px; }
 
+.action--bar,
 .action__header {
-  padding: 0 10px;
+  padding: 0 10px; }
+
+.action__header {
   cursor: pointer;
   top: 0; }
 
@@ -154,17 +133,45 @@ body {
 .action + .action {
   margin-top: 10px; }
 
-.action__title {
-  width: 50%; }
-
-.action__buttons {
-  width: 50%; }
-
 .action__content {
   margin-top: 1px;
   min-height: 75px;
   left: 0;
   padding: 30px; }
+
+.userForm {
+  top: 0;
+  left: 0; }
+
+.user__form__close {
+  right: 2px;
+  top: 2px; }
+
+.action__header,
+.action__content,
+.form > div {
+  margin: 0 30px; }
+
+.action__title,
+.action__buttons,
+#navBar > div > div {
+  width: 50%; }
+
+.action--bar,
+.action__header,
+#navBar,
+#navBar + div,
+#navBar > div > div {
+  height: 50px; }
+
+#body,
+#body > #navColumn,
+#background {
+  height: 100%; }
+
+#background,
+.form__element {
+  width: 100%; }
 
 .form--button,
 .reset--button {
@@ -186,9 +193,10 @@ a:hover,
 .link--button {
   text-decoration: none; }
 
-.hided, .mobile--rotated,
+.hided,
 .slide--effect,
-.slide--effect--left {
+.slide--effect--left,
+.mobile--rotated {
   opacity: 0;
   visibility: hidden; }
 
@@ -221,7 +229,9 @@ a:hover,
 .navBarMobile__subDropdown > div,
 #background,
 #navBarMobileButton > .fa-bars,
-#navBArMobileButton__left > .fa-user {
+#navBArMobileButton__left > .fa-user,
+.userForm,
+.user__form__close {
   position: absolute; }
 
 .justifyContent,

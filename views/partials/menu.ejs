@@ -7,7 +7,7 @@
             <div class='navBar__element'>
                 <a href='/user/login' class='noUnderline--link'><%= __('login') %></a>
             </div>
-            <% if (isLogged) {%>
+            <% if (locals.isLogged) {%>
                 <div class='navBar__element'>
                     <a href='/user/gtd/basket' class='noUnderline--link'><%= __('user') %></a>
                 </div>
