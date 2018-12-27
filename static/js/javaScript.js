@@ -19,6 +19,7 @@ function rotate(deg, time, el){
     })
 }
 
+(function() {
 function slideEffect(){
     show($('.slide--effect').css('top', '0'), '1.2s')
     show($('.slide--effect--left').css('left', '0'), '1,2s')
@@ -134,3 +135,33 @@ $(window).on('resize', function(){
         })
     }
 })
+})();
+
+// CONTENT
+(function() {
+    let actions = {
+        actionIcons: function() {return $('.action--icon')},
+        actions: function() {return $('.action')},
+
+        addActionIconsEffect: function(){
+            for (let i = 0;i < this.actionIcons().length;i++)
+                this.actionIcons().eq(i).on('mouseenter', function(){
+                    rotate(15, '0.2s', $(this))
+                    $(this).css('font-size', '35px')
+                }).on('mouseleave', function(){
+                    rotate(0, '0.2s', $(this))
+                    $(this).css('font-size', '30px')
+                })
+        },
+        hideAllActionContentAndApplyEventHandler: function(){
+            this.actions().children('.action__content').slideUp(0)
+            for (let i = 0;i < this.actions().length;i++)
+                this.actions().eq(i).on('click', function(){
+                    $(this).children('.action__content').slideToggle()
+                })
+        }
+    }
+
+    actions.addActionIconsEffect()
+    actions.hideAllActionContentAndApplyEventHandler()
+})()
