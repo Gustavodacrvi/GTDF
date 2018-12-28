@@ -148,6 +148,11 @@ let actions = new Vue({
                     addAction: {
                         title: '',
                         description: ''
+                    },
+                    editAction: {
+                        title: '',
+                        description: '',
+                        id: ''
                     }
                 }
             },
@@ -165,6 +170,14 @@ let actions = new Vue({
     methods: {
         addActionBasket: function(){
             $.post('/user/add-basket-action', { title: this.v.forms.basket.addAction.title, description: this.v.forms.basket.addAction.description}, (data, status, xhr) => {
+                this.v.user = JSON.parse(data).actions
+            }).then(() => {
+                this.$forceUpdate()
+                this.actionsInit()
+            })
+        },
+        editActionBasket: function(){
+            $.post('/user/edit-action', { title: this.v.forms.basket.editAction.title, description: this.v.forms.basket.editAction.description, actionId: this.v.forms.basket.editAction.id}, (data, status, xhr) => {
                 this.v.user = JSON.parse(data).actions
             }).then(() => {
                 this.$forceUpdate()

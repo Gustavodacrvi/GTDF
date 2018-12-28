@@ -271,6 +271,22 @@ app.post('/user/delete-action', function(req, res){
     })
 })
 
+app.post('/user/edit-action', function(req, res){
+    User.findById(req.user.id, function(err, user){
+        if (err) return handleError(err)
+
+        let i = user.actions.basket.findIndex(function(el){
+            return el.id == req.body.actionId
+        })
+        user.actions.basket[i].title = req.body.title
+        user.actions.basket[i].description = req.body.description
+        user.save(function(err, updatedUser){
+            if (err) return handleError(err)
+            res.send(JSON.stringify(updatedUser))
+        })
+    })
+})
+
 app.listen(3000, '0.0.0.0', function(req, res){
     console.log('Server started at port 3000...')
 })

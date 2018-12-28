@@ -45,5 +45,7 @@
     "ADD_ACTION": "ADD ACTION",
     "Title": "Title",
     "Description": "Description",
-    "Add_action": "Add action"
+    "Add_action": "Add action",
+    "EDIT_ACTION": "EDIT ACTION",
+    "Edit_action": "Edit action"
 }
