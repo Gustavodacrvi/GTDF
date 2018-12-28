@@ -10,23 +10,20 @@ $min--desktop--width: 768px
     font-family: 'Work Sans Light'
     src: url('../fontes/Work Sans/WorkSans-Light.otf')
 
+body,
+.form--button,
+.textBox
+    font-family: 'Work Sans Light'
+
 body
     margin: 0
-    font-family: 'Work Sans Light'
     background-color: $back--color
 
 #background
-    width: 100%
-    height: 100%
     z-index: -1
 
 
 // ---------- MENU
-
-#navBar,
-#navBar + div,
-#navBar > div > div 
-    height: 50px
 
 
 #navBar
@@ -34,10 +31,7 @@ body
     width: 90%
     padding: 0 5%
     border-bottom: 0.5px solid $gray--light
-    z-index: 1
-
-#navBar > div > div
-    width: 50%
+    z-index: 2
 
 #navBar + div
     z-index: 12
@@ -70,7 +64,6 @@ body
     right: 0
 
 .mobile--rotated
-    @extend .hided
     transform: rotate(360deg)
 
 // ---------- LOGIN/SIGNUP
@@ -79,12 +72,8 @@ body
     width: 350px
     padding-top: 25px
 
-.form > div
-    margin: 0 30px
-
 .form__element
     margin-bottom: 25px
-    width: 100%
 
 .form--eye
     right: 0
@@ -97,14 +86,14 @@ body
 
 // ---------- BODY
 
-#body
-    height: 100%
-
 #body > #navColumn
+    position: fixed
     flex-basis: 250px
     border-right: 0.5px solid $gray--light--light
     background-color: $gray
-    z-index: 0
+    z-index: 1
+    left: 0
+    width: 250px
 
 #body > #content
     flex-basis: 1570px
@@ -119,23 +108,115 @@ body
     margin-bottom: 35px
     width: 200px
 
+#content__cards
+    width: 75%
+
+#content__ads
+    width: 25%
+
 @media screen and (min-width: $min--desktop--width + 1)
     // MENU
     #navBar #navBar__mobile
         display: none
+    #content
+        margin-left: 260px
     
 @media screen and (max-width: $min--desktop--width)
     // MENU
     #navBar__desktop
         display: none
-    #navColumn
-        position: fixed
-        left: 0
+    #content
+        flex-direction: column-reverse
+    #content__cards
         height: 100%
-        width: 250px
+    #content__ads
+        height: 250px
+
+    #content__cards,
+    #content__ads
+        width: 100%
+
+// CONTENT 
+
+.action--bar
+    margin: 0 30px
+    margin-top: 40px
+    margin-bottom: 80px
+
+.action--bar,
+.action__header
+    padding: 0 10px
+
+.action__header
+    cursor: pointer 
+
+.action:hover
+    top: -3px
+
+.action + .action 
+    margin-top: 10px
+
+.action__content
+    top: 1px
+    min-height: 75px
+    padding: 30px
+
+.action__title
+    flex-basis: 90%
+    height: 100%
+
+.action__buttons
+    flex-basis: 10%
+
+// USER FORMS
+
+#userForms
+    width: 100%
+    height: 100%
+
+#userForms > div
+    width: 350px
+    height: 450px
+    z-index: 5
+    
+.userForm
+    top: 0
+    left: 0
+
+.user__form__close
+    right: 2px
+    top: 2px
 
 
 
+
+
+
+.action__header,
+.action__content,
+.form > div
+    margin: 0 30px
+
+.action__title,
+.action__buttons,
+#navBar > div > div
+    width: 50%
+
+.action--bar,
+.action__header,
+#navBar,
+#navBar + div,
+#navBar > div > div 
+    height: 50px
+    
+#body,
+#body > #navColumn,
+#background
+    height: 100%
+
+#background,
+.form__element
+    width: 100%
 
 .form--button,
 .reset--button
@@ -147,7 +228,8 @@ a,
 .form--input--text,
 .fa-eye,
 body,
-.icon
+.icon,
+.textBox
     color: $gray--light--light
 
 a:hover,
@@ -159,7 +241,9 @@ a:hover,
 
 .hided,
 .slide--effect,
-.slide--effect--left
+.slide--effect--left,
+.slide--effect--right,
+.mobile--rotated
     opacity: 0
     visibility: hidden
 
@@ -167,22 +251,28 @@ a:hover,
 a:hover,
 .form--button,
 .link--button,
-.active--link
+.active--link,
+h1.title
     color: $blue
 
 #navBar,
 .card,
 .form--input--text,
-.reset--button
+.reset--button,
+.textBox
     background-color: $gray
 
 .slide--effect,
 .slide--effect--left,
+.slide--effect--right,
 .form__element,
 .dropdownDesktop,
 .navBarMobile__subDropdown,
 #navBarMobileButton,
-#navBArMobileButton__left
+#navBArMobileButton__left,
+.action,
+#userForms > div,
+.action__content
     position: relative
 
 .form--eye,
@@ -191,7 +281,10 @@ a:hover,
 .navBarMobile__subDropdown > div,
 #background,
 #navBarMobileButton > .fa-bars,
-#navBArMobileButton__left > .fa-user
+#navBArMobileButton__left > .fa-user,
+.userForm,
+.user__form__close,
+#userForms
     position: absolute
 
 .justifyContent,
@@ -200,7 +293,9 @@ a:hover,
 .centralizeContentColumn,
 .rowReversed,
 #body,
-.column
+.column,
+#content,
+.action__header
     display: flex
 
 .alignContent,
@@ -223,14 +318,10 @@ a:hover,
 .form--button, .link--button,
 .dropdownDesktop > div,
 #navBarMobile__toggle > div,
+.action__header,
+.action
     transition-duration: 0.2s
 
-.slide--effect,
-.slide--effect--left
-    transition-duration: 1.2s
-
-
-    
 .status--alert
     color: $orange
 
@@ -256,15 +347,25 @@ a
 .form--button
     background-color: transparent
     width: 250px
-    font-family: 'Work Sans Light'
 
-.form--input--text
+.form--input--text,
+.textBox
     border: none
-    border-bottom: 1px solid $gray--light
     width: 275px
     padding: 10px
     outline: none
     font-size: 1.1em
+
+
+.form--input--text
+    border-bottom: 1px solid $gray--light
+
+.textBox
+    border: 1px solid $gray--light
+    word-wrap: break-word
+    word-break: break-all
+    resize: none
+    height: 80px
 
 .reset--button
     border: none
@@ -284,5 +385,11 @@ a
 .slide--effect--left
     left: -30px
 
+.slide--effect--right
+    right: -30px
+
 .align--text
     text-align: center
+
+h1.title
+    font-size: 30px

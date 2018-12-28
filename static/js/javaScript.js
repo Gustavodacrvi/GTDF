@@ -22,6 +22,19 @@ function rotate(deg, time, el){
 function slideEffect(){
     show($('.slide--effect').css('top', '0'), '1.2s')
     show($('.slide--effect--left').css('left', '0'), '1,2s')
+    show($('.slide--effect--right').css('right', '0'), '1,2s')
+}
+function abrirIconeLeft(){
+    show($('#navBarMobile__toggle__left > button > .fa-times'), '0.4s')
+    hide($('#navBarMobile__toggle__left > button > .fa-user'), '0.4s')
+    rotate(0, '0.3s', $('#navBarMobile__toggle__left > button > .fa-times'))
+    rotate(180, '0.3s', $('#navBarMobile__toggle__left > button > .fa-user'))
+}
+function fecharIconeLeft(){
+    show($('#navBarMobile__toggle__left > button > .fa-user'), '0.4s')
+    hide($('#navBarMobile__toggle__left > button > .fa-times'), '0.4s')
+    rotate(0, '0.3s', $('#navBarMobile__toggle__left > button > .fa-user'))
+    rotate(360, '0.3s', $('#navBarMobile__toggle__left > button > .fa-times'))
 }
 function dropdowns(){
     function abrirIcone(){
@@ -35,18 +48,6 @@ function dropdowns(){
         hide($('#navBarMobile__toggle > button > .fa-times'), '0.4s')
         rotate(0, '0.3s', $('#navBarMobile__toggle > button > .fa-bars'))
         rotate(360, '0.3s', $('#navBarMobile__toggle > button > .fa-times'))
-    }
-    function abrirIconeLeft(){
-        show($('#navBarMobile__toggle__left > button > .fa-times'), '0.4s')
-        hide($('#navBarMobile__toggle__left > button > .fa-user'), '0.4s')
-        rotate(0, '0.3s', $('#navBarMobile__toggle__left > button > .fa-times'))
-        rotate(180, '0.3s', $('#navBarMobile__toggle__left > button > .fa-user'))
-    }
-    function fecharIconeLeft(){
-        show($('#navBarMobile__toggle__left > button > .fa-user'), '0.4s')
-        hide($('#navBarMobile__toggle__left > button > .fa-times'), '0.4s')
-        rotate(0, '0.3s', $('#navBarMobile__toggle__left > button > .fa-user'))
-        rotate(360, '0.3s', $('#navBarMobile__toggle__left > button > .fa-times'))
     }
 
     $('.dropdownDesktop').on('mouseenter', function(){
@@ -134,3 +135,110 @@ $(window).on('resize', function(){
         })
     }
 })
+
+// CONTENT
+
+
+let actions = new Vue({
+    el: '#background',
+    data: {
+        v: {
+            forms: {
+                basket: {
+                    addAction: {
+                        title: '',
+                        description: ''
+                    },
+                    editAction: {
+                        title: '',
+                        description: '',
+                        id: ''
+                    }
+                }
+            },
+            user: {
+                basket: [
+                ]
+            },
+            actionIcons: function() {return $('.action--icon')},
+            closeIcons: function() {return $('.close--icon')},
+            userIcons: function() {return $('.user--icon')},
+            actions: function() {return $('.action')},
+            userForms: function() {return $('.userForm')},
+        },
+    },
+    methods: {
+        addActionBasket: function(){
+            $.post('/user/add-basket-action', { title: this.v.forms.basket.addAction.title, description: this.v.forms.basket.addAction.description}, (data, status, xhr) => {
+                this.v.user = JSON.parse(data).actions
+            }).then(() => {
+                this.$forceUpdate()
+                this.actionsInit()
+            })
+        },
+        editActionBasket: function(){
+            $.post('/user/edit-action', { title: this.v.forms.basket.editAction.title, description: this.v.forms.basket.editAction.description, actionId: this.v.forms.basket.editAction.id}, (data, status, xhr) => {
+                this.v.user = JSON.parse(data).actions
+            }).then(() => {
+                this.$forceUpdate()
+                this.actionsInit()
+            })
+        },
+        getUser: function(){
+            $.get('/user/get-user', (data, status) => {
+                this.v.user = JSON.parse(data).actions
+            }).then(() => {
+                this.actionsInit()
+            })
+        },
+        actionsInit: function(){
+            this.addActionIconsEffect()
+            this.hideAllActionContentAndApplyEventHandler()
+            this.hideAllUserForms()
+            this.applyEventHandlersUserForms()
+        },
+        addActionIconsEffect: function(){
+            for (let i = 0;i < this.v.userIcons().length;i++)
+                this.v.userIcons().eq(i).on('mouseenter', function(){
+                    rotate(15, '0.2s', $(this))
+                    $(this).css('font-size', '35px')
+                }).on('mouseleave', function(){
+                    rotate(0, '0.2s', $(this))
+                    $(this).css('font-size', '30px')
+                })
+        },
+        hideAllActionContentAndApplyEventHandler: function(){
+            this.v.actions().children('.action__content').slideUp(0)
+            for (let i = 0;i < this.v.actions().length;i++)
+                if (this.v.actions().find('.action__title').eq(i).data('alreadyApplied') !== true)
+                    this.v.actions().find('.action__title').eq(i).on('click', function(){
+                        $(this).parent().parent().children('.action__content').slideToggle()
+                    }).data('alreadyApplied', true)
+        },
+        hideAllUserForms: function(){
+            hide(this.v.userForms())
+            hide($('#userForms > div'))
+        },
+        applyEventHandlersUserForms: function(){
+            for (let i = 0;i < this.v.closeIcons().length;i++)
+                this.v.closeIcons().eq(i).on('click', function(){
+                    hide($(this).parent().parent(), '0.2s')
+                    hide($('#userForms > div'))
+                })
+        },
+        openUserForm: function(id){
+            this.hideAllUserForms()
+            show($('#' + id), '0.2s')
+            show($('#userForms > div'))
+        },
+        deleteAction: function(id){
+            $.post('/user/delete-action', { actionId: id }, (data, status) => {
+                this.v.user = JSON.parse(data).actions
+            }).then(() => {
+                this.actionsInit()
+            })
+        }
+    }
+})
+
+actions.getUser()

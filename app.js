@@ -12,6 +12,11 @@ var passport = require('passport')
 var cookieParser = require('cookie-parser')
 
 
+
+
+// OBJECT ID
+var Objectid = mongoose.Types.ObjectId
+
 // MONGOOSE
 mongoose.connect('mongodb://localhost/GTD', { useNewUrlParser: true})
 var mongoose = mongoose.connection
@@ -93,6 +98,11 @@ app.use(expressValidator({
 app.use('/users', users)
 
 
+// MODEL
+var User = require('./models/user')
+
+
+
 
 
 function check_and_change_locale(req, res){
@@ -137,7 +147,7 @@ app.get('/user/gtd/basket', function(req, res){
         check_and_change_locale(req, res)
         res.locals.activeLink = 'basket'
         res.render('user/gtd/basket', {
-            username: req.user.username,
+            user: req.user,
             displayUserMenu: true
         })
     } else {
@@ -150,7 +160,7 @@ app.get('/user/gtd/calendar', function(req,res){
         check_and_change_locale(req, res)
         res.locals.activeLink = 'calendar'
         res.render('user/gtd/calendar', {
-            username: req.user.username,
+            user: req.user,
             displayUserMenu: true
         })
     } else {
@@ -163,7 +173,7 @@ app.get('/user/gtd/next-actions', function(req,res){
         check_and_change_locale(req, res)
         res.locals.activeLink = 'next actions'
         res.render('user/gtd/next-actions', {
-            username: req.user.username,
+            user: req.user,
             displayUserMenu: true
         })
     } else {
@@ -176,7 +186,7 @@ app.get('/user/gtd/projects', function(req,res){
         check_and_change_locale(req, res)
         res.locals.activeLink = 'projects'
         res.render('user/gtd/projects', {
-            username: req.user.username,
+            user: req.user,
             displayUserMenu: true
         })
     } else {
@@ -189,7 +199,7 @@ app.get('/user/gtd/someday', function(req,res){
         check_and_change_locale(req, res)
         res.locals.activeLink = 'someday'
         res.render('user/gtd/someday', {
-            username: req.user.username,
+            user: req.user,
             displayUserMenu: true
         })
     } else {
@@ -202,7 +212,7 @@ app.get('/user/gtd/waiting', function(req,res){
         check_and_change_locale(req, res)
         res.locals.activeLink = 'waiting'
         res.render('user/gtd/waiting', {
-            username: req.user.username,
+            user: req.user,
             displayUserMenu: true
         })
     } else {
@@ -219,8 +229,68 @@ app.get('/pt-BR', function(req, res){
     res.redirect('/')
 })
 
+// ACTIONS
 
+app.post('/user/add-basket-action', function(req, res){
+    let action = {
+        id: new Objectid(),
+        title: req.body.title,
+        description: req.body.description
+    }
+    User.findById(req.user.id, function (err, user) {
+        if (err) return handleError(err)
+      
+        user.actions.basket.push(action)
+        user.save(function (err, updatedUser) {
+          if (err) return handleError(err)
+          res.send(JSON.stringify(updatedUser))
+        })
+      })
+})
 
+app.get('/user/get-user', function(req, res){
+    User.findById(req.user.id, function(err, user){
+        if (err) return handleError(err)
+
+        res.send(JSON.stringify(user))
+    })
+})
+
+app.post('/user/delete-action', function(req, res){
+    User.findById(req.user.id, function(err, user){
+        if (err) return handleError(err)
+
+        let i = user.actions.basket.findIndex(function(el){
+            return el.id == req.body.actionId
+        })
+        user.actions.basket.splice(i, 1)
+        user.save(function(err, updatedUser){
+            if (err) return handleError(err)
+            res.send(JSON.stringify(updatedUser))
+        })
+    })
+})
+
+app.post('/user/edit-action', function(req, res){
+    User.findById(req.user.id, function(err, user){
+        if (err) return handleError(err)
+
+        let i = user.actions.basket.findIndex(function(el){
+            return el.id == req.body.actionId
+        })
+        user.actions.basket[i].title = req.body.title
+        user.actions.basket[i].description = req.body.description
+        user.markModified('actions.basket')
+        user.save(function(err, updatedUser){
+            if(err){
+                console.log(err)
+                return;
+           }
+
+            res.send(JSON.stringify(updatedUser))
+        })
+    })
+})
 
 app.listen(3000, '0.0.0.0', function(req, res){
     console.log('Server started at port 3000...')

@@ -30,5 +30,22 @@
 	"login": "entrar",
 	"_current_language": "Português (Brasil)",
 	"logout": "sair",
-	"user": "usuário"
+	"user": "usuário",
+	"_logged_as": "conectado como ",
+	"_in-basket": "entrada",
+	"_calendar": "agenda",
+	"next_actions": "próximas ações",
+	"projects": "projetos",
+	"someday/maybe": "algum dia/talvez",
+	"waiting": "esperando",
+	"_logout": "sair",
+	"_delete_action": "deletar ação",
+	"_edit_action": "editar ação",
+	"add/edit_tag": "adicionar/editar tag",
+	"ADD_ACTION": "ADICIONAR AÇÃO",
+	"Title": "Título",
+	"Description": "Descrição",
+	"Add_action": "Adicionar ação",
+	"EDIT_ACTION": "EDITAR AÇÃO",
+	"Edit_action": "Editar ação"
 }
