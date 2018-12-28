@@ -152,10 +152,8 @@ let actions = new Vue({
                 }
             },
             user: {
-                actions: {
-                    basket: [
-                    ]
-                }
+                basket: [
+                ]
             },
             actionIcons: function() {return $('.action--icon')},
             closeIcons: function() {return $('.close--icon')},
@@ -167,7 +165,7 @@ let actions = new Vue({
     methods: {
         addActionBasket: function(){
             $.post('/user/add-basket-action', { title: this.v.forms.basket.addAction.title, description: this.v.forms.basket.addAction.description}, (data, status, xhr) => {
-                this.v.user = JSON.parse(data)
+                this.v.user = JSON.parse(data).actions
             }).then(() => {
                 this.$forceUpdate()
                 this.actionsInit()
@@ -175,7 +173,7 @@ let actions = new Vue({
         },
         getUser: function(){
             $.get('/user/get-user', (data, status) => {
-                this.v.user = JSON.parse(data)
+                this.v.user = JSON.parse(data).actions
             }).then(() => {
                 this.actionsInit()
             })

@@ -54,11 +54,11 @@
             <div class='card action--bar alignContent'>
                 <button class='reset--button' onclick='actions.openUserForm("addSimpleActionForm")'><i class='fa fa-plus icon action--icon user--icon'></i></button>
             </div>
-                <template v-if='v.user.actions'>
-                <div class='action' v-for='i in v.user.actions.basket.length' :key='i'>
+                <template v-if='v.user'>
+                <div class='action' v-for='i in v.user.basket.length' :key='i'>
                         <div class='card action__header alignContent'>
                         <div class='action__title alignContent'>
-                            <span class='text'>{{ v.user.actions.basket[i - 1].title }}</span>
+                            <span class='text'>{{ v.user.basket[i - 1].title }}</span>
                         </div>
                         <div class='action__buttons rowReversed'>
                             <button class='reset--button' title='<%= __("_delete_action") %>'><i class='fa fa-times icon action--icon user--icon'></i></button>
@@ -67,7 +67,7 @@
                         </div>
                     </div>
                     <div class='action__content card'>
-                        <span class='text'> {{ v.user.actions.basket[i - 1].description }} </span>
+                        <span class='text'> {{ v.user.basket[i - 1].description }} </span>
                     </div>
                 </div>
                 </template>
