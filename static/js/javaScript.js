@@ -210,9 +210,10 @@ let actions = new Vue({
         hideAllActionContentAndApplyEventHandler: function(){
             this.v.actions().children('.action__content').slideUp(0)
             for (let i = 0;i < this.v.actions().length;i++)
-                this.v.actions().find('.action__title').eq(i).on('click', function(){
-                    $(this).parent().parent().children('.action__content').slideToggle()
-                })
+                if (this.v.actions().find('.action__title').eq(i).data('alreadyApplied') !== true)
+                    this.v.actions().find('.action__title').eq(i).on('click', function(){
+                        $(this).parent().parent().children('.action__content').slideToggle()
+                    }).data('alreadyApplied', true)
         },
         hideAllUserForms: function(){
             hide(this.v.userForms())
