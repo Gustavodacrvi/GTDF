@@ -19,7 +19,6 @@ function rotate(deg, time, el){
     })
 }
 
-(function() {
 function slideEffect(){
     show($('.slide--effect').css('top', '0'), '1.2s')
     show($('.slide--effect--left').css('left', '0'), '1,2s')
@@ -136,53 +135,91 @@ $(window).on('resize', function(){
         })
     }
 })
-})();
 
 // CONTENT
-let actions = {
-    actionIcons: function() {return $('.action--icon')},
-    closeIcons: function() {return $('.close--icon')},
-    userIcons: function() {return $('.user--icon')},
-    actions: function() {return $('.action')},
-    userForms: function() {return $('.userForm')},
 
-    addActionIconsEffect: function(){
-        for (let i = 0;i < this.userIcons().length;i++)
-            this.userIcons().eq(i).on('mouseenter', function(){
-                rotate(15, '0.2s', $(this))
-                $(this).css('font-size', '35px')
-            }).on('mouseleave', function(){
-                rotate(0, '0.2s', $(this))
-                $(this).css('font-size', '30px')
+
+let actions = new Vue({
+    el: '#background',
+    data: {
+        v: {
+            forms: {
+                basket: {
+                    addAction: {
+                        title: '',
+                        description: ''
+                    }
+                }
+            },
+            user: {
+                actions: {
+                    basket: [
+                    ]
+                }
+            },
+            actionIcons: function() {return $('.action--icon')},
+            closeIcons: function() {return $('.close--icon')},
+            userIcons: function() {return $('.user--icon')},
+            actions: function() {return $('.action')},
+            userForms: function() {return $('.userForm')},
+        },
+    },
+    methods: {
+        addActionBasket: function(){
+            $.post('/user/add-basket-action', { title: this.v.forms.basket.addAction.title, description: this.v.forms.basket.addAction.description}, (data, status, xhr) => {
+                this.v.user = JSON.parse(data)
+            }).then(() => {
+                this.$forceUpdate()
+                this.actionsInit()
             })
-    },
-    hideAllActionContentAndApplyEventHandler: function(){
-        this.actions().children('.action__content').slideUp(0)
-        for (let i = 0;i < this.actions().length;i++)
-            this.actions().find('.action__title').eq(i).on('click', function(){
-                $(this).parent().parent().children('.action__content').slideToggle()
+        },
+        getUser: function(){
+            $.get('/user/get-user', (data, status) => {
+                this.v.user = JSON.parse(data)
+            }).then(() => {
+                this.actionsInit()
             })
-    },
-    hideAllUserForms: function(){
-        hide(this.userForms())
-        hide($('#userForms > div'))
-    },
-    applyEventHandlersUserForms: function(){
-        for (let i = 0;i < this.closeIcons().length;i++)
-            this.closeIcons().eq(i).on('click', function(){
-                hide($(this).parent().parent(), '0.2s')
-                hide($('#userForms > div'))
-            })
-    },
-    openUserForm: function(id){
-        this.hideAllUserForms()
-        show($('#' + id), '0.2s')
-        show($('#userForms > div'))
+        },
+        actionsInit: function(){
+            this.addActionIconsEffect()
+            this.hideAllActionContentAndApplyEventHandler()
+            this.hideAllUserForms()
+            this.applyEventHandlersUserForms()
+        },
+        addActionIconsEffect: function(){
+            for (let i = 0;i < this.v.userIcons().length;i++)
+                this.v.userIcons().eq(i).on('mouseenter', function(){
+                    rotate(15, '0.2s', $(this))
+                    $(this).css('font-size', '35px')
+                }).on('mouseleave', function(){
+                    rotate(0, '0.2s', $(this))
+                    $(this).css('font-size', '30px')
+                })
+        },
+        hideAllActionContentAndApplyEventHandler: function(){
+            this.v.actions().children('.action__content').slideUp(0)
+            for (let i = 0;i < this.v.actions().length;i++)
+                this.v.actions().find('.action__title').eq(i).on('click', function(){
+                    $(this).parent().parent().children('.action__content').slideToggle()
+                })
+        },
+        hideAllUserForms: function(){
+            hide(this.v.userForms())
+            hide($('#userForms > div'))
+        },
+        applyEventHandlersUserForms: function(){
+            for (let i = 0;i < this.v.closeIcons().length;i++)
+                this.v.closeIcons().eq(i).on('click', function(){
+                    hide($(this).parent().parent(), '0.2s')
+                    hide($('#userForms > div'))
+                })
+        },
+        openUserForm: function(id){
+            this.hideAllUserForms()
+            show($('#' + id), '0.2s')
+            show($('#userForms > div'))
+        }
     }
-}
+})
 
-
-actions.addActionIconsEffect()
-actions.hideAllActionContentAndApplyEventHandler()
-actions.applyEventHandlersUserForms()
-actions.hideAllUserForms()
+actions.getUser()

@@ -13,7 +13,6 @@
 
 <section class='centralizeContent' id='userForms'>
     <div>
-        <form method='post' action='/user/add-basket-action'>
         <div class='form card userForm hided' id='addSimpleActionForm'>
             <button class='reset--button user__form__close'><i class='fa fa-times icon close--icon user--icon'></i></button>
             <div>
@@ -21,17 +20,16 @@
                     <h1 class='title' style='margin-top: 0;margin-bottom: 10px'><%= __('ADD_ACTION') %></h1>
                 </div>
                 <div class='form__element centralizeContent'>
-                    <textarea name='title' class='textBox' style='height: 41px' placeholder='<%= __("Title") %>...'></textarea>
+                    <textarea v-model='v.forms.basket.addAction.title' class='textBox' style='height: 41px' placeholder='<%= __("Title") %>...'></textarea>
                 </div>
                 <div class='form__element centralizeContent'>
-                    <textarea name='description' class='textBox' style='height: 168px' placeholder='<%= __("Description") %>...'></textarea>
+                    <textarea v-model='v.forms.basket.addAction.description' class='textBox' style='height: 168px' placeholder='<%= __("Description") %>...'></textarea>
                 </div>
                 <div class='form__element centralizeContent'>
-                    <button class='form--button' type='submit'><%= __('Add_action') %></button>
+                    <button class='form--button' @click='addActionBasket()'><%= __('Add_action') %></button>
                 </div>
             </div>
         </div>
-        </form>
         <div class='form card userForm hided' id='add_changeTags'>
             <button class='reset--button user__form__close'><i class='fa fa-times icon close--icon user--icon'></i></button>
             <div>
@@ -56,10 +54,11 @@
             <div class='card action--bar alignContent'>
                 <button class='reset--button' onclick='actions.openUserForm("addSimpleActionForm")'><i class='fa fa-plus icon action--icon user--icon'></i></button>
             </div>
-                <div class='action'>
-                    <div class='card action__header alignContent'>
+                <template v-if='v.user.actions'>
+                <div class='action' v-for='i in v.user.actions.basket.length' :key='i'>
+                        <div class='card action__header alignContent'>
                         <div class='action__title alignContent'>
-                            <span class='text'>Limpar computador.</span>
+                            <span class='text'>{{ v.user.actions.basket[i - 1].title }}</span>
                         </div>
                         <div class='action__buttons rowReversed'>
                             <button class='reset--button' title='<%= __("_delete_action") %>'><i class='fa fa-times icon action--icon user--icon'></i></button>
@@ -68,26 +67,10 @@
                         </div>
                     </div>
                     <div class='action__content card'>
-                        <span class='text'> Loremasdf asdf asdf asdf asdf asdf asdf a Loremasdf asdf asdf asdf asdf asdf asdf a Loremasdf asdf asdf asdf asdf asdf asdf a Loremasdf asdf asdf asdf asdf asdf asdf a Loremasdf asdf asdf asdf asdf asdf asdf a</span>
+                        <span class='text'> {{ v.user.actions.basket[i - 1].description }} </span>
                     </div>
                 </div>
-                <% for (let i = 0;i < user.actions.basket.length;i++) { %>
-                    <div class='action'>
-                        <div class='card action__header alignContent'>
-                            <div class='action__title alignContent'>
-                                <span class='text'><%= user.actions.basket[i].title %></span>
-                            </div>
-                            <div class='action__buttons rowReversed'>
-                                <button class='reset--button' title='<%= __("_delete_action") %>'><i class='fa fa-times icon action--icon user--icon'></i></button>
-                                <button class='reset--button' title='<%= __("_edit_action") %>' onclick='actions.openUserForm("editAction")'><i class='fa fa-edit icon action--icon user--icon'></i></button>
-                                <button class='reset--button' title='<%= __("add/edit_tag") %>' onclick='actions.openUserForm("add_changeTags")'><i class='fa fa-tag icon action--icon user--icon'></i></button>
-                            </div>
-                        </div>
-                        <div class='action__content card'>
-                            <span class='text'><%= user.actions.basket[i].description %></span>
-                        </div>
-                    </div>
-                <% } %>
+                </template>
                 <div style='height: 100px'></div>
         </div>
         <div id='content__ads'>

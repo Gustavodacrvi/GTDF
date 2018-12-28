@@ -239,11 +239,18 @@ app.post('/user/add-basket-action', function(req, res){
         user.actions.basket.push(action)
         user.save(function (err, updatedUser) {
           if (err) return handleError(err)
-          res.redirect('/user/gtd/basket')
+          res.send(JSON.stringify(user))
         })
       })
 })
 
+app.get('/user/get-user', function(req, res){
+    User.findById(req.user.id, function(err, user){
+        if (err) return handleError(err)
+
+        res.send(JSON.stringify(user))
+    })
+})
 
 app.listen(3000, '0.0.0.0', function(req, res){
     console.log('Server started at port 3000...')
