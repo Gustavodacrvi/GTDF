@@ -280,8 +280,13 @@ app.post('/user/edit-action', function(req, res){
         })
         user.actions.basket[i].title = req.body.title
         user.actions.basket[i].description = req.body.description
+        user.markModified('actions.basket')
         user.save(function(err, updatedUser){
-            if (err) return handleError(err)
+            if(err){
+                console.log(err)
+                return;
+           }
+
             res.send(JSON.stringify(updatedUser))
         })
     })
