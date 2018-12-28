@@ -12,6 +12,8 @@ var passport = require('passport')
 var cookieParser = require('cookie-parser')
 
 
+
+
 // MONGOOSE
 mongoose.connect('mongodb://localhost/GTD', { useNewUrlParser: true})
 var mongoose = mongoose.connection
@@ -91,6 +93,11 @@ app.use(expressValidator({
 }))
 
 app.use('/users', users)
+
+
+// MODEL
+var User = require('./models/user')
+
 
 
 
@@ -219,7 +226,23 @@ app.get('/pt-BR', function(req, res){
     res.redirect('/')
 })
 
+// ACTIONS
 
+app.post('/user/add-basket-action', function(req, res){
+    let action = {
+        title: req.body.title,
+        description: req.body.description
+    }
+    User.findById(req.user.id, function (err, user) {
+        if (err) return handleError(err)
+      
+        user.actions.basket.push(action)
+        user.save(function (err, updatedUser) {
+          if (err) return handleError(err)
+          res.redirect('/user/gtd/basket')
+        })
+      })
+})
 
 
 app.listen(3000, '0.0.0.0', function(req, res){
