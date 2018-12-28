@@ -216,6 +216,13 @@ let actions = new Vue({
             this.hideAllUserForms()
             show($('#' + id), '0.2s')
             show($('#userForms > div'))
+        },
+        deleteAction: function(id){
+            $.post('/user/delete-action', { actionId: id }, (data, status) => {
+                this.v.user = JSON.parse(data).actions
+            }).then(() => {
+                this.actionsInit()
+            })
         }
     }
 })

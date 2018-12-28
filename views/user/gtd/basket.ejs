@@ -61,7 +61,7 @@
                             <span class='text'>{{ v.user.basket[i - 1].title }}</span>
                         </div>
                         <div class='action__buttons rowReversed'>
-                            <button class='reset--button' title='<%= __("_delete_action") %>'><i class='fa fa-times icon action--icon user--icon'></i></button>
+                            <button class='reset--button' title='<%= __("_delete_action") %>' @click='deleteAction(v.user.basket[i - 1].id)'><i class='fa fa-times icon action--icon user--icon'></i></button>
                             <button class='reset--button' title='<%= __("_edit_action") %>' onclick='actions.openUserForm("editAction")'><i class='fa fa-edit icon action--icon user--icon'></i></button>
                             <button class='reset--button' title='<%= __("add/edit_tag") %>' onclick='actions.openUserForm("add_changeTags")'><i class='fa fa-tag icon action--icon user--icon'></i></button>
                         </div>

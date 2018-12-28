@@ -14,6 +14,9 @@ var cookieParser = require('cookie-parser')
 
 
 
+// OBJECT ID
+var Objectid = mongoose.Types.ObjectId
+
 // MONGOOSE
 mongoose.connect('mongodb://localhost/GTD', { useNewUrlParser: true})
 var mongoose = mongoose.connection
@@ -230,6 +233,7 @@ app.get('/pt-BR', function(req, res){
 
 app.post('/user/add-basket-action', function(req, res){
     let action = {
+        id: new Objectid(),
         title: req.body.title,
         description: req.body.description
     }
@@ -239,7 +243,7 @@ app.post('/user/add-basket-action', function(req, res){
         user.actions.basket.push(action)
         user.save(function (err, updatedUser) {
           if (err) return handleError(err)
-          res.send(JSON.stringify(user))
+          res.send(JSON.stringify(updatedUser))
         })
       })
 })
@@ -249,6 +253,21 @@ app.get('/user/get-user', function(req, res){
         if (err) return handleError(err)
 
         res.send(JSON.stringify(user))
+    })
+})
+
+app.post('/user/delete-action', function(req, res){
+    User.findById(req.user.id, function(err, user){
+        if (err) return handleError(err)
+
+        let i = user.actions.basket.findIndex(function(el){
+            return el.id == req.body.actionId
+        })
+        user.actions.basket.splice(i, 1)
+        user.save(function(err, updatedUser){
+            if (err) return handleError(err)
+            res.send(JSON.stringify(updatedUser))
+        })
     })
 })
 
