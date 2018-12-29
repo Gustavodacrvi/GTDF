@@ -115,27 +115,6 @@ let menu = {
 }
 
 
-
-slideEffect()
-dropdowns()
-
-if (menu.isDesktop()){
-    $('#navColumn').off('mouseleave')
-} 
-
-$(window).on('resize', function(){
-    if (menu.isDesktop()){
-        show($('#navColumn'), '0s')
-        $('#navColumn').off('mouseleave')
-    } else {
-        hide($('#navColumn'), '0s')
-        $('#navColumn').on('mouseleave', function(){
-            hide($(this), '0.3s')
-            fecharIconeLeft()
-        })
-    }
-})
-
 // CONTENT
 
 
@@ -259,3 +238,23 @@ let actions = new Vue({
 })
 
 actions.getUser()
+
+slideEffect()
+dropdowns()
+
+if (menu.isDesktop()){
+    $('#navColumn').off('mouseleave')
+} 
+
+$(window).on('resize', function(){
+    if (menu.isDesktop()){
+        show($('#navColumn'), '0s')
+        $('#navColumn').off('mouseleave')
+    } else {
+        hide($('#navColumn'), '0s')
+        $('#navColumn').on('mouseleave', function(){
+            hide($(this), '0.3s')
+            fecharIconeLeft()
+        })
+    }
+})
