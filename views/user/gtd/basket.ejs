@@ -11,49 +11,7 @@
 <body>
 <section id='background'>
 
-<section class='centralizeContent' id='userForms'>
-    <div>
-        <div class='form card userForm hided' id='addSimpleActionForm'>
-            <button class='reset--button user__form__close'><i class='fa fa-times icon close--icon user--icon'></i></button>
-            <div>
-                <div class='form__element centralizeContent'>
-                    <h1 class='title' style='margin-top: 0;margin-bottom: 10px'><%= __('ADD_ACTION') %></h1>
-                </div>
-                <div class='form__element centralizeContent'>
-                    <textarea v-model='v.forms.basket.addAction.title' class='textBox' style='height: 41px' placeholder='<%= __("Title") %>...'></textarea>
-                </div>
-                <div class='form__element centralizeContent'>
-                    <textarea v-model='v.forms.basket.addAction.description' class='textBox' style='height: 168px' placeholder='<%= __("Description") %>...'></textarea>
-                </div>
-                <div class='form__element centralizeContent'>
-                    <button class='form--button' @click='addActionBasket()'><%= __('Add_action') %></button>
-                </div>
-            </div>
-        </div>
-        <div class='form card userForm hided' id='add_changeTags'>
-            <button class='reset--button user__form__close'><i class='fa fa-times icon close--icon user--icon'></i></button>
-            <div>
-            </div>
-        </div>
-        <div class='form card userForm hided' id='editAction'>
-            <button class='reset--button user__form__close'><i class='fa fa-times icon close--icon user--icon'></i></button>
-            <div>
-                <div class='form__element centralizeContent'>
-                    <h1 class='title' style='margin-top: 0;margin-bottom: 10px'><%= __('EDIT_ACTION') %></h1>
-                </div>
-                <div class='form__element centralizeContent'>
-                    <textarea v-model='v.forms.basket.editAction.title' class='textBox' style='height: 41px' placeholder='<%= __("Title") %>...'></textarea>
-                </div>
-                <div class='form__element centralizeContent'>
-                    <textarea v-model='v.forms.basket.editAction.description' class='textBox' style='height: 168px' placeholder='<%= __("Description") %>...'></textarea>
-                </div>
-                <div class='form__element centralizeContent'>
-                    <button class='form--button' @click='editActionBasket()'><%= __('Edit_action') %></button>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+<% include ../../partials/user-forms %>
 
 <div id='body'>
     <% include ../../partials/menu %>
@@ -65,21 +23,25 @@
                 <button class='reset--button' onclick='actions.openUserForm("addSimpleActionForm")'><i class='fa fa-plus icon action--icon user--icon'></i></button>
             </div>
                 <template v-if='v.user'>
-                <div class='action' v-for='i in v.user.basket.length' :key='i'>
-                        <div class='card action__header alignContent'>
-                        <div class='action__title alignContent'>
-                            <span class='text'>{{ v.user.basket[i - 1].title }}</span>
+                    <template v-for='i in v.user.length'>
+                    <template v-if='v.user[i - 1].tag == "basket"'>
+                        <div class='action'>
+                                <div class='card action__header alignContent'>
+                                <div class='action__title alignContent'>
+                                    <span class='text'>{{ v.user[i - 1].title }}</span>
+                                </div>
+                                <div class='action__buttons rowReversed'>
+                                    <button class='reset--button' title='<%= __("_delete_action") %>' @click='deleteAction(v.user[i - 1].id)'><i class='fa fa-times icon action--icon user--icon'></i></button>
+                                    <button class='reset--button' title='<%= __("_edit_action") %>' @click='openUserForm("editAction");v.forms.basket.editAction.id = v.user[i - 1].id'><i class='fa fa-edit icon action--icon user--icon'></i></button>
+                                    <button class='reset--button' title='<%= __("add/edit_tag") %>' @click='openUserForm("add_changeTags");v.forms.basket.editTag.id = v.user[i - 1].id;selectTagForm("" + v.user[i - 1].tag)'><i class='fa fa-tag icon action--icon user--icon'></i></button>
+                                </div>
+                            </div>
+                            <div class='action__content card'>
+                                <span class='text'> {{ v.user[i - 1].description }} </span>
+                            </div>
                         </div>
-                        <div class='action__buttons rowReversed'>
-                            <button class='reset--button' title='<%= __("_delete_action") %>' @click='deleteAction(v.user.basket[i - 1].id)'><i class='fa fa-times icon action--icon user--icon'></i></button>
-                            <button class='reset--button' title='<%= __("_edit_action") %>' @click='openUserForm("editAction");v.forms.basket.editAction.id = v.user.basket[i - 1].id'><i class='fa fa-edit icon action--icon user--icon'></i></button>
-                            <button class='reset--button' title='<%= __("add/edit_tag") %>' onclick='actions.openUserForm("add_changeTags")'><i class='fa fa-tag icon action--icon user--icon'></i></button>
-                        </div>
-                    </div>
-                    <div class='action__content card'>
-                        <span class='text'> {{ v.user.basket[i - 1].description }} </span>
-                    </div>
-                </div>
+                    </template>
+                    </template>
                 </template>
                 <div style='height: 100px'></div>
         </div>

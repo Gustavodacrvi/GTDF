@@ -1,0 +1,67 @@
+<section class='centralizeContent' id='userForms'>
+    <div>
+        <div class='form card userForm hided' id='addSimpleActionForm'>
+            <button class='reset--button user__form__close'><i class='fa fa-times icon close--icon user--icon'></i></button>
+            <div>
+                <div class='form__element centralizeContent'>
+                    <h1 class='title' style='margin-top: 0;margin-bottom: 10px'><%= __('ADD_ACTION') %></h1>
+                </div>
+                <div class='form__element centralizeContent'>
+                    <textarea v-model='v.forms.basket.addAction.title' class='textBox' style='height: 41px' placeholder='<%= __("Title") %>...'></textarea>
+                </div>
+                <div class='form__element centralizeContent'>
+                    <textarea v-model='v.forms.basket.addAction.description' class='textBox' style='height: 168px' placeholder='<%= __("Description") %>...'></textarea>
+                </div>
+                <div class='form__element centralizeContent'>
+                    <button class='form--button' @click='addActionBasket()'><%= __('Add_action') %></button>
+                </div>
+            </div>
+        </div>
+        <div class='form card userForm hided' id='add_changeTags' style='margin-top: 50px'>
+            <button class='reset--button user__form__close'><i class='fa fa-times icon close--icon user--icon'></i></button>
+            <div>
+                <div class='form__element alignContent'>
+                    <h1 class='title' style='margin-top: 0;margin-bottom: 10px'><%= __('ADD/EDIT_TAG') %></h1>
+                </div>
+                <div class='form__element alignContent'>
+                    <div class='iconGroup centralizeContent'>
+                        <div>
+                            <div class='centralizeContent icon--selector' @click='selectTagForm("waiting")' id='waiting' title='<%= __("waiting") %>'>
+                                <i class="fas fa-hourglass-half icon"></i>
+                            </div>
+                            <div class='centralizeContent icon--selector'  @click='selectTagForm("maybe")' id='maybe' title='<%= __("someday/maybe") %>'>
+                                <i class="fas fa-question icon"></i>
+                            </div>
+                            <div class='centralizeContent icon--selector' @click='selectTagForm("nextAction")' id='nextAction' title='<%= __("next_action") %>'>
+                                <i class="fas fa-forward icon"></i>
+                            </div>
+                            <div class='centralizeContent icon--selector' @click='selectTagForm("calendar")' id='calendar' title='<%= __("_calendar") %>'>
+                                <i class="fas fa-calendar-alt icon"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class='form__element centralizeContent'>
+                    <button class='form--button' @click='editTag()'><%= __('Edit_action') %></button>
+                </div>
+            </div>
+        </div>
+        <div class='form card userForm hided' id='editAction'>
+            <button class='reset--button user__form__close'><i class='fa fa-times icon close--icon user--icon'></i></button>
+            <div>
+                <div class='form__element centralizeContent'>
+                    <h1 class='title' style='margin-top: 0;margin-bottom: 10px'><%= __('EDIT_ACTION') %></h1>
+                </div>
+                <div class='form__element centralizeContent'>
+                    <textarea v-model='v.forms.basket.editAction.title' class='textBox' style='height: 41px' placeholder='<%= __("Title") %>...'></textarea>
+                </div>
+                <div class='form__element centralizeContent'>
+                    <textarea v-model='v.forms.basket.editAction.description' class='textBox' style='height: 168px' placeholder='<%= __("Description") %>...'></textarea>
+                </div>
+                <div class='form__element centralizeContent'>
+                    <button class='form--button' @click='editActionBasket()'><%= __('Edit_action') %></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

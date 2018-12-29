@@ -234,13 +234,14 @@ app.get('/pt-BR', function(req, res){
 app.post('/user/add-basket-action', function(req, res){
     let action = {
         id: new Objectid(),
+        tag: 'basket',
         title: req.body.title,
         description: req.body.description
     }
     User.findById(req.user.id, function (err, user) {
         if (err) return handleError(err)
       
-        user.actions.basket.push(action)
+        user.actions.push(action)
         user.save(function (err, updatedUser) {
           if (err) return handleError(err)
           res.send(JSON.stringify(updatedUser))
@@ -260,10 +261,10 @@ app.post('/user/delete-action', function(req, res){
     User.findById(req.user.id, function(err, user){
         if (err) return handleError(err)
 
-        let i = user.actions.basket.findIndex(function(el){
+        let i = user.actions.findIndex(function(el){
             return el.id == req.body.actionId
         })
-        user.actions.basket.splice(i, 1)
+        user.actions.splice(i, 1)
         user.save(function(err, updatedUser){
             if (err) return handleError(err)
             res.send(JSON.stringify(updatedUser))
@@ -275,18 +276,32 @@ app.post('/user/edit-action', function(req, res){
     User.findById(req.user.id, function(err, user){
         if (err) return handleError(err)
 
-        let i = user.actions.basket.findIndex(function(el){
+        let i = user.actions.findIndex(function(el){
             return el.id == req.body.actionId
         })
-        user.actions.basket[i].title = req.body.title
-        user.actions.basket[i].description = req.body.description
-        user.markModified('actions.basket')
+        user.actions[i].title = req.body.title
+        user.actions[i].description = req.body.description
+        user.markModified('actions')
         user.save(function(err, updatedUser){
-            if(err){
-                console.log(err)
-                return;
-           }
+            if (err) return handleError(err)
 
+            res.send(JSON.stringify(updatedUser))
+        })
+    })
+})
+
+app.post('/user/edit-tag', function(req, res){
+    User.findById(req.user.id, function(err, user){
+        if (err) return handleError(err)
+
+        let i = user.actions.findIndex(function(el){
+            return el.id == req.body.actionId
+        })
+        user.actions[i].tag = req.body.tag
+        user.markModified('actions')
+        user.save(function(err, updatedUser){
+            if (err) return handleError(err)
+            
             res.send(JSON.stringify(updatedUser))
         })
     })
