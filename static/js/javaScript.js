@@ -153,6 +153,10 @@ let actions = new Vue({
                         title: '',
                         description: '',
                         id: ''
+                    },
+                    editTag: {
+                        Id: '',
+                        newTag: 'basket'
                     }
                 }
             },
@@ -170,6 +174,14 @@ let actions = new Vue({
     methods: {
         addActionBasket: function(){
             $.post('/user/add-basket-action', { title: this.v.forms.basket.addAction.title, description: this.v.forms.basket.addAction.description}, (data, status, xhr) => {
+                this.v.user = JSON.parse(data).actions
+            }).then(() => {
+                this.$forceUpdate()
+                this.actionsInit()
+            })
+        },
+        editTag: function(){
+            $.post('/user/edit-tag', { actionId: this.v.forms.basket.editTag.id, tag: this.v.forms.basket.editTag.newTag}, (data, status, xhr) => {
                 this.v.user = JSON.parse(data).actions
             }).then(() => {
                 this.$forceUpdate()
@@ -237,7 +249,12 @@ let actions = new Vue({
             }).then(() => {
                 this.actionsInit()
             })
-        }
+        },
+        selectTagForm: function(id){
+            $('.icon--selector').removeClass('icon--selector--selected')
+            $('#' + id).addClass('icon--selector--selected')
+            this.v.forms.basket.editTag.newTag = id
+        },
     }
 })
 

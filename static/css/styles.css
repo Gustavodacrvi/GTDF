@@ -179,6 +179,9 @@ body {
   .icon--selector:hover {
     background-color: #0080FF; }
 
+.icon--selector--selected {
+  background-color: #0080FF; }
+
 .action__header,
 .action__content,
 .form > div {

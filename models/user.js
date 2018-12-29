@@ -18,11 +18,8 @@ var userSchema = mongoose.Schema({
         required: true,
         unique: true
     },
-    actions: {
-        actionType: String,
-        basket: [
-        ]
-    },
+    actions: [
+    ],
     resetPasswordToken: {
         type: String
     },
