@@ -30,10 +30,15 @@
                                 <div class='action__title alignContent'>
                                     <span class='text'>{{ v.user[i - 1].title }}</span>
                                 </div>
-                                <div class='action__buttons rowReversed'>
-                                    <button class='reset--button' title='<%= __("_delete_action") %>' @click='deleteAction(v.user[i - 1].id)'><i class='fa fa-times icon action--icon user--icon'></i></button>
-                                    <button class='reset--button' title='<%= __("_edit_action") %>' @click='openUserForm("editAction");v.forms.basket.editAction.id = v.user[i - 1].id'><i class='fa fa-edit icon action--icon user--icon'></i></button>
-                                    <button class='reset--button' title='<%= __("add/edit_tag") %>' @click='openUserForm("add_changeTags");v.forms.basket.editTag.id = v.user[i - 1].id;selectTagForm("" + v.user[i - 1].tag)'><i class='fa fa-tag icon action--icon user--icon'></i></button>
+                                <div class='actionButtonDropdown rowReversed'>
+                                    <button class='reset--button'><i class="fas fa-ellipsis-v icon action--icon"></i></button>
+                                    <div class='rowReversed'>
+                                        <div class='action__buttons rowReversed'>
+                                            <button class='reset--button' title='<%= __("_delete_action") %>' @click='deleteAction(v.user[i - 1].id)'><i class='fa fa-times icon action--icon user--icon'></i></button>
+                                            <button class='reset--button' title='<%= __("_edit_action") %>' @click='openUserForm("editAction");v.forms.basket.editAction.id = v.user[i - 1].id'><i class='fa fa-edit icon action--icon user--icon'></i></button>
+                                            <button class='reset--button' title='<%= __("add/edit_tag") %>' @click='openUserForm("add_changeTags");v.forms.basket.editTag.id = v.user[i - 1].id;selectTagForm("" + v.user[i - 1].tag)'><i class='fa fa-tag icon action--icon user--icon'></i></button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div class='action__content card'>

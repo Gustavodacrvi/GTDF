@@ -114,38 +114,15 @@ body
 #content__ads
     width: 25%
 
-@media screen and (min-width: $min--desktop--width + 1)
-    // MENU
-    #navBar #navBar__mobile
-        display: none
-    #content
-        margin-left: 260px
-    
-@media screen and (max-width: $min--desktop--width)
-    // MENU
-    #navBar__desktop
-        display: none
-    #content
-        flex-direction: column-reverse
-    #content__cards
-        height: 100%
-    #content__ads
-        height: 250px
-
-    #content__cards,
-    #content__ads
-        width: 100%
-
 // CONTENT 
 
 .action--bar
-    margin: 0 30px
-    margin-top: 40px
-    margin-bottom: 80px
+    margin: 40px 30px 80px 30px
 
 .action--bar,
 .action__header
     padding: 0 10px
+
 
 .action__header
     cursor: pointer 
@@ -203,6 +180,10 @@ body
 
 .icon--selector--selected
     background-color: $blue
+
+
+    
+
 
 
 
@@ -407,3 +388,46 @@ a
 
 h1.title
     font-size: 30px
+
+
+
+@media screen and (min-width: $min--desktop--width + 1)
+    // MENU
+    #navBar #navBar__mobile
+        display: none
+    #content
+        margin-left: 260px
+    .actionButtonDropdown
+        >button
+            display: none
+    
+@media screen and (max-width: $min--desktop--width)
+    // MENU
+    #navBar__desktop
+        display: none
+    #content
+        flex-direction: column-reverse
+    #content__cards
+        height: 100%
+    #content__ads
+        height: 250px
+
+    #content__cards,
+    #content__ads
+        width: 100%
+
+    // ACTIONS
+    .actionButtonDropdown
+        >div
+            position: absolute
+            right: 10px
+            top: -110%
+            border: 0.5px solid $gray--light
+            border-radius: 2px
+        button
+            padding: 10px
+    .action--bar
+        margin: 40px 10px 80px 10px  
+    .action__header,
+    .action__content
+        margin: 0 10px
