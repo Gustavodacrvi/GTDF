@@ -32,13 +32,23 @@
                             <div class='centralizeContent icon--selector'  @click='selectTagForm("maybe")' id='maybe' title='<%= __("someday/maybe") %>'>
                                 <i class="fas fa-question icon"></i>
                             </div>
-                            <div class='centralizeContent icon--selector' @click='selectTagForm("nextAction")' id='nextAction' title='<%= __("next_action") %>'>
+                            <div class='centralizeContent icon--selector' @click='selectTagForm("nextAction")' id='nextAction' title='<%= __("next_actions") %>'>
                                 <i class="fas fa-forward icon"></i>
                             </div>
                             <div class='centralizeContent icon--selector' @click='selectTagForm("calendar")' id='calendar' title='<%= __("_calendar") %>'>
                                 <i class="fas fa-calendar-alt icon"></i>
                             </div>
                         </div>
+                    </div>
+                </div>
+                <div v-if='v.forms.basket.editTag.newTag == "calendar"' class='form__element centralizeContent'>
+                    <div>
+                        <div>
+                            <textarea v-model='v.forms.basket.addAction.title' class='textBox' style='height: 20px' placeholder='<%= __("Date") %>: DD/MM/YYYY'></textarea>
+                        </div>
+                        <div>
+                            <textarea v-model='v.forms.basket.addAction.title' class='textBox' style='height: 20px' placeholder='<%= __("Hour") %>: HH:MM (<%= __("Optional") %>)'></textarea>
+                        </div>                        
                     </div>
                 </div>
                 <div class='form__element centralizeContent'>
