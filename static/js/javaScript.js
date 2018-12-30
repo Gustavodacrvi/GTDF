@@ -187,6 +187,18 @@ let actions = new Vue({
             this.hideAllActionContentAndApplyEventHandler()
             this.hideAllUserForms()
             this.applyEventHandlersUserForms()
+            if (!menu.isDesktop())
+                this.hideAllActionMobileElipsesAdnApplyEventHandler()
+        },
+        hideAllActionMobileElipsesAdnApplyEventHandler: function(){
+            hide($('.actionButtonDropdown div'))
+            for (let i = 0;i < $('.actionButtonDropdown').length;i++)
+                if ($($('.actionButtonDropdown').eq(i).data('alreadyApplied') != true))
+                    $('.actionButtonDropdown').eq(i).on('mouseenter', function(){
+                        show($(this).find('div'), '0.2s')
+                    }).on('mouseleave', function(){
+                        hide($(this).find('div'), '0.2s')
+                    }).data('alreadyApplied', true)
         },
         addActionIconsEffect: function(){
             for (let i = 0;i < this.v.userIcons().length;i++)
@@ -244,17 +256,21 @@ dropdowns()
 
 if (menu.isDesktop()){
     $('#navColumn').off('mouseleave')
-} 
+}
 
 $(window).on('resize', function(){
     if (menu.isDesktop()){
         show($('#navColumn'), '0s')
         $('#navColumn').off('mouseleave')
+        show($('.actionButtonDropdown').find('div'))
+        $('.actionButtonDropdown ').off('mouseenter')
+        $('.actionButtonDropdown ').off('mouseleave')
     } else {
         hide($('#navColumn'), '0s')
         $('#navColumn').on('mouseleave', function(){
             hide($(this), '0.3s')
             fecharIconeLeft()
         })
+        actions.hideAllActionMobileElipsesAdnApplyEventHandler()
     }
 })
