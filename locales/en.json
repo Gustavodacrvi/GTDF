@@ -59,5 +59,7 @@
     "_Create_a_project_with_the_same_name_of_this_action": "Create a project with the same name of this action.",
     "delete_action": "delete action",
     "Create": "Create",
-    "Create_project": "Create project"
+    "Create_project": "Create project",
+    "Add_this_action_to_the_selected_project": "Add this project to the selectedd.",
+    "Add_to_project": "Add to project"
 }

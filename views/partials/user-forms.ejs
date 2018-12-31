@@ -76,35 +76,40 @@
         <div class='form card userForm hided' id='actionToProject'>
             <button class='reset--button user__form__close'><i class='fa fa-times icon close--icon user--icon'></i></button>
             <div>
-            <div class='form__element centralizeContent'>
-                <h1 class='title' style='margin-top: 0;margin-bottom: 10px'><%= __('ADD_TO_PROJECT/CREATE_PROJECT') %></h1>
-            </div>
-                <nav class='form__element selectionBar column' style='height: 200px'>
-                    <div class='selectionBar__links row'>
-                        <div>
-                            <div class='selectionBar--link centralizeContent selectionBar--selected'>
-                                <a><%= __('CREATE') %></a>
-                            </div>
-                            <div class='selectionBar__content'>
-                                <span class='selectionBar__element'><%= __('_Create_a_project_with_the_same_name_of_this_action') %></span>
-                                <div class='selectionBar__element checkBox' @click='v.forms.project.action.delete = !v.forms.project.action.delete'>
-                                    <span><%= __('delete_action') %><div style='text-align: center'><i class="fas fa-check icon--tiny"></i></div></span>
+                <div class='form__element centralizeContent'>
+                    <h1 class='title' style='margin-top: 0;margin-bottom: 10px'><%= __('ADD_TO_PROJECT/CREATE_PROJECT') %></h1>
+                </div>
+                <div>
+                    <nav class='form__element selectionBar column' style='height: 200px'>
+                        <div class='selectionBar__links row'>
+                            <div>
+                                <div class='selectionBar--link centralizeContent selectionBar--selected'>
+                                    <a><%= __('CREATE') %></a>
                                 </div>
-                                <div class='selectionBar__element form__element centralizeContent'>
-                                    <button class='form--button'><%= __('Create_project') %></button>
+                                <div class='selectionBar__content'>
+                                    <span class='selectionBar__element'><%= __('_Create_a_project_with_the_same_name_of_this_action') %></span>
+                                    <div class='selectionBar__element checkBox' @click='v.forms.project.action.delete = !v.forms.project.action.delete'>
+                                        <span><%= __('delete_action') %><div style='text-align: center'><i class="fas fa-check icon--tiny"></i></div></span>
+                                    </div>
+                                    <div class='selectionBar__element form__element centralizeContent'>
+                                        <button class='form--button'><%= __('Create_project') %></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class='selectionBar--link centralizeContent'>
+                                    <a><%= __('ADD') %></a>
+                                </div>
+                                <div class='selectionBar__content hided'>
+                                    <span class='selectionBar__element'><%= __('Add_this_action_to_the_selected_project') %></span>
+                                    <div class='selectionBar__element form__element centralizeContent'>
+                                        <button class='form--button'><%= __('Create_project') %></button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div>
-                            <div class='selectionBar--link centralizeContent'>
-                                <a><%= __('ADD') %></a>
-                            </div>
-                            <div class='selectionBar__content hided'>
-                                <span></span>
-                            </div>
-                        </div>
-                    </div>
-                </nav>
+                    </nav>
+                </div>
             </div>
         </div>
     </div>

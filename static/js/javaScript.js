@@ -433,7 +433,8 @@ let actions = new Vue({
                 },
                 project: {
                     action: {
-                        delete: true
+                        delete: true,
+                        projectId: ''
                     }
                 }
             },

@@ -154,9 +154,13 @@ body {
   cursor: pointer; }
   .icon--selector:hover {
     background-color: #0080FF; }
+    .icon--selector:hover i {
+      color: white; }
 
 .icon--selector--selected {
   background-color: #0080FF; }
+  .icon--selector--selected i {
+    color: white; }
 
 .selectionBar--link {
   cursor: pointer; }
@@ -172,7 +176,7 @@ body {
 .selectionBar--selected {
   background-color: #0080FF; }
   .selectionBar--selected a {
-    color: #B9B9B9 !important; }
+    color: white !important; }
 
 .selectionBar__content {
   left: 0;
