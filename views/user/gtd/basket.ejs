@@ -37,6 +37,7 @@
                                             <button class='reset--button' title='<%= __("_delete_action") %>' @click='deleteAction(v.user[i - 1].id)'><i class='fa fa-times icon action--icon user--icon'></i></button>
                                             <button class='reset--button' title='<%= __("_edit_action") %>' @click='openUserForm("editAction");v.forms.editAction.id = v.user[i - 1].id'><i class='fa fa-edit icon action--icon user--icon'></i></button>
                                             <button class='reset--button' title='<%= __("add/edit_tag") %>' @click='openUserForm("add_changeTags");v.forms.editTag.id = v.user[i - 1].id;selectTagForm("" + v.user[i - 1].tag)'><i class='fa fa-tag icon action--icon user--icon'></i></button>
+                                            <button class='reset--button' title='<%= __("projects") %>' @click='openUserForm("actionToProject");v.forms.project.action.id = v.user[i - 1].id'><i class="fas fa-project-diagram icon action--icon user--icon"></i></button>
                                         </div>
                                     </div>
                                 </div>

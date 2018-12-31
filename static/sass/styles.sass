@@ -182,7 +182,32 @@ body
     background-color: $blue
 
 
-    
+
+.selectionBar--link
+    cursor: pointer
+    &:hover
+            a
+                color: $blue
+
+.selectionBar__links
+    >div
+        width: 100%
+    a
+        text-decoration: none
+        padding: 4px
+
+.selectionBar--selected
+    background-color: $blue
+    a
+        color: $gray--light--light !important
+
+
+.selectionBar__content
+    left: 0
+    top: 45px
+
+.selectionBar__element
+    margin-top: 30px
 
 
 
@@ -210,7 +235,8 @@ body
     height: 100%
 
 #background,
-.form__element
+.form__element,
+.selectionBar
     width: 100%
 
 .form--button,
@@ -224,6 +250,7 @@ a,
 .fa-eye,
 body,
 .icon,
+.icon--tiny,
 .textBox
     color: $gray--light--light
 
@@ -267,7 +294,8 @@ h1.title
 #navBArMobileButton__left,
 .action,
 #userForms > div,
-.action__content
+.action__content,
+.selectionBar
     position: relative
 
 .form--eye,
@@ -279,7 +307,8 @@ h1.title
 #navBArMobileButton__left > .fa-user,
 .userForm,
 .user__form__close,
-#userForms
+#userForms,
+.selectionBar__content
     position: absolute
 
 .justifyContent,
@@ -287,10 +316,12 @@ h1.title
 .centralizeContent,
 .centralizeContentColumn,
 .rowReversed,
+.rowAround,
+.row,
 #body,
 .column,
 #content,
-.action__header
+.action__header,
     display: flex
 
 .alignContent,
@@ -300,7 +331,10 @@ h1.title
 
 .rowReversed
     flex-direction: row-reverse
-    
+
+.rowAround
+    justify-content: space-around
+
 .centralizeContent,
 .centralizeContentColumn,
 .justifyContent
@@ -368,6 +402,9 @@ a
 .icon
     font-size: 30px
 
+.icon--tiny
+    font-size: 15px
+
 
 .link--button
     display: inline-block
@@ -431,3 +468,13 @@ h1.title
     .action__header,
     .action__content
         margin: 0 10px
+
+.checkBox
+    cursor: pointer
+    display: inline-block
+    div
+        margin-left: 5px
+        display: inline-block
+        border: 0.5px solid $gray--light--light
+        width: 20px
+        height: 20px

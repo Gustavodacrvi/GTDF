@@ -158,6 +158,29 @@ body {
 .icon--selector--selected {
   background-color: #0080FF; }
 
+.selectionBar--link {
+  cursor: pointer; }
+  .selectionBar--link:hover a {
+    color: #0080FF; }
+
+.selectionBar__links > div {
+  width: 100%; }
+.selectionBar__links a {
+  text-decoration: none;
+  padding: 4px; }
+
+.selectionBar--selected {
+  background-color: #0080FF; }
+  .selectionBar--selected a {
+    color: #B9B9B9 !important; }
+
+.selectionBar__content {
+  left: 0;
+  top: 45px; }
+
+.selectionBar__element {
+  margin-top: 30px; }
+
 .action__header,
 .action__content,
 .form > div {
@@ -181,7 +204,8 @@ body {
   height: 100%; }
 
 #background,
-.form__element {
+.form__element,
+.selectionBar {
   width: 100%; }
 
 .form--button,
@@ -195,6 +219,7 @@ a,
 .fa-eye,
 body,
 .icon,
+.icon--tiny,
 .textBox {
   color: #B9B9B9; }
 
@@ -238,7 +263,8 @@ h1.title {
 #navBArMobileButton__left,
 .action,
 #userForms > div,
-.action__content {
+.action__content,
+.selectionBar {
   position: relative; }
 
 .form--eye,
@@ -250,7 +276,8 @@ h1.title {
 #navBArMobileButton__left > .fa-user,
 .userForm,
 .user__form__close,
-#userForms {
+#userForms,
+.selectionBar__content {
   position: absolute; }
 
 .justifyContent,
@@ -258,6 +285,8 @@ h1.title {
 .centralizeContent,
 .centralizeContentColumn,
 .rowReversed,
+.rowAround,
+.row,
 #body,
 .column,
 #content,
@@ -271,6 +300,9 @@ h1.title {
 
 .rowReversed {
   flex-direction: row-reverse; }
+
+.rowAround {
+  justify-content: space-around; }
 
 .centralizeContent,
 .centralizeContentColumn,
@@ -335,6 +367,9 @@ a {
 .icon {
   font-size: 30px; }
 
+.icon--tiny {
+  font-size: 15px; }
+
 .link--button {
   display: inline-block;
   width: 225px;
@@ -396,5 +431,14 @@ h1.title {
   .action__header,
   .action__content {
     margin: 0 10px; } }
+.checkBox {
+  cursor: pointer;
+  display: inline-block; }
+  .checkBox div {
+    margin-left: 5px;
+    display: inline-block;
+    border: 0.5px solid #B9B9B9;
+    width: 20px;
+    height: 20px; }
 
 /*# sourceMappingURL=styles.css.map */

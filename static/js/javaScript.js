@@ -218,12 +218,11 @@ class TimeM {
 
     sync(){
         let date = new Date()
-        let init = () => {this.syncId = setInterval(() => {this.addMin(1);console.log(this)}, 60000)}
+        let init = () => {this.syncId = setInterval(() => {this.addMin(1)}, 60000)}
         setTimeout(() => {
             this.hour = date.getHours()
             this.min = date.getMinutes()
             this.addMin(1)
-            console.log(this)
             init()
         }, 60000 - date.getSeconds() * 1000)
     }
@@ -377,6 +376,38 @@ let menu = {
     isDesktop: function() {return $(window).width() >= this.minDesktopWidth}
 }
 
+let selectionBar = {
+    bars: function() {return $('.selectionBar')},
+
+    applyEventHandlers: function(){
+        let v = $('.selectionBar--link')
+        for (let i = 0;i < v.length;i++)
+            v.eq(i).on('click', function(){
+                $(this).parent().parent().find('.selectionBar--link').removeClass('selectionBar--selected')
+                $(this).addClass('selectionBar--selected')
+                hide($(this).parent().parent().find('.selectionBar__content'), '0.2s')
+                show($(this).parent().children('.selectionBar__content'), '0.2s')
+            })
+    }
+}
+
+let checkbox = {
+    applyEventHandlers: function(){
+        let v = $('.checkBox')
+        for (let i = 0;i < v.length;i++){
+            v.eq(i).data('clicked', true)
+            v.eq(i).on('click', function(){
+                if ($(this).data('clicked') == undefined || $(this).data('clicked') == false){
+                    show($(this).find('i'), '0.2s')
+                    $(this).data('clicked', true)
+                } else {
+                    hide($(this).find('i'), '0.2s')
+                    $(this).data('clicked', false)
+                }
+            })
+        }
+    }
+}
 
 // CONTENT
 
@@ -399,6 +430,11 @@ let actions = new Vue({
                 editTag: {
                     Id: '',
                     newTag: 'basket'
+                },
+                project: {
+                    action: {
+                        delete: true
+                    }
                 }
             },
             user: {
@@ -513,6 +549,8 @@ actions.getUser()
 
 slideEffect()
 dropdowns()
+selectionBar.applyEventHandlers()
+checkbox.applyEventHandlers()
 
 if (menu.isDesktop()){
     $('#navColumn').off('mouseleave')

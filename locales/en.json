@@ -52,5 +52,12 @@
     "ADD_TO_CALENDAR": "ADD TO CALENDAR",
     "Date": "Date",
     "Hour": "Hour",
-    "Optional": "Optional"
+    "Optional": "Optional",
+    "ADD_TO_PROJECT/CREATE_PROJECT": "ADD TO PROJECT/CREATE PROJECT",
+    "ADD": "ADD",
+    "CREATE": "CREATE",
+    "_Create_a_project_with_the_same_name_of_this_action": "Create a project with the same name of this action.",
+    "delete_action": "delete action",
+    "Create": "Create",
+    "Create_project": "Create project"
 }
