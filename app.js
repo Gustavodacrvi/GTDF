@@ -231,10 +231,10 @@ app.get('/pt-BR', function(req, res){
 
 // ACTIONS
 
-app.post('/user/add-basket-action', function(req, res){
+app.post('/user/add-action', function(req, res){
     let action = {
         id: new Objectid(),
-        tag: 'basket',
+        tag: req.body.tag,
         title: req.body.title,
         description: req.body.description
     }

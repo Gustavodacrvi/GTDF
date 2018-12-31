@@ -7,13 +7,13 @@
                     <h1 class='title' style='margin-top: 0;margin-bottom: 10px'><%= __('ADD_ACTION') %></h1>
                 </div>
                 <div class='form__element centralizeContent'>
-                    <textarea v-model='v.forms.basket.addAction.title' class='textBox' style='height: 41px' placeholder='<%= __("Title") %>...'></textarea>
+                    <textarea v-model='v.forms.addAction.title' class='textBox' style='height: 41px' placeholder='<%= __("Title") %>...'></textarea>
                 </div>
                 <div class='form__element centralizeContent'>
-                    <textarea v-model='v.forms.basket.addAction.description' class='textBox' style='height: 168px' placeholder='<%= __("Description") %>...'></textarea>
+                    <textarea v-model='v.forms.addAction.description' class='textBox' style='height: 168px' placeholder='<%= __("Description") %>...'></textarea>
                 </div>
                 <div class='form__element centralizeContent'>
-                    <button class='form--button' @click='addActionBasket()'><%= __('Add_action') %></button>
+                    <button class='form--button' @click='addAction()'><%= __('Add_action') %></button>
                 </div>
             </div>
         </div>
@@ -41,13 +41,13 @@
                         </div>
                     </div>
                 </div>
-                <div v-if='v.forms.basket.editTag.newTag == "calendar"' class='form__element centralizeContent'>
+                <div v-if='v.forms.editTag.newTag == "calendar"' class='form__element centralizeContent'>
                     <div>
                         <div>
-                            <textarea v-model='v.forms.basket.addAction.title' class='textBox' style='height: 20px' placeholder='<%= __("Date") %>: DD/MM/YYYY'></textarea>
+                            <textarea v-model='v.forms.addAction.title' class='textBox' style='height: 20px' placeholder='<%= __("Date") %>: DD/MM/YYYY'></textarea>
                         </div>
                         <div>
-                            <textarea v-model='v.forms.basket.addAction.title' class='textBox' style='height: 20px' placeholder='<%= __("Hour") %>: HH:MM (<%= __("Optional") %>)'></textarea>
+                            <textarea v-model='v.forms.addAction.title' class='textBox' style='height: 20px' placeholder='<%= __("Hour") %>: HH:MM (<%= __("Optional") %>)'></textarea>
                         </div>                        
                     </div>
                 </div>
@@ -63,13 +63,13 @@
                     <h1 class='title' style='margin-top: 0;margin-bottom: 10px'><%= __('EDIT_ACTION') %></h1>
                 </div>
                 <div class='form__element centralizeContent'>
-                    <textarea v-model='v.forms.basket.editAction.title' class='textBox' style='height: 41px' placeholder='<%= __("Title") %>...'></textarea>
+                    <textarea v-model='v.forms.editAction.title' class='textBox' style='height: 41px' placeholder='<%= __("Title") %>...'></textarea>
                 </div>
                 <div class='form__element centralizeContent'>
-                    <textarea v-model='v.forms.basket.editAction.description' class='textBox' style='height: 168px' placeholder='<%= __("Description") %>...'></textarea>
+                    <textarea v-model='v.forms.editAction.description' class='textBox' style='height: 168px' placeholder='<%= __("Description") %>...'></textarea>
                 </div>
                 <div class='form__element centralizeContent'>
-                    <button class='form--button' @click='editActionBasket()'><%= __('Edit_action') %></button>
+                    <button class='form--button' @click='editAction()'><%= __('Edit_action') %></button>
                 </div>
             </div>
         </div>
