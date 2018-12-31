@@ -376,21 +376,6 @@ let menu = {
     isDesktop: function() {return $(window).width() >= this.minDesktopWidth}
 }
 
-let selectionBar = {
-    bars: function() {return $('.selectionBar')},
-
-    applyEventHandlers: function(){
-        let v = $('.selectionBar--link')
-        for (let i = 0;i < v.length;i++)
-            v.eq(i).on('click', function(){
-                $(this).parent().parent().find('.selectionBar--link').removeClass('selectionBar--selected')
-                $(this).addClass('selectionBar--selected')
-                hide($(this).parent().parent().find('.selectionBar__content'), '0.2s')
-                show($(this).parent().children('.selectionBar__content'), '0.2s')
-            })
-    }
-}
-
 let checkbox = {
     applyEventHandlers: function(){
         let v = $('.checkBox')
@@ -543,14 +528,33 @@ let actions = new Vue({
             $('#' + id).addClass('icon--selector--selected')
             this.v.forms.editTag.newTag = id
         },
+        applySelectionBarEventHandlers: function(){
+            let v = $('.selectionBar--link')
+            for (let i = 0;i < v.length;i++)
+                v.eq(i).on('click', function(){
+                    $(this).parent().parent().find('.selectionBar--link').removeClass('selectionBar--selected')
+                    $(this).addClass('selectionBar--selected')
+                    hide($(this).parent().parent().find('.selectionBar__content'), '0.2s')
+                    show($(this).parent().children('.selectionBar__content'), '0.2s')
+                })
+        },
+        hideAllSelectionBars: function(){
+            hide($('.selectionBar--link').parent().parent().find('.selectionBar__content'), '0.2s')
+        },
+        showMainOptionSelectionBars: function(){
+            $('.selectionBar--link').removeClass('selectionBar--selected')
+            $('#selectionBar_actionToProject_main').parent().children('.selectionBar--link').addClass('selectionBar--selected')
+            show($('#selectionBar_actionToProject_main'))
+        }
     }
 })
 
 actions.getUser()
 
+
 slideEffect()
 dropdowns()
-selectionBar.applyEventHandlers()
+actions.applySelectionBarEventHandlers()
 checkbox.applyEventHandlers()
 
 if (menu.isDesktop()){

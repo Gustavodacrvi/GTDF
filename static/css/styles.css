@@ -394,6 +394,16 @@ a {
 h1.title {
   font-size: 30px; }
 
+.checkBox {
+  cursor: pointer;
+  display: inline-block; }
+  .checkBox div {
+    margin-left: 5px;
+    display: inline-block;
+    border: 0.5px solid #B9B9B9;
+    width: 20px;
+    height: 20px; }
+
 @media screen and (min-width: 769px) {
   #navBar #navBar__mobile {
     display: none; }
@@ -423,11 +433,10 @@ h1.title {
   .actionButtonDropdown > div {
     position: absolute;
     right: 10px;
-    top: -110%;
+    top: -55px;
     border: 0.5px solid #6A6A6A;
-    border-radius: 2px; }
-  .actionButtonDropdown button {
-    padding: 10px; }
+    border-radius: 2px;
+    height: 50px; }
 
   .action--bar {
     margin: 40px 10px 80px 10px; }
@@ -435,14 +444,5 @@ h1.title {
   .action__header,
   .action__content {
     margin: 0 10px; } }
-.checkBox {
-  cursor: pointer;
-  display: inline-block; }
-  .checkBox div {
-    margin-left: 5px;
-    display: inline-block;
-    border: 0.5px solid #B9B9B9;
-    width: 20px;
-    height: 20px; }
 
 /*# sourceMappingURL=styles.css.map */
