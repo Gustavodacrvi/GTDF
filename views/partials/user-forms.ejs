@@ -1,6 +1,6 @@
 <section class='centralizeContent' id='userForms'>
     <div>
-        <div class='form card userForm hided' id='addSimpleActionForm'>
+        <article class='form card userForm hided' id='addSimpleActionForm'>
             <button class='reset--button user__form__close'><i class='fa fa-times icon close--icon user--icon'></i></button>
             <div>
                 <div class='form__element centralizeContent'>
@@ -16,8 +16,8 @@
                     <button class='form--button' @click='addAction()'><%= __('Add_action') %></button>
                 </div>
             </div>
-        </div>
-        <div class='form card userForm hided' id='add_changeTags' style='margin-top: 50px'>
+        </article>
+        <article class='form card userForm hided' id='add_changeTags' style='margin-top: 50px'>
             <button class='reset--button user__form__close'><i class='fa fa-times icon close--icon user--icon'></i></button>
             <div>
                 <div class='form__element alignContent'>
@@ -55,8 +55,8 @@
                     <button class='form--button' @click='editTag()'><%= __('Edit_action') %></button>
                 </div>
             </div>
-        </div>
-        <div class='form card userForm hided' id='editAction'>
+        </article>
+        <article class='form card userForm hided' id='editAction'>
             <button class='reset--button user__form__close'><i class='fa fa-times icon close--icon user--icon'></i></button>
             <div>
                 <div class='form__element centralizeContent'>
@@ -72,8 +72,8 @@
                     <button class='form--button' @click='editAction()'><%= __('Edit_action') %></button>
                 </div>
             </div>
-        </div>
-        <div class='form card userForm hided' id='actionToProject'>
+        </article>
+        <article class='form card userForm hided' id='actionToProject'>
             <button class='reset--button user__form__close' @click='hideAllSelectionBars()'><i class='fa fa-times icon close--icon user--icon'></i></button>
             <div>
                 <div class='form__element centralizeContent'>
@@ -111,8 +111,8 @@
                     </nav>
                 </div>
             </div>
-        </div>
-        <div class='form card userForm hided' id='addProject'>
+        </article>
+        <article class='form card userForm hided' id='addProject'>
             <button class='reset--button user__form__close'><i class='fa fa-times icon close--icon user--icon'></i></button>
             <div>
                 <div>
@@ -123,10 +123,10 @@
                         <textarea v-model='v.forms.project.title' class='textBox' style='height: 41px' placeholder='<%= __("Title") %>...'></textarea>
                     </div>
                     <div class='form__element centralizeContent'>
-                        <button class='form--button'><%= __('Create_project') %></button>
+                        <button class='form--button' @click='createProject()'><%= __('Create_project') %></button>
                     </div>
                 </div>
             </div>
-        </div>
+        </article>
     </div>
 </section>

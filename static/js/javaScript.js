@@ -426,6 +426,9 @@ let actions = new Vue({
             },
             user: {
             },
+            projects: {
+
+            },
             actionIcons: function() {return $('.action--icon')},
             closeIcons: function() {return $('.close--icon')},
             userIcons: function() {return $('.user--icon')},
@@ -437,6 +440,14 @@ let actions = new Vue({
         addAction: function(){
             $.post('/user/add-action', { title: this.v.forms.addAction.title, description: this.v.forms.addAction.description, tag: this.v.forms.addAction.tag}, (data, status, xhr) => {
                 this.v.user = JSON.parse(data).actions
+            }).then(() => {
+                this.$forceUpdate()
+                this.actionsInit()
+            })
+        },
+        createProject: function(){
+            $.post('/user/create-project', {title: this.v.forms.project.title}, (data, status, xhr) => {
+                this.v.projects = JSON.parse(data).projects
             }).then(() => {
                 this.$forceUpdate()
                 this.actionsInit()
@@ -460,7 +471,9 @@ let actions = new Vue({
         },
         getUser: function(){
             $.get('/user/get-user', (data, status) => {
-                this.v.user = JSON.parse(data).actions
+                let user = JSON.parse(data)
+                this.v.user = user.actions
+                this.v.projects = user.projects
             }).then(() => {
                 this.actionsInit()
             })
@@ -509,7 +522,7 @@ let actions = new Vue({
                 if (v.eq(i).data('alreadyApplied') !== true)
                     v.eq(i).find('.project__header').on('click', function(){
                         $(this).parent().children('.project__actions').slideToggle()
-                    }).data('alreadyApplied', true)
+                    }).parent().data('alreadyApplied', true)
         },
         hideAllUserForms: function(){
             hide(this.v.userForms(), '0.3s')

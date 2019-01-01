@@ -307,6 +307,25 @@ app.post('/user/edit-tag', function(req, res){
     })
 })
 
+app.post('/user/create-project', function(req, res){
+    let project = {
+        id: new Objectid(),
+        title: req.body.title,
+        actions: [
+
+        ]
+    }
+    User.findById(req.user.id, function(err, user){
+        if (err) return handleError(err)
+
+        user.projects.push(project)
+        user.save(function (err, updatedUser) {
+            if (err) return handleError(err)
+            res.send(JSON.stringify(updatedUser))
+          })
+    })
+})
+
 app.listen(3000, '0.0.0.0', function(req, res){
     console.log('Server started at port 3000...')
 })
