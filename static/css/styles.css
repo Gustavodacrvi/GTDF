@@ -162,6 +162,10 @@ body {
   .icon--selector--selected i {
     color: white; }
 
+.usefForm--title {
+  margin-top: 0;
+  margin-bottom: 10px; }
+
 .selectionBar--link {
   cursor: pointer; }
   .selectionBar--link:hover a {

@@ -11,10 +11,22 @@
 <body>
 <section id='background'>
 
+<% include ../../partials/user-forms %>
+
 <div id='body'>
     <% include ../../partials/menu %>
     <% include ../../partials/menu-vertical %>
     <div id='content'>
+        <div id='content__cards' class='slide--effect--right'>
+            <div style='height: 50px'></div>
+            <div class='card action--bar alignContent'>
+                <button class='reset--button' onclick='actions.openUserForm("addProject")'><i class='fa fa-plus icon action--icon user--icon'></i></button>
+            </div>
+                <!-- COLOCAR CARDS AQUI -->
+            <div style='height: 100px'></div>
+        </div>
+        <div id='content__ads'>
+        </div>
     </div>
 </div>
 

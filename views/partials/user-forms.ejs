@@ -4,10 +4,9 @@
             <button class='reset--button user__form__close'><i class='fa fa-times icon close--icon user--icon'></i></button>
             <div>
                 <div class='form__element centralizeContent'>
-                    <h1 class='title' style='margin-top: 0;margin-bottom: 10px'><%= __('ADD_ACTION') %></h1>
+                    <h1 class='title usefForm--title'><%= __('ADD_ACTION') %></h1>
                 </div>
                 <div class='form__element centralizeContent'>
-                    <textarea v-model='v.forms.addAction.title' class='textBox' style='height: 41px' placeholder='<%= __("Title") %>...'></textarea>
                 </div>
                 <div class='form__element centralizeContent'>
                     <textarea v-model='v.forms.addAction.description' class='textBox' style='height: 168px' placeholder='<%= __("Description") %>...'></textarea>
@@ -21,7 +20,7 @@
             <button class='reset--button user__form__close'><i class='fa fa-times icon close--icon user--icon'></i></button>
             <div>
                 <div class='form__element alignContent'>
-                    <h1 class='title' style='margin-top: 0;margin-bottom: 10px'><%= __('ADD/EDIT_TAG') %></h1>
+                    <h1 class='title usefForm--title'><%= __('ADD/EDIT_TAG') %></h1>
                 </div>
                 <div class='form__element alignContent'>
                     <div class='iconGroup centralizeContent'>
@@ -60,7 +59,7 @@
             <button class='reset--button user__form__close'><i class='fa fa-times icon close--icon user--icon'></i></button>
             <div>
                 <div class='form__element centralizeContent'>
-                    <h1 class='title' style='margin-top: 0;margin-bottom: 10px'><%= __('EDIT_ACTION') %></h1>
+                    <h1 class='title usefForm--title'><%= __('EDIT_ACTION') %></h1>
                 </div>
                 <div class='form__element centralizeContent'>
                     <textarea v-model='v.forms.editAction.title' class='textBox' style='height: 41px' placeholder='<%= __("Title") %>...'></textarea>
@@ -77,7 +76,7 @@
             <button class='reset--button user__form__close' @click='hideAllSelectionBars()'><i class='fa fa-times icon close--icon user--icon'></i></button>
             <div>
                 <div class='form__element centralizeContent'>
-                    <h1 class='title' style='margin-top: 0;margin-bottom: 10px'><%= __('ADD_TO_PROJECT/CREATE_PROJECT') %></h1>
+                    <h1 class='title usefForm--title'><%= __('ADD_TO_PROJECT/CREATE_PROJECT') %></h1>
                 </div>
                 <div>
                     <nav class='form__element selectionBar column' style='height: 200px'>
@@ -109,6 +108,22 @@
                             </div>
                         </div>
                     </nav>
+                </div>
+            </div>
+        </div>
+        <div class='form card userForm hided' id='addProject'>
+            <button class='reset--button user__form__close'><i class='fa fa-times icon close--icon user--icon'></i></button>
+            <div>
+                <div>
+                    <div class='form__element centralizeContent'>
+                        <h1 class='title usefForm--title'><%= __('ADD_PROJECT') %></h1>
+                    </div>
+                    <div class='form__element'>
+                        <textarea class='textBox' style='height: 41px' placeholder='<%= __("Title") %>...'></textarea>
+                    </div>
+                    <div class='form__element centralizeContent'>
+                        <button class='form--button'><%= __('Create_project') %></button>
+                    </div>
                 </div>
             </div>
         </div>
