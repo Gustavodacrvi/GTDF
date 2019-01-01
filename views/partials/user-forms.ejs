@@ -115,16 +115,28 @@
         <article class='form card userForm hided' id='addProject'>
             <button class='reset--button user__form__close'><i class='fa fa-times icon close--icon user--icon'></i></button>
             <div>
-                <div>
-                    <div class='form__element centralizeContent'>
-                        <h1 class='title usefForm--title'><%= __('ADD_PROJECT') %></h1>
-                    </div>
-                    <div class='form__element'>
-                        <textarea v-model='v.forms.project.title' class='textBox' style='height: 41px' placeholder='<%= __("Title") %>...'></textarea>
-                    </div>
-                    <div class='form__element centralizeContent'>
-                        <button class='form--button' @click='createProject()'><%= __('Create_project') %></button>
-                    </div>
+                <div class='form__element centralizeContent'>
+                    <h1 class='title usefForm--title'><%= __('ADD_PROJECT') %></h1>
+                </div>
+                <div class='form__element'>
+                    <textarea v-model='v.forms.project.title' class='textBox' style='height: 41px' placeholder='<%= __("Title") %>...'></textarea>
+                </div>
+                <div class='form__element centralizeContent'>
+                    <button class='form--button' @click='createProject()'><%= __('Create_project') %></button>
+                </div>
+            </div>
+        </article>
+        <article class='form card userForm hided' id='editProjectTitle'>
+            <button class='reset--button user__form__close'><i class='fa fa-times icon close--icon user--icon'></i></button>
+            <div>
+                <div class='form__element centralizeContent'>
+                    <h1 class='title usefForm--title'><%= __('EDIT_PROJECT_TITLE') %></h1>
+                </div>
+                <div class='form__element'>
+                    <textarea v-model='v.forms.project.editProjectTitle' class='textBox' style='height: 41px' placeholder='<%= __("Title") %>...'></textarea>                        
+                </div>
+                <div class='form__element centralizeContent'>
+                    <button class='form--button' @click='editProjectTitle()'><%= __('Create_project') %></button>
                 </div>
             </div>
         </article>

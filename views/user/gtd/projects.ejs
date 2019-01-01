@@ -34,7 +34,7 @@
                             <div class='rowReversed'>
                                 <div class='action__buttons rowReversed'>
                                     <button class='reset--button' title='<%= __("_delete_project") %>' @click='deleteProject(v.projects[i - 1].id)'><i class='fa fa-times icon action--icon user--icon'></i></button>                                    
-                                    <button class='reset--button' title='<%= __("_edit_project_title") %>' @click='openUserForm("editAction");v.forms.editAction.id = v.user[i - 1].id;hideAllSelectionBars()'><i class='fa fa-edit icon action--icon user--icon'></i></button>
+                                    <button class='reset--button' title='<%= __("_edit_project_title") %>' @click='openUserForm("editProjectTitle");v.forms.project.editProjectId = v.projects[i - 1].id;hideAllSelectionBars()'><i class='fa fa-edit icon action--icon user--icon'></i></button>
                                     <button class='reset--button' title='<%= __("_add_action_to_project") %>'><i class='fa fa-plus icon action--icon user--icon'></i></button>
                                 </div>
                             </div>

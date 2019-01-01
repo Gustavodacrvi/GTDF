@@ -421,7 +421,9 @@ let actions = new Vue({
                         delete: true,
                         projectId: ''
                     },
-                    title: ''
+                    title: '',
+                    editProjectId: '',
+                    editProjectTitle: ''
                 }
             },
             user: {
@@ -549,6 +551,13 @@ let actions = new Vue({
         },
         deleteProject: function(id){
             $.post('/user/delete-project', { projectId: id}, (data, status) => {
+                this.v.projects = JSON.parse(data)
+            }).then(() => {
+                this.actionsInit()
+            })
+        },
+        editProjectTitle: function(){
+            $.post('/user/edit-project-title', { title: this.v.forms.project.editProjectTitle, projectId: this.v.forms.project.editProjectId }, (data, status) => {
                 this.v.projects = JSON.parse(data)
             }).then(() => {
                 this.actionsInit()

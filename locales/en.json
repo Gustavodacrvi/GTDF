@@ -65,5 +65,6 @@
     "ADD_PROJECT": "ADD PROJECT",
     "_delete_project": "delete project",
     "_edit_project_title": "edit project title",
-    "_add_action_to_project": "add action to projeto"
+    "_add_action_to_project": "add action to projeto",
+    "EDIT_PROJECT_TITLE": "EDIT PROJECT TITLE"
 }
