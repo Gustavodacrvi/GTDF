@@ -326,6 +326,21 @@ app.post('/user/create-project', function(req, res){
     })
 })
 
+app.post('/user/delete-project', function(req, res){
+    User.findById(req.user.id, function(err, user){
+        if (err) return handleError(err)
+
+        let i = user.projects.findIndex(function(el){
+            return el.id == req.body.projectId
+        })
+        user.projects.splice(i, 1)
+        user.save(function(err, updatedUser){
+            if (err) return handleError(err)
+            res.send(JSON.stringify(updatedUser.projects))
+        })
+    })
+})
+
 app.listen(3000, '0.0.0.0', function(req, res){
     console.log('Server started at port 3000...')
 })

@@ -62,5 +62,8 @@
     "Create_project": "Create project",
     "Add_this_action_to_the_selected_project": "Add this action to the selected.",
     "Add_to_project": "Add to project",
-    "ADD_PROJECT": "ADD PROJECT"
+    "ADD_PROJECT": "ADD PROJECT",
+    "_delete_project": "delete project",
+    "_edit_project_title": "edit project title",
+    "_add_action_to_project": "add action to projeto"
 }

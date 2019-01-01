@@ -547,6 +547,13 @@ let actions = new Vue({
                 this.actionsInit()
             })
         },
+        deleteProject: function(id){
+            $.post('/user/delete-project', { projectId: id}, (data, status) => {
+                this.v.projects = JSON.parse(data)
+            }).then(() => {
+                this.actionsInit()
+            })
+        },
         selectTagForm: function(id){
             $('.icon--selector').removeClass('icon--selector--selected')
             $('#' + id).addClass('icon--selector--selected')
