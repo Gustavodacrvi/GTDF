@@ -420,7 +420,8 @@ let actions = new Vue({
                     action: {
                         delete: true,
                         projectId: ''
-                    }
+                    },
+                    title: ''
                 }
             },
             user: {
@@ -501,8 +502,8 @@ let actions = new Vue({
                     }).data('alreadyApplied', true)
         },
         hideAllUserForms: function(){
-            hide(this.v.userForms())
-            hide($('#userForms > div'))
+            hide(this.v.userForms(), '0.3s')
+            hide($('#userForms > div'), '0.3s')
         },
         applyEventHandlersUserForms: function(){
             for (let i = 0;i < this.v.closeIcons().length;i++)
@@ -513,8 +514,8 @@ let actions = new Vue({
         },
         openUserForm: function(id){
             this.hideAllUserForms()
-            show($('#' + id), '0.2s')
-            show($('#userForms > div'))
+            show($('#' + id), '0.3s')
+            show($('#userForms > div'), '0.3s')
         },
         deleteAction: function(id){
             $.post('/user/delete-action', { actionId: id }, (data, status) => {

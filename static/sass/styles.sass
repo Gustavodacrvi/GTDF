@@ -79,7 +79,6 @@ body
     right: 0
     top: 9px
     font-size: 22px
-    cursor: pointer
 
 .fa-eye-slash
     color: $gray--light
@@ -90,9 +89,7 @@ body
     position: fixed
     flex-basis: 250px
     border-right: 0.5px solid $gray--light--light
-    background-color: $gray
     z-index: 1
-    left: 0
     width: 250px
 
 #body > #content
@@ -124,8 +121,6 @@ body
     padding: 0 10px
 
 
-.action__header
-    cursor: pointer 
 
 .action:hover
     top: -3px
@@ -140,16 +135,11 @@ body
 
 .action__title
     flex-basis: 90%
-    height: 100%
 
 .action__buttons
     flex-basis: 10%
 
 // USER FORMS
-
-#userForms
-    width: 100%
-    height: 100%
 
 #userForms > div
     width: 350px
@@ -158,32 +148,20 @@ body
     
 .userForm
     top: 0
-    left: 0
 
 .user__form__close
     right: 2px
     top: 2px
 
 .iconGroup
-    width: 100%
     >div
-        display: flex
         flex-wrap: wrap
 
 .icon--selector
     border: 0.5px solid $gray--light--light
     width: 70px
     height: 70px
-    cursor: pointer
-    &:hover
-        background-color: $blue
-        i
-            color: white
 
-.icon--selector--selected
-    background-color: $blue
-    i
-        color: white
 
 .usefForm--title
     margin-top: 0
@@ -192,26 +170,21 @@ body
 
 
 .selectionBar--link
-    cursor: pointer
     &:hover
             a
                 color: $blue
 
 .selectionBar__links
-    >div
-        width: 100%
     a
         text-decoration: none
         padding: 4px
 
 .selectionBar--selected
-    background-color: $blue
     a
         color: white !important
 
 
 .selectionBar__content
-    left: 0
     top: 45px
 
 .selectionBar__element
@@ -219,6 +192,32 @@ body
 
 
 
+
+.form--button:hover,
+.link--button:hover,
+.icon--selector:hover i,
+.icon--selector--selected i
+    color: white
+
+.form--button:hover,
+.link--button:hover,
+.icon--selector:hover,
+.selectionBar--selected,
+.icon--selector--selected
+    background-color: $blue
+
+.checkBox,
+.form--eye,
+.action__header,
+.icon--selector,
+.selectionBar--link
+    cursor: pointer
+
+
+.selectionBar__content,
+#body > #navColumn,
+.userForm
+    left: 0
 
 .action__header,
 .action__content,
@@ -239,12 +238,17 @@ body
     
 #body,
 #body > #navColumn,
-#background
+#background,
+.action__title,
+#userForms
     height: 100%
 
 #background,
 .form__element,
-.selectionBar
+.selectionBar,
+#userForms,
+.iconGroup,
+.selectionBar__links > div
     width: 100%
 
 .form--button,
@@ -289,7 +293,8 @@ h1.title
 .card,
 .form--input--text,
 .reset--button,
-.textBox
+.textBox,
+#body > #navColumn
     background-color: $gray
 
 .slide--effect,
@@ -330,6 +335,7 @@ h1.title
 .column,
 #content,
 .action__header,
+.iconGroup > div
     display: flex
 
 .alignContent,
@@ -377,9 +383,6 @@ a
     padding: 12px
     font-size: 1em
 
-.form--button:hover, .link--button:hover
-    color: white
-    background-color: $blue
 
 .form--button
     background-color: transparent
@@ -435,7 +438,6 @@ h1.title
     font-size: 30px
 
 .checkBox
-    cursor: pointer
     display: inline-block
     div
         margin-left: 5px

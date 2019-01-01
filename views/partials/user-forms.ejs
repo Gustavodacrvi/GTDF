@@ -119,7 +119,7 @@
                         <h1 class='title usefForm--title'><%= __('ADD_PROJECT') %></h1>
                     </div>
                     <div class='form__element'>
-                        <textarea class='textBox' style='height: 41px' placeholder='<%= __("Title") %>...'></textarea>
+                        <textarea v-model='v.forms.project.title' class='textBox' style='height: 41px' placeholder='<%= __("Title") %>...'></textarea>
                     </div>
                     <div class='form__element centralizeContent'>
                         <button class='form--button'><%= __('Create_project') %></button>

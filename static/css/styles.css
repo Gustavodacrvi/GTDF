@@ -62,8 +62,7 @@ body {
 .form--eye {
   right: 0;
   top: 9px;
-  font-size: 22px;
-  cursor: pointer; }
+  font-size: 22px; }
 
 .fa-eye-slash {
   color: #6A6A6A; }
@@ -72,9 +71,7 @@ body {
   position: fixed;
   flex-basis: 250px;
   border-right: 0.5px solid #B9B9B9;
-  background-color: #474747;
   z-index: 1;
-  left: 0;
   width: 250px; }
 
 #body > #content {
@@ -103,9 +100,6 @@ body {
 .action__header {
   padding: 0 10px; }
 
-.action__header {
-  cursor: pointer; }
-
 .action:hover {
   top: -3px; }
 
@@ -118,15 +112,10 @@ body {
   padding: 30px; }
 
 .action__title {
-  flex-basis: 90%;
-  height: 100%; }
+  flex-basis: 90%; }
 
 .action__buttons {
   flex-basis: 10%; }
-
-#userForms {
-  width: 100%;
-  height: 100%; }
 
 #userForms > div {
   width: 350px;
@@ -134,60 +123,64 @@ body {
   z-index: 5; }
 
 .userForm {
-  top: 0;
-  left: 0; }
+  top: 0; }
 
 .user__form__close {
   right: 2px;
   top: 2px; }
 
-.iconGroup {
-  width: 100%; }
-  .iconGroup > div {
-    display: flex;
-    flex-wrap: wrap; }
+.iconGroup > div {
+  flex-wrap: wrap; }
 
 .icon--selector {
   border: 0.5px solid #B9B9B9;
   width: 70px;
-  height: 70px;
-  cursor: pointer; }
-  .icon--selector:hover {
-    background-color: #0080FF; }
-    .icon--selector:hover i {
-      color: white; }
-
-.icon--selector--selected {
-  background-color: #0080FF; }
-  .icon--selector--selected i {
-    color: white; }
+  height: 70px; }
 
 .usefForm--title {
   margin-top: 0;
   margin-bottom: 10px; }
 
-.selectionBar--link {
-  cursor: pointer; }
-  .selectionBar--link:hover a {
-    color: #0080FF; }
+.selectionBar--link:hover a {
+  color: #0080FF; }
 
-.selectionBar__links > div {
-  width: 100%; }
 .selectionBar__links a {
   text-decoration: none;
   padding: 4px; }
 
-.selectionBar--selected {
-  background-color: #0080FF; }
-  .selectionBar--selected a {
-    color: white !important; }
+.selectionBar--selected a {
+  color: white !important; }
 
 .selectionBar__content {
-  left: 0;
   top: 45px; }
 
 .selectionBar__element {
   margin-top: 30px; }
+
+.form--button:hover,
+.link--button:hover,
+.icon--selector:hover i,
+.icon--selector--selected i {
+  color: white; }
+
+.form--button:hover,
+.link--button:hover,
+.icon--selector:hover,
+.selectionBar--selected,
+.icon--selector--selected {
+  background-color: #0080FF; }
+
+.checkBox,
+.form--eye,
+.action__header,
+.icon--selector,
+.selectionBar--link {
+  cursor: pointer; }
+
+.selectionBar__content,
+#body > #navColumn,
+.userForm {
+  left: 0; }
 
 .action__header,
 .action__content,
@@ -208,12 +201,17 @@ body {
 
 #body,
 #body > #navColumn,
-#background {
+#background,
+.action__title,
+#userForms {
   height: 100%; }
 
 #background,
 .form__element,
-.selectionBar {
+.selectionBar,
+#userForms,
+.iconGroup,
+.selectionBar__links > div {
   width: 100%; }
 
 .form--button,
@@ -258,7 +256,8 @@ h1.title {
 .card,
 .form--input--text,
 .reset--button,
-.textBox {
+.textBox,
+#body > #navColumn {
   background-color: #474747; }
 
 .slide--effect,
@@ -298,7 +297,8 @@ h1.title {
 #body,
 .column,
 #content,
-.action__header {
+.action__header,
+.iconGroup > div {
   display: flex; }
 
 .alignContent,
@@ -342,10 +342,6 @@ a {
   border: 1px solid #0080FF;
   padding: 12px;
   font-size: 1em; }
-
-.form--button:hover, .link--button:hover {
-  color: white;
-  background-color: #0080FF; }
 
 .form--button {
   background-color: transparent;
@@ -399,7 +395,6 @@ h1.title {
   font-size: 30px; }
 
 .checkBox {
-  cursor: pointer;
   display: inline-block; }
   .checkBox div {
     margin-left: 5px;
