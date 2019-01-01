@@ -139,6 +139,22 @@ body
 .action__buttons
     flex-basis: 10%
 
+
+.project__header
+    margin-bottom: 5px
+    &:hover
+        left: -6px
+
+.project__actions
+    justify-content: flex-end
+    margin-top: 15px
+    >div
+        width: 95%
+
+.project + .project
+    margin-top: 15px
+
+    
 // USER FORMS
 
 #userForms > div
@@ -216,7 +232,8 @@ body
 
 .selectionBar__content,
 #body > #navColumn,
-.userForm
+.userForm,
+.project__header
     left: 0
 
 .action__header,
@@ -308,7 +325,9 @@ h1.title
 .action,
 #userForms > div,
 .action__content,
-.selectionBar
+.selectionBar,
+.project,
+.project__header
     position: relative
 
 .form--eye,
@@ -335,7 +354,8 @@ h1.title
 .column,
 #content,
 .action__header,
-.iconGroup > div
+.iconGroup > div,
+.project__actions
     display: flex
 
 .alignContent,
@@ -362,7 +382,8 @@ h1.title
 .dropdownDesktop > div,
 #navBarMobile__toggle > div,
 .action__header,
-.action
+.action,
+.project__header
     transition-duration: 0.2s
 
 .status--alert

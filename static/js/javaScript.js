@@ -472,6 +472,7 @@ let actions = new Vue({
             this.applyEventHandlersUserForms()
             if (!menu.isDesktop())
                 this.hideAllActionMobileElipsesAdnApplyEventHandler()
+            this.hideAllProjectActionsAndApplyEventHandler()            
         },
         hideAllActionMobileElipsesAdnApplyEventHandler: function(){
             hide($('.actionButtonDropdown div'))
@@ -499,6 +500,15 @@ let actions = new Vue({
                 if (this.v.actions().find('.action__title').eq(i).data('alreadyApplied') !== true)
                     this.v.actions().find('.action__title').eq(i).on('click', function(){
                         $(this).parent().parent().children('.action__content').slideToggle()
+                    }).data('alreadyApplied', true)
+        },
+        hideAllProjectActionsAndApplyEventHandler: function(){
+            $('.project .project__actions').slideUp(0)
+            let v = $('.project')
+            for (let i = 0;i < v.length;i++)
+                if (v.eq(i).data('alreadyApplied') !== true)
+                    v.eq(i).find('.project__header').on('click', function(){
+                        $(this).parent().children('.project__actions').slideToggle()
                     }).data('alreadyApplied', true)
         },
         hideAllUserForms: function(){
