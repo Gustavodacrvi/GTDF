@@ -7,6 +7,7 @@
                     <h1 class='title usefForm--title'><%= __('ADD_ACTION') %></h1>
                 </div>
                 <div class='form__element centralizeContent'>
+                    <textarea v-model='v.forms.addAction.title' class='textBox' style='height: 41px' placeholder='<%= __("Title") %>...'></textarea>                    
                 </div>
                 <div class='form__element centralizeContent'>
                     <textarea v-model='v.forms.addAction.description' class='textBox' style='height: 168px' placeholder='<%= __("Description") %>...'></textarea>
