@@ -312,7 +312,6 @@ app.post('/user/create-project', function(req, res){
         id: new Objectid(),
         title: req.body.title,
         actions: [
-
         ]
     }
     User.findById(req.user.id, function(err, user){
@@ -353,6 +352,78 @@ app.post('/user/edit-project-title', function(req, res){
         user.save(function(err, updatedUser){
             if (err) return handleError(err)
             res.send(JSON.stringify(updatedUser.projects))
+        })
+    })
+})
+
+app.post('/user/create-add-action-project', function(req, res){
+    function insertion_Sort(arr){
+            for (var i = 1; i < arr.length; i++) {
+                if (arr[i] < arr[0]) {
+                    arr.unshift(arr.splice(i,1)[0]);
+                } 
+                else if (arr[i] > arr[i-1]) {
+                    continue;
+                } 
+                else {
+                    for (var j = 1; j < i; j++) {
+                        if (arr[i] > arr[j-1] && arr[i] < arr[j]) {
+                            //move element
+                            arr.splice(j,0,arr.splice(i,1)[0]);
+                        }
+                    }
+                }
+            }
+            return arr;
+        }
+    function insertionSort(arr){
+        for (let i = 1; i < arr.length;i++){
+            if (arr[i].order < arr[0].order){
+                arr.unshift(arr.splice(i,1)[0])
+            }
+            else if (arr[i].order > arr[i-1].order){
+                continue
+            }
+            else {
+                for (let j = 1;j < i;j++){
+                    if (arr[i].order > arr[j-1].order && arr[i].order < arr[j].order){
+                        arr.splice(j,0,arr.splice(i,1)[0])
+                    }
+                }
+            }
+        }
+        return arr
+    }
+    User.findById(req.user.id, function(err, user){
+        if (err) return handleError(err)
+
+        let i = user.projects.findIndex(function(el){
+            return el.id == req.body.projectId
+        })
+        let action = {
+            id: new Objectid(),
+            tag: 'basket',
+            title: req.body.title,
+            description: req.body.description,
+            project: {
+                id: req.body.projectId,
+                title: user.projects[i].title,
+                order: req.body.order
+            }
+        }
+        let projectAction = {
+            id: action.id,
+            order: req.body.order
+        }
+        user.projects[i].actions.push(projectAction)
+        user.actions.push(action)
+        if (user.projects[i].actions.length > 1)
+            user.projects[i].actions = insertionSort(user.projects[i].actions)
+        user.markModified('actions')
+        user.markModified('projects')
+        user.save(function(err, updatedUser){
+            if (err) return handleError(err)
+            res.send(JSON.stringify(updatedUser))
         })
     })
 })

@@ -36,7 +36,6 @@ router.post('/signup', function(req, res){
     var password = req.body.password
     var password2 = req.body.password2
 
-    console.log(username)
     req.checkBody('username', 'Username_required').notEmpty()
     req.checkBody('email', 'Email_required').notEmpty()
     req.checkBody('email', 'Invalid_email').isEmail()
@@ -56,7 +55,6 @@ router.post('/signup', function(req, res){
             if (count > 0){
                 emailTaken = true
             }
-
 
             if (errors){
                 res.render('user/signup', {

@@ -66,5 +66,12 @@
 	"_delete_project": "deletar projeto",
 	"_edit_project_title": "editar título do projeto",
 	"_add_action_to_project": "adicionar ação no projeto",
-	"EDIT_PROJECT_TITLE": "EDITAR TÍTULO DO PROJETO"
+	"EDIT_PROJECT_TITLE": "EDITAR TÍTULO DO PROJETO",
+	"ADD_ACTION_TO_PROJECT": "ADICIONAR AÇÃO NO PROJETO",
+	"Create_an_action_and_add_to_the_project": "Criar uma ação e adicionar no projeto.",
+	"Add_an_already_existing_action": "Adicionar uma ação já existente.",
+	"Add": "Adicionar",
+	"Order": "Ordem",
+	"Order_must_be_an_integer_and_bigger_than_0": "A ordem deve ser um número inteiro e maior que 0",
+	"Missing credentials": "Missing credentials"
 }

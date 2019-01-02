@@ -353,6 +353,20 @@ function dropdowns(){
         }
     })
 }
+function strIsInteger(str){
+    if (str.length == 0)
+        return false
+    let containsLetter = false
+    for (let i = 0;i < str.length;i++){
+        if (str.charCodeAt(i) < 48 || str.charCodeAt(i) > 57){
+            containsLetter = true
+            break
+        }
+    }
+    if (containsLetter)
+        return false
+    return true
+}
 
 
 let formEyes = {
@@ -417,14 +431,21 @@ let actions = new Vue({
                     newTag: 'basket'
                 },
                 project: {
+                    id: '',
                     action: {
                         delete: true,
                         projectId: ''
                     },
                     title: '',
                     editProjectId: '',
-                    editProjectTitle: ''
-                }
+                    editProjectTitle: '',
+                },
+                action: {
+                    title: '',
+                    description: '',
+                    order: undefined,
+                    user: ''
+                },
             },
             user: {
             },
@@ -470,6 +491,21 @@ let actions = new Vue({
                 this.$forceUpdate()
                 this.actionsInit()
             })
+        },
+        createAndAddActionProject: function(){
+            if (!strIsInteger(this.v.forms.action.order) || parseInt(this.v.forms.action.order) < 1){
+                $('#createAndAddActionProjectAlert').css('display', 'block')
+            } else {
+                $('#createAndAddActionProjectAlert').css('display', 'none')
+                $.post('/user/create-add-action-project', { title: this.v.forms.action.title, description: this.v.forms.action.description, projectId: this.v.forms.project.id, order: this.v.forms.action.order}, (data, status, xhr) => {
+                    let user = JSON.parse(data)
+                    this.v.user = user.actions
+                    this.v.projects = user.projects
+                }).then(() => {
+                    this.$forceUpdate()
+                    this.actionsInit()
+                })
+            }
         },
         getUser: function(){
             $.get('/user/get-user', (data, status) => {
@@ -583,14 +619,18 @@ let actions = new Vue({
         },
         showMainOptionSelectionBars: function(){
             $('.selectionBar--link').removeClass('selectionBar--selected')
-            $('#selectionBar_actionToProject_main').parent().children('.selectionBar--link').addClass('selectionBar--selected')
-            show($('#selectionBar_actionToProject_main'))
+            $('.selectionBar__main').parent().children('.selectionBar--link').addClass('selectionBar--selected')
+            show($('.selectionBar__main'))
+        },
+        displayProjectAction: function(actionId){
+            let index = this.v.user.findIndex(function(el, i){
+                return el.id == actionId
+            })
+            this.v.forms.project.user = this.v.user[index]
+            return this.v.user[index]
         }
     }
 })
-
-actions.getUser()
-
 
 slideEffect()
 dropdowns()
