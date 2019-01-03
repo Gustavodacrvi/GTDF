@@ -509,6 +509,16 @@ let actions = new Vue({
                 })
             }
         },
+        transformActionToProject: function(){
+            $.post('/user/transform-action-to-project', { actionId: this.v.forms.project.action.id, delete: this.v.forms.project.action.delete}, (data, status, xhr) =>{
+                let user = JSON.parse(data)
+                this.v.user = user.actions
+                this.v.projects = user.projects
+            }).then(() =>{
+                this.$forceUpdate()
+                this.actionsInit()
+            })
+        },
         editActionProject: function(){
             if (!strIsInteger(this.v.forms.action.order) || parseInt(this.v.forms.action.order) < 1){
                 $('#createAndAddActionProjectAlert').css('display', 'block')

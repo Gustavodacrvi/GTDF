@@ -532,6 +532,45 @@ app.post('/user/add-already-existing-action', function(req, res){
     })
 })
 
+app.post('/user/transform-action-to-project', function(req, res){
+    User.findById(req.user.id, function(err, user){
+        if (err) handleError(err)
+
+        let actionI = getUserActionIndex(user, req.body.actionId)
+
+        let project = {}
+        if (req.body.delete == true){
+            project = {
+                id: user.actions[actionI].id,
+                title: user.actions[actionI].title,
+                actions: [
+                ]
+            }
+            user.actions.splice(actionI, 1)
+        } else {
+            project = {
+                id: new Objectid(),
+                title: user.actions[actionI].title,
+                actions: [
+
+                ]
+            }
+        }
+
+
+
+        user.projects.push(project)        
+
+        user.markModified('projects')
+        user.markModified('actions')
+        user.save(function(err, updatedUser){
+            if (err) return handleError(err)
+
+            res.send(JSON.stringify(updatedUser))
+        })
+    })
+})
+
 app.listen(3000, '0.0.0.0', function(req, res){
     console.log('Server started at port 3000...')
 })
