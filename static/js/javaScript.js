@@ -499,7 +499,23 @@ let actions = new Vue({
                 $('#createAndAddActionProjectAlert').css('display', 'block')
             } else {
                 $('#createAndAddActionProjectAlert').css('display', 'none')
-                $.post('/user/create-add-action-project', { title: this.v.forms.action.title, description: this.v.forms.action.description, projectId: this.v.forms.project.id, order: this.v.forms.action.order}, (data, status, xhr) => {
+                $.post('/user/create-add-action-project', { title: this.v.forms.action.title, description: this.v.forms.action.description, projectId: this.v.forms.project.id, order: parseInt(this.v.forms.action.order)}, (data, status, xhr) => {
+                    let user = JSON.parse(data)
+                    this.v.user = user.actions
+                    this.v.projects = user.projects
+                }).then(() => {
+                    this.$forceUpdate()
+                    this.actionsInit()
+                })
+            }
+        },
+        editActionProject: function(){
+            if (!strIsInteger(this.v.forms.action.order) || parseInt(this.v.forms.action.order) < 1){
+                $('#createAndAddActionProjectAlert').css('display', 'block')
+            } else {
+                $('#createAndAddActionProjectAlert').css('display', 'none')
+                $.post('/user/edit-action-project', { title: this.v.forms.action.title, description: this.v.forms.action.description, order: this.v.forms.action.order,
+                actionId: this.v.forms.action.id}, (data, status, xhr) => {
                     let user = JSON.parse(data)
                     this.v.user = user.actions
                     this.v.projects = user.projects
@@ -650,7 +666,7 @@ let actions = new Vue({
             })
             this.v.forms.project.user = this.v.user[index]
             return this.v.user[index]
-        },
+        }
     }
 })
 

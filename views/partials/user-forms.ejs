@@ -183,5 +183,28 @@
                 </div>
             </div>
         </article>
+        <article class='form card userForm hided' id='editProjectAction'>
+            <button class='reset--button user__form__close'><i class='fa fa-times icon close--icon user--icon'></i></button>
+            <div>
+                <div class='form__element centralizeContent'>
+                    <textarea v-model='v.forms.action.title' class='textBox' style='height: 41px' placeholder='<%= __("Title") %>...'></textarea>
+                </div>
+                <div class='form__element centralizeContent'>
+                    <textarea v-model='v.forms.action.description' class='textBox' style='height: 168px' placeholder='<%= __("Description") %>...'></textarea>
+                </div>
+                <div class='form__element centralizeContent'>
+                    <div>
+                    <span class='text'><%= __('Order') %>:  </span>
+                    <input class='textBox' v-model='v.forms.action.order' style='height:initial;width:30px'/>
+                    </div>
+                </div>
+                <div class='form__element' id='createAndAddActionProjectAlert'>
+                    <span class='status--alert'><%= __('Order_must_be_an_integer_and_bigger_than_0') %>.</span>
+                </div>
+                <div class='form__element centralizeContent'>
+                    <button class='form--button' @click='editActionProject()'><%= __('Edit_action') %></button>
+                </div>
+            </div>
+        </article>
     </div>
 </section>
