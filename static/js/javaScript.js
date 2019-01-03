@@ -567,11 +567,11 @@ let actions = new Vue({
             if (tag_str == 'nextAction')
                 return 'fas fa-forward icon icon--dark'
             if (tag_str == 'calendar')
-                return 'fas fa-calendar-alt icon'
+                return 'fas fa-calendar-alt icon icon--dark'
             if (tag_str == 'waiting')
-                return 'fas fa-hourglass-half icon'
+                return 'fas fa-hourglass-half icon icon--dark'
             if (tag_str == 'maybe')
-                return 'fas fa-question icon' 
+                return 'fas fa-question icon icon--dark' 
         },
         selectOption: function(title, id){
             this.v.forms.action.title = title
