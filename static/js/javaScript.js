@@ -354,6 +354,8 @@ function dropdowns(){
     })
 }
 function strIsInteger(str){
+    if (str == undefined)
+        return false
     if (str.length == 0)
         return false
     let containsLetter = false
@@ -558,8 +560,8 @@ let actions = new Vue({
             let v = $('.project')
             for (let i = 0;i < v.length;i++)
                 if (v.eq(i).data('alreadyApplied') !== true)
-                    v.eq(i).find('.project__header').on('click', function(){
-                        $(this).parent().children('.project__actions').slideToggle()
+                    v.eq(i).find('.action__title').on('click', function(){
+                        $(this).parent().parent().children('.project__actions').slideToggle()
                     }).parent().data('alreadyApplied', true)
         },
         hideAllUserForms: function(){
@@ -585,9 +587,20 @@ let actions = new Vue({
                 this.actionsInit()
             })
         },
+        deleteProjectAction: function(id){
+            $.post('/user/delete-project-action', { actionId: id}, (data, status) => {
+                let user = JSON.parse(data)
+                this.v.user = user.actions
+                this.v.projects = user.projects
+            }).then(() => {
+                this.actionsInit()
+            })
+        },
         deleteProject: function(id){
             $.post('/user/delete-project', { projectId: id}, (data, status) => {
-                this.v.projects = JSON.parse(data)
+                let user = JSON.parse(data)
+                this.v.projects = user.projects
+                this.v.user = user.actions
             }).then(() => {
                 this.actionsInit()
             })
