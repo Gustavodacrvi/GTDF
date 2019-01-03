@@ -21,7 +21,6 @@
 	"You_created_an_account_and_can_now_login": "Você criou uma conta e agora pode fazer login.",
 	"Unknown_username": "Usuário desconhecido.",
 	"Wrong_password": "Senha errada.",
-	"": "",
 	"_You_logged_out": "Você saiu.",
 	"No_account_with_that_email_address_exists": "Nenhuma conta com esse email existe.",
 	"An_email_has_been_sent_with_further_instructions": "Um email foi mandado contendo instruções para mudar sua senha.",
@@ -73,5 +72,7 @@
 	"Add": "Adicionar",
 	"Order": "Ordem",
 	"Order_must_be_an_integer_and_bigger_than_0": "A ordem deve ser um número inteiro e maior que 0",
-	"Missing credentials": "Missing credentials"
+	"Missing credentials": "Missing credentials",
+	"remove_from_project": "retirar do projeto",
+	"": ""
 }

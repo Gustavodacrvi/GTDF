@@ -112,6 +112,23 @@ function check_and_change_locale(req, res){
 function check_authentication(req, res){
     res.locals.isLogged = req.isAuthenticated()
 }
+function removeActionFromProject(user, actionId){
+    let i = user.projects.findIndex(function(el){
+        return el.actions.some(function(ele){
+            return ele.id == actionId
+        })
+    })
+    let j = user.projects[i].actions.findIndex(function(el){
+        return el.id == actionId
+    })
+    user.projects[i].actions.splice(j, 1)
+    let k = user.actions.findIndex(function(el){
+        return el.id == actionId
+    })
+    delete user.actions[k].project
+    user.markModified('projects')
+    user.markModified('actions')
+}
 
 
 
@@ -437,6 +454,20 @@ app.post('/user/delete-project-action', function(req, res){
         user.markModified('projects')
         user.save(function(err, updatedUser){
             if (err) return handleError(err)
+            res.send(JSON.stringify(updatedUser))
+        })
+    })
+})
+
+app.post('/user/remove-from-project', function(req, res){
+    User.findById(req.user.id, function(err, user){
+        if (err) handleError(err)
+
+        removeActionFromProject(user, req.body.actionId)
+
+        user.save(function(err, updatedUser){
+            if (err) return handleError(err)
+
             res.send(JSON.stringify(updatedUser))
         })
     })

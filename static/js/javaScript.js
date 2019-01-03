@@ -553,16 +553,16 @@ let actions = new Vue({
                 if (this.v.actions().find('.action__title').eq(i).data('alreadyApplied') !== true)
                     this.v.actions().find('.action__title').eq(i).on('click', function(){
                         $(this).parent().parent().children('.action__content').slideToggle()
-                    }).data('alreadyApplied', true)
+                    }).parent().data('alreadyApplied', true)
         },
         hideAllProjectActionsAndApplyEventHandler: function(){
             $('.project .project__actions').slideUp(0)
             let v = $('.project')
             for (let i = 0;i < v.length;i++)
-                if (v.eq(i).data('alreadyApplied') !== true)
+                if (v.eq(i).find('.action__title').data('alreadyApplied') !== true)
                     v.eq(i).find('.action__title').on('click', function(){
                         $(this).parent().parent().children('.project__actions').slideToggle()
-                    }).parent().data('alreadyApplied', true)
+                    }).data('alreadyApplied', true)
         },
         hideAllUserForms: function(){
             hide(this.v.userForms(), '0.3s')
@@ -612,6 +612,15 @@ let actions = new Vue({
                 this.actionsInit()
             })
         },
+        removeFromProject(actionId, projectId){
+            $.post('/user/remove-from-project', { actionId: actionId, projectId: projectId }, (data, status) => {
+                let user = JSON.parse(data)
+                this.v.projects = user.projects
+                this.v.user = user.actions
+            }).then(() => {
+                this.actionsInit()
+            })
+        },
         selectTagForm: function(id){
             $('.icon--selector').removeClass('icon--selector--selected')
             $('#' + id).addClass('icon--selector--selected')
@@ -641,7 +650,7 @@ let actions = new Vue({
             })
             this.v.forms.project.user = this.v.user[index]
             return this.v.user[index]
-        }
+        },
     }
 })
 

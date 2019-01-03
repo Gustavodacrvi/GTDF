@@ -72,5 +72,6 @@
     "Add_an_already_existing_action": "Add an already existing action",
     "Add": "Add",
     "Order": "Order",
-    "Order_must_be_an_integer_and_bigger_than_0": "Order must be an integer and bigger than 0"
+    "Order_must_be_an_integer_and_bigger_than_0": "Order must be an integer and bigger than 0",
+    "remove_from_project": "remove from project"
 }
