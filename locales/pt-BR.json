@@ -74,5 +74,6 @@
 	"Order_must_be_an_integer_and_bigger_than_0": "A ordem deve ser um número inteiro e maior que 0",
 	"Missing credentials": "Missing credentials",
 	"remove_from_project": "retirar do projeto",
-	"": ""
+	"": "",
+	"Choose_the_action": "Escolha a ação"
 }

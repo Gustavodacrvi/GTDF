@@ -47,16 +47,17 @@
                                     <div class='action'>
                                             <div class='card action__header alignContent'>
                                             <div class='action__title alignContent'>
-                                                <span class='text'>{{ displayProjectAction(v.projects[j - 1].actions[i - 1].id).title }}</span>
+                                                <span class='text'>{{ displayProjectAction(v.projects[j - 1].actions[i - 1].id).project.order }} | {{ v.forms.project.user.title }}</span>
                                             </div>
                                             <div class='actionButtonDropdown rowReversed'>
                                                 <button class='reset--button'><i class="fas fa-ellipsis-v icon action--icon"></i></button>
                                                 <div class='rowReversed'>
                                                     <div class='action__buttons rowReversed'>
-                                                        <button class='reset--button' title='<%= __("_delete_action") %>' @click='deleteProjectAction(v.user[i - 1].id)'><i class='fa fa-times icon action--icon user--icon'></i></button>
-                                                        <button class='reset--button' title='<%= __("_edit_action") %>' @click=';v.forms.action.id = v.user[i - 1].id;openUserForm("editProjectAction");;hideAllSelectionBars()'><i class='fa fa-edit icon action--icon user--icon'></i></button>
-                                                        <button class='reset--button' title='<%= __("add/edit_tag") %>' @click='openUserForm("add_changeTags");v.forms.editTag.id = v.user[i - 1].id;selectTagForm("" + v.user[i - 1].tag);hideAllSelectionBars()'><i class='fa fa-tag icon action--icon user--icon'></i></button>
-                                                        <button class='reset--button' title='<%= __("remove_from_project") %>' @click='removeFromProject(v.user[i - 1].id, v.projects[j - 1].id)'><i class="fas fa-external-link-alt icon action--icon user--icon"></i></button>
+                                                        <button class='reset--button' title='<%= __("_delete_action") %>' @click='deleteProjectAction(v.projects[j - 1].actions[i - 1].id)'><i class='fa fa-times icon action--icon user--icon'></i></button>
+                                                        <button class='reset--button' title='<%= __("_edit_action") %>' @click=';v.forms.action.id = v.projects[j - 1].actions[i - 1].id.id;openUserForm("editProjectAction");;hideAllSelectionBars()'><i class='fa fa-edit icon action--icon user--icon'></i></button>
+                                                        <button class='reset--button' title='<%= __("add/edit_tag") %>' @click='openUserForm("add_changeTags");v.forms.editTag.id = v.projects[j - 1].actions[i - 1].id.id;selectTagForm("" + v.user[i - 1].tag);hideAllSelectionBars()'><i class='fa fa-tag icon action--icon user--icon'></i></button>
+                                                        <button class='reset--button' title='<%= __("remove_from_project") %>' @click='removeFromProject(v.projects[j - 1].actions[i - 1].id, v.projects[j - 1].id)'><i class="fas fa-external-link-alt icon action--icon user--icon"></i></button>
+                                                        <button class='reset--button'><i :class='returnRespectiveTagIcon("" + v.user[i - 1].tag)'></i></button>
                                                     </div>
                                                 </div>
                                             </div>

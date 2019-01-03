@@ -115,15 +115,15 @@ function check_authentication(req, res){
 function removeActionFromProject(user, actionId){
     let i = user.projects.findIndex(function(el){
         return el.actions.some(function(ele){
-            return ele.id == actionId
+            return '' + ele.id === '' + actionId
         })
     })
     let j = user.projects[i].actions.findIndex(function(el){
-        return el.id == actionId
+        return '' + el.id === '' + actionId
     })
     user.projects[i].actions.splice(j, 1)
     let k = user.actions.findIndex(function(el){
-        return el.id == actionId
+        return '' + el.id === '' + actionId
     })
     delete user.actions[k].project
     user.markModified('projects')
@@ -131,7 +131,7 @@ function removeActionFromProject(user, actionId){
 }
 function deleteAction(user, actionId){
     let i = user.actions.findIndex(function(el){
-        return el.id == actionId
+        return '' + el.id === '' + actionId
     })
     user.actions.splice(i, 1)
     user.markModified('actions')
@@ -152,6 +152,11 @@ function getProjectActionIndex(user, actionId){
         return el.id == actionId
     })
     return {action: j, project: i}
+}
+function getProjectIndex(user, projectId){
+    return user.projects.findIndex(function(el){
+        return '' + el.id === '' + projectId
+    })
 }
 function insertionSort(arr){
     for (let i = 1; i < arr.length;i++){
@@ -389,9 +394,9 @@ app.post('/user/delete-project', function(req, res){
         })
         user.projects[i].actions.forEach(function(el, j){
             let k = user.actions.findIndex(function(ele){
-                return ele.id === el.id
+                return '' + ele.id === '' + el.id
             })
-            user.actions.splice(k, 1)
+            delete user.actions[k].project
         })
         user.projects.splice(i, 1)
         user.markModified('projects')
@@ -489,8 +494,34 @@ app.post('/user/edit-action-project', function(req, res){
 
         user.actions[actionI].title = req.body.title
         user.actions[actionI].description = req.body.description
+        user.actions[actionI].project.order = req.body.order
         user.projects[projectI.project].actions[projectI.action].order = req.body.order
         user.projects[projectI.project].actions = insertionSort(user.projects[projectI.project].actions)
+        user.markModified('actions')
+        user.markModified('projects')
+        user.save(function(err, updatedUser){
+            if (err) return handleError(err)
+
+            res.send(JSON.stringify(updatedUser))
+        })
+    })
+})
+app.post('/user/add-already-existing-action', function(req, res){
+    User.findById(req.user.id, function(err, user){
+        if (err) handleError(err)
+
+        let actionI = getUserActionIndex(user, req.body.actionId)
+        let projectI = getProjectIndex(user, req.body.projectId)
+
+        user.projects[projectI].actions.push({ id: req.body.actionId, order: req.body.order})
+        user.projects[projectI].actions = insertionSort(user.projects[projectI].actions)
+
+        user.actions[actionI].project = {
+            id: req.body.projectId,
+            order: req.body.order,
+            title: user.projects[projectI].title
+        }
+        
         user.markModified('actions')
         user.markModified('projects')
         user.save(function(err, updatedUser){

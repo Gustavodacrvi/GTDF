@@ -465,4 +465,35 @@ h1.title {
 #createAndAddActionProjectAlert {
   display: none; }
 
+.icon--dark {
+  color: #6A6A6A; }
+
+.selectForm {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column; }
+
+.selectForm__content {
+  position: absolute;
+  top: 100%;
+  width: 100%;
+  background-color: #474747;
+  z-index: 30; }
+
+.selectForm__element {
+  display: block;
+  padding: 6px; }
+  .selectForm__element:hover {
+    background-color: #0080FF;
+    color: white;
+    cursor: pointer; }
+
+.selectForm__header {
+  border: 0.5px solid #6A6A6A;
+  padding: 5px; }
+  .selectForm__header:hover {
+    background-color: #0080FF;
+    color: white; }
+
 /*# sourceMappingURL=styles.css.map */

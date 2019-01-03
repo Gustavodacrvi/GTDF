@@ -149,7 +149,7 @@
                 <div class='form__element'>
                     <span class='text'><%= __('Add_an_already_existing_action') %></span>
                     <div class='centralizeContent'>
-                        <button class='form--button'><%= __('Add') %></button>
+                        <button class='form--button' @click='openUserForm("addAlreadyExistingAction");v.forms.action.title = "<%= __("Choose_the_action") %>:"'><%= __('Add') %></button>
                     </div>
                 </div>
                 <div class='form__element'>
@@ -203,6 +203,32 @@
                 </div>
                 <div class='form__element centralizeContent'>
                     <button class='form--button' @click='editActionProject()'><%= __('Edit_action') %></button>
+                </div>
+            </div>
+        </article>
+        <article class='form card userForm hided' id='addAlreadyExistingAction' style='margin-top: 150px'>
+            <button class='reset--button user__form__close'><i class='fa fa-times icon close--icon user--icon'></i></button>
+            <div>
+                <div class='selectForm form__element' style='margin-top: 10px'>
+                    <div class='selectForm__header'>
+                        <span>{{ v.forms.action.title }}</span>
+                    </div>
+                    <div class='selectForm__content hided card'>
+                        <template v-for='i in v.user.length'>
+                            <template v-if='!v.user[i - 1].project'>
+                                <span class='text selectForm__element' @click='selectOption(v.user[i - 1].title, v.user[i - 1].id)'> {{ v.user[i - 1].title }}</span>
+                            </template>
+                        </template>
+                    </div>
+                </div>
+                <div class='form__element centralizeContent'>
+                    <div>
+                    <span class='text'><%= __('Order') %>:  </span>
+                    <input class='textBox' v-model='v.forms.action.order' style='height:initial;width:30px'/>
+                    </div>
+                </div>
+                <div class='form__element centralizeContent'>
+                    <button class='form--button' @click='addAlreadyExistingAction()'><%= __('Add') %></button>
                 </div>
             </div>
         </article>

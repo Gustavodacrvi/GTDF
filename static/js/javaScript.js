@@ -563,6 +563,44 @@ let actions = new Vue({
                     $(this).css('font-size', '30px')
                 })
         },
+        returnRespectiveTagIcon: function(tag_str){
+            if (tag_str == 'nextAction')
+                return 'fas fa-forward icon icon--dark'
+            if (tag_str == 'calendar')
+                return 'fas fa-calendar-alt icon'
+            if (tag_str == 'waiting')
+                return 'fas fa-hourglass-half icon'
+            if (tag_str == 'maybe')
+                return 'fas fa-question icon' 
+        },
+        selectOption: function(title, id){
+            this.v.forms.action.title = title
+            this.v.forms.action.id = id
+        },
+        applySelectFormEventHandlers: function(){
+            let v = $('.selectForm')
+            for (let i = 0;i < v.length;i++)
+                if (v.eq(i).data('alreadyApplied') != true)
+                    v.eq(i).on('mouseenter', function(){
+                        show($(this).find('.selectForm__content'), '.2s')
+                    }).on('mouseleave', function(){
+                        hide($(this).find('.selectForm__content'), '.2s')
+                    }).data('alreadyApplied', true)
+        },
+        addAlreadyExistingAction: function(){
+            if (!strIsInteger(this.v.forms.action.order) || parseInt(this.v.forms.action.order) < 1){
+                $('#createAndAddActionProjectAlert').css('display', 'block')
+            } else {
+                $.post('/user/add-already-existing-action', { actionId: this.v.forms.action.id, projectId: this.v.forms.project.id, order: this.v.forms.action.order}, (data, status, xhr) => {
+                    let user = JSON.parse(data)
+                    this.v.user = user.actions
+                    this.v.projects = user.projects
+                }).then(() =>{
+                    this.$forceUpdate()
+                    this.actionsInit()
+                })
+            }
+        },
         hideAllActionContentAndApplyEventHandler: function(){
             this.v.actions().children('.action__content').slideUp(0)
             for (let i = 0;i < this.v.actions().length;i++)
@@ -604,7 +642,7 @@ let actions = new Vue({
             })
         },
         deleteProjectAction: function(id){
-            $.post('/user/delete-project-action', { actionId: id}, (data, status) => {
+           $.post('/user/delete-project-action', { actionId: id}, (data, status) => {
                 let user = JSON.parse(data)
                 this.v.user = user.actions
                 this.v.projects = user.projects
@@ -661,7 +699,7 @@ let actions = new Vue({
             show($('.selectionBar__main'))
         },
         displayProjectAction: function(actionId){
-            let index = this.v.user.findIndex(function(el, i){
+            let index = this.v.user.findIndex(function(el){
                 return el.id == actionId
             })
             this.v.forms.project.user = this.v.user[index]
@@ -673,6 +711,7 @@ let actions = new Vue({
 slideEffect()
 dropdowns()
 actions.applySelectionBarEventHandlers()
+actions.applySelectFormEventHandlers()
 checkbox.applyEventHandlers()
 
 if (menu.isDesktop()){
