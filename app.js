@@ -176,6 +176,18 @@ function insertionSort(arr){
     }
     return arr
 }
+function addTimedAction(user, date, time, title, description){
+    user.actions.push({
+        id: new Objectid(),
+        tag: 'calendar',
+        title: title,
+        description: description,
+        calendar: {
+            date: date,
+            time: time
+        }
+    })
+}
 
 
 app.get('/', function(req, res){
@@ -563,6 +575,20 @@ app.post('/user/transform-action-to-project', function(req, res){
             if (err) return handleError(err)
 
             res.send(JSON.stringify(updatedUser))
+        })
+    })
+})
+
+app.post('/user/add-timed-action', function(req, res){
+    User.findById(req.user.id, function(err, user){
+        if (err) handleError(err)
+
+        addTimedAction(user, req.body.date, req.body.time, req.body.title, req.body.description)
+
+        user.save(function(err, updatedUser){
+            if (err) return handleError(err)
+
+            res.send(JSON.stringify(updatedUser.actions))
         })
     })
 })

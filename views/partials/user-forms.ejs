@@ -248,5 +248,33 @@
                 </div>
             </div>
         </article>
+        <article class='form card userForm hided' id='addTimedActionSection' style='margin-top: -70px'>
+            <button class='reset--button user__form__close'><i class='fa fa-times icon close--icon user--icon'></i></button>
+            <div>
+                <div class='form__element centralizeContent' style='margin-top: 20px'>
+                    <textarea v-model='v.forms.addAction.title' class='textBox' style='height: 41px' placeholder='<%= __("Title") %>...'></textarea>                    
+                </div>
+                <div class='form__element centralizeContent'>
+                    <textarea v-model='v.forms.addAction.description' class='textBox' style='height: 168px' placeholder='<%= __("Description") %>...'></textarea>
+                </div>
+                <div class='form__element'>
+                    <div>
+                        <textarea v-model='v.calendar.user.date' class='textBox' style='height: 20px' placeholder='<%= __("Date") %>: DD/MM/YYYY'></textarea>
+                    </div>
+                    <div>
+                        <textarea v-model='v.calendar.user.time' class='textBox' style='height: 20px' placeholder='<%= __("Hour") %>: HH:MM (<%= __("Optional") %>)'></textarea>
+                    </div>
+                    <div>
+                        <span id='invalidDate' class='status--alert' style='display: none'><%= __('Invalid_date') %>.</span>
+                    </div>
+                    <div>
+                        <span id='invalidTime' class='status--alert' style='display: none'><%= __('Invalid_time') %>.</span>
+                    </div>
+                </div>
+                <div class='form__element centralizeContent'>
+                    <button class='form--button' @click='addTimedAction()'><%= __('Add_action') %></button>
+                </div>
+            </div>
+        </article>
     </div>
 </section>

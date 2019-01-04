@@ -75,5 +75,7 @@
     "Order_must_be_an_integer_and_bigger_than_0": "Order must be an integer and bigger than 0",
     "remove_from_project": "remove from project",
     "Choose_the_action": "Choose the action",
-    "select_project": "select project"
+    "select_project": "select project",
+    "Invalid_date": "Invalid date",
+    "Invalid_time": "invalid time"
 }
