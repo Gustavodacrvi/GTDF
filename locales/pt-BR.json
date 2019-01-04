@@ -76,5 +76,7 @@
 	"remove_from_project": "retirar do projeto",
 	"": "",
 	"Choose_the_action": "Escolha a ação",
-	"select_project": "selecionar projeto"
+	"select_project": "selecionar projeto",
+	"Invalid_date": "Data inválida",
+	"Invalid_time": "Hora inválida"
 }

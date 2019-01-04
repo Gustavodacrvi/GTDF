@@ -1,3 +1,4 @@
+
 function hide(el, time){
     el.css({
         'transition-duration': time,
@@ -78,6 +79,9 @@ class DateM {
     }
 
     isEqual(date_obj){
+        if (typeof(date_obj) == 'string'){
+            date_obj = new DateM(date_obj)
+        } 
         if (date_obj.day != this.day)
             return false
         if (date_obj.month != this.month)
@@ -178,6 +182,7 @@ class TimeM {
         
         if (hour > 23 || hour < 0 || min < 0 || min > 59)
             return false
+        return true
     }
     static getCurrentTime(){
         let date = new Date()
@@ -454,6 +459,13 @@ let actions = new Vue({
             projects: {
 
             },
+            calendar: {
+                date: '',
+                user: {
+                    date: '',
+                    time: undefined
+                }
+            },
             actionIcons: function() {return $('.action--icon')},
             closeIcons: function() {return $('.close--icon')},
             userIcons: function() {return $('.user--icon')},
@@ -479,12 +491,39 @@ let actions = new Vue({
             })
         },
         editTag: function(){
-            $.post('/user/edit-tag', { actionId: this.v.forms.editTag.id, tag: this.v.forms.editTag.newTag}, (data, status, xhr) => {
-                this.v.user = JSON.parse(data).actions
-            }).then(() => {
-                this.$forceUpdate()
-                this.actionsInit()
+            let i = this.v.user.findIndex((el) => {
+                return '' + el.id === '' + this.v.forms.editTag.id
             })
+            if (this.v.user[i].tag == 'calendar'){
+                $.post('/user/remove-calendar-tag-action', { actionId: this.v.forms.editTag.id, tag: this.v.forms.editTag.newTag}, (data, status, xhr) => {
+                    this.v.user = JSON.parse(data)
+                }).then(() => {
+                    this.$forceUpdate()
+                    this.actionsInit()
+                })
+            } else if (this.v.forms.editTag.newTag != 'calendar'){
+                $.post('/user/edit-tag', { actionId: this.v.forms.editTag.id, tag: this.v.forms.editTag.newTag}, (data, status, xhr) => {
+                    this.v.user = JSON.parse(data).actions
+                }).then(() => {
+                    this.$forceUpdate()
+                    this.actionsInit()
+                })
+            } else {
+                if (!DateM.isValidDate(this.v.calendar.user.date)){
+                    $('#invalidTime').css('display', 'none')
+                    $('#invalidDate').css('display', 'block')
+                } else if (this.v.calendar.user.time != undefined && !TimeM.isValidTime(this.v.calendar.user.time)){
+                    $('#invalidDate').css('display', 'none')    
+                    $('#invalidTime').css('display', 'block')
+                } else {
+                    $.post('/user/add-calendar-tag', { actionId: this.v.forms.editTag.id, date: this.v.calendar.user.date, time: this.v.calendar.user.time }, (data, status, xhr) => {
+                        this.v.user = JSON.parse(data)
+                    }).then(() => {
+                        this.$forceUpdate()
+                        this.actionsInit()
+                    })
+                }
+            }
         },
         editAction: function(){
             $.post('/user/edit-action', { title: this.v.forms.editAction.title, description: this.v.forms.editAction.description, actionId: this.v.forms.editAction.id}, (data, status, xhr) => {
@@ -561,7 +600,7 @@ let actions = new Vue({
             this.applyEventHandlersUserForms()
             if (!menu.isDesktop())
                 this.hideAllActionMobileElipsesAdnApplyEventHandler()
-            this.hideAllProjectActionsAndApplyEventHandler()            
+            this.hideAllProjectActionsAndApplyEventHandler()
         },
         hideAllActionMobileElipsesAdnApplyEventHandler: function(){
             hide($('.actionButtonDropdown div'))
@@ -627,7 +666,7 @@ let actions = new Vue({
                 if (this.v.actions().find('.action__title').eq(i).data('alreadyApplied') !== true)
                     this.v.actions().find('.action__title').eq(i).on('click', function(){
                         $(this).parent().parent().children('.action__content').slideToggle()
-                    }).parent().data('alreadyApplied', true)
+                    }).data('alreadyApplied', true)
         },
         hideAllProjectActionsAndApplyEventHandler: function(){
             $('.project .project__actions').slideUp(0)
@@ -724,6 +763,61 @@ let actions = new Vue({
             })
             this.v.forms.project.user = this.v.user[index]
             return this.v.user[index]
+        },
+
+        getCurrentDay: function(){
+            this.v.calendar.date = DateM.getCurrentDay().stringfy()
+        },
+        selectedDate: function(user){
+            let givenDate = new DateM(user.calendar.date)
+            let selected = new DateM(this.v.calendar.date)
+
+            if (selected.isEqual(givenDate))
+                return true
+            return false
+        },
+        editTimedAction: function(){
+            if (!DateM.isValidDate(this.v.calendar.user.date)){
+                $('#invalidTime').css('display', 'none')
+                $('#invalidDate').css('display', 'block')
+            } else if (this.v.calendar.user.time != undefined && !TimeM.isValidTime(this.v.calendar.user.time)){
+                $('#invalidDate').css('display', 'none')    
+                $('#invalidTime').css('display', 'block')
+            } else {
+                $('#invalidDate').css('display', 'none')
+                $('#invalidTime').css('display', 'none')
+                $.post('/user/edit-timed-action', { date: this.v.calendar.user.date, time: this.v.calendar.user.time, title: this.v.forms.addAction.title, description: this.v.forms.addAction.description, actionId: this.v.forms.editAction.id}, (data, status, xhr) =>{
+                    this.v.user = JSON.parse(data)
+                }).then(() =>{
+                    this.$forceUpdate()
+                    this.actionsInit()
+                })
+            }
+        },
+        addTimedAction: function(){
+            if (!DateM.isValidDate(this.v.calendar.user.date)){
+                $('#invalidTime').css('display', 'none')
+                $('#invalidDate').css('display', 'block')
+            } else if (this.v.calendar.user.time != undefined && !TimeM.isValidTime(this.v.calendar.user.time)){
+                $('#invalidDate').css('display', 'none')    
+                $('#invalidTime').css('display', 'block')
+            } else {
+                $('#invalidDate').css('display', 'none')
+                $('#invalidTime').css('display', 'none')
+                $.post('/user/add-timed-action', { date: this.v.calendar.user.date, time: this.v.calendar.user.time, title: this.v.forms.addAction.title, description: this.v.forms.addAction.description}, (data, status, xhr) =>{
+                    this.v.user = JSON.parse(data)
+                }).then(() =>{
+                    this.$forceUpdate()
+                    this.actionsInit()
+                })
+            }
+        }
+    },
+    computed: {
+        changedValue: function(){
+            let i = this.v.calendar.date
+            setTimeout(this.actionsInit, 10)
+            return ''
         }
     }
 })
@@ -732,6 +826,7 @@ slideEffect()
 dropdowns()
 actions.applySelectionBarEventHandlers()
 actions.applySelectFormEventHandlers()
+actions.getCurrentDay()
 checkbox.applyEventHandlers()
 
 if (menu.isDesktop()){

@@ -47,7 +47,12 @@
                                     <div class='action'>
                                             <div class='card action__header alignContent'>
                                             <div class='action__title alignContent'>
-                                                <span class='text'>{{ displayProjectAction(v.projects[j - 1].actions[i - 1].id).project.order }} <span class='dark--text'>|</span> {{ v.forms.project.user.title }}</span>
+                                                <template v-if='displayProjectAction(v.projects[j - 1].actions[i - 1].id).calendar'>
+                                                    <span class='text'>{{ v.forms.project.user.project.order }} <span class='dark--text'>|</span> {{ v.forms.project.user.title }} <span class='dark--text'> | </span> {{ v.forms.project.user.calendar.date}} <span class='dark--text'> | </span> {{ v.forms.project.user.calendar.time}} </span>
+                                                </template>
+                                                <template v-if='!v.forms.project.user.calendar'>
+                                                    <span class='text'>{{ v.forms.project.user.project.order }} <span class='dark--text'>|</span> {{ v.forms.project.user.title }} </span>
+                                                </template>
                                             </div>
                                             <div class='actionButtonDropdown rowReversed'>
                                                 <button class='reset--button'><i class="fas fa-ellipsis-v icon action--icon"></i></button>
