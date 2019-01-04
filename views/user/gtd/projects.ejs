@@ -11,16 +11,81 @@
 <body>
 <section id='background'>
 
+<% include ../../partials/user-forms %>
+
 <div id='body'>
     <% include ../../partials/menu %>
     <% include ../../partials/menu-vertical %>
     <div id='content'>
+        <div id='content__cards' class='slide--effect--right'>
+            <div style='height: 50px'></div>
+            <div class='card action--bar alignContent'>
+                <button class='reset--button' onclick='actions.openUserForm("addProject")'><i class='fa fa-plus icon action--icon user--icon'></i></button>
+            </div>
+            <template v-if='v.projects'>
+            <template v-for='j in v.projects.length'>
+                <div class='project column'>
+                    <div class='card action__header project__header alignContent'>
+                        <div class='action__title alignContent'>
+                            <span class='text'>{{ v.projects[j - 1].title }}</span>
+                        </div>
+                        <div class='actionButtonDropdown rowReversed'>
+                            <button class='reset--button'><i class="fas fa-ellipsis-v icon action--icon"></i></button>
+                            <div class='rowReversed'>
+                                <div class='action__buttons rowReversed'>
+                                    <button class='reset--button' title='<%= __("_delete_project") %>' @click='deleteProject(v.projects[j - 1].id);'><i class='fa fa-times icon action--icon user--icon'></i></button>                                    
+                                    <button class='reset--button' title='<%= __("_edit_project_title") %>' @click='openUserForm("editProjectTitle");v.forms.project.editProjectId = v.projects[j - 1].id'><i class='fa fa-edit icon action--icon user--icon'></i></button>
+                                    <button class='reset--button' title='<%= __("_add_action_to_project") %>' @click='openUserForm("addActionProject");v.forms.project.id = v.projects[j - 1].id'><i class='fa fa-plus icon action--icon user--icon'></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='project__actions'>
+                        <div>
+                            <template v-if='v.user'>
+                                <template v-for='i in v.projects[j - 1].actions.length'>
+                                    <div class='action'>
+                                            <div class='card action__header alignContent'>
+                                            <div class='action__title alignContent'>
+                                                <span class='text'>{{ displayProjectAction(v.projects[j - 1].actions[i - 1].id).project.order }} <span class='dark--text'>|</span> {{ v.forms.project.user.title }}</span>
+                                            </div>
+                                            <div class='actionButtonDropdown rowReversed'>
+                                                <button class='reset--button'><i class="fas fa-ellipsis-v icon action--icon"></i></button>
+                                                <div class='rowReversed'>
+                                                    <div class='action__buttons rowReversed'>
+                                                        <button class='reset--button' title='<%= __("_delete_action") %>' @click='deleteProjectAction(v.projects[j - 1].actions[i - 1].id)'><i class='fa fa-times icon action--icon user--icon'></i></button>
+                                                        <button class='reset--button' title='<%= __("_edit_action") %>' @click='v.forms.action.id = v.projects[j - 1].actions[i - 1].id;openUserForm("editProjectAction");hideAllSelectionBars()'><i class='fa fa-edit icon action--icon user--icon'></i></button>
+                                                        <button class='reset--button' title='<%= __("add/edit_tag") %>' @click='openUserForm("add_changeTags");v.forms.editTag.id = v.projects[j - 1].actions[i - 1].id;selectTagForm("" + v.user[i - 1].tag);hideAllSelectionBars()'><i class='fa fa-tag icon action--icon user--icon'></i></button>
+                                                        <button class='reset--button' title='<%= __("remove_from_project") %>' @click='removeFromProject(v.projects[j - 1].actions[i - 1].id, v.projects[j - 1].id)'><i class="fas fa-external-link-alt icon action--icon user--icon"></i></button>
+                                                        <button class='reset--button'><i :class='returnRespectiveTagIcon("" + v.forms.project.user.tag)'></i></button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class='action__content card'>
+                                            <span class='text'> {{ v.forms.project.user.description }} </span>
+                                        </div>
+                                    </div>
+                                </template>
+                            </template>
+                        </div>
+                    </div>
+                </div>
+            </template>
+            </template>
+            <div style='height: 100px'></div>
+        </div>
+        <div id='content__ads'>
+        </div>
     </div>
 </div>
 
 
 </section>
 <% include ../../partials/footer %>
+<script>
+    actions.getUser()
+</script>
 </body>
 
 </html>

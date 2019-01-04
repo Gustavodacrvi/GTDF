@@ -20,6 +20,9 @@ var userSchema = mongoose.Schema({
     },
     actions: [
     ],
+    projects: [
+
+    ],
     resetPasswordToken: {
         type: String
     },

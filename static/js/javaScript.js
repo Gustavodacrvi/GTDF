@@ -218,12 +218,11 @@ class TimeM {
 
     sync(){
         let date = new Date()
-        let init = () => {this.syncId = setInterval(() => {this.addMin(1);console.log(this)}, 60000)}
+        let init = () => {this.syncId = setInterval(() => {this.addMin(1)}, 60000)}
         setTimeout(() => {
             this.hour = date.getHours()
             this.min = date.getMinutes()
             this.addMin(1)
-            console.log(this)
             init()
         }, 60000 - date.getSeconds() * 1000)
     }
@@ -354,6 +353,22 @@ function dropdowns(){
         }
     })
 }
+function strIsInteger(str){
+    if (str == undefined)
+        return false
+    if (str.length == 0)
+        return false
+    let containsLetter = false
+    for (let i = 0;i < str.length;i++){
+        if (str.charCodeAt(i) < 48 || str.charCodeAt(i) > 57){
+            containsLetter = true
+            break
+        }
+    }
+    if (containsLetter)
+        return false
+    return true
+}
 
 
 let formEyes = {
@@ -377,6 +392,23 @@ let menu = {
     isDesktop: function() {return $(window).width() >= this.minDesktopWidth}
 }
 
+let checkbox = {
+    applyEventHandlers: function(){
+        let v = $('.checkBox')
+        for (let i = 0;i < v.length;i++){
+            v.eq(i).data('clicked', true)
+            v.eq(i).on('click', function(){
+                if ($(this).data('clicked') == undefined || $(this).data('clicked') == false){
+                    show($(this).find('i'), '0.2s')
+                    $(this).data('clicked', true)
+                } else {
+                    hide($(this).find('i'), '0.2s')
+                    $(this).data('clicked', false)
+                }
+            })
+        }
+    }
+}
 
 // CONTENT
 
@@ -399,9 +431,28 @@ let actions = new Vue({
                 editTag: {
                     Id: '',
                     newTag: 'basket'
-                }
+                },
+                project: {
+                    id: '',
+                    action: {
+                        delete: true,
+                        projectId: ''
+                    },
+                    title: '',
+                    editProjectId: '',
+                    editProjectTitle: '',
+                },
+                action: {
+                    title: '',
+                    description: '',
+                    order: undefined,
+                    user: ''
+                },
             },
             user: {
+            },
+            projects: {
+
             },
             actionIcons: function() {return $('.action--icon')},
             closeIcons: function() {return $('.close--icon')},
@@ -414,6 +465,14 @@ let actions = new Vue({
         addAction: function(){
             $.post('/user/add-action', { title: this.v.forms.addAction.title, description: this.v.forms.addAction.description, tag: this.v.forms.addAction.tag}, (data, status, xhr) => {
                 this.v.user = JSON.parse(data).actions
+            }).then(() => {
+                this.$forceUpdate()
+                this.actionsInit()
+            })
+        },
+        createProject: function(){
+            $.post('/user/create-project', {title: this.v.forms.project.title}, (data, status, xhr) => {
+                this.v.projects = JSON.parse(data).projects
             }).then(() => {
                 this.$forceUpdate()
                 this.actionsInit()
@@ -435,9 +494,62 @@ let actions = new Vue({
                 this.actionsInit()
             })
         },
+        createAndAddActionProject: function(){
+            if (!strIsInteger(this.v.forms.action.order) || parseInt(this.v.forms.action.order) < 1){
+                $('#createAndAddActionProjectAlert').css('display', 'block')
+            } else {
+                $('#createAndAddActionProjectAlert').css('display', 'none')
+                $.post('/user/create-add-action-project', { title: this.v.forms.action.title, description: this.v.forms.action.description, projectId: this.v.forms.project.id, order: parseInt(this.v.forms.action.order)}, (data, status, xhr) => {
+                    let user = JSON.parse(data)
+                    this.v.user = user.actions
+                    this.v.projects = user.projects
+                }).then(() => {
+                    this.$forceUpdate()
+                    this.actionsInit()
+                })
+            }
+        },
+        transformActionToProject: function(){
+            $.post('/user/transform-action-to-project', { actionId: this.v.forms.project.action.id, delete: this.v.forms.project.action.delete}, (data, status, xhr) =>{
+                let user = JSON.parse(data)
+                this.v.user = user.actions
+                this.v.projects = user.projects
+            }).then(() =>{
+                this.$forceUpdate()
+                this.actionsInit()
+            })
+        },
+        addAlreadyExistingActionToProject: function(){
+            $.post('/user/add-already-existing-action', { projectId: this.v.forms.action.id, actionId: this.v.forms.project.action.id, order: this.v.forms.action.order}, (data, status, xhr) => {
+                let user = JSON.parse(data)
+                this.v.user = user.actions
+                this.v.projects = user.projects
+            }).then(() =>{
+                this.$forceUpdate()
+                this.actionsInit()
+            })
+        },
+        editActionProject: function(){
+            if (!strIsInteger(this.v.forms.action.order) || parseInt(this.v.forms.action.order) < 1){
+                $('#createAndAddActionProjectAlert').css('display', 'block')
+            } else {
+                $('#createAndAddActionProjectAlert').css('display', 'none')
+                $.post('/user/edit-action-project', { title: this.v.forms.action.title, description: this.v.forms.action.description, order: this.v.forms.action.order,
+                actionId: this.v.forms.action.id}, (data, status, xhr) => {
+                    let user = JSON.parse(data)
+                    this.v.user = user.actions
+                    this.v.projects = user.projects
+                }).then(() => {
+                    this.$forceUpdate()
+                    this.actionsInit()
+                })
+            }
+        },
         getUser: function(){
             $.get('/user/get-user', (data, status) => {
-                this.v.user = JSON.parse(data).actions
+                let user = JSON.parse(data)
+                this.v.user = user.actions
+                this.v.projects = user.projects
             }).then(() => {
                 this.actionsInit()
             })
@@ -449,6 +561,7 @@ let actions = new Vue({
             this.applyEventHandlersUserForms()
             if (!menu.isDesktop())
                 this.hideAllActionMobileElipsesAdnApplyEventHandler()
+            this.hideAllProjectActionsAndApplyEventHandler()            
         },
         hideAllActionMobileElipsesAdnApplyEventHandler: function(){
             hide($('.actionButtonDropdown div'))
@@ -470,17 +583,64 @@ let actions = new Vue({
                     $(this).css('font-size', '30px')
                 })
         },
+        returnRespectiveTagIcon: function(tag_str){
+            if (tag_str == 'nextAction')
+                return 'fas fa-forward icon icon--dark'
+            if (tag_str == 'calendar')
+                return 'fas fa-calendar-alt icon icon--dark'
+            if (tag_str == 'waiting')
+                return 'fas fa-hourglass-half icon icon--dark'
+            if (tag_str == 'maybe')
+                return 'fas fa-question icon icon--dark' 
+        },
+        selectOption: function(title, id){
+            this.v.forms.action.title = title
+            this.v.forms.action.id = id
+        },
+        applySelectFormEventHandlers: function(){
+            let v = $('.selectForm')
+            for (let i = 0;i < v.length;i++)
+                if (v.eq(i).data('alreadyApplied') != true)
+                    v.eq(i).on('mouseenter', function(){
+                        show($(this).find('.selectForm__content'), '.2s')
+                    }).on('mouseleave', function(){
+                        hide($(this).find('.selectForm__content'), '.2s')
+                    }).data('alreadyApplied', true)
+        },
+        addAlreadyExistingAction: function(){
+            if (!strIsInteger(this.v.forms.action.order) || parseInt(this.v.forms.action.order) < 1){
+                $('#createAndAddActionProjectAlert').css('display', 'block')
+            } else {
+                $.post('/user/add-already-existing-action', { actionId: this.v.forms.action.id, projectId: this.v.forms.project.id, order: this.v.forms.action.order}, (data, status, xhr) => {
+                    let user = JSON.parse(data)
+                    this.v.user = user.actions
+                    this.v.projects = user.projects
+                }).then(() =>{
+                    this.$forceUpdate()
+                    this.actionsInit()
+                })
+            }
+        },
         hideAllActionContentAndApplyEventHandler: function(){
             this.v.actions().children('.action__content').slideUp(0)
             for (let i = 0;i < this.v.actions().length;i++)
                 if (this.v.actions().find('.action__title').eq(i).data('alreadyApplied') !== true)
                     this.v.actions().find('.action__title').eq(i).on('click', function(){
                         $(this).parent().parent().children('.action__content').slideToggle()
+                    }).parent().data('alreadyApplied', true)
+        },
+        hideAllProjectActionsAndApplyEventHandler: function(){
+            $('.project .project__actions').slideUp(0)
+            let v = $('.project')
+            for (let i = 0;i < v.length;i++)
+                if (v.eq(i).find('.action__title').data('alreadyApplied') !== true)
+                    v.eq(i).find('.action__title').on('click', function(){
+                        $(this).parent().parent().children('.project__actions').slideToggle()
                     }).data('alreadyApplied', true)
         },
         hideAllUserForms: function(){
-            hide(this.v.userForms())
-            hide($('#userForms > div'))
+            hide(this.v.userForms(), '0.3s')
+            hide($('#userForms > div'), '0.3s')
         },
         applyEventHandlersUserForms: function(){
             for (let i = 0;i < this.v.closeIcons().length;i++)
@@ -491,12 +651,46 @@ let actions = new Vue({
         },
         openUserForm: function(id){
             this.hideAllUserForms()
-            show($('#' + id), '0.2s')
-            show($('#userForms > div'))
+            show($('#' + id), '0.3s')
+            show($('#userForms > div'), '0.3s')
         },
         deleteAction: function(id){
             $.post('/user/delete-action', { actionId: id }, (data, status) => {
                 this.v.user = JSON.parse(data).actions
+            }).then(() => {
+                this.actionsInit()
+            })
+        },
+        deleteProjectAction: function(id){
+           $.post('/user/delete-project-action', { actionId: id}, (data, status) => {
+                let user = JSON.parse(data)
+                this.v.user = user.actions
+                this.v.projects = user.projects
+            }).then(() => {
+                this.actionsInit()
+            })
+        },
+        deleteProject: function(id){
+            $.post('/user/delete-project', { projectId: id}, (data, status) => {
+                let user = JSON.parse(data)
+                this.v.projects = user.projects
+                this.v.user = user.actions
+            }).then(() => {
+                this.actionsInit()
+            })
+        },
+        editProjectTitle: function(){
+            $.post('/user/edit-project-title', { title: this.v.forms.project.editProjectTitle, projectId: this.v.forms.project.editProjectId }, (data, status) => {
+                this.v.projects = JSON.parse(data)
+            }).then(() => {
+                this.actionsInit()
+            })
+        },
+        removeFromProject(actionId, projectId){
+            $.post('/user/remove-from-project', { actionId: actionId, projectId: projectId }, (data, status) => {
+                let user = JSON.parse(data)
+                this.v.projects = user.projects
+                this.v.user = user.actions
             }).then(() => {
                 this.actionsInit()
             })
@@ -506,13 +700,39 @@ let actions = new Vue({
             $('#' + id).addClass('icon--selector--selected')
             this.v.forms.editTag.newTag = id
         },
+        applySelectionBarEventHandlers: function(){
+            let v = $('.selectionBar--link')
+            for (let i = 0;i < v.length;i++)
+                v.eq(i).on('click', function(){
+                    $(this).parent().parent().find('.selectionBar--link').removeClass('selectionBar--selected')
+                    $(this).addClass('selectionBar--selected')
+                    hide($(this).parent().parent().find('.selectionBar__content'), '0.2s')
+                    show($(this).parent().children('.selectionBar__content'), '0.2s')
+                })
+        },
+        hideAllSelectionBars: function(){
+            hide($('.selectionBar--link').parent().parent().find('.selectionBar__content'), '0.2s')
+        },
+        showMainOptionSelectionBars: function(){
+            $('.selectionBar--link').removeClass('selectionBar--selected')
+            $('.selectionBar__main').parent().children('.selectionBar--link').addClass('selectionBar--selected')
+            show($('.selectionBar__main'))
+        },
+        displayProjectAction: function(actionId){
+            let index = this.v.user.findIndex(function(el){
+                return el.id == actionId
+            })
+            this.v.forms.project.user = this.v.user[index]
+            return this.v.user[index]
+        }
     }
 })
 
-actions.getUser()
-
 slideEffect()
 dropdowns()
+actions.applySelectionBarEventHandlers()
+actions.applySelectFormEventHandlers()
+checkbox.applyEventHandlers()
 
 if (menu.isDesktop()){
     $('#navColumn').off('mouseleave')

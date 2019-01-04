@@ -1,13 +1,13 @@
 <section class='centralizeContent' id='userForms'>
     <div>
-        <div class='form card userForm hided' id='addSimpleActionForm'>
+        <article class='form card userForm hided' id='addSimpleActionForm'>
             <button class='reset--button user__form__close'><i class='fa fa-times icon close--icon user--icon'></i></button>
             <div>
                 <div class='form__element centralizeContent'>
-                    <h1 class='title' style='margin-top: 0;margin-bottom: 10px'><%= __('ADD_ACTION') %></h1>
+                    <h1 class='title usefForm--title'><%= __('ADD_ACTION') %></h1>
                 </div>
                 <div class='form__element centralizeContent'>
-                    <textarea v-model='v.forms.addAction.title' class='textBox' style='height: 41px' placeholder='<%= __("Title") %>...'></textarea>
+                    <textarea v-model='v.forms.addAction.title' class='textBox' style='height: 41px' placeholder='<%= __("Title") %>...'></textarea>                    
                 </div>
                 <div class='form__element centralizeContent'>
                     <textarea v-model='v.forms.addAction.description' class='textBox' style='height: 168px' placeholder='<%= __("Description") %>...'></textarea>
@@ -16,12 +16,12 @@
                     <button class='form--button' @click='addAction()'><%= __('Add_action') %></button>
                 </div>
             </div>
-        </div>
-        <div class='form card userForm hided' id='add_changeTags' style='margin-top: 50px'>
+        </article>
+        <article class='form card userForm hided' id='add_changeTags' style='margin-top: 50px'>
             <button class='reset--button user__form__close'><i class='fa fa-times icon close--icon user--icon'></i></button>
             <div>
                 <div class='form__element alignContent'>
-                    <h1 class='title' style='margin-top: 0;margin-bottom: 10px'><%= __('ADD/EDIT_TAG') %></h1>
+                    <h1 class='title usefForm--title'><%= __('ADD/EDIT_TAG') %></h1>
                 </div>
                 <div class='form__element alignContent'>
                     <div class='iconGroup centralizeContent'>
@@ -55,12 +55,12 @@
                     <button class='form--button' @click='editTag()'><%= __('Edit_action') %></button>
                 </div>
             </div>
-        </div>
-        <div class='form card userForm hided' id='editAction'>
+        </article>
+        <article class='form card userForm hided' id='editAction'>
             <button class='reset--button user__form__close'><i class='fa fa-times icon close--icon user--icon'></i></button>
             <div>
                 <div class='form__element centralizeContent'>
-                    <h1 class='title' style='margin-top: 0;margin-bottom: 10px'><%= __('EDIT_ACTION') %></h1>
+                    <h1 class='title usefForm--title'><%= __('EDIT_ACTION') %></h1>
                 </div>
                 <div class='form__element centralizeContent'>
                     <textarea v-model='v.forms.editAction.title' class='textBox' style='height: 41px' placeholder='<%= __("Title") %>...'></textarea>
@@ -72,6 +72,181 @@
                     <button class='form--button' @click='editAction()'><%= __('Edit_action') %></button>
                 </div>
             </div>
-        </div>
+        </article>
+        <article class='form card userForm hided' id='actionToProject'>
+            <button class='reset--button user__form__close' @click='hideAllSelectionBars()'><i class='fa fa-times icon close--icon user--icon'></i></button>
+            <div>
+                <div class='form__element centralizeContent'>
+                    <h1 class='title usefForm--title'><%= __('ADD_TO_PROJECT/CREATE_PROJECT') %></h1>
+                </div>
+                <div class='form__element'>
+                    <nav class='selectionBar column' style='height: 260px'>
+                        <div class='selectionBar__links row'>
+                            <div>
+                                <div class='selectionBar--link centralizeContent selectionBar--selected' >
+                                    <a><%= __('CREATE') %></a>
+                                </div>
+                                <div class='selectionBar__content selectionBar__main'>
+                                    <span class='selectionBar__element'><%= __('_Create_a_project_with_the_same_name_of_this_action') %></span>
+                                    <div class='selectionBar__element checkBox' @click='v.forms.project.action.delete = !v.forms.project.action.delete'>
+                                        <span><%= __('delete_action') %><div style='text-align: center'><i class="fas fa-check icon--tiny"></i></div></span>
+                                    </div>
+                                    <div class='selectionBar__element form__element centralizeContent'>
+                                        <button class='form--button' @click='transformActionToProject()'><%= __('Create_project') %></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class='selectionBar--link centralizeContent'>
+                                    <a><%= __('ADD') %></a>
+                                </div>
+                                <div class='selectionBar__content hided'>
+                                    <span class='selectionBar__element'><%= __('Add_this_action_to_the_selected_project') %></span>
+                                    <div class='selectForm form__element' style='margin-top: 10px'>
+                                        <div class='selectForm__header'>
+                                            <span>{{ v.forms.action.title }}</span>
+                                        </div>
+                                        <div class='selectForm__content hided card'>
+                                            <template v-for='j in v.projects.length'>
+                                                <span class='text selectForm__element' @click='selectOption(v.projects[j - 1].title, v.projects[j - 1].id)'> {{ v.projects[j - 1].title }}</span>
+                                            </template>
+                                        </div>
+                                    </div>
+                                    <div class='form__element centralizeContent'>
+                                        <div>
+                                        <span class='text'><%= __('Order') %>:  </span>
+                                        <input class='textBox' v-model='v.forms.action.order' style='height:initial;width:30px'/>
+                                        </div>
+                                    </div>
+                                    <div class='selectionBar__element centralizeContent' >
+                                        <button class='form--button' @click='addAlreadyExistingActionToProject()'><%= __('Add_to_project') %></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </article>
+        <article class='form card userForm hided' id='addProject'>
+            <button class='reset--button user__form__close'><i class='fa fa-times icon close--icon user--icon'></i></button>
+            <div>
+                <div class='form__element centralizeContent'>
+                    <h1 class='title usefForm--title'><%= __('ADD_PROJECT') %></h1>
+                </div>
+                <div class='form__element'>
+                    <textarea v-model='v.forms.project.title' class='textBox' style='height: 41px' placeholder='<%= __("Title") %>...'></textarea>
+                </div>
+                <div class='form__element centralizeContent'>
+                    <button class='form--button' @click='createProject()'><%= __('Create_project') %></button>
+                </div>
+            </div>
+        </article>
+        <article class='form card userForm hided' id='editProjectTitle'>
+            <button class='reset--button user__form__close'><i class='fa fa-times icon close--icon user--icon'></i></button>            
+            <div>
+                <div class='form__element centralizeContent'>
+                    <h1 class='title usefForm--title'><%= __('EDIT_PROJECT_TITLE') %></h1>
+                </div>
+                <div class='form__element'>
+                    <textarea v-model='v.forms.project.editProjectTitle' class='textBox' style='height: 41px' placeholder='<%= __("Title") %>...'></textarea>                        
+                </div>
+                <div class='form__element centralizeContent'>
+                    <button class='form--button' @click='editProjectTitle()'><%= __('Create_project') %></button>
+                </div>
+            </div>
+        </article>
+        <article class='form card userForm hided' id='addActionProject'>
+            <button class='reset--button user__form__close' @click='hideAllSelectionBars()'><i class='fa fa-times icon close--icon user--icon'></i></button>            
+            <div>
+                <div class='form__element centralizeContent'>
+                    <h1 class='title usefForm--title'><%= __('ADD_ACTION_TO_PROJECT') %></h1>
+                </div>
+                <div class='form__element'>
+                    <span class='text'><%= __('Add_an_already_existing_action') %></span>
+                    <div class='centralizeContent'>
+                        <button class='form--button' @click='openUserForm("addAlreadyExistingAction");v.forms.action.title = "<%= __("Choose_the_action") %>:"'><%= __('Add') %></button>
+                    </div>
+                </div>
+                <div class='form__element'>
+                    <span class='text'><%= __('Create_an_action_and_add_to_the_project') %></span>
+                    <div class='centralizeContent'>
+                        <button class='form--button' @click='openUserForm("createAddActionProject")'><%= __('Create') %></button>
+                    </div>
+                </div>
+            </div>
+        </article>
+        <article class='form card userForm hided' id='createAddActionProject' style='margin-top: -20px'>
+            <button class='reset--button user__form__close' @click='hideAllSelectionBars()'><i class='fa fa-times icon close--icon user--icon'></i></button>                        
+            <div>
+                <div class='form__element centralizeContent' style='margin-top: 10px'>
+                    <textarea v-model='v.forms.action.title' class='textBox' style='height: 41px' placeholder='<%= __("Title") %>...'></textarea>                    
+                </div>
+                <div class='form__element centralizeContent'>
+                    <textarea v-model='v.forms.action.description' class='textBox' style='height: 168px' placeholder='<%= __("Description") %>...'></textarea>
+                </div>
+                <div class='form__element centralizeContent'>
+                    <div>
+                    <span class='text'><%= __('Order') %>:  </span>
+                    <input class='textBox' v-model='v.forms.action.order' style='height:initial;width:30px'/>
+                    </div>
+                </div>
+                <div class='form__element' id='createAndAddActionProjectAlert'>
+                    <span class='status--alert'><%= __('Order_must_be_an_integer_and_bigger_than_0') %>.</span>
+                </div>
+                <div class='form__element centralizeContent'>
+                    <button class='form--button' @click='createAndAddActionProject()'><%= __('Add_action') %></button>
+                </div>
+            </div>
+        </article>
+        <article class='form card userForm hided' id='editProjectAction'>
+            <button class='reset--button user__form__close'><i class='fa fa-times icon close--icon user--icon'></i></button>
+            <div>
+                <div class='form__element centralizeContent'>
+                    <textarea v-model='v.forms.action.title' class='textBox' style='height: 41px' placeholder='<%= __("Title") %>...'></textarea>
+                </div>
+                <div class='form__element centralizeContent'>
+                    <textarea v-model='v.forms.action.description' class='textBox' style='height: 168px' placeholder='<%= __("Description") %>...'></textarea>
+                </div>
+                <div class='form__element centralizeContent'>
+                    <div>
+                    <span class='text'><%= __('Order') %>:  </span>
+                    <input class='textBox' v-model='v.forms.action.order' style='height:initial;width:30px'/>
+                    </div>
+                </div>
+                <div class='form__element' id='createAndAddActionProjectAlert'>
+                    <span class='status--alert'><%= __('Order_must_be_an_integer_and_bigger_than_0') %>.</span>
+                </div>
+                <div class='form__element centralizeContent'>
+                    <button class='form--button' @click='editActionProject()'><%= __('Edit_action') %></button>
+                </div>
+            </div>
+        </article>
+        <article class='form card userForm hided' id='addAlreadyExistingAction' style='margin-top: 150px'>
+            <button class='reset--button user__form__close'><i class='fa fa-times icon close--icon user--icon'></i></button>
+            <div>
+                <div class='selectForm form__element' style='margin-top: 10px'>
+                    <div class='selectForm__header'>
+                        <span>{{ v.forms.action.title }}</span>
+                    </div>
+                    <div class='selectForm__content hided card'>
+                        <template v-for='i in v.user.length'>
+                            <template v-if='!v.user[i - 1].project'>
+                                <span class='text selectForm__element' @click='selectOption(v.user[i - 1].title, v.user[i - 1].id)'> {{ v.user[i - 1].title }}</span>
+                            </template>
+                        </template>
+                    </div>
+                </div>
+                <div class='form__element centralizeContent'>
+                    <div>
+                    <span class='text'><%= __('Order') %>:  </span>
+                    <input class='textBox' v-model='v.forms.action.order' style='height:initial;width:30px'/>
+                    </div>
+                </div>
+                <div class='form__element centralizeContent'>
+                    <button class='form--button' @click='addAlreadyExistingAction()'><%= __('Add') %></button>
+                </div>
+            </div>
+        </article>
     </div>
 </section>

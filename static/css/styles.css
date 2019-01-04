@@ -62,8 +62,7 @@ body {
 .form--eye {
   right: 0;
   top: 9px;
-  font-size: 22px;
-  cursor: pointer; }
+  font-size: 22px; }
 
 .fa-eye-slash {
   color: #6A6A6A; }
@@ -72,9 +71,7 @@ body {
   position: fixed;
   flex-basis: 250px;
   border-right: 0.5px solid #B9B9B9;
-  background-color: #474747;
   z-index: 1;
-  left: 0;
   width: 250px; }
 
 #body > #content {
@@ -103,9 +100,6 @@ body {
 .action__header {
   padding: 0 10px; }
 
-.action__header {
-  cursor: pointer; }
-
 .action:hover {
   top: -3px; }
 
@@ -118,15 +112,24 @@ body {
   padding: 30px; }
 
 .action__title {
-  flex-basis: 90%;
-  height: 100%; }
+  flex-basis: 90%; }
 
 .action__buttons {
   flex-basis: 10%; }
 
-#userForms {
-  width: 100%;
-  height: 100%; }
+.project__header {
+  margin-bottom: 5px; }
+  .project__header:hover {
+    left: -6px; }
+
+.project__actions {
+  justify-content: flex-end;
+  margin-top: 15px; }
+  .project__actions > div {
+    width: 95%; }
+
+.project + .project {
+  margin-top: 15px; }
 
 #userForms > div {
   width: 350px;
@@ -134,29 +137,65 @@ body {
   z-index: 5; }
 
 .userForm {
-  top: 0;
-  left: 0; }
+  top: 0; }
 
 .user__form__close {
   right: 2px;
   top: 2px; }
 
-.iconGroup {
-  width: 100%; }
-  .iconGroup > div {
-    display: flex;
-    flex-wrap: wrap; }
+.iconGroup > div {
+  flex-wrap: wrap; }
 
 .icon--selector {
   border: 0.5px solid #B9B9B9;
   width: 70px;
-  height: 70px;
-  cursor: pointer; }
-  .icon--selector:hover {
-    background-color: #0080FF; }
+  height: 70px; }
 
+.usefForm--title {
+  margin-top: 0;
+  margin-bottom: 10px; }
+
+.selectionBar--link:hover a {
+  color: #0080FF; }
+
+.selectionBar__links a {
+  text-decoration: none;
+  padding: 4px; }
+
+.selectionBar--selected a {
+  color: white !important; }
+
+.selectionBar__content {
+  top: 45px; }
+
+.selectionBar__element {
+  margin-top: 30px; }
+
+.form--button:hover,
+.link--button:hover,
+.icon--selector:hover i,
+.icon--selector--selected i {
+  color: white; }
+
+.form--button:hover,
+.link--button:hover,
+.icon--selector:hover,
+.selectionBar--selected,
 .icon--selector--selected {
   background-color: #0080FF; }
+
+.checkBox,
+.form--eye,
+.action__header,
+.icon--selector,
+.selectionBar--link {
+  cursor: pointer; }
+
+.selectionBar__content,
+#body > #navColumn,
+.userForm,
+.project__header {
+  left: 0; }
 
 .action__header,
 .action__content,
@@ -177,11 +216,17 @@ body {
 
 #body,
 #body > #navColumn,
-#background {
+#background,
+.action__title,
+#userForms {
   height: 100%; }
 
 #background,
-.form__element {
+.form__element,
+.selectionBar,
+#userForms,
+.iconGroup,
+.selectionBar__links > div {
   width: 100%; }
 
 .form--button,
@@ -195,6 +240,7 @@ a,
 .fa-eye,
 body,
 .icon,
+.icon--tiny,
 .textBox {
   color: #B9B9B9; }
 
@@ -225,7 +271,8 @@ h1.title {
 .card,
 .form--input--text,
 .reset--button,
-.textBox {
+.textBox,
+#body > #navColumn {
   background-color: #474747; }
 
 .slide--effect,
@@ -238,7 +285,10 @@ h1.title {
 #navBArMobileButton__left,
 .action,
 #userForms > div,
-.action__content {
+.action__content,
+.selectionBar,
+.project,
+.project__header {
   position: relative; }
 
 .form--eye,
@@ -250,7 +300,8 @@ h1.title {
 #navBArMobileButton__left > .fa-user,
 .userForm,
 .user__form__close,
-#userForms {
+#userForms,
+.selectionBar__content {
   position: absolute; }
 
 .justifyContent,
@@ -258,10 +309,14 @@ h1.title {
 .centralizeContent,
 .centralizeContentColumn,
 .rowReversed,
+.rowAround,
+.row,
 #body,
 .column,
 #content,
-.action__header {
+.action__header,
+.iconGroup > div,
+.project__actions {
   display: flex; }
 
 .alignContent,
@@ -271,6 +326,9 @@ h1.title {
 
 .rowReversed {
   flex-direction: row-reverse; }
+
+.rowAround {
+  justify-content: space-around; }
 
 .centralizeContent,
 .centralizeContentColumn,
@@ -285,7 +343,8 @@ h1.title {
 .dropdownDesktop > div,
 #navBarMobile__toggle > div,
 .action__header,
-.action {
+.action,
+.project__header {
   transition-duration: 0.2s; }
 
 .status--alert {
@@ -302,10 +361,6 @@ a {
   border: 1px solid #0080FF;
   padding: 12px;
   font-size: 1em; }
-
-.form--button:hover, .link--button:hover {
-  color: white;
-  background-color: #0080FF; }
 
 .form--button {
   background-color: transparent;
@@ -335,6 +390,9 @@ a {
 .icon {
   font-size: 30px; }
 
+.icon--tiny {
+  font-size: 15px; }
+
 .link--button {
   display: inline-block;
   width: 225px;
@@ -354,6 +412,15 @@ a {
 
 h1.title {
   font-size: 30px; }
+
+.checkBox {
+  display: inline-block; }
+  .checkBox div {
+    margin-left: 5px;
+    display: inline-block;
+    border: 0.5px solid #B9B9B9;
+    width: 20px;
+    height: 20px; }
 
 @media screen and (min-width: 769px) {
   #navBar #navBar__mobile {
@@ -384,11 +451,10 @@ h1.title {
   .actionButtonDropdown > div {
     position: absolute;
     right: 10px;
-    top: -110%;
+    top: -55px;
     border: 0.5px solid #6A6A6A;
-    border-radius: 2px; }
-  .actionButtonDropdown button {
-    padding: 10px; }
+    border-radius: 2px;
+    height: 50px; }
 
   .action--bar {
     margin: 40px 10px 80px 10px; }
@@ -396,5 +462,41 @@ h1.title {
   .action__header,
   .action__content {
     margin: 0 10px; } }
+#createAndAddActionProjectAlert {
+  display: none; }
+
+.icon--dark {
+  color: #6A6A6A; }
+
+.selectForm {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column; }
+
+.selectForm__content {
+  position: absolute;
+  top: 100%;
+  width: 100%;
+  background-color: #474747;
+  z-index: 30; }
+
+.selectForm__element {
+  display: block;
+  padding: 6px; }
+  .selectForm__element:hover {
+    background-color: #0080FF;
+    color: white;
+    cursor: pointer; }
+
+.selectForm__header {
+  border: 0.5px solid #6A6A6A;
+  padding: 5px; }
+  .selectForm__header:hover {
+    background-color: #0080FF;
+    color: white; }
+
+.dark--text {
+  color: #6A6A6A; }
 
 /*# sourceMappingURL=styles.css.map */
