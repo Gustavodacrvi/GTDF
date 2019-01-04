@@ -80,7 +80,7 @@
                     <h1 class='title usefForm--title'><%= __('ADD_TO_PROJECT/CREATE_PROJECT') %></h1>
                 </div>
                 <div class='form__element'>
-                    <nav class='selectionBar column' style='height: 200px'>
+                    <nav class='selectionBar column' style='height: 260px'>
                         <div class='selectionBar__links row'>
                             <div>
                                 <div class='selectionBar--link centralizeContent selectionBar--selected' >
@@ -102,8 +102,24 @@
                                 </div>
                                 <div class='selectionBar__content hided'>
                                     <span class='selectionBar__element'><%= __('Add_this_action_to_the_selected_project') %></span>
+                                    <div class='selectForm form__element' style='margin-top: 10px'>
+                                        <div class='selectForm__header'>
+                                            <span>{{ v.forms.action.title }}</span>
+                                        </div>
+                                        <div class='selectForm__content hided card'>
+                                            <template v-for='j in v.projects.length'>
+                                                <span class='text selectForm__element' @click='selectOption(v.projects[j - 1].title, v.projects[j - 1].id)'> {{ v.projects[j - 1].title }}</span>
+                                            </template>
+                                        </div>
+                                    </div>
+                                    <div class='form__element centralizeContent'>
+                                        <div>
+                                        <span class='text'><%= __('Order') %>:  </span>
+                                        <input class='textBox' v-model='v.forms.action.order' style='height:initial;width:30px'/>
+                                        </div>
+                                    </div>
                                     <div class='selectionBar__element centralizeContent' >
-                                        <button class='form--button'><%= __('Create_project') %></button>
+                                        <button class='form--button' @click='addAlreadyExistingActionToProject()'><%= __('Add_to_project') %></button>
                                     </div>
                                 </div>
                             </div>

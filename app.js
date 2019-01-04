@@ -556,11 +556,7 @@ app.post('/user/transform-action-to-project', function(req, res){
                 ]
             }
         }
-
-
-
         user.projects.push(project)        
-
         user.markModified('projects')
         user.markModified('actions')
         user.save(function(err, updatedUser){

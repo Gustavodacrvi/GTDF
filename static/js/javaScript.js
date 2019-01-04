@@ -519,6 +519,16 @@ let actions = new Vue({
                 this.actionsInit()
             })
         },
+        addAlreadyExistingActionToProject: function(){
+            $.post('/user/add-already-existing-action', { projectId: this.v.forms.action.id, actionId: this.v.forms.project.action.id, order: this.v.forms.action.order}, (data, status, xhr) => {
+                let user = JSON.parse(data)
+                this.v.user = user.actions
+                this.v.projects = user.projects
+            }).then(() =>{
+                this.$forceUpdate()
+                this.actionsInit()
+            })
+        },
         editActionProject: function(){
             if (!strIsInteger(this.v.forms.action.order) || parseInt(this.v.forms.action.order) < 1){
                 $('#createAndAddActionProjectAlert').css('display', 'block')
