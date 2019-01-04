@@ -45,8 +45,17 @@
                     <div class='graphTable__squares'>
                     </div>
                 </div>
+                <div class='graphTable__info alignContent rowReversed'>
+                    <span class='text'>More actions</span>
+                    <div class='square' style='margin-right: 8px;background-color: #003800'></div>
+                    <div class='square' style='margin-right: 3px;background-color: #007a02'></div>
+                    <div class='square' style='margin-right: 3px;background-color: #45a547'></div>
+                    <div class='square' style='margin-right: 3px;background-color: #85c75c'></div>
+                    <div class='square' style='margin-right: 3px;margin-left: 8px'></div>
+                    <span class='text'>Less actions</span>
+                </div>
             </div>
-            <div class='card action--bar alignContent'>
+            <div class='card action--bar alignContent' id='calendarActionBar'>
                 <button class='reset--button' onclick='actions.openUserForm("addTimedActionSection");actions.v.forms.addAction.tag = "calendar"'><i class='fa fa-plus icon action--icon user--icon'></i></button>
                 <div class='calendar--bar alignContent rowReversed'>
                     <input class='textBox' style='height: 12px;width: 90px' v-model='v.calendar.date' :placeholder='v.calendar.date' />
@@ -131,7 +140,7 @@
     actions.getUser()
     actions.v.graph.createGraph()
     actions.v.graph.applyEventHandlers()
-    actions.v.graph.paintSelectedDate()
+    actions.calculateNumberOfActionsAndPaintAllSquares()
 </script>
 </body>
 

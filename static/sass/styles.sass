@@ -114,7 +114,7 @@ body
 // CONTENT 
 
 .action--bar
-    margin: 2px 30px 80px 30px
+    margin: 40px 30px 80px 30px
 
 .action--bar,
 .action__header
@@ -472,46 +472,6 @@ h1.title
         width: 20px
         height: 20px
 
-@media screen and (min-width: $min--desktop--width + 1)
-    // MENU
-    #navBar #navBar__mobile
-        display: none
-    #content
-        margin-left: 260px
-    .actionButtonDropdown
-        >button
-            display: none
-    
-@media screen and (max-width: $min--desktop--width)
-    // MENU
-    #navBar__desktop
-        display: none
-    #content
-        flex-direction: column-reverse
-    #content__cards
-        height: 100%
-    #content__ads
-        height: 250px
-
-    #content__cards,
-    #content__ads
-        width: 100%
-
-    // ACTIONS
-    .actionButtonDropdown
-        >div
-            position: absolute
-            right: 10px
-            top: -55px
-            border: 0.5px solid $gray--light
-            border-radius: 2px
-            height: 50px
-    .action--bar
-        margin: 40px 10px 80px 10px  
-    .action__header,
-    .action__content
-        margin: 0 10px
-
 
 #createAndAddActionProjectAlert
     display: none
@@ -609,3 +569,64 @@ h1.title
 .graphTableSquaresColumn__square +
 .graphTableSquaresColumn__square
     margin-top: 3px
+
+.graphTable__info
+    width: 87%
+    position: absolute
+    bottom: 2px
+    right: 23px
+    height: 40px
+
+.square
+    width: 10px
+    height: 10px
+    background-color: white
+
+@media screen and (max-width: 1355px)
+    .graph
+        display: none
+
+@media screen and (min-width: 1355px)
+    #calendarActionBar
+        margin-top: 2px
+
+
+@media screen and (min-width: $min--desktop--width + 1)
+    // MENU
+    #navBar #navBar__mobile
+        display: none
+    #content
+        margin-left: 260px
+    .actionButtonDropdown
+        >button
+            display: none
+    
+@media screen and (max-width: $min--desktop--width)
+    // MENU
+    #navBar__desktop
+        display: none
+    #content
+        flex-direction: column-reverse
+    #content__cards
+        height: 100%
+    #content__ads
+        height: 250px
+
+    #content__cards,
+    #content__ads
+        width: 100%
+
+    // ACTIONS
+    .actionButtonDropdown
+        >div
+            position: absolute
+            right: 10px
+            top: -55px
+            border: 0.5px solid $gray--light
+            border-radius: 2px
+            height: 50px
+    .action--bar
+        margin: 40px 10px 80px 10px  
+    .action__header,
+    .action__content
+        margin: 0 10px

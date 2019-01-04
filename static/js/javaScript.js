@@ -501,8 +501,8 @@ let actions = new Vue({
                             }).on('click', function() {
                                 actions.v.graph.selectedDate = $(this).attr('id')
                                 actions.v.calendar.date = $(this).attr('id').replace(/-/g, '/')
-                                actions.v.graph.paintSelectedDate()
                                 actions.v.graph.unpaintLastSelectedDate()
+                                actions.v.graph.paintSelectedDate()
                                 actions.v.graph.lastSelectedDate = $(this).attr('id')
                                 setTimeout(actions.actionsInit, 10)
                             }).data('alreadyApplied', true)
@@ -510,11 +510,20 @@ let actions = new Vue({
                     }
                 },
                 unpaintLastSelectedDate: function(){
-                    $('#' + this.lastSelectedDate).css('background-color', 'white')
+                    if ($('#' + this.lastSelectedDate).data('numberOfActions') >= 1)
+                        $('#' + this.lastSelectedDate).css('background-color', '#85c75c')
+                    if ($('#' + this.lastSelectedDate).data('numberOfActions') > 3)
+                        $('#' + this.lastSelectedDate).css('background-color', '#45a547')
+                    if ($('#' + this.lastSelectedDate).data('numberOfActions') > 6)
+                        $('#' + this.lastSelectedDate).css('background-color', '#007a02')
+                    if ($('#' + this.lastSelectedDate).data('numberOfActions') > 10)
+                        $('#' + this.lastSelectedDate).css('background-color', '#003800')
+                    if ($('#' + this.lastSelectedDate).data('numberOfActions') == 0)
+                        $('#' + this.lastSelectedDate).css('background-color', 'white')                        
                 },
                 paintSelectedDate: function(){
                     $('#' + this.selectedDate).css('background-color', '#0080FF')
-                },
+                }
             },
             actionIcons: function() {return $('.action--icon')},
             closeIcons: function() {return $('.close--icon')},
@@ -824,7 +833,6 @@ let actions = new Vue({
         isTheSelectedDate: function(user){
             let givenDate = new DateM(user.calendar.date)
             let selected = new DateM(this.v.calendar.date)
-            console.log(3)
 
             if (selected.isEqual(givenDate))
                 return true
@@ -865,12 +873,42 @@ let actions = new Vue({
                     this.actionsInit()
                 })
             }
+        },
+
+        calculateNumberOfActionsAndPaintAllSquares: function(){
+            setTimeout(() => {
+                let actions = this.v.user
+                let squares = this.v.graph.squares()
+                for (let i = 0;i < squares.length;i++){
+                    squares.eq(i).data('numberOfActions', 0)
+                    actions.forEach(function(el){
+                        if (el.calendar){
+                            if (new DateM(el.calendar.date).isEqual(new DateM(squares.eq(i).attr('id').replace(/-/g, '/')))){
+                                squares.eq(i).data('numberOfActions', squares.eq(i).data('numberOfActions') + 1)
+                            }
+                        }
+                    })
+                }
+                for (let i = 0;i < squares.length;i++){
+                    if (squares.eq(i).data('numberOfActions') >= 1)
+                        squares.eq(i).css('background-color', '#85c75c')
+                    if (squares.eq(i).data('numberOfActions') > 3)
+                        squares.eq(i).css('background-color', '#45a547')
+                    if (squares.eq(i).data('numberOfActions') > 6)
+                        squares.eq(i).css('background-color', '#007a02')
+                    if (squares.eq(i).data('numberOfActions') > 10){
+                        squares.eq(i).css('background-color', '#003800')
+                        console.log(3)
+                    }
+                }
+                this.v.graph.paintSelectedDate()                
+            }, 100)
         }
     },
     computed: {
         changedValue: function(){
             let i = this.v.calendar.date
-            setTimeout(this.actionsInit, 10)
+            setTimeout(this.actionsInit, 100)
             return ''
         }
     }
