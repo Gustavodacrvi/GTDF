@@ -44,11 +44,17 @@
                 <div v-if='v.forms.editTag.newTag == "calendar"' class='form__element centralizeContent'>
                     <div>
                         <div>
-                            <textarea v-model='v.forms.addAction.title' class='textBox' style='height: 20px' placeholder='<%= __("Date") %>: DD/MM/YYYY'></textarea>
+                            <textarea v-model='v.calendar.user.date' class='textBox' style='height: 20px' placeholder='<%= __("Date") %>: DD/MM/YYYY'></textarea>
                         </div>
                         <div>
-                            <textarea v-model='v.forms.addAction.title' class='textBox' style='height: 20px' placeholder='<%= __("Hour") %>: HH:MM (<%= __("Optional") %>)'></textarea>
-                        </div>                        
+                            <textarea v-model='v.calendar.user.time' class='textBox' style='height: 20px' placeholder='<%= __("Hour") %>: HH:MM (<%= __("Optional") %>)'></textarea>
+                        </div>
+                        <div>
+                            <span id='invalidDate' class='status--alert' style='display: none'><%= __('Invalid_date') %>.</span>
+                        </div>
+                        <div>
+                            <span id='invalidTime' class='status--alert' style='display: none'><%= __('Invalid_time') %>.</span>
+                        </div>                   
                     </div>
                 </div>
                 <div class='form__element centralizeContent'>

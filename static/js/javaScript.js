@@ -1,3 +1,4 @@
+
 function hide(el, time){
     el.css({
         'transition-duration': time,
@@ -490,12 +491,29 @@ let actions = new Vue({
             })
         },
         editTag: function(){
-            $.post('/user/edit-tag', { actionId: this.v.forms.editTag.id, tag: this.v.forms.editTag.newTag}, (data, status, xhr) => {
-                this.v.user = JSON.parse(data).actions
-            }).then(() => {
-                this.$forceUpdate()
-                this.actionsInit()
-            })
+            if (this.v.forms.editTag.newTag != 'calendar'){
+                $.post('/user/edit-tag', { actionId: this.v.forms.editTag.id, tag: this.v.forms.editTag.newTag}, (data, status, xhr) => {
+                    this.v.user = JSON.parse(data).actions
+                }).then(() => {
+                    this.$forceUpdate()
+                    this.actionsInit()
+                })
+            } else {
+                if (!DateM.isValidDate(this.v.calendar.user.date)){
+                    $('#invalidTime').css('display', 'none')
+                    $('#invalidDate').css('display', 'block')
+                } else if (this.v.calendar.user.time != undefined && !TimeM.isValidTime(this.v.calendar.user.time)){
+                    $('#invalidDate').css('display', 'none')    
+                    $('#invalidTime').css('display', 'block')
+                } else {
+                    $.post('/user/add-calendar-tag', { actionId: this.v.forms.editTag.id, date: this.v.calendar.user.date, time: this.v.calendar.user.time }, (data, status, xhr) => {
+                        this.v.user = JSON.parse(data).actions
+                    }).then(() => {
+                        this.$forceUpdate()
+                        this.actionsInit()
+                    })
+                }
+            }
         },
         editAction: function(){
             $.post('/user/edit-action', { title: this.v.forms.editAction.title, description: this.v.forms.editAction.description, actionId: this.v.forms.editAction.id}, (data, status, xhr) => {

@@ -345,6 +345,18 @@ function editTimedAction(user, actionId, date, time, title, description){
     user.actions = insertionSortCalendar(user.actions)
     user.markModified('actions')
 }
+function addCalendarTagToAction(user, actionId, date, time){
+    let i = user.actions.findIndex(function(el){
+        return '' + actionId == '' + el.id
+    })
+    user.actions[i].tag = 'calendar'
+    user.actions[i].calendar = {
+        date: date,
+        time: time
+    }
+    user.actions = insertionSortCalendar(user.actions)
+    user.markModified('actions')
+}
 
 
 app.get('/', function(req, res){
@@ -755,6 +767,20 @@ app.post('/user/edit-timed-action', function(req, res){
         if (err) handleError(err)
 
         editTimedAction(user, req.body.actionId, req.body.date, req.body.time, req.body.title, req.body.description)
+
+        user.save(function(err, updatedUser){
+            if (err) return handleError(err)
+
+            res.send(JSON.stringify(updatedUser.actions))
+        })
+    })
+})
+
+app.post('/user/add-calendar-tag', function(req, res){
+    User.findById(req.user.id, function(err, user){
+        if (err) handleError(err)
+
+        addCalendarTagToAction(user, req.body.actionId, req.body.date, req.body.time)
 
         user.save(function(err, updatedUser){
             if (err) return handleError(err)
