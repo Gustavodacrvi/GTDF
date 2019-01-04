@@ -491,7 +491,17 @@ let actions = new Vue({
             })
         },
         editTag: function(){
-            if (this.v.forms.editTag.newTag != 'calendar'){
+            let i = this.v.user.findIndex((el) => {
+                return '' + el.id === '' + this.v.forms.editTag.id
+            })
+            if (this.v.user[i].tag == 'calendar'){
+                $.post('/user/remove-calendar-tag-action', { actionId: this.v.forms.editTag.id, tag: this.v.forms.editTag.newTag}, (data, status, xhr) => {
+                    this.v.user = JSON.parse(data)
+                }).then(() => {
+                    this.$forceUpdate()
+                    this.actionsInit()
+                })
+            } else if (this.v.forms.editTag.newTag != 'calendar'){
                 $.post('/user/edit-tag', { actionId: this.v.forms.editTag.id, tag: this.v.forms.editTag.newTag}, (data, status, xhr) => {
                     this.v.user = JSON.parse(data).actions
                 }).then(() => {

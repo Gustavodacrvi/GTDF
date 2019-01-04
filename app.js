@@ -357,6 +357,15 @@ function addCalendarTagToAction(user, actionId, date, time){
     user.actions = insertionSortCalendar(user.actions)
     user.markModified('actions')
 }
+function removeCalendarTagFromAction(user, actionId, tag){
+    let i = user.actions.findIndex(function(el){
+        return '' + el.id === '' + actionId
+    })
+    user.actions[i].tag = tag
+    delete user.actions[i].calendar
+    user.actions = insertionSort(user.actions)
+    user.markModified('actions')
+}
 
 
 app.get('/', function(req, res){
@@ -781,6 +790,20 @@ app.post('/user/add-calendar-tag', function(req, res){
         if (err) handleError(err)
 
         addCalendarTagToAction(user, req.body.actionId, req.body.date, req.body.time)
+
+        user.save(function(err, updatedUser){
+            if (err) return handleError(err)
+
+            res.send(JSON.stringify(updatedUser.actions))
+        })
+    })
+})
+
+app.post('/user/remove-calendar-tag-action', function(req, res){
+    User.findById(req.user.id, function(err, user){
+        if (err) handleError(err)
+
+        removeCalendarTagFromAction(user, req.body.actionId, req.body.tag)
 
         user.save(function(err, updatedUser){
             if (err) return handleError(err)
