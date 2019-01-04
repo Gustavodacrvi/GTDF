@@ -67,10 +67,8 @@ class DateM {
         if (month == 10) return 31
         if (month == 11) return 30
         if (month == 12) return 31
-        if (leap_year_bool) {
-            if (month == 2 && leap_year_bool) return 29
-            if (month == 2 && !leap_year_bool) return 28
-        }
+        if (month == 2 && leap_year_bool) return 29
+        if (month == 2 && !leap_year_bool) return 28
     }
     static getCurrentDay(){
         let date = new Date()
@@ -117,11 +115,11 @@ class DateM {
 
     addDay(int){
         for (let i = 0;i < int;i++){
-            if (this.month + 1 > 12){
-                this.year += 1
-                this.month = 1
-            } else 
+            if (this.day + 1 > DateM.getDaysInMonth(this.month, DateM.isLeapYear(this.year))){
                 this.month += 1
+                this.day = 1
+            } else 
+                this.day += 1
         }
     }
     addMonth(int){
@@ -466,6 +464,67 @@ let actions = new Vue({
                     time: undefined
                 }
             },
+            graph: {
+                columns: function(){return $('.graphTableSquares__column')},
+                squares: function(){return $('.graphTableSquaresColumn__square')},
+                lastSelectedDate: DateM.getCurrentDay().day+'-'+DateM.getCurrentDay().month+'-'+DateM.getCurrentDay().year,
+                selectedDate: DateM.getCurrentDay().day+'-'+DateM.getCurrentDay().month+'-'+DateM.getCurrentDay().year,
+                createGraph: function(){
+                    let graph = $('.graphTable__squares')
+                    let date = DateM.getCurrentDay()
+                    date.day = 1         
+                    date.month = 1
+        
+                    let week = 0
+                    while (week < 52){
+                        graph.append($("<div class='graphTableSquares__column' id='"+(week+1)+"'></div>"))
+                        for (let d = 0;d < 7;d++){
+                            graph.children('#' + (week+1)).append($("<div class='graphTableSquaresColumn__square' id='"+date.day+'-'+date.month+'-'+date.year+"' title='"+date.stringfy()+"''></div>"))
+                            date.addDay(1)
+                        }
+                        week++
+                    }
+                    graph.append($("<div class='graphTableSquares__column' id='"+(week+1)+"'></div>"))
+                    for (let d = 0;d < 365 - (7 * 52);d++){
+                        graph.append($("<div class='graphTableSquaresColumn__square' id='"+date.stringfy()+"'></div>"))
+                        date.addDay(1)
+                    }
+                },
+                applyEventHandlers: function(){
+                    let squares = this.squares()
+                    for (let i = 0;i < squares.length;i++){
+                        if (squares.eq(i).data('alreadyApplied') != true){
+                            squares.eq(i).on('mouseenter',function(){
+                                $(this).css('top', '-1px')
+                            }).on('mouseleave', function(){
+                                $(this).css('top', 'initial')
+                            }).on('click', function() {
+                                actions.v.graph.selectedDate = $(this).attr('id')
+                                actions.v.calendar.date = $(this).attr('id').replace(/-/g, '/')
+                                actions.v.graph.unpaintLastSelectedDate()
+                                actions.v.graph.paintSelectedDate()
+                                actions.v.graph.lastSelectedDate = $(this).attr('id')
+                                setTimeout(actions.actionsInit, 10)
+                            }).data('alreadyApplied', true)
+                        }
+                    }
+                },
+                unpaintLastSelectedDate: function(){
+                    if ($('#' + this.lastSelectedDate).data('numberOfActions') >= 1)
+                        $('#' + this.lastSelectedDate).css('background-color', '#85c75c')
+                    if ($('#' + this.lastSelectedDate).data('numberOfActions') > 3)
+                        $('#' + this.lastSelectedDate).css('background-color', '#45a547')
+                    if ($('#' + this.lastSelectedDate).data('numberOfActions') > 6)
+                        $('#' + this.lastSelectedDate).css('background-color', '#007a02')
+                    if ($('#' + this.lastSelectedDate).data('numberOfActions') > 10)
+                        $('#' + this.lastSelectedDate).css('background-color', '#003800')
+                    if ($('#' + this.lastSelectedDate).data('numberOfActions') == 0)
+                        $('#' + this.lastSelectedDate).css('background-color', 'white')                        
+                },
+                paintSelectedDate: function(){
+                    $('#' + this.selectedDate).css('background-color', '#0080FF')
+                }
+            },
             actionIcons: function() {return $('.action--icon')},
             closeIcons: function() {return $('.close--icon')},
             userIcons: function() {return $('.user--icon')},
@@ -768,7 +827,10 @@ let actions = new Vue({
         getCurrentDay: function(){
             this.v.calendar.date = DateM.getCurrentDay().stringfy()
         },
-        selectedDate: function(user){
+        getCurrendYear: function(){
+            return DateM.getCurrentDay().year
+        },
+        isTheSelectedDate: function(user){
             let givenDate = new DateM(user.calendar.date)
             let selected = new DateM(this.v.calendar.date)
 
@@ -811,12 +873,42 @@ let actions = new Vue({
                     this.actionsInit()
                 })
             }
+        },
+
+        calculateNumberOfActionsAndPaintAllSquares: function(){
+            setTimeout(() => {
+                let actions = this.v.user
+                let squares = this.v.graph.squares()
+                for (let i = 0;i < squares.length;i++){
+                    squares.eq(i).data('numberOfActions', 0)
+                    actions.forEach(function(el){
+                        if (el.calendar){
+                            if (new DateM(el.calendar.date).isEqual(new DateM(squares.eq(i).attr('id').replace(/-/g, '/')))){
+                                squares.eq(i).data('numberOfActions', squares.eq(i).data('numberOfActions') + 1)
+                            }
+                        }
+                    })
+                }
+                for (let i = 0;i < squares.length;i++){
+                    if (squares.eq(i).data('numberOfActions') >= 1)
+                        squares.eq(i).css('background-color', '#85c75c')
+                    if (squares.eq(i).data('numberOfActions') > 3)
+                        squares.eq(i).css('background-color', '#45a547')
+                    if (squares.eq(i).data('numberOfActions') > 6)
+                        squares.eq(i).css('background-color', '#007a02')
+                    if (squares.eq(i).data('numberOfActions') > 10){
+                        squares.eq(i).css('background-color', '#003800')
+                        console.log(3)
+                    }
+                }
+                this.v.graph.paintSelectedDate()                
+            }, 100)
         }
     },
     computed: {
         changedValue: function(){
             let i = this.v.calendar.date
-            setTimeout(this.actionsInit, 10)
+            setTimeout(this.actionsInit, 100)
             return ''
         }
     }
