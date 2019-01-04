@@ -517,7 +517,7 @@ let actions = new Vue({
                     $('#invalidTime').css('display', 'block')
                 } else {
                     $.post('/user/add-calendar-tag', { actionId: this.v.forms.editTag.id, date: this.v.calendar.user.date, time: this.v.calendar.user.time }, (data, status, xhr) => {
-                        this.v.user = JSON.parse(data).actions
+                        this.v.user = JSON.parse(data)
                     }).then(() => {
                         this.$forceUpdate()
                         this.actionsInit()
@@ -666,7 +666,7 @@ let actions = new Vue({
                 if (this.v.actions().find('.action__title').eq(i).data('alreadyApplied') !== true)
                     this.v.actions().find('.action__title').eq(i).on('click', function(){
                         $(this).parent().parent().children('.action__content').slideToggle()
-                    }).parent().data('alreadyApplied', true)
+                    }).data('alreadyApplied', true)
         },
         hideAllProjectActionsAndApplyEventHandler: function(){
             $('.project .project__actions').slideUp(0)
