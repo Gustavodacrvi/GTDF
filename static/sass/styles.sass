@@ -114,7 +114,7 @@ body
 // CONTENT 
 
 .action--bar
-    margin: 40px 30px 80px 30px
+    margin: 2px 30px 80px 30px
 
 .action--bar,
 .action__header
@@ -327,7 +327,8 @@ h1.title
 .action__content,
 .selectionBar,
 .project,
-.project__header
+.project__header,
+.graph
     position: relative
 
 .form--eye,
@@ -340,7 +341,8 @@ h1.title
 .userForm,
 .user__form__close,
 #userForms,
-.selectionBar__content
+.selectionBar__content,
+.graph .title
     position: absolute
 
 .justifyContent,
@@ -349,6 +351,7 @@ h1.title
 .centralizeContentColumn,
 .rowReversed,
 .rowAround,
+.columnAround,
 .row,
 #body,
 .column,
@@ -366,7 +369,8 @@ h1.title
 .rowReversed
     flex-direction: row-reverse
 
-.rowAround
+.rowAround,
+.columnAround
     justify-content: space-around
 
 .centralizeContent,
@@ -375,7 +379,8 @@ h1.title
     justify-content: center
 
 .centralizeContentColumn,
-.column
+.column,
+.columnAround
     flex-direction: column
 
 .form--button, .link--button,
@@ -547,3 +552,60 @@ h1.title
 
 .calendar--bar
     width: 100%
+
+.graph
+    height: 175px
+    margin: 40px 30px 0 30px
+    padding: 6px
+
+.graph
+    .title
+        margin: 0
+        left: 6px
+        top: 6px
+
+.graph__table
+    position: absolute
+    left: 25px
+    top: 20px
+    width: 88%
+    height: 70%
+
+.graphTable__weekdays
+    position: absolute
+    height: 77%
+    margin-top: 30px
+    width: 43px
+
+.graphTable__months
+    position: absolute
+    width: 693px    
+    margin-left: 43px
+    height: 30px
+
+.graphTable__squares
+    position: absolute
+    width: 633px
+    top: 33px
+    left: 43px
+    height: 97px
+    display: flex
+
+.graphTableSquares__column
+    height: 100%
+
+.graphTableSquares__column +
+.graphTableSquares__column
+    margin-left: 3px 
+    
+.graphTableSquaresColumn__square
+    position: relative
+    background-color: white
+    transition-duration: .2s
+    cursor: pointer
+    width: 10px
+    height: 10px
+
+.graphTableSquaresColumn__square +
+.graphTableSquaresColumn__square
+    margin-top: 3px
