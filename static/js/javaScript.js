@@ -748,15 +748,31 @@ let actions = new Vue({
                 return true
             return false
         },
+        editTimedAction: function(){
+            if (!DateM.isValidDate(this.v.calendar.user.date)){
+                $('#invalidTime').css('display', 'none')
+                $('#invalidDate').css('display', 'block')
+            } else if (this.v.calendar.user.time != undefined && !TimeM.isValidTime(this.v.calendar.user.time)){
+                $('#invalidDate').css('display', 'none')    
+                $('#invalidTime').css('display', 'block')
+            } else {
+                $('#invalidDate').css('display', 'none')
+                $('#invalidTime').css('display', 'none')
+                $.post('/user/edit-timed-action', { date: this.v.calendar.user.date, time: this.v.calendar.user.time, title: this.v.forms.addAction.title, description: this.v.forms.addAction.description, actionId: this.v.forms.editAction.id}, (data, status, xhr) =>{
+                    this.v.user = JSON.parse(data)
+                }).then(() =>{
+                    this.$forceUpdate()
+                    this.actionsInit()
+                })
+            }
+        },
         addTimedAction: function(){
             if (!DateM.isValidDate(this.v.calendar.user.date)){
                 $('#invalidTime').css('display', 'none')
                 $('#invalidDate').css('display', 'block')
-            } else if (this.v.calendar.user.time != undefined){
-                if (!TimeM.isValidTime(this.v.calendar.user.time)){
-                    $('#invalidDate').css('display', 'none')    
-                    $('#invalidTime').css('display', 'block')
-                }
+            } else if (this.v.calendar.user.time != undefined && !TimeM.isValidTime(this.v.calendar.user.time)){
+                $('#invalidDate').css('display', 'none')    
+                $('#invalidTime').css('display', 'block')
             } else {
                 $('#invalidDate').css('display', 'none')
                 $('#invalidTime').css('display', 'none')

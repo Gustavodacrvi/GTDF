@@ -35,16 +35,17 @@
                             <div class='action'>
                                     <div class='card action__header alignContent'>
                                     <div class='action__title alignContent'>
-                                        <span class='text'> {{ v.user[i - 1].title }}</span>
+                                        <span class='text'> {{ v.user[i - 1].title }} <span class='dark--text'>| </span>{{ v.user[i - 1].calendar.time}}</span>
                                     </div>
                                     <div class='actionButtonDropdown rowReversed'>
                                         <button class='reset--button'><i class="fas fa-ellipsis-v icon action--icon"></i></button>
                                         <div class='rowReversed'>
                                             <div class='action__buttons rowReversed'>
                                                 <button class='reset--button' title='<%= __("_delete_action") %>' @click='deleteAction(v.user[i - 1].id);hideAllSelectionBars()'><i class='fa fa-times icon action--icon user--icon'></i></button>
-                                                <button class='reset--button' title='<%= __("_edit_action") %>' @click='openUserForm("editAction");v.forms.editAction.id = v.user[i - 1].id;hideAllSelectionBars()'><i class='fa fa-edit icon action--icon user--icon'></i></button>
+                                                <button class='reset--button' title='<%= __("_edit_action") %>' @click='openUserForm("editTimedAction");v.forms.editAction.id = v.user[i - 1].id;hideAllSelectionBars()'><i class='fa fa-edit icon action--icon user--icon'></i></button>
                                                 <button class='reset--button' title='<%= __("add/edit_tag") %>' @click='openUserForm("add_changeTags");v.forms.editTag.id = v.user[i - 1].id;selectTagForm("" + v.user[i - 1].tag);hideAllSelectionBars()'><i class='fa fa-tag icon action--icon user--icon'></i></button>
                                                 <button class='reset--button' title='<%= __("projects") %>' @click='openUserForm("actionToProject");v.forms.project.action.id = v.user[i - 1].id;v.forms.action.title = "<%= __("select_project") %>:";showMainOptionSelectionBars()'><i class="fas fa-project-diagram icon action--icon user--icon"></i></button>
+                                                <button class='reset--button'></button>
                                             </div>
                                         </div>
                                     </div>
