@@ -586,6 +586,30 @@ h1.title
     height: 10px
     background-color: rgb(225,225,225)
 
+[data-title]:hover:after 
+    opacity: .9
+    transition: all 0.1s ease 0.2s
+    visibility: visible
+
+[data-title]:after 
+    content: attr(data-title)
+    font-size: 15px
+    color: $gray--light--light
+    position: absolute
+    padding: 8px 5px
+    top: -1.6em
+    left: 0
+    white-space: nowrap
+    opacity: 0
+    z-index: 99999
+    visibility: hidden
+    @extend .card
+
+[data-title] 
+    position: relative
+
+
+
 @media screen and (max-width: 1355px)
     .graph
         display: none

@@ -480,14 +480,14 @@ let actions = new Vue({
                     while (week < 52){
                         graph.append($("<div class='graphTableSquares__column' id='"+(week+1)+"'></div>"))
                         for (let d = 0;d < 7;d++){
-                            graph.children('#' + (week+1)).append($("<div class='graphTableSquaresColumn__square' id='"+date.day+'-'+date.month+'-'+date.year+"' title='"+date.stringfy()+"'></div>"))
+                            graph.children('#' + (week+1)).append($("<div class='graphTableSquaresColumn__square' id='"+date.day+'-'+date.month+'-'+date.year+"' data-title='"+date.stringfy()+"'></div>"))
                             date.addDay(1)
                         }
                         week++
                     }
                     graph.append($("<div class='graphTableSquares__column' id='"+(week+1)+"'></div>"))
                     for (let d = 0;d < 365 - (7 * 52);d++){
-                        graph.children('#' + (week+1)).append($("<div class='graphTableSquaresColumn__square' id='"+date.stringfy()+"' title='"+date.stringfy()+"'></div>"))
+                        graph.children('#' + (week+1)).append($("<div class='graphTableSquaresColumn__square' id='"+date.stringfy()+"' data-title='"+date.stringfy()+"'></div>"))
                         date.addDay(1)
                     }
                 },
@@ -902,7 +902,7 @@ let actions = new Vue({
                     if (square.data('numberOfActions') >= 10)
                         squares.eq(i).css('background-color', '#003800')
                     if (square.data('title') != true || square.data('lastNumberOfActions') != square.data('numberOfActions')){
-                        square.attr('title', '' + square.attr('id').replace(/-/g, '/') + '  ' + square.data('numberOfActions') + ' ' + this.v.calendar.square_title)
+                        square.attr('data-title', '' + square.attr('id').replace(/-/g, '/') + '  ' + square.data('numberOfActions') + ' ' + this.v.calendar.square_title)
                         square.data('title', true)
                         square.data('lastNumberOfActions', square.data('numberOfActions'))
                     }
