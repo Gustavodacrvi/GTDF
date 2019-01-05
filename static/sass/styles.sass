@@ -32,6 +32,7 @@ body
     padding: 0 5%
     border-bottom: 0.5px solid $gray--light
     z-index: 2
+    font-size: 17px
 
 #navBar + div
     z-index: 12
@@ -88,9 +89,12 @@ body
 #body > #navColumn
     position: fixed
     flex-basis: 250px
-    border-right: 0.5px solid $gray--light--light
+    border-right: 0.5px solid $gray--light
     z-index: 1
     width: 250px
+
+#navColumn
+    font-size: 18px 
 
 #body > #content
     flex-basis: 1570px
@@ -101,8 +105,8 @@ body
 
 .navColumnContent__division
     border: 0.5px solid $gray--light
-    margin-top: 10px
-    margin-bottom: 35px
+    margin-top: 5px
+    margin-bottom: 26px
     width: 200px
 
 #content__cards
@@ -126,7 +130,7 @@ body
     top: -3px
 
 .action + .action 
-    margin-top: 10px
+    margin-top: 6px
 
 .action__content
     top: 1px
@@ -174,7 +178,7 @@ body
         flex-wrap: wrap
 
 .icon--selector
-    border: 0.5px solid $gray--light--light
+    border: 0.5px solid $gray--light
     width: 70px
     height: 70px
 
@@ -206,7 +210,8 @@ body
 .selectionBar__element
     margin-top: 30px
 
-
+.action__header
+    height: 42px
 
 
 .form--button:hover,
@@ -247,7 +252,6 @@ body
     width: 50%
 
 .action--bar,
-.action__header,
 #navBar,
 #navBar + div,
 #navBar > div > div 
@@ -526,7 +530,7 @@ h1.title
 
 .graph__table
     position: absolute
-    left: 25px
+    left: 17px
     top: 20px
     width: 88%
     height: 70%
