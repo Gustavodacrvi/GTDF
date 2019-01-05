@@ -26,16 +26,16 @@
                 <div class='form__element alignContent'>
                     <div class='iconGroup centralizeContent'>
                         <div>
-                            <div class='centralizeContent icon--selector' @click='selectTagForm("waiting")' id='waiting' title='<%= __("waiting") %>'>
+                            <div class='centralizeContent icon--selector' @click='selectTagForm("waiting")' id='waiting' data-title='<%= __("waiting") %>'>
                                 <i class="fas fa-hourglass-half icon"></i>
                             </div>
-                            <div class='centralizeContent icon--selector'  @click='selectTagForm("maybe")' id='maybe' title='<%= __("someday/maybe") %>'>
+                            <div class='centralizeContent icon--selector'  @click='selectTagForm("maybe")' id='maybe' data-title='<%= __("someday/maybe") %>'>
                                 <i class="fas fa-question icon"></i>
                             </div>
-                            <div class='centralizeContent icon--selector' @click='selectTagForm("nextAction")' id='nextAction' title='<%= __("next_actions") %>'>
+                            <div class='centralizeContent icon--selector' @click='selectTagForm("nextAction")' id='nextAction' data-title='<%= __("next_actions") %>'>
                                 <i class="fas fa-forward icon"></i>
                             </div>
-                            <div class='centralizeContent icon--selector' @click='selectTagForm("calendar")' id='calendar' title='<%= __("_calendar") %>'>
+                            <div class='centralizeContent icon--selector' @click='selectTagForm("calendar")' id='calendar' data-title='<%= __("_calendar") %>'>
                                 <i class="fas fa-calendar-alt icon"></i>
                             </div>
                         </div>
@@ -208,7 +208,7 @@
         <article class='form card userForm hided' id='editProjectAction'>
             <button class='reset--button user__form__close'><i class='fa fa-times icon close--icon user--icon'></i></button>
             <div>
-                <div class='form__element centralizeContent'>
+                <div class='form__element centralizeContent' style='margin-top: 20px'>
                     <textarea v-model='v.forms.action.title' class='textBox' style='height: 41px' placeholder='<%= __("Title") %>...'></textarea>
                 </div>
                 <div class='form__element centralizeContent'>
@@ -307,6 +307,43 @@
                 </div>
                 <div class='form__element centralizeContent'>
                     <button class='form--button' @click='editTimedAction()'><%= __('Add_action') %></button>
+                </div>
+            </div>
+        </article>
+        <article class='form card userForm hided' id='editProjectTimedAction' style='margin-top: -70px'>
+            <button class='reset--button user__form__close'><i class='fa fa-times icon close--icon user--icon'></i></button>
+            <div>
+                <div class='form__element centralizeContent' style='margin-top: 20px'>
+                    <textarea v-model='v.forms.addAction.title' class='textBox' style='height: 41px' placeholder='<%= __("Title") %>...'></textarea>                    
+                </div>
+                <div class='form__element centralizeContent'>
+                    <textarea v-model='v.forms.addAction.description' class='textBox' style='height: 168px' placeholder='<%= __("Description") %>...'></textarea>
+                </div>
+                <div class='form__element centralizeContent'>
+                    <div>
+                    <span class='text'><%= __('Order') %>:  </span>
+                    <input class='textBox' v-model='v.forms.action.order' style='height:initial;width:30px'/>
+                    </div>
+                </div>
+                <div class='form__element' id='createAndAddActionProjectAlert'>
+                    <span class='status--alert'><%= __('Order_must_be_an_integer_and_bigger_than_0') %>.</span>
+                </div>
+                <div class='form__element'>
+                    <div>
+                        <textarea v-model='v.calendar.user.date' class='textBox' style='height: 20px' placeholder='<%= __("Date") %>: DD/MM/YYYY'></textarea>
+                    </div>
+                    <div>
+                        <textarea v-model='v.calendar.user.time' class='textBox' style='height: 20px' placeholder='<%= __("Hour") %>: HH:MM (<%= __("Optional") %>)'></textarea>
+                    </div>
+                    <div>
+                        <span id='invalidDate' class='status--alert' style='display: none'><%= __('Invalid_date') %>.</span>
+                    </div>
+                    <div>
+                        <span id='invalidTime' class='status--alert' style='display: none'><%= __('Invalid_time') %>.</span>
+                    </div>
+                </div>
+                <div class='form__element centralizeContent'>
+                    <button class='form--button' @click='editProjectTimedAction()'><%= __('Add_action') %></button>
                 </div>
             </div>
         </article>

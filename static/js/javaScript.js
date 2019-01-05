@@ -858,6 +858,29 @@ let actions = new Vue({
                 })
             }
         },
+        editProjectTimedAction: function(){
+            if (!DateM.isValidDate(this.v.calendar.user.date)){
+                $('#invalidTime').css('display', 'none')
+                $('#invalidDate').css('display', 'block')
+            } else if (this.v.calendar.user.time != undefined && !TimeM.isValidTime(this.v.calendar.user.time)){
+                $('#invalidDate').css('display', 'none')    
+                $('#invalidTime').css('display', 'block')
+            } else if (!strIsInteger(this.v.forms.action.order) || parseInt(this.v.forms.action.order) < 1){
+                    $('#createAndAddActionProjectAlert').css('display', 'block')
+            } else {
+                $('#invalidDate').css('display', 'none')
+                $('#invalidTime').css('display', 'none')
+                $('#createAndAddActionProjectAlert').css('display', 'none')
+                $.post('/user/edit-timed-project-action', { date: this.v.calendar.user.date, time: this.v.calendar.user.time, title: this.v.forms.addAction.title, description: this.v.forms.addAction.description, order: this.v.forms.action.order, actionId: this.v.forms.action.id}, (data, status, xhr) =>{
+                    let user = JSON.parse(data)
+                    this.v.user = user.actions
+                    this.v.projects = user.projects
+                }).then(() =>{
+                    this.$forceUpdate()
+                    this.actionsInit()
+                })
+            }
+        },
         addTimedAction: function(){
             if (!DateM.isValidDate(this.v.calendar.user.date)){
                 $('#invalidTime').css('display', 'none')

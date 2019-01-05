@@ -551,7 +551,7 @@ h1.title {
   color: #B9B9B9;
   position: absolute;
   padding: 8px 5px;
-  top: -1.6em;
+  bottom: 100%;
   left: 0;
   white-space: nowrap;
   opacity: 0;
