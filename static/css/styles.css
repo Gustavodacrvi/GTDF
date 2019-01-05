@@ -275,6 +275,7 @@ h1.title {
 
 #navBar,
 .card,
+[data-title]:after,
 .form--input--text,
 .reset--button,
 .textBox,
@@ -361,7 +362,7 @@ h1.title {
 .status--alert {
   color: #FF6F00; }
 
-.card {
+.card, [data-title]:after {
   border: 0.5px solid #6A6A6A;
   border-radius: 2px; }
 
@@ -538,6 +539,27 @@ h1.title {
   width: 10px;
   height: 10px;
   background-color: #e1e1e1; }
+
+[data-title]:hover:after {
+  opacity: 0.9;
+  transition: all 0.1s ease 0.2s;
+  visibility: visible; }
+
+[data-title]:after {
+  content: attr(data-title);
+  font-size: 15px;
+  color: #B9B9B9;
+  position: absolute;
+  padding: 8px 5px;
+  top: -1.6em;
+  left: 0;
+  white-space: nowrap;
+  opacity: 0;
+  z-index: 99999;
+  visibility: hidden; }
+
+[data-title] {
+  position: relative; }
 
 @media screen and (max-width: 1355px) {
   .graph {

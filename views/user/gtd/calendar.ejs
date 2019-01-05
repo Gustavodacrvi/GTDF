@@ -48,16 +48,16 @@
                 </div>
                 <div class='graphTable__info alignContent rowReversed'>
                     <span class='text'><%= __('More_actions') %></span>
-                    <div class='square' :title='"10 " + v.calendar.square_title' style='margin-right: 8px;background-color: #003800'></div>
-                    <div class='square' :title='"6 " + v.calendar.square_title' style='margin-right: 3px;background-color: #007a02'></div>
-                    <div class='square' :title='"4 " + v.calendar.square_title' style='margin-right: 3px;background-color: #8ce981'></div>
-                    <div class='square' :title='"1 " + v.calendar.square_title' style='margin-right: 3px;background-color: #caff75'></div>
-                    <div class='square' :title='"0 " + v.calendar.square_title' style='margin-right: 3px;margin-left: 8px'></div>
+                    <div class='square' :data-title='"10 " + v.calendar.square_title' style='margin-right: 8px;background-color: #003800'></div>
+                    <div class='square' :data-title='"6 " + v.calendar.square_title' style='margin-right: 3px;background-color: #007a02'></div>
+                    <div class='square' :data-title='"4 " + v.calendar.square_title' style='margin-right: 3px;background-color: #8ce981'></div>
+                    <div class='square' :data-title='"1 " + v.calendar.square_title' style='margin-right: 3px;background-color: #caff75'></div>
+                    <div class='square' :data-title='"0 " + v.calendar.square_title' style='margin-right: 3px;margin-left: 8px'></div>
                     <span class='text'><%= __('Less_actions') %></span>
                 </div>
             </div>
             <div class='card action--bar alignContent' id='calendarActionBar'>
-                <button class='reset--button' onclick='actions.openUserForm("addTimedActionSection");actions.v.forms.addAction.tag = "calendar"'><i class='fa fa-plus icon action--icon user--icon'></i></button>
+                <button class='reset--button' data-title='<%= __("add_action") %>' onclick='actions.openUserForm("addTimedActionSection");actions.v.forms.addAction.tag = "calendar"'><i class='fa fa-plus icon action--icon user--icon'></i></button>
                 <div class='calendar--bar alignContent rowReversed'>
                     <input class='textBox' style='height: 12px;width: 90px' v-model='v.calendar.date' :placeholder='v.calendar.date' />
                     <span class='status--alert hided' style='margin-right: 20px'> FF</span>
@@ -78,10 +78,10 @@
                                         <button class='reset--button'><i class="fas fa-ellipsis-v icon action--icon"></i></button>
                                         <div class='rowReversed'>
                                             <div class='action__buttons rowReversed'>
-                                                <button class='reset--button' title='<%= __("_delete_action") %>' @click='deleteProjectAction(v.projects[j - 1].actions[i - 1].id)'><i class='fa fa-times icon action--icon user--icon'></i></button>
-                                                <button class='reset--button' title='<%= __("_edit_action") %>' @click='v.forms.action.id = v.projects[j - 1].actions[i - 1].id;openUserForm("editProjectAction");hideAllSelectionBars()'><i class='fa fa-edit icon action--icon user--icon'></i></button>
-                                                <button class='reset--button' title='<%= __("add/edit_tag") %>' @click='openUserForm("add_changeTags");v.forms.editTag.id = v.projects[j - 1].actions[i - 1].id;selectTagForm("" + v.user[i - 1].tag);hideAllSelectionBars()'><i class='fa fa-tag icon action--icon user--icon'></i></button>
-                                                <button class='reset--button' title='<%= __("remove_from_project") %>' @click='removeFromProject(v.projects[j - 1].actions[i - 1].id, v.projects[j - 1].id)'><i class="fas fa-external-link-alt icon action--icon user--icon"></i></button>
+                                                <button class='reset--button' data-title='<%= __("_delete_action") %>' @click='deleteProjectAction(v.projects[j - 1].actions[i - 1].id)'><i class='fa fa-times icon action--icon user--icon'></i></button>
+                                                <button class='reset--button' data-title='<%= __("_edit_action") %>' @click='v.forms.action.id = v.projects[j - 1].actions[i - 1].id;openUserForm("editProjectAction");hideAllSelectionBars()'><i class='fa fa-edit icon action--icon user--icon'></i></button>
+                                                <button class='reset--button' data-title='<%= __("add/edit_tag") %>' @click='openUserForm("add_changeTags");v.forms.editTag.id = v.projects[j - 1].actions[i - 1].id;selectTagForm("" + v.user[i - 1].tag);hideAllSelectionBars()'><i class='fa fa-tag icon action--icon user--icon'></i></button>
+                                                <button class='reset--button' data-title='<%= __("remove_from_project") %>' @click='removeFromProject(v.projects[j - 1].actions[i - 1].id, v.projects[j - 1].id)'><i class="fas fa-external-link-alt icon action--icon user--icon"></i></button>
                                             </div>
                                         </div>
                                     </div>
@@ -108,10 +108,10 @@
                                         <button class='reset--button'><i class="fas fa-ellipsis-v icon action--icon"></i></button>
                                         <div class='rowReversed'>
                                             <div class='action__buttons rowReversed'>
-                                                <button class='reset--button' title='<%= __("_delete_action") %>' @click='deleteAction(v.user[i - 1].id);hideAllSelectionBars()'><i class='fa fa-times icon action--icon user--icon'></i></button>
-                                                <button class='reset--button' title='<%= __("_edit_action") %>' @click='openUserForm("editTimedAction");v.forms.editAction.id = v.user[i - 1].id;hideAllSelectionBars()'><i class='fa fa-edit icon action--icon user--icon'></i></button>
-                                                <button class='reset--button' title='<%= __("add/edit_tag") %>' @click='openUserForm("add_changeTags");v.forms.editTag.id = v.user[i - 1].id;selectTagForm("" + v.user[i - 1].tag);hideAllSelectionBars()'><i class='fa fa-tag icon action--icon user--icon'></i></button>
-                                                <button class='reset--button' title='<%= __("projects") %>' @click='openUserForm("actionToProject");v.forms.project.action.id = v.user[i - 1].id;v.forms.action.title = "<%= __("select_project") %>:";showMainOptionSelectionBars()'><i class="fas fa-project-diagram icon action--icon user--icon"></i></button>
+                                                <button class='reset--button' data-title='<%= __("_delete_action") %>' @click='deleteAction(v.user[i - 1].id);hideAllSelectionBars()'><i class='fa fa-times icon action--icon user--icon'></i></button>
+                                                <button class='reset--button' data-title='<%= __("_edit_action") %>' @click='openUserForm("editTimedAction");v.forms.editAction.id = v.user[i - 1].id;hideAllSelectionBars()'><i class='fa fa-edit icon action--icon user--icon'></i></button>
+                                                <button class='reset--button' data-title='<%= __("add/edit_tag") %>' @click='openUserForm("add_changeTags");v.forms.editTag.id = v.user[i - 1].id;selectTagForm("" + v.user[i - 1].tag);hideAllSelectionBars()'><i class='fa fa-tag icon action--icon user--icon'></i></button>
+                                                <button class='reset--button' data-title='<%= __("projects") %>' @click='openUserForm("actionToProject");v.forms.project.action.id = v.user[i - 1].id;v.forms.action.title = "<%= __("select_project") %>:";showMainOptionSelectionBars()'><i class="fas fa-project-diagram icon action--icon user--icon"></i></button>
                                                 <button class='reset--button'></button>
                                             </div>
                                         </div>
