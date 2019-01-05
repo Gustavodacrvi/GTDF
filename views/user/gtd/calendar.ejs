@@ -13,6 +13,7 @@
 
 <% include ../../partials/user-forms %>
 
+{{ v.calendar.square_title = "<%= __('actions') %>" }}
 
 <div id='body'>
     <% include ../../partials/menu %>
@@ -24,35 +25,35 @@
                 <h1 class='title'>{{ getCurrendYear()}}</h1>
                 <div class='graph__table'>
                     <div class='graphTable__weekdays columnAround'>
-                        <span class='text'>Seg</span>
-                        <span class='text'>Qua</span>
-                        <span class='text'>Sex</span>
+                        <span class='text'><%= __('Mon') %></span>
+                        <span class='text'><%= __('Wed') %></span>
+                        <span class='text'><%= __('Fri') %></span>
                     </div>
                     <div class='graphTable__months rowAround alignContent'>
                         <span class='text'>Jan</span>
-                        <span class='text'>Fev</span>
+                        <span class='text'><%= __('Feb') %></span>
                         <span class='text'>Mar</span>
-                        <span class='text'>Abr</span>
-                        <span class='text'>Mai</span>
+                        <span class='text'><%= __('Apr') %></span>
+                        <span class='text'><%= __('May') %></span>
                         <span class='text'>Jun</span>
                         <span class='text'>Jul</span>
-                        <span class='text'>Aug</span>
-                        <span class='text'>Sep</span>
-                        <span class='text'>Oct</span>
+                        <span class='text'><%= __('Aug') %></span>
+                        <span class='text'><%= __('Sep') %></span>
+                        <span class='text'><%= __('Oct') %></span>
                         <span class='text'>Nov</span>
-                        <span class='text'>Dec</span>
+                        <span class='text'><%= __('Dec') %></span>
                     </div>
                     <div class='graphTable__squares'>
                     </div>
                 </div>
                 <div class='graphTable__info alignContent rowReversed'>
-                    <span class='text'>More actions</span>
-                    <div class='square' style='margin-right: 8px;background-color: #003800'></div>
-                    <div class='square' style='margin-right: 3px;background-color: #007a02'></div>
-                    <div class='square' style='margin-right: 3px;background-color: #45a547'></div>
-                    <div class='square' style='margin-right: 3px;background-color: #85c75c'></div>
-                    <div class='square' style='margin-right: 3px;margin-left: 8px'></div>
-                    <span class='text'>Less actions</span>
+                    <span class='text'><%= __('More_actions') %></span>
+                    <div class='square' :title='"10 " + v.calendar.square_title' style='margin-right: 8px;background-color: #003800'></div>
+                    <div class='square' :title='"6 " + v.calendar.square_title' style='margin-right: 3px;background-color: #007a02'></div>
+                    <div class='square' :title='"4 " + v.calendar.square_title' style='margin-right: 3px;background-color: #8ce981'></div>
+                    <div class='square' :title='"1 " + v.calendar.square_title' style='margin-right: 3px;background-color: #caff75'></div>
+                    <div class='square' :title='"0 " + v.calendar.square_title' style='margin-right: 3px;margin-left: 8px'></div>
+                    <span class='text'><%= __('Less_actions') %></span>
                 </div>
             </div>
             <div class='card action--bar alignContent' id='calendarActionBar'>
@@ -132,7 +133,6 @@
         </div>
     </div>
 </div>
-
 
 </section>
 <% include ../../partials/footer %>

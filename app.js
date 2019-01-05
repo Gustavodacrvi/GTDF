@@ -516,7 +516,9 @@ app.post('/user/delete-action', function(req, res){
 
         deleteAction(user, req.body.actionId)
         user.save(function(err, updatedUser){
-            if (err) return handleError(err)
+            if (err){
+                console.log(err)
+            }
             res.send(JSON.stringify(updatedUser))
         })
     })

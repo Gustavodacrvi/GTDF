@@ -462,7 +462,8 @@ let actions = new Vue({
                 user: {
                     date: '',
                     time: undefined
-                }
+                },
+                square_title: ''
             },
             graph: {
                 columns: function(){return $('.graphTableSquares__column')},
@@ -479,14 +480,14 @@ let actions = new Vue({
                     while (week < 52){
                         graph.append($("<div class='graphTableSquares__column' id='"+(week+1)+"'></div>"))
                         for (let d = 0;d < 7;d++){
-                            graph.children('#' + (week+1)).append($("<div class='graphTableSquaresColumn__square' id='"+date.day+'-'+date.month+'-'+date.year+"' title='"+date.stringfy()+"''></div>"))
+                            graph.children('#' + (week+1)).append($("<div class='graphTableSquaresColumn__square' id='"+date.day+'-'+date.month+'-'+date.year+"' title='"+date.stringfy()+"'></div>"))
                             date.addDay(1)
                         }
                         week++
                     }
                     graph.append($("<div class='graphTableSquares__column' id='"+(week+1)+"'></div>"))
                     for (let d = 0;d < 365 - (7 * 52);d++){
-                        graph.append($("<div class='graphTableSquaresColumn__square' id='"+date.stringfy()+"'></div>"))
+                        graph.children('#' + (week+1)).append($("<div class='graphTableSquaresColumn__square' id='"+date.stringfy()+"' title='"+date.stringfy()+"'></div>"))
                         date.addDay(1)
                     }
                 },
@@ -511,15 +512,15 @@ let actions = new Vue({
                 },
                 unpaintLastSelectedDate: function(){
                     if ($('#' + this.lastSelectedDate).data('numberOfActions') >= 1)
-                        $('#' + this.lastSelectedDate).css('background-color', '#85c75c')
-                    if ($('#' + this.lastSelectedDate).data('numberOfActions') > 3)
-                        $('#' + this.lastSelectedDate).css('background-color', '#45a547')
-                    if ($('#' + this.lastSelectedDate).data('numberOfActions') > 6)
+                        $('#' + this.lastSelectedDate).css('background-color', '#caff75')
+                    if ($('#' + this.lastSelectedDate).data('numberOfActions') >= 4)
+                        $('#' + this.lastSelectedDate).css('background-color', '#8ce981')
+                    if ($('#' + this.lastSelectedDate).data('numberOfActions') >= 6)
                         $('#' + this.lastSelectedDate).css('background-color', '#007a02')
-                    if ($('#' + this.lastSelectedDate).data('numberOfActions') > 10)
+                    if ($('#' + this.lastSelectedDate).data('numberOfActions') >= 10)
                         $('#' + this.lastSelectedDate).css('background-color', '#003800')
                     if ($('#' + this.lastSelectedDate).data('numberOfActions') == 0)
-                        $('#' + this.lastSelectedDate).css('background-color', 'white')                        
+                        $('#' + this.lastSelectedDate).css('background-color', 'rgb(225,225,225)')                        
                 },
                 paintSelectedDate: function(){
                     $('#' + this.selectedDate).css('background-color', '#0080FF')
@@ -660,6 +661,7 @@ let actions = new Vue({
             if (!menu.isDesktop())
                 this.hideAllActionMobileElipsesAdnApplyEventHandler()
             this.hideAllProjectActionsAndApplyEventHandler()
+            this.calculateNumberOfActionsAndPaintAllSquares()
         },
         hideAllActionMobileElipsesAdnApplyEventHandler: function(){
             hide($('.actionButtonDropdown div'))
@@ -890,18 +892,22 @@ let actions = new Vue({
                     })
                 }
                 for (let i = 0;i < squares.length;i++){
-                    if (squares.eq(i).data('numberOfActions') >= 1)
-                        squares.eq(i).css('background-color', '#85c75c')
-                    if (squares.eq(i).data('numberOfActions') > 3)
-                        squares.eq(i).css('background-color', '#45a547')
-                    if (squares.eq(i).data('numberOfActions') > 6)
-                        squares.eq(i).css('background-color', '#007a02')
-                    if (squares.eq(i).data('numberOfActions') > 10){
+                    let square = squares.eq(i)
+                    if (square.data('numberOfActions') >= 1)
+                        square.css('background-color', '#caff75')
+                    if (square.data('numberOfActions') >= 4)
+                        square.css('background-color', '#8ce981')
+                    if (square.data('numberOfActions') >= 6)
+                        square.css('background-color', '#007a02')
+                    if (square.data('numberOfActions') >= 10)
                         squares.eq(i).css('background-color', '#003800')
-                        console.log(3)
+                    if (square.data('title') != true || square.data('lastNumberOfActions') != square.data('numberOfActions')){
+                        square.attr('title', '' + square.attr('id').replace(/-/g, '/') + '  ' + square.data('numberOfActions') + ' ' + this.v.calendar.square_title)
+                        square.data('title', true)
+                        square.data('lastNumberOfActions', square.data('numberOfActions'))
                     }
                 }
-                this.v.graph.paintSelectedDate()                
+                this.v.graph.paintSelectedDate()
             }, 100)
         }
     },

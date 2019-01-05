@@ -78,5 +78,18 @@
 	"Choose_the_action": "Escolha a ação",
 	"select_project": "selecionar projeto",
 	"Invalid_date": "Data inválida",
-	"Invalid_time": "Hora inválida"
+	"Invalid_time": "Hora inválida",
+	"Mon": "Seg",
+	"Wed": "Qua",
+	"Fri": "Sex",
+	"Feb": "Fev",
+	"Apr": "Abr",
+	"May": "Mar",
+	"Aug": "Ago",
+	"Sep": "Set",
+	"Oct": "Out",
+	"Dec": "Dez",
+	"More_actions": "Mais ações",
+	"Less_actions": "Menos ações",
+	"actions": "ações"
 }
