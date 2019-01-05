@@ -1,9 +1,10 @@
 $back--color: #191919
 $gray--light--light: #B9B9B9
 $gray--light: #6A6A6A
+$border--color: #3e3e3e
 $orange: #FF6F00
-$gray: #474747
-$blue: #0080FF
+$gray: #333232
+$red: #FF1313
 $min--desktop--width: 768px
     
 @font-face
@@ -33,7 +34,7 @@ body
     position: fixed
     width: 90%
     padding: 0 5%
-    border-bottom: 0.5px solid $gray--light
+    border-bottom: 0.5px solid $border--color
     z-index: 2
     font-size: 17px
 
@@ -41,6 +42,8 @@ body
     z-index: 12
     width: 10px
 
+b
+    color: $red
 
 .navBar__element
     margin: 8px
@@ -92,7 +95,7 @@ body
 #body > #navColumn
     position: fixed
     flex-basis: 250px
-    border-right: 0.5px solid $gray--light
+    border-right: 0.5px solid $border--color
     z-index: 1
     width: 250px
 
@@ -131,6 +134,9 @@ body
 
 .action:hover
     top: -3px
+    .action__title
+        span
+            color: $red
 
 .action + .action 
     margin-top: 6px
@@ -181,7 +187,7 @@ body
         flex-wrap: wrap
 
 .icon--selector
-    border: 0.5px solid $gray--light
+    border: 0.5px solid $border--color
     width: 70px
     height: 70px
 
@@ -195,7 +201,7 @@ body
 .selectionBar--link
     &:hover
             a
-                color: $blue
+                color: $red
 
 .selectionBar__links
     a
@@ -228,7 +234,7 @@ body
 .icon--selector:hover,
 .selectionBar--selected,
 .icon--selector--selected
-    background-color: $blue
+    background-color: $red
 
 .checkBox,
 .form--eye,
@@ -311,7 +317,7 @@ a:hover,
 .link--button,
 .active--link,
 h1.title
-    color: $blue
+    color: $red
 
 #navBar,
 .card,
@@ -402,7 +408,7 @@ h1.title
     color: $orange
 
 .card
-    border: 0.5px solid $gray--light
+    border: 0.5px solid $border--color
     border-radius: 2px
 
 
@@ -412,7 +418,7 @@ a
 
 
 .form--button, .link--button
-    border: 1px solid $blue
+    border: 1px solid $red
     padding: 12px
     font-size: 1em
 
@@ -434,7 +440,7 @@ a
     border-bottom: 1px solid $gray--light
 
 .textBox
-    border: 1px solid $gray--light
+    border: 1px solid $border--color
     word-wrap: break-word
     word-break: break-all
     resize: none
@@ -445,6 +451,9 @@ a
 
 .icon
     font-size: 30px
+
+.user--icon:hover
+    color: $red
 
 .icon--tiny
     font-size: 15px
@@ -475,7 +484,7 @@ h1.title
     div
         margin-left: 5px
         display: inline-block
-        border: 0.5px solid $gray--light--light
+        border: 0.5px solid $border--color
         width: 20px
         height: 20px
 
@@ -503,15 +512,15 @@ h1.title
     display: block
     padding: 6px
     &:hover
-        background-color: $blue
+        background-color: $red
         color: white
         cursor: pointer
 
 .selectForm__header
-    border: 0.5px solid $gray--light
+    border: 0.5px solid $border--color
     padding: 5px
     &:hover
-        background-color: $blue
+        background-color: $red
         color: white
 
 .dark--text
@@ -653,7 +662,7 @@ h1.title
             position: absolute
             right: 10px
             top: -55px
-            border: 0.5px solid $gray--light
+            border: 0.5px solid $border--color
             border-radius: 2px
             height: 50px
     .action--bar

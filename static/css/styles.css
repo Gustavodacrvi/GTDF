@@ -20,13 +20,16 @@ body {
   position: fixed;
   width: 90%;
   padding: 0 5%;
-  border-bottom: 0.5px solid #6A6A6A;
+  border-bottom: 0.5px solid #3e3e3e;
   z-index: 2;
   font-size: 17px; }
 
 #navBar + div {
   z-index: 12;
   width: 10px; }
+
+b {
+  color: #FF1313; }
 
 .navBar__element {
   margin: 8px;
@@ -74,7 +77,7 @@ body {
 #body > #navColumn {
   position: fixed;
   flex-basis: 250px;
-  border-right: 0.5px solid #6A6A6A;
+  border-right: 0.5px solid #3e3e3e;
   z-index: 1;
   width: 250px; }
 
@@ -109,6 +112,8 @@ body {
 
 .action:hover {
   top: -3px; }
+  .action:hover .action__title span {
+    color: #FF1313; }
 
 .action + .action {
   margin-top: 6px; }
@@ -154,7 +159,7 @@ body {
   flex-wrap: wrap; }
 
 .icon--selector {
-  border: 0.5px solid #6A6A6A;
+  border: 0.5px solid #3e3e3e;
   width: 70px;
   height: 70px; }
 
@@ -163,7 +168,7 @@ body {
   margin-bottom: 10px; }
 
 .selectionBar--link:hover a {
-  color: #0080FF; }
+  color: #FF1313; }
 
 .selectionBar__links a {
   text-decoration: none;
@@ -192,7 +197,7 @@ body {
 .icon--selector:hover,
 .selectionBar--selected,
 .icon--selector--selected {
-  background-color: #0080FF; }
+  background-color: #FF1313; }
 
 .checkBox,
 .form--eye,
@@ -274,7 +279,7 @@ a:hover,
 .link--button,
 .active--link,
 h1.title {
-  color: #0080FF; }
+  color: #FF1313; }
 
 #navBar,
 .card,
@@ -283,7 +288,7 @@ h1.title {
 .reset--button,
 .textBox,
 #body > #navColumn {
-  background-color: #474747; }
+  background-color: #333232; }
 
 .slide--effect,
 .slide--effect--left,
@@ -366,14 +371,14 @@ h1.title {
   color: #FF6F00; }
 
 .card, [data-title]:after {
-  border: 0.5px solid #6A6A6A;
+  border: 0.5px solid #3e3e3e;
   border-radius: 2px; }
 
 a {
   text-decoration: underline; }
 
 .form--button, .link--button {
-  border: 1px solid #0080FF;
+  border: 1px solid #FF1313;
   padding: 12px;
   font-size: 1em; }
 
@@ -393,7 +398,7 @@ a {
   border-bottom: 1px solid #6A6A6A; }
 
 .textBox {
-  border: 1px solid #6A6A6A;
+  border: 1px solid #3e3e3e;
   word-wrap: break-word;
   word-break: break-all;
   resize: none;
@@ -404,6 +409,9 @@ a {
 
 .icon {
   font-size: 30px; }
+
+.user--icon:hover {
+  color: #FF1313; }
 
 .icon--tiny {
   font-size: 15px; }
@@ -433,7 +441,7 @@ h1.title {
   .checkBox div {
     margin-left: 5px;
     display: inline-block;
-    border: 0.5px solid #B9B9B9;
+    border: 0.5px solid #3e3e3e;
     width: 20px;
     height: 20px; }
 
@@ -453,22 +461,22 @@ h1.title {
   position: absolute;
   top: 100%;
   width: 100%;
-  background-color: #474747;
+  background-color: #333232;
   z-index: 30; }
 
 .selectForm__element {
   display: block;
   padding: 6px; }
   .selectForm__element:hover {
-    background-color: #0080FF;
+    background-color: #FF1313;
     color: white;
     cursor: pointer; }
 
 .selectForm__header {
-  border: 0.5px solid #6A6A6A;
+  border: 0.5px solid #3e3e3e;
   padding: 5px; }
   .selectForm__header:hover {
-    background-color: #0080FF;
+    background-color: #FF1313;
     color: white; }
 
 .dark--text {
@@ -600,7 +608,7 @@ h1.title {
     position: absolute;
     right: 10px;
     top: -55px;
-    border: 0.5px solid #6A6A6A;
+    border: 0.5px solid #3e3e3e;
     border-radius: 2px;
     height: 50px; }
 
