@@ -143,13 +143,20 @@ b {
 .project + .project {
   margin-top: 15px; }
 
+#userForms {
+  position: fixed;
+  pointer-events: none;
+  z-index: 10; }
+
 #userForms > div {
   width: 350px;
-  height: 450px;
-  z-index: 5; }
+  height: 450px; }
 
 .userForm {
-  top: 0; }
+  top: 0;
+  pointer-events: all; }
+  .userForm > div {
+    padding-top: 15px; }
 
 .user__form__close {
   right: 2px;
@@ -316,7 +323,6 @@ h1.title {
 #navBArMobileButton__left > .fa-user,
 .userForm,
 .user__form__close,
-#userForms,
 .selectionBar__content,
 .graph .title {
   position: absolute; }
@@ -445,7 +451,7 @@ h1.title {
     width: 20px;
     height: 20px; }
 
-#createAndAddActionProjectAlert {
+.createAndAddActionProjectAlert {
   display: none; }
 
 .icon--dark {

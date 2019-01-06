@@ -170,13 +170,20 @@ b
     
 // USER FORMS
 
+#userForms
+    position: fixed
+    pointer-events: none
+    z-index: 10
+
 #userForms > div
     width: 350px
     height: 450px
-    z-index: 5
     
 .userForm
     top: 0
+    pointer-events: all
+    >div
+        padding-top: 15px
 
 .user__form__close
     right: 2px
@@ -353,7 +360,6 @@ h1.title
 #navBArMobileButton__left > .fa-user,
 .userForm,
 .user__form__close,
-#userForms,
 .selectionBar__content,
 .graph .title
     position: absolute
@@ -489,7 +495,7 @@ h1.title
         height: 20px
 
 
-#createAndAddActionProjectAlert
+.createAndAddActionProjectAlert
     display: none
 
 .icon--dark
