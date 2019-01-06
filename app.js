@@ -546,9 +546,8 @@ app.post('/user/edit-tag', function(req, res){
     User.findById(req.user.id, function(err, user){
         if (err) return handleError(err)
 
-        let i = user.actions.findIndex(function(el){
-            return el.id == req.body.actionId
-        })
+        let i = getUserActionIndex(user, req.body.actionId)
+
         user.actions[i].tag = req.body.tag
         user.markModified('actions')
         user.save(function(err, updatedUser){
@@ -731,7 +730,7 @@ app.post('/user/transform-action-to-project', function(req, res){
         let actionI = getUserActionIndex(user, req.body.actionId)
 
         let project = {}
-        if (req.body.delete == true){
+        if ('' + req.body.delete == '' + true){
             project = {
                 id: user.actions[actionI].id,
                 title: user.actions[actionI].title,

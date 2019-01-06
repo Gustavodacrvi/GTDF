@@ -420,52 +420,35 @@ let actions = new Vue({
     el: '#background',
     data: {
         v: {
-            forms: {
-                addAction: {
-                    title: '',
-                    description: '',
-                    tag: ''
-                },
-                editAction: {
-                    title: '',
-                    description: '',
-                    id: ''
-                },
-                editTag: {
-                    Id: '',
-                    newTag: 'basket'
+            actionData:{
+                title: '',
+                description: '',
+                tag: '',
+                id: '',
+                calendar: {
+                    time: '',
+                    date: ''
                 },
                 project: {
+                    order: '',
                     id: '',
-                    action: {
-                        delete: true,
-                        projectId: ''
-                    },
-                    title: '',
-                    editProjectId: '',
-                    editProjectTitle: '',
-                },
-                action: {
-                    title: '',
-                    description: '',
-                    order: undefined,
-                    user: ''
-                },
+                    title: ''
+                }
+            },
+            projectData: {
+                id: '',
+                title: '',
+                delete: true
             },
             user: {
             },
             projects: {
 
             },
-            calendar: {
-                date: '',
-                user: {
-                    date: '',
-                    time: undefined
-                },
-                square_title: ''
-            },
             graph: {
+                square_title: '',
+                editActionDate: DateM.getCurrentDay().stringfy(),
+                date: DateM.getCurrentDay().stringfy(),
                 columns: function(){return $('.graphTableSquares__column')},
                 squares: function(){return $('.graphTableSquaresColumn__square')},
                 lastSelectedDate: DateM.getCurrentDay().day+'-'+DateM.getCurrentDay().month+'-'+DateM.getCurrentDay().year,
@@ -501,7 +484,9 @@ let actions = new Vue({
                                 $(this).css('top', 'initial')
                             }).on('click', function() {
                                 actions.v.graph.selectedDate = $(this).attr('id')
-                                actions.v.calendar.date = $(this).attr('id').replace(/-/g, '/')
+                                actions.v.actionData.calendar.date = $(this)
+                                .attr('id').replace(/-/g, '/')
+                                actions.v.graph.date = actions.v.actionData.calendar.date
                                 actions.v.graph.unpaintLastSelectedDate()
                                 actions.v.graph.paintSelectedDate()
                                 actions.v.graph.lastSelectedDate = $(this).attr('id')
@@ -535,111 +520,100 @@ let actions = new Vue({
     },
     methods: {
         addAction: function(){
-            $.post('/user/add-action', { title: this.v.forms.addAction.title, description: this.v.forms.addAction.description, tag: this.v.forms.addAction.tag}, (data, status, xhr) => {
+            $.post('/user/add-action', { description: this.v.actionData.description, title: this.v.actionData.title, tag: this.v.actionData.tag}, (data, status, xhr) => {
                 this.v.user = JSON.parse(data).actions
             }).then(() => {
-                this.$forceUpdate()
                 this.actionsInit()
             })
         },
         createProject: function(){
-            $.post('/user/create-project', {title: this.v.forms.project.title}, (data, status, xhr) => {
+            $.post('/user/create-project', { title: this.v.projectData.title}, (data, status, xhr) => {
                 this.v.projects = JSON.parse(data).projects
             }).then(() => {
-                this.$forceUpdate()
                 this.actionsInit()
             })
         },
         editTag: function(){
             let i = this.v.user.findIndex((el) => {
-                return '' + el.id === '' + this.v.forms.editTag.id
+                return '' + el.id === '' + this.v.actionData.id
             })
             if (this.v.user[i].tag == 'calendar'){
-                $.post('/user/remove-calendar-tag-action', { actionId: this.v.forms.editTag.id, tag: this.v.forms.editTag.newTag}, (data, status, xhr) => {
+                $.post('/user/remove-calendar-tag-action', { actionId: this.v.actionData.id, tag: this.v.actionData.tag}, (data, status, xhr) => {
                     this.v.user = JSON.parse(data)
                 }).then(() => {
-                    this.$forceUpdate()
                     this.actionsInit()
                 })
-            } else if (this.v.forms.editTag.newTag != 'calendar'){
-                $.post('/user/edit-tag', { actionId: this.v.forms.editTag.id, tag: this.v.forms.editTag.newTag}, (data, status, xhr) => {
+            } else if (this.v.actionData.tag != 'calendar'){
+                $.post('/user/edit-tag', { tag: this.v.actionData.tag, actionId: this.v.actionData.id}, (data, status, xhr) => {
                     this.v.user = JSON.parse(data).actions
                 }).then(() => {
-                    this.$forceUpdate()
                     this.actionsInit()
                 })
             } else {
-                if (!DateM.isValidDate(this.v.calendar.user.date)){
-                    $('#invalidTime').css('display', 'none')
-                    $('#invalidDate').css('display', 'block')
-                } else if (this.v.calendar.user.time != undefined && !TimeM.isValidTime(this.v.calendar.user.time)){
-                    $('#invalidDate').css('display', 'none')    
-                    $('#invalidTime').css('display', 'block')
+                if (!DateM.isValidDate(this.v.actionData.calendar.date)){
+                    $('.invalidTime').css('display', 'none')
+                    $('.invalidDate').css('display', 'block')
+                } else if (this.v.actionData.calendar.time != '' && !TimeM.isValidTime(this.v.actionData.calendar.time)){
+                    $('.invalidDate').css('display', 'none')    
+                    $('.invalidTime').css('display', 'block')
                 } else {
-                    $.post('/user/add-calendar-tag', { actionId: this.v.forms.editTag.id, date: this.v.calendar.user.date, time: this.v.calendar.user.time }, (data, status, xhr) => {
+                    $.post('/user/add-calendar-tag', { actionId: this.v.actionData.id, date: this.v.actionData.calendar.date, time: this.v.actionData.calendar.time }, (data, status, xhr) => {
                         this.v.user = JSON.parse(data)
                     }).then(() => {
-                        this.$forceUpdate()
                         this.actionsInit()
                     })
                 }
             }
         },
         editAction: function(){
-            $.post('/user/edit-action', { title: this.v.forms.editAction.title, description: this.v.forms.editAction.description, actionId: this.v.forms.editAction.id}, (data, status, xhr) => {
+            $.post('/user/edit-action', { actionId: this.v.actionData.id, title: this.v.actionData.title, description: this.v.actionData.description}, (data, status, xhr) => {
                 this.v.user = JSON.parse(data).actions
             }).then(() => {
-                this.$forceUpdate()
                 this.actionsInit()
             })
         },
         createAndAddActionProject: function(){
-            if (!strIsInteger(this.v.forms.action.order) || parseInt(this.v.forms.action.order) < 1){
-                $('#createAndAddActionProjectAlert').css('display', 'block')
+            if (!strIsInteger(this.v.actionData.project.order) || parseInt(this.v.actionData.project.order) < 1){
+                $('.createAndAddActionProjectAlert').css('display', 'block')
             } else {
-                $('#createAndAddActionProjectAlert').css('display', 'none')
-                $.post('/user/create-add-action-project', { title: this.v.forms.action.title, description: this.v.forms.action.description, projectId: this.v.forms.project.id, order: parseInt(this.v.forms.action.order)}, (data, status, xhr) => {
+                $('.createAndAddActionProjectAlert').css('display', 'none')
+                $.post('/user/create-add-action-project', { title: this.v.actionData.title, description: this.v.actionData.description, projectId: this.v.projectData.id, order: parseInt(this.v.actionData.project.order)}, (data, status, xhr) => {
                     let user = JSON.parse(data)
                     this.v.user = user.actions
                     this.v.projects = user.projects
                 }).then(() => {
-                    this.$forceUpdate()
                     this.actionsInit()
                 })
             }
         },
         transformActionToProject: function(){
-            $.post('/user/transform-action-to-project', { actionId: this.v.forms.project.action.id, delete: this.v.forms.project.action.delete}, (data, status, xhr) =>{
+            $.post('/user/transform-action-to-project', { actionId: this.v.actionData.id, delete: this.v.projectData.delete}, (data, status, xhr) =>{
                 let user = JSON.parse(data)
                 this.v.user = user.actions
                 this.v.projects = user.projects
             }).then(() =>{
-                this.$forceUpdate()
                 this.actionsInit()
             })
         },
         addAlreadyExistingActionToProject: function(){
-            $.post('/user/add-already-existing-action', { projectId: this.v.forms.action.id, actionId: this.v.forms.project.action.id, order: this.v.forms.action.order}, (data, status, xhr) => {
+            $.post('/user/add-already-existing-action', { actionId: this.v.actionData.id, projectId: this.v.projectData.id, order: this.v.actionData.project.order}, (data, status, xhr) => {
                 let user = JSON.parse(data)
                 this.v.user = user.actions
                 this.v.projects = user.projects
             }).then(() =>{
-                this.$forceUpdate()
                 this.actionsInit()
             })
         },
         editActionProject: function(){
-            if (!strIsInteger(this.v.forms.action.order) || parseInt(this.v.forms.action.order) < 1){
-                $('#createAndAddActionProjectAlert').css('display', 'block')
+            if (!strIsInteger(this.v.actionData.project.order) || parseInt(this.v.actionData.project.order) < 1){
+                $('.createAndAddActionProjectAlert').css('display', 'block')
             } else {
-                $('#createAndAddActionProjectAlert').css('display', 'none')
-                $.post('/user/edit-action-project', { title: this.v.forms.action.title, description: this.v.forms.action.description, order: this.v.forms.action.order,
-                actionId: this.v.forms.action.id}, (data, status, xhr) => {
+                $('.createAndAddActionProjectAlert').css('display', 'none')
+                $.post('/user/edit-action-project', { actionId: this.v.actionData.id, title: this.v.actionData.title, description: this.v.actionData.description, order: this.v.actionData.project.order}, (data, status, xhr) => {
                     let user = JSON.parse(data)
                     this.v.user = user.actions
                     this.v.projects = user.projects
                 }).then(() => {
-                    this.$forceUpdate()
                     this.actionsInit()
                 })
             }
@@ -662,6 +636,7 @@ let actions = new Vue({
                 this.hideAllActionMobileElipsesAdnApplyEventHandler()
             this.hideAllProjectActionsAndApplyEventHandler()
             this.calculateNumberOfActionsAndPaintAllSquares()
+            this.hideAllSelectionBars()
         },
         hideAllActionMobileElipsesAdnApplyEventHandler: function(){
             hide($('.actionButtonDropdown div'))
@@ -693,10 +668,6 @@ let actions = new Vue({
             if (tag_str == 'maybe')
                 return 'fas fa-question icon icon--dark' 
         },
-        selectOption: function(title, id){
-            this.v.forms.action.title = title
-            this.v.forms.action.id = id
-        },
         applySelectFormEventHandlers: function(){
             let v = $('.selectForm')
             for (let i = 0;i < v.length;i++)
@@ -708,15 +679,15 @@ let actions = new Vue({
                     }).data('alreadyApplied', true)
         },
         addAlreadyExistingAction: function(){
-            if (!strIsInteger(this.v.forms.action.order) || parseInt(this.v.forms.action.order) < 1){
-                $('#createAndAddActionProjectAlert').css('display', 'block')
+            if (!strIsInteger(this.v.actionData.project.order) || parseInt(this.v.actionData.project.order) < 1){
+                $('.createAndAddActionProjectAlert').css('display', 'block')
             } else {
-                $.post('/user/add-already-existing-action', { actionId: this.v.forms.action.id, projectId: this.v.forms.project.id, order: this.v.forms.action.order}, (data, status, xhr) => {
+                $('.createAndAddActionProjectAlert').css('display', 'none')
+                $.post('/user/add-already-existing-action', { projectId: this.v.projectData.id, actionId: this.v.actionData.id, order: this.v.actionData.project.order }, (data, status, xhr) => {
                     let user = JSON.parse(data)
                     this.v.user = user.actions
                     this.v.projects = user.projects
                 }).then(() =>{
-                    this.$forceUpdate()
                     this.actionsInit()
                 })
             }
@@ -747,6 +718,7 @@ let actions = new Vue({
                 this.v.closeIcons().eq(i).on('click', function(){
                     hide($(this).parent().parent(), '0.2s')
                     hide($('#userForms > div'))
+                    actions.cleanActionData()
                 })
         },
         openUserForm: function(id){
@@ -780,7 +752,7 @@ let actions = new Vue({
             })
         },
         editProjectTitle: function(){
-            $.post('/user/edit-project-title', { title: this.v.forms.project.editProjectTitle, projectId: this.v.forms.project.editProjectId }, (data, status) => {
+            $.post('/user/edit-project-title', { projectId: this.v.projectData.id, title: this.v.projectData.title}, (data, status) => {
                 this.v.projects = JSON.parse(data)
             }).then(() => {
                 this.actionsInit()
@@ -798,7 +770,10 @@ let actions = new Vue({
         selectTagForm: function(id){
             $('.icon--selector').removeClass('icon--selector--selected')
             $('#' + id).addClass('icon--selector--selected')
-            this.v.forms.editTag.newTag = id
+            this.v.actionData.tag = id
+        },
+        initAfterSomeTime: function(){
+            setTimeout(this.actionsInit, 10)
         },
         applySelectionBarEventHandlers: function(){
             let v = $('.selectionBar--link')
@@ -819,82 +794,114 @@ let actions = new Vue({
             show($('.selectionBar__main'))
         },
         displayProjectAction: function(actionId){
-            let index = this.v.user.findIndex(function(el){
+            return this.v.user[this.v.user.findIndex(function(el){
                 return el.id == actionId
-            })
-            this.v.forms.project.user = this.v.user[index]
-            return this.v.user[index]
+            })]
+        },
+        cleanActionData: function(){
+            this.v.actionData.title = ''
+            this.v.actionData.description = ''
+            this.v.actionData.tag = ''
+            this.v.actionData.id = ''
+
+            this.v.actionData.calendar.time = ''
+            this.v.actionData.calendar.date = ''
+
+            this.v.actionData.project.order = ''
+            this.v.actionData.project.id = ''
+            this.v.actionData.project.title = ''
+        },
+        getDataFromAction: function(el){
+            this.v.actionData.title = el.title
+            this.v.actionData.description = el.description
+            this.v.actionData.id = el.id
+            this.v.actionData.tag = el.tag
+            if (el.calendar){
+                this.v.actionData.calendar.time = el.calendar.time
+                this.v.actionData.calendar.date = el.calendar.date
+            }
+            if (el.project){
+                this.v.actionData.project.order = el.project.order
+                this.v.actionData.project.id = el.project.id
+                this.v.actionData.project.title = el.project.title
+            }
+        },
+        cleanProjectData: function(){
+            this.v.projectData.id = ''
+            this.v.projectData.title = ''
+            this.v.projectData.delete = true
+        },
+        getDataFromProject: function(el){
+            this.v.projectData.id = el.id
+            this.v.projectData.title = el.title
         },
 
         getCurrentDay: function(){
-            this.v.calendar.date = DateM.getCurrentDay().stringfy()
+            this.v.actionData.calendar.date = DateM.getCurrentDay().stringfy()
         },
         getCurrendYear: function(){
             return DateM.getCurrentDay().year
         },
         isTheSelectedDate: function(user){
             let givenDate = new DateM(user.calendar.date)
-            let selected = new DateM(this.v.calendar.date)
+            let selected = new DateM(this.v.graph.date)
 
             if (selected.isEqual(givenDate))
                 return true
             return false
         },
         editTimedAction: function(){
-            if (!DateM.isValidDate(this.v.calendar.user.date)){
-                $('#invalidTime').css('display', 'none')
-                $('#invalidDate').css('display', 'block')
-            } else if (this.v.calendar.user.time != undefined && !TimeM.isValidTime(this.v.calendar.user.time)){
-                $('#invalidDate').css('display', 'none')    
-                $('#invalidTime').css('display', 'block')
+            if (!DateM.isValidDate(this.v.graph.editActionDate)){
+                $('.invalidTime').css('display', 'none')
+                $('.invalidDate').css('display', 'block')
+            } else if (this.v.actionData.calendar.time != '' && !TimeM.isValidTime(this.v.actionData.calendar.time)){
+                $('.invalidDate').css('display', 'none')    
+                $('.invalidTime').css('display', 'block')
             } else {
-                $('#invalidDate').css('display', 'none')
-                $('#invalidTime').css('display', 'none')
-                $.post('/user/edit-timed-action', { date: this.v.calendar.user.date, time: this.v.calendar.user.time, title: this.v.forms.addAction.title, description: this.v.forms.addAction.description, actionId: this.v.forms.editAction.id}, (data, status, xhr) =>{
+                $('.invalidDate').css('display', 'none')
+                $('.invalidTime').css('display', 'none')
+                $.post('/user/edit-timed-action', { actionId: this.v.actionData.id, time: this.v.actionData.calendar.time, date: this.v.graph.editActionDate, title: this.v.actionData.title, description: this.v.actionData.description}, (data, status, xhr) =>{
                     this.v.user = JSON.parse(data)
                 }).then(() =>{
-                    this.$forceUpdate()
                     this.actionsInit()
                 })
             }
         },
         editProjectTimedAction: function(){
-            if (!DateM.isValidDate(this.v.calendar.user.date)){
-                $('#invalidTime').css('display', 'none')
-                $('#invalidDate').css('display', 'block')
-            } else if (this.v.calendar.user.time != undefined && !TimeM.isValidTime(this.v.calendar.user.time)){
-                $('#invalidDate').css('display', 'none')    
-                $('#invalidTime').css('display', 'block')
-            } else if (!strIsInteger(this.v.forms.action.order) || parseInt(this.v.forms.action.order) < 1){
-                    $('#createAndAddActionProjectAlert').css('display', 'block')
+            if (!DateM.isValidDate(this.v.graph.editActionDate)){
+                $('.invalidTime').css('display', 'none')
+                $('.invalidDate').css('display', 'block')
+            } else if (this.v.actionData.calendar.time != '' && !TimeM.isValidTime(this.v.actionData.calendar.time)){
+                $('.invalidDate').css('display', 'none')    
+                $('.invalidTime').css('display', 'block')
+            } else if (!strIsInteger(this.v.actionData.project.order) || parseInt(this.v.actionData.project.order) < 1){
+                    $('.createAndAddActionProjectAlert').css('display', 'block')
             } else {
-                $('#invalidDate').css('display', 'none')
-                $('#invalidTime').css('display', 'none')
-                $('#createAndAddActionProjectAlert').css('display', 'none')
-                $.post('/user/edit-timed-project-action', { date: this.v.calendar.user.date, time: this.v.calendar.user.time, title: this.v.forms.addAction.title, description: this.v.forms.addAction.description, order: this.v.forms.action.order, actionId: this.v.forms.action.id}, (data, status, xhr) =>{
+                $('.invalidDate').css('display', 'none')
+                $('.invalidTime').css('display', 'none')
+                $('.createAndAddActionProjectAlert').css('display', 'none')
+                $.post('/user/edit-timed-project-action', { actionId: this.v.actionData.id, title: this.v.actionData.title, description: this.v.actionData.description, time: this.v.actionData.calendar.time, date: this.v.graph.editActionDate, order: this.v.actionData.project.order, projectId: this.v.projectData.id}, (data, status, xhr) =>{
                     let user = JSON.parse(data)
                     this.v.user = user.actions
                     this.v.projects = user.projects
                 }).then(() =>{
-                    this.$forceUpdate()
                     this.actionsInit()
                 })
             }
         },
         addTimedAction: function(){
-            if (!DateM.isValidDate(this.v.calendar.user.date)){
-                $('#invalidTime').css('display', 'none')
-                $('#invalidDate').css('display', 'block')
-            } else if (this.v.calendar.user.time != undefined && !TimeM.isValidTime(this.v.calendar.user.time)){
-                $('#invalidDate').css('display', 'none')    
-                $('#invalidTime').css('display', 'block')
+            if (!DateM.isValidDate(this.v.graph.date)){
+                $('.invalidTime').css('display', 'none')
+                $('.invalidDate').css('display', 'block')
+            } else if (this.v.actionData.calendar.time != '' && !TimeM.isValidTime(this.v.actionData.calendar.time)){
+                $('.invalidDate').css('display', 'none')    
+                $('.invalidTime').css('display', 'block')
             } else {
-                $('#invalidDate').css('display', 'none')
-                $('#invalidTime').css('display', 'none')
-                $.post('/user/add-timed-action', { date: this.v.calendar.user.date, time: this.v.calendar.user.time, title: this.v.forms.addAction.title, description: this.v.forms.addAction.description}, (data, status, xhr) =>{
+                $('.invalidDate').css('display', 'none')
+                $('.invalidTime').css('display', 'none')
+                $.post('/user/add-timed-action', { actionId: this.v.actionData.title, title: this.v.actionData.title, description: this.v.actionData.description, time: this.v.actionData.calendar.time, date: this.v.graph.date,}, (data, status, xhr) =>{
                     this.v.user = JSON.parse(data)
                 }).then(() =>{
-                    this.$forceUpdate()
                     this.actionsInit()
                 })
             }
@@ -925,7 +932,7 @@ let actions = new Vue({
                     if (square.data('numberOfActions') >= 10)
                         squares.eq(i).css('background-color', '#003800')
                     if (square.data('title') != true || square.data('lastNumberOfActions') != square.data('numberOfActions')){
-                        square.attr('data-title', '' + square.attr('id').replace(/-/g, '/') + '  ' + square.data('numberOfActions') + ' ' + this.v.calendar.square_title)
+                        square.attr('data-title', '' + square.attr('id').replace(/-/g, '/') + '  ' + square.data('numberOfActions') + ' ' + this.v.graph.square_title)
                         square.data('title', true)
                         square.data('lastNumberOfActions', square.data('numberOfActions'))
                     }
@@ -936,8 +943,8 @@ let actions = new Vue({
     },
     computed: {
         changedValue: function(){
-            let i = this.v.calendar.date
-            setTimeout(this.actionsInit, 100)
+            let i = this.v.actionData.calendar.date + ''
+            this.initAfterSomeTime()
             return ''
         }
     }
