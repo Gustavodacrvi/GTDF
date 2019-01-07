@@ -957,6 +957,7 @@ actions.applySelectFormEventHandlers()
 actions.getCurrentDay()
 checkbox.applyEventHandlers()
 
+
 if (menu.isDesktop()){
     $('#navColumn').off('mouseleave')
 }
@@ -977,3 +978,4 @@ $(window).on('resize', function(){
         actions.hideAllActionMobileElipsesAdnApplyEventHandler()
     }
 })
+
