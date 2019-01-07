@@ -35,7 +35,7 @@
                                 <div class='action__buttons rowReversed'>
                                     <button class='reset--button' data-title='<%= __("_delete_project") %>' @click='deleteProject(v.projects[j - 1].id);'><i class='fa fa-times icon action--icon user--icon'></i></button>                                    
                                     <button class='reset--button' data-title='<%= __("_edit_project_title") %>' @click='cleanProjectData();getDataFromProject(v.projects[j - 1]);openUserForm("editProjectTitle")'><i class='fa fa-edit icon action--icon user--icon'></i></button>
-                                    <button class='reset--button' data-title='<%= __("_add_action_to_project") %>' @click='cleanProjectData();getDataFromProject(v.projects[j - 1]);openUserForm("addActionProject")'><i class='fa fa-plus icon action--icon user--icon'></i></button>
+                                    <button class='reset--button' data-title='<%= __("_add_action_to_project") %>' @click='cleanProjectData();cleanActionData();getDataFromProject(v.projects[j - 1]);openUserForm("addActionProject")'><i class='fa fa-plus icon action--icon user--icon'></i></button>
                                 </div>
                             </div>
                         </div>
@@ -59,7 +59,12 @@
                                                 <div class='rowReversed'>
                                                     <div class='action__buttons rowReversed'>
                                                         <button class='reset--button' data-title='<%= __("_delete_action") %>' @click='deleteProjectAction(v.projects[j - 1].actions[i - 1].id)'><i class='fa fa-times icon action--icon user--icon'></i></button>
-                                                        <button class='reset--button' data-title='<%= __("_edit_action") %>' @click='cleanActionData();getDataFromAction(displayProjectAction(v.projects[j - 1].actions[i - 1].id));openUserForm("editProjectAction");hideAllSelectionBars()'><i class='fa fa-edit icon action--icon user--icon'></i></button>
+                                                        <template v-if='displayProjectAction(v.projects[j - 1].actions[i - 1].id).calendar'>
+                                                            <button class='reset--button' data-title='<%= __("_edit_action") %>' @click='cleanActionData();getDataFromAction(displayProjectAction(v.projects[j - 1].actions[i - 1].id));openUserForm("editProjectTimedAction");hideAllSelectionBars()'><i class='fa fa-edit icon action--icon user--icon'></i></button>
+                                                        </template>
+                                                        <template v-if='!displayProjectAction(v.projects[j - 1].actions[i - 1].id).calendar'>
+                                                            <button class='reset--button' data-title='<%= __("_edit_action") %>' @click='cleanActionData();getDataFromAction(displayProjectAction(v.projects[j - 1].actions[i - 1].id));openUserForm("editProjectAction");hideAllSelectionBars()'><i class='fa fa-edit icon action--icon user--icon'></i></button>
+                                                        </template>
                                                         <button class='reset--button' data-title='<%= __("add/edit_tag") %>' @click='cleanActionData();getDataFromAction(displayProjectAction(v.projects[j - 1].actions[i - 1].id));openUserForm("add_changeTags");selectTagForm("" + displayProjectAction(v.projects[j - 1].actions[i - 1].id).tag);hideAllSelectionBars()'><i class='fa fa-tag icon action--icon user--icon'></i></button>
                                                         <button class='reset--button' data-title='<%= __("remove_from_project") %>' @click='removeFromProject(v.projects[j - 1].actions[i - 1].id, v.projects[j - 1].id)'><i class="fas fa-external-link-alt icon action--icon user--icon"></i></button>
                                                         <button class='reset--button'><i :class='returnRespectiveTagIcon("" + displayProjectAction(v.projects[j - 1].actions[i - 1].id).tag)'></i></button>

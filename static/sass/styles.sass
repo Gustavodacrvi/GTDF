@@ -543,12 +543,12 @@ h1.title
 .graph
     .title
         margin: 0
-        left: 6px
-        top: 6px
+        left: 3px
+        top: 0
 
 .graph__table
     position: absolute
-    left: 17px
+    left: 7px
     top: 20px
     width: 88%
     height: 70%
@@ -557,12 +557,12 @@ h1.title
     position: absolute
     height: 77%
     margin-top: 30px
-    width: 43px
+    width: 41px
 
 .graphTable__months
     position: absolute
     width: 693px    
-    margin-left: 43px
+    margin-left: 41px
     height: 30px
 
 .graphTable__squares
@@ -580,7 +580,8 @@ h1.title
 .graphTableSquares__column
     margin-left: 3px 
     
-.graphTableSquaresColumn__square
+.graphTableSquaresColumn__square,
+.dark--square
     position: relative
     background-color: rgb(225,225,225)
     transition-duration: .2s
@@ -589,7 +590,8 @@ h1.title
     height: 10px
 
 .graphTableSquaresColumn__square +
-.graphTableSquaresColumn__square
+.graphTableSquaresColumn__square,
+.dark--square
     margin-top: 3px
 
 .graphTable__info
@@ -626,7 +628,10 @@ h1.title
 [data-title] 
     position: relative
 
+.dark--square
+    background-color: $gray
 
+    
 
 @media screen and (max-width: 1355px)
     .graph

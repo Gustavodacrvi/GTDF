@@ -806,8 +806,26 @@ app.post('/user/remove-calendar-tag-action', function(req, res){
 
         removeCalendarTagFromAction(user, req.body.actionId, req.body.tag)
 
+
         user.save(function(err, updatedUser){
             if (err) return handleError(err)
+
+            res.send(JSON.stringify(updatedUser.actions))
+        })
+    })
+})
+
+app.post('/user/edit-calendar-tag', function(req, res){
+    User.findById(req.user.id, function(err, user){
+        if (err) handleError(err)
+
+        let i = getUserActionIndex(user, req.body.actionId)
+        user.actions[i].calendar.time = req.body.time
+        user.actions[i].calendar.date = req.body.date
+
+        user.markModified('actions')
+        user.save(function(err, updatedUser){
+            if (err) handleError(err)
 
             res.send(JSON.stringify(updatedUser.actions))
         })
@@ -845,7 +863,8 @@ app.post('/user/edit-timed-project-action', function(req, res){
     })
 })
 
+
 app.listen(3000, '0.0.0.0', function(req, res){
     console.log('Server started at port 3000...')
 })
-//
+

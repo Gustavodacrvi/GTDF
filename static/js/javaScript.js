@@ -75,6 +75,17 @@ class DateM {
         let datem = new DateM('' + date.getDate() + '/' + (parseInt(date.getMonth()) + parseInt(1)) + '/' + date.getFullYear())
         return datem
     }
+    getWeekDay(){
+        let a = Math.floor((14 - this.month) / 12)
+        let y = this.year - a
+        let m = this.month + 12*a - 2
+        return (this.day + y + Math.floor(y/4) - Math.floor(y/100) + Math.floor(y/400) + Math.floor((31*m)/12)) % 7
+    }
+/* 
+a = (14 - month) / 12
+y = year - a
+m = month + 12*a - 2
+d = (day + y + y/4 - y/100 + y/400 + (31*m)/12) mod 7 */
 
     isEqual(date_obj){
         if (typeof(date_obj) == 'string'){
@@ -463,13 +474,24 @@ let actions = new Vue({
                     while (week < 52){
                         graph.append($("<div class='graphTableSquares__column' id='"+(week+1)+"'></div>"))
                         for (let d = 0;d < 7;d++){
+                            if (d === 0 && week === 0){
+                                let m = date.getWeekDay()
+                                for (let i = 0;i < m;i++){
+                                    graph.children('#' + (week+1)).append($("<div class='dark--square'></div>"))
+                                }
+                                for (let k = 0;k < 7 - m;k++){
+                                    graph.children('#' + (week+1)).append($("<div class='graphTableSquaresColumn__square' id='"+date.day+'-'+date.month+'-'+date.year+"' data-title='"+date.stringfy()+"'></div>"))
+                                    date.addDay(1)
+                                }
+                                break
+                            }
                             graph.children('#' + (week+1)).append($("<div class='graphTableSquaresColumn__square' id='"+date.day+'-'+date.month+'-'+date.year+"' data-title='"+date.stringfy()+"'></div>"))
                             date.addDay(1)
                         }
                         week++
                     }
                     graph.append($("<div class='graphTableSquares__column' id='"+(week+1)+"'></div>"))
-                    for (let d = 0;d < 365 - (7 * 52);d++){
+                    for (let d = 0;d < 365 - (7 * 52) + new DateM('1/1/' + DateM.getCurrentDay().year).getWeekDay();d++){
                         graph.children('#' + (week+1)).append($("<div class='graphTableSquaresColumn__square' id='"+date.stringfy()+"' data-title='"+date.stringfy()+"'></div>"))
                         date.addDay(1)
                     }
@@ -537,19 +559,29 @@ let actions = new Vue({
             let i = this.v.user.findIndex((el) => {
                 return '' + el.id === '' + this.v.actionData.id
             })
-            if (this.v.user[i].tag == 'calendar'){
+            if (this.v.user[i].tag == 'calendar' && this.v.actionData.tag != 'calendar'){
+                console.log(0)
                 $.post('/user/remove-calendar-tag-action', { actionId: this.v.actionData.id, tag: this.v.actionData.tag}, (data, status, xhr) => {
                     this.v.user = JSON.parse(data)
                 }).then(() => {
                     this.actionsInit()
                 })
+            } else if (this.v.user[i].tag == 'calendar' && this.v.actionData.tag == 'calendar'){
+                console.log(-1)
+                $.post('/user/edit-calendar-tag', { actionId: this.v.actionData.id, time: this.v.actionData.calendar.time, date: this.v.actionData.calendar.date}, (data, status, xhr) => {
+                    this.v.user = JSON.parse(data)
+                }).then(() => {
+                    this.actionsInit()
+                })
             } else if (this.v.actionData.tag != 'calendar'){
+                console.log(1)
                 $.post('/user/edit-tag', { tag: this.v.actionData.tag, actionId: this.v.actionData.id}, (data, status, xhr) => {
                     this.v.user = JSON.parse(data).actions
                 }).then(() => {
                     this.actionsInit()
                 })
             } else {
+                console.log(2)
                 if (!DateM.isValidDate(this.v.actionData.calendar.date)){
                     $('.invalidTime').css('display', 'none')
                     $('.invalidDate').css('display', 'block')
@@ -790,6 +822,7 @@ let actions = new Vue({
         },
         showMainOptionSelectionBars: function(){
             $('.selectionBar--link').removeClass('selectionBar--selected')
+            console.log(3)
             $('.selectionBar__main').parent().children('.selectionBar--link').addClass('selectionBar--selected')
             show($('.selectionBar__main'))
         },
@@ -943,7 +976,7 @@ let actions = new Vue({
     },
     computed: {
         changedValue: function(){
-            let i = this.v.actionData.calendar.date + ''
+            let i = this.v.actionData.calendar.date + '' + this.v.graph.date
             this.initAfterSomeTime()
             return ''
         }

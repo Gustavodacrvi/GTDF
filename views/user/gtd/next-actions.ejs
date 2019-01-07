@@ -20,7 +20,7 @@
         <div id='content__cards' class='slide--effect--right'>
             <div style='height: 50px'></div>
             <div class='card action--bar alignContent'>
-                <button class='reset--button' data-title='<%= __("add_action") %>' onclick='actions.openUserForm("addSimpleActionForm");actions.v.forms.addAction.tag = "nextAction"'><i class='fa fa-plus icon action--icon user--icon'></i></button>
+                <button class='reset--button' data-title='<%= __("add_action") %>' @click='cleanActionData();openUserForm("addSimpleActionForm");v.actionData.tag = "nextAction"'><i class='fa fa-plus icon action--icon user--icon'></i></button>
             </div>
                 <template v-if='v.user'>
                     <template v-if='v.projects'>
