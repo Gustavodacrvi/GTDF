@@ -22,7 +22,7 @@
             <div class='card action--bar alignContent'>
                 <button class='reset--button' data-title='<%= __("add_action") %>' @click='cleanActionData();openUserForm("addSimpleActionForm");v.actionData.tag = "nextAction"'><i class='fa fa-plus icon action--icon user--icon'></i></button>
             </div>
-                <template v-if='v.user'>
+            <template v-if='v.user'>
                     <template v-if='v.projects'>
                     <template v-for='j in v.projects.length'>
                         <template v-for='i in v.projects[j - 1].actions.length'>
@@ -79,8 +79,8 @@
                         </template>
                     </template>
                     </template>
-                </template>
-                <div style='height: 100px'></div>
+            </template>
+            <div style='height: 100px'></div>
         </div>
         <div id='content__ads'>
         </div>

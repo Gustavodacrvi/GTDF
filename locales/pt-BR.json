@@ -73,7 +73,7 @@
 	"Add": "Adicionar",
 	"Order": "Ordem",
 	"Order_must_be_an_integer_and_bigger_than_0": "A ordem deve ser um número inteiro e maior que 0",
-	"Missing credentials": "Missing credentials",
+	"Missing credentials": "Campo do usuário não pode estar vazio.",
 	"remove_from_project": "retirar do projeto",
 	"": "",
 	"Choose_the_action": "Escolha a ação",
@@ -92,5 +92,6 @@
 	"Dec": "Dez",
 	"More_actions": "Mais ações",
 	"Less_actions": "Menos ações",
-	"actions": "ações"
+	"actions": "ações",
+	"Edit_title": "Editar título"
 }

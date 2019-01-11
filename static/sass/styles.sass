@@ -1,15 +1,29 @@
 $back--color: #191919
 $gray--light--light: #B9B9B9
-$gray--light: #6A6A6A
-$border--color: #3e3e3e
+$gray--light: #464646
+$border--color: #333232
 $orange: #FF6F00
-$gray: #333232
+$gray: #282626
 $red: #FF1313
 $min--desktop--width: 768px
+$green: #2be01a
     
 @font-face
     font-family: 'Work Sans Light'
     src: url('../fontes/Work Sans/WorkSans-Light.otf')
+
+::-webkit-scrollbar
+    width: 12px
+    height: 12px
+
+::-webkit-scrollbar-track
+    background: $gray
+ 
+::-webkit-scrollbar-thumb
+    background: $border--color
+
+::-webkit-scrollbar-thumb:hover
+    background: $gray--light
 
 body,
 .form--button,
@@ -131,23 +145,26 @@ b
     padding: 0 10px
 
 
-
 .action:hover
     top: -3px
     .action__title
         span
             color: $red
 
+.action:active
+    top: 5px
+
 .action + .action 
     margin-top: 6px
 
 .action__content
     top: 1px
-    min-height: 75px
-    padding: 30px
+    padding: 25px
 
 .action__title
     flex-basis: 90%
+    white-space: pre-wrap
+    word-break: break-all
 
 .action__buttons
     flex-basis: 10%
@@ -157,6 +174,8 @@ b
     margin-bottom: 5px
     &:hover
         left: -6px
+    &:active
+        left: 6px
 
 .project__actions
     justify-content: flex-end
@@ -227,7 +246,7 @@ b
     margin-top: 30px
 
 .action__header
-    min-height: 42px
+    min-height: 39px
 
 
 .form--button:hover,
@@ -280,6 +299,7 @@ b
 #userForms
     height: 100%
 
+
 #background,
 .form__element,
 .selectionBar,
@@ -318,7 +338,9 @@ a:hover,
     opacity: 0
     visibility: hidden
 
-.status--success,
+.status--success
+    color: $green
+
 a:hover,
 .form--button,
 .link--button,
@@ -377,7 +399,7 @@ h1.title
 #content,
 .action__header,
 .iconGroup > div,
-.project__actions
+.project__actions,
     display: flex
 
 .alignContent,
@@ -408,7 +430,7 @@ h1.title
 .action__header,
 .action,
 .project__header
-    transition-duration: 0.2s
+    transition-duration: 0.3s
 
 .status--alert
     color: $orange
@@ -454,9 +476,10 @@ a
 
 .reset--button
     border: none
+    padding: 0 4px
 
 .icon
-    font-size: 30px
+    font-size: 28px
 
 .user--icon:hover
     color: $red
@@ -513,6 +536,8 @@ h1.title
     width: 100%
     background-color: $gray
     z-index: 30
+    max-height: 200px
+    overflow: auto
 
 .selectForm__element
     display: block
@@ -583,7 +608,7 @@ h1.title
 .graphTableSquaresColumn__square,
 .dark--square
     position: relative
-    background-color: rgb(225,225,225)
+    background-color: rgb(230,230,230)
     transition-duration: .2s
     cursor: pointer
     width: 10px
@@ -604,7 +629,7 @@ h1.title
 .square
     width: 10px
     height: 10px
-    background-color: rgb(225,225,225)
+    background-color: rgb(230,230,230)
 
 [data-title]:hover:after 
     opacity: .9
@@ -617,8 +642,8 @@ h1.title
     color: $gray--light--light
     position: absolute
     padding: 8px 5px
-    bottom: 100%
-    left: 0
+    bottom: 135%
+    left: -50%
     white-space: nowrap
     opacity: 0
     z-index: 99999
@@ -631,7 +656,8 @@ h1.title
 .dark--square
     background-color: $gray
 
-    
+.loginUserForm
+    margin-top: 50px    
 
 @media screen and (max-width: 1355px)
     .graph
@@ -642,7 +668,7 @@ h1.title
         margin-top: 2px
 
 
-@media screen and (min-width: $min--desktop--width + 1)
+@media screen and (min-width: $min--desktop--width)
     // MENU
     #navBar #navBar__mobile
         display: none
@@ -652,10 +678,11 @@ h1.title
         >button
             display: none
     
-@media screen and (max-width: $min--desktop--width)
+@media screen and (max-width: $min--desktop--width - 1)
     // MENU
     #navBar__desktop
         display: none
+
     #content
         flex-direction: column-reverse
     #content__cards
@@ -671,13 +698,16 @@ h1.title
     .actionButtonDropdown
         >div
             position: absolute
+            overflow: hidden
             right: 10px
             top: -55px
             border: 0.5px solid $border--color
             border-radius: 2px
             height: 50px
     .action--bar
-        margin: 40px 10px 80px 10px  
+        margin: 40px 10px 80px 10px
     .action__header,
     .action__content
         margin: 0 10px
+    .loginUserForm
+        margin-top: 140px

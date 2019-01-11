@@ -519,20 +519,26 @@ let actions = new Vue({
                 },
                 unpaintLastSelectedDate: function(){
                     if ($('#' + this.lastSelectedDate).data('numberOfActions') >= 1)
-                        $('#' + this.lastSelectedDate).css('background-color', '#caff75')
+                        $('#' + this.lastSelectedDate).css('background-color', '#d2e896')
                     if ($('#' + this.lastSelectedDate).data('numberOfActions') >= 4)
-                        $('#' + this.lastSelectedDate).css('background-color', '#8ce981')
+                        $('#' + this.lastSelectedDate).css('background-color', '#6bec5f')
                     if ($('#' + this.lastSelectedDate).data('numberOfActions') >= 6)
                         $('#' + this.lastSelectedDate).css('background-color', '#007a02')
                     if ($('#' + this.lastSelectedDate).data('numberOfActions') >= 10)
                         $('#' + this.lastSelectedDate).css('background-color', '#003800')
                     if ($('#' + this.lastSelectedDate).data('numberOfActions') == 0)
-                        $('#' + this.lastSelectedDate).css('background-color', 'rgb(225,225,225)')                        
+                        $('#' + this.lastSelectedDate).css('background-color', 'rgb(230,230,230)')                        
                 },
                 paintSelectedDate: function(){
-                    $('#' + this.selectedDate).css('background-color', '#0080FF')
+                    $('#' + this.selectedDate).css('background-color', '#FF1313')
                 }
             },
+            openedProjects: [
+
+            ],
+            openedActions: [
+
+            ],
             actionIcons: function() {return $('.action--icon')},
             closeIcons: function() {return $('.close--icon')},
             userIcons: function() {return $('.user--icon')},
@@ -542,6 +548,7 @@ let actions = new Vue({
     },
     methods: {
         addAction: function(){
+            this.getDataOfOpenedActions()            
             $.post('/user/add-action', { description: this.v.actionData.description, title: this.v.actionData.title, tag: this.v.actionData.tag}, (data, status, xhr) => {
                 this.v.user = JSON.parse(data).actions
             }).then(() => {
@@ -549,6 +556,7 @@ let actions = new Vue({
             })
         },
         createProject: function(){
+            this.getDataOfOpenedActions()
             $.post('/user/create-project', { title: this.v.projectData.title}, (data, status, xhr) => {
                 this.v.projects = JSON.parse(data).projects
             }).then(() => {
@@ -560,21 +568,21 @@ let actions = new Vue({
                 return '' + el.id === '' + this.v.actionData.id
             })
             if (this.v.user[i].tag == 'calendar' && this.v.actionData.tag != 'calendar'){
-                console.log(0)
+                this.getDataOfOpenedActions()                
                 $.post('/user/remove-calendar-tag-action', { actionId: this.v.actionData.id, tag: this.v.actionData.tag}, (data, status, xhr) => {
                     this.v.user = JSON.parse(data)
                 }).then(() => {
                     this.actionsInit()
                 })
             } else if (this.v.user[i].tag == 'calendar' && this.v.actionData.tag == 'calendar'){
-                console.log(-1)
+              this.getDataOfOpenedActions()                
                 $.post('/user/edit-calendar-tag', { actionId: this.v.actionData.id, time: this.v.actionData.calendar.time, date: this.v.actionData.calendar.date}, (data, status, xhr) => {
                     this.v.user = JSON.parse(data)
                 }).then(() => {
                     this.actionsInit()
                 })
             } else if (this.v.actionData.tag != 'calendar'){
-                console.log(1)
+                this.getDataOfOpenedActions()
                 $.post('/user/edit-tag', { tag: this.v.actionData.tag, actionId: this.v.actionData.id}, (data, status, xhr) => {
                     this.v.user = JSON.parse(data).actions
                 }).then(() => {
@@ -589,6 +597,7 @@ let actions = new Vue({
                     $('.invalidDate').css('display', 'none')    
                     $('.invalidTime').css('display', 'block')
                 } else {
+                    this.getDataOfOpenedActions()
                     $.post('/user/add-calendar-tag', { actionId: this.v.actionData.id, date: this.v.actionData.calendar.date, time: this.v.actionData.calendar.time }, (data, status, xhr) => {
                         this.v.user = JSON.parse(data)
                     }).then(() => {
@@ -598,6 +607,7 @@ let actions = new Vue({
             }
         },
         editAction: function(){
+            this.getDataOfOpenedActions()
             $.post('/user/edit-action', { actionId: this.v.actionData.id, title: this.v.actionData.title, description: this.v.actionData.description}, (data, status, xhr) => {
                 this.v.user = JSON.parse(data).actions
             }).then(() => {
@@ -608,6 +618,7 @@ let actions = new Vue({
             if (!strIsInteger(this.v.actionData.project.order) || parseInt(this.v.actionData.project.order) < 1){
                 $('.createAndAddActionProjectAlert').css('display', 'block')
             } else {
+                this.getDataOfOpenedActions()
                 $('.createAndAddActionProjectAlert').css('display', 'none')
                 $.post('/user/create-add-action-project', { title: this.v.actionData.title, description: this.v.actionData.description, projectId: this.v.projectData.id, order: parseInt(this.v.actionData.project.order)}, (data, status, xhr) => {
                     let user = JSON.parse(data)
@@ -619,6 +630,7 @@ let actions = new Vue({
             }
         },
         transformActionToProject: function(){
+            this.getDataOfOpenedActions()
             $.post('/user/transform-action-to-project', { actionId: this.v.actionData.id, delete: this.v.projectData.delete}, (data, status, xhr) =>{
                 let user = JSON.parse(data)
                 this.v.user = user.actions
@@ -628,6 +640,7 @@ let actions = new Vue({
             })
         },
         addAlreadyExistingActionToProject: function(){
+            this.getDataOfOpenedActions()
             $.post('/user/add-already-existing-action', { actionId: this.v.actionData.id, projectId: this.v.projectData.id, order: this.v.actionData.project.order}, (data, status, xhr) => {
                 let user = JSON.parse(data)
                 this.v.user = user.actions
@@ -640,6 +653,7 @@ let actions = new Vue({
             if (!strIsInteger(this.v.actionData.project.order) || parseInt(this.v.actionData.project.order) < 1){
                 $('.createAndAddActionProjectAlert').css('display', 'block')
             } else {
+                this.getDataOfOpenedActions()
                 $('.createAndAddActionProjectAlert').css('display', 'none')
                 $.post('/user/edit-action-project', { actionId: this.v.actionData.id, title: this.v.actionData.title, description: this.v.actionData.description, order: this.v.actionData.project.order}, (data, status, xhr) => {
                     let user = JSON.parse(data)
@@ -669,6 +683,7 @@ let actions = new Vue({
             this.hideAllProjectActionsAndApplyEventHandler()
             this.calculateNumberOfActionsAndPaintAllSquares()
             this.hideAllSelectionBars()
+            this.openAllOpenedActionContent()
         },
         hideAllActionMobileElipsesAdnApplyEventHandler: function(){
             hide($('.actionButtonDropdown div'))
@@ -684,10 +699,10 @@ let actions = new Vue({
             for (let i = 0;i < this.v.userIcons().length;i++)
                 this.v.userIcons().eq(i).on('mouseenter', function(){
                     rotate(15, '0.2s', $(this))
-                    $(this).css('font-size', '35px')
+                    $(this).css('font-size', '30px')
                 }).on('mouseleave', function(){
                     rotate(0, '0.2s', $(this))
-                    $(this).css('font-size', '30px')
+                    $(this).css('font-size', '28px')
                 })
         },
         returnRespectiveTagIcon: function(tag_str){
@@ -714,6 +729,7 @@ let actions = new Vue({
             if (!strIsInteger(this.v.actionData.project.order) || parseInt(this.v.actionData.project.order) < 1){
                 $('.createAndAddActionProjectAlert').css('display', 'block')
             } else {
+                this.getDataOfOpenedActions()
                 $('.createAndAddActionProjectAlert').css('display', 'none')
                 $.post('/user/add-already-existing-action', { projectId: this.v.projectData.id, actionId: this.v.actionData.id, order: this.v.actionData.project.order }, (data, status, xhr) => {
                     let user = JSON.parse(data)
@@ -730,7 +746,31 @@ let actions = new Vue({
                 if (this.v.actions().find('.action__title').eq(i).data('alreadyApplied') !== true)
                     this.v.actions().find('.action__title').eq(i).on('click', function(){
                         $(this).parent().parent().children('.action__content').slideToggle()
+                        if ($(this).data('opened') == false || $(this).data('openedt') == undefined)
+                          $(this).data('opened', true)
+                        else
+                          $(this).data('opened', false)
                     }).data('alreadyApplied', true)
+        },
+        getDataOfOpenedActions: function(){
+          this.v.openedActions = []
+          this.v.openedProjects = []
+          let v = this.v.actions()
+          for (let i = 0;i < v.length;i++)
+            this.v.openedActions.push(v.find('.action__title').eq(i).data('opened'))
+          v = $('.project .project__actions')
+          for (let i = 0;i < v.length;i++)
+            this.v.openedProjects.push($('.project').eq(i).find('.action__title').data('opened'))
+        },
+        openAllOpenedActionContent: function(){
+          let v = this.v.actions().children('.action__content')
+          for (let i = 0;i < v.length;i++)
+            if (this.v.openedActions[i] == true)
+              v.eq(i).slideDown(0)
+          v = $('.project .project__actions')
+          for (let i = 0;i < v.length;i++)
+            if (this.v.openedProjects[i] == true)
+              v.eq(i).slideDown(0)
         },
         hideAllProjectActionsAndApplyEventHandler: function(){
             $('.project .project__actions').slideUp(0)
@@ -739,6 +779,10 @@ let actions = new Vue({
                 if (v.eq(i).find('.action__title').data('alreadyApplied') !== true)
                     v.eq(i).find('.action__title').on('click', function(){
                         $(this).parent().parent().children('.project__actions').slideToggle()
+                        if ($(this).data('opened') == false || $(this).data('opened') == undefined)
+                          $(this).data('opened', true)
+                        else
+                          $(this).data('opened', false)
                     }).data('alreadyApplied', true)
         },
         hideAllUserForms: function(){
@@ -759,6 +803,7 @@ let actions = new Vue({
             show($('#userForms > div'), '0.3s')
         },
         deleteAction: function(id){
+            this.getDataOfOpenedActions()
             $.post('/user/delete-action', { actionId: id }, (data, status) => {
                 this.v.user = JSON.parse(data).actions
             }).then(() => {
@@ -766,6 +811,7 @@ let actions = new Vue({
             })
         },
         deleteProjectAction: function(id){
+            this.getDataOfOpenedActions()
            $.post('/user/delete-project-action', { actionId: id}, (data, status) => {
                 let user = JSON.parse(data)
                 this.v.user = user.actions
@@ -775,6 +821,7 @@ let actions = new Vue({
             })
         },
         deleteProject: function(id){
+            this.getDataOfOpenedActions()
             $.post('/user/delete-project', { projectId: id}, (data, status) => {
                 let user = JSON.parse(data)
                 this.v.projects = user.projects
@@ -784,6 +831,7 @@ let actions = new Vue({
             })
         },
         editProjectTitle: function(){
+            this.getDataOfOpenedActions()
             $.post('/user/edit-project-title', { projectId: this.v.projectData.id, title: this.v.projectData.title}, (data, status) => {
                 this.v.projects = JSON.parse(data)
             }).then(() => {
@@ -791,6 +839,7 @@ let actions = new Vue({
             })
         },
         removeFromProject(actionId, projectId){
+            this.getDataOfOpenedActions()
             $.post('/user/remove-from-project', { actionId: actionId, projectId: projectId }, (data, status) => {
                 let user = JSON.parse(data)
                 this.v.projects = user.projects
@@ -893,6 +942,7 @@ let actions = new Vue({
             } else {
                 $('.invalidDate').css('display', 'none')
                 $('.invalidTime').css('display', 'none')
+                this.getDataOfOpenedActions()
                 $.post('/user/edit-timed-action', { actionId: this.v.actionData.id, time: this.v.actionData.calendar.time, date: this.v.graph.editActionDate, title: this.v.actionData.title, description: this.v.actionData.description}, (data, status, xhr) =>{
                     this.v.user = JSON.parse(data)
                 }).then(() =>{
@@ -913,6 +963,7 @@ let actions = new Vue({
                 $('.invalidDate').css('display', 'none')
                 $('.invalidTime').css('display', 'none')
                 $('.createAndAddActionProjectAlert').css('display', 'none')
+                this.getDataOfOpenedActions()
                 $.post('/user/edit-timed-project-action', { actionId: this.v.actionData.id, title: this.v.actionData.title, description: this.v.actionData.description, time: this.v.actionData.calendar.time, date: this.v.graph.editActionDate, order: this.v.actionData.project.order, projectId: this.v.projectData.id}, (data, status, xhr) =>{
                     let user = JSON.parse(data)
                     this.v.user = user.actions
@@ -932,6 +983,7 @@ let actions = new Vue({
             } else {
                 $('.invalidDate').css('display', 'none')
                 $('.invalidTime').css('display', 'none')
+                this.getDataOfOpenedActions()
                 $.post('/user/add-timed-action', { actionId: this.v.actionData.title, title: this.v.actionData.title, description: this.v.actionData.description, time: this.v.actionData.calendar.time, date: this.v.graph.date,}, (data, status, xhr) =>{
                     this.v.user = JSON.parse(data)
                 }).then(() =>{
@@ -957,9 +1009,9 @@ let actions = new Vue({
                 for (let i = 0;i < squares.length;i++){
                     let square = squares.eq(i)
                     if (square.data('numberOfActions') >= 1)
-                        square.css('background-color', '#caff75')
+                        square.css('background-color', '#d2e896')
                     if (square.data('numberOfActions') >= 4)
-                        square.css('background-color', '#8ce981')
+                        square.css('background-color', '#6bec5ff')
                     if (square.data('numberOfActions') >= 6)
                         square.css('background-color', '#007a02')
                     if (square.data('numberOfActions') >= 10)

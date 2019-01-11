@@ -122,7 +122,7 @@
                 </div>
             </div>
         </article>
-        <article class='form card userForm hided' id='addProject'>
+        <article class='form card userForm hided' id='addProject' style='margin-top: 80px'>
             <button class='reset--button user__form__close'><i class='fa fa-times icon close--icon user--icon'></i></button>
             <div>
                 <div class='form__element'>
@@ -133,18 +133,17 @@
                 </div>
             </div>
         </article>
-        <article class='form card userForm hided' id='editProjectTitle'>
+        <article class='form card userForm hided' id='editProjectTitle' style='margin-top: 80px'>
             <button class='reset--button user__form__close'><i class='fa fa-times icon close--icon user--icon'></i></button>            
             <div>
                 <div class='form__element'>
                     <textarea v-model='v.projectData.title' class='textBox' style='height: 41px' placeholder='<%= __("Title") %>...'></textarea>                        
                 </div>
                 <div class='form__element centralizeContent'>
-                    <button class='form--button' @click='editProjectTitle()'><%= __('Create_project') %></button>
                 </div>
             </div>
         </article>
-        <article class='form card userForm hided' id='addActionProject'>
+        <article class='form card userForm hided' id='addActionProject' style='margin-top: 60px '>
             <button class='reset--button user__form__close' @click='hideAllSelectionBars()'><i class='fa fa-times icon close--icon user--icon'></i></button>            
             <div>
                 <div class='form__element'>
@@ -207,7 +206,7 @@
                 </div>
             </div>
         </article>
-        <article class='form card userForm hided' id='addAlreadyExistingAction' style='margin-top: 150px'>
+        <article class='form card userForm hided' id='addAlreadyExistingAction' style='margin-top: 60px'>
             <button class='reset--button user__form__close'><i class='fa fa-times icon close--icon user--icon'></i></button>
             <div>
                 <div class='selectForm form__element' style='margin-top: 10px'>
@@ -288,7 +287,7 @@
                     </div>
                 </div>
                 <div class='form__element centralizeContent'>
-                    <button class='form--button' @click='editTimedAction()'><%= __('Add_action') %></button>
+                    <button class='form--button' @click='editTimedAction()'><%= __('Edit_action') %></button>
                 </div>
             </div>
         </article>

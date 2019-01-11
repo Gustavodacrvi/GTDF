@@ -50,8 +50,8 @@
                     <span class='text'><%= __('More_actions') %></span>
                     <div class='square' :data-title='"10 " + v.graph.square_title' style='margin-right: 8px;background-color: #003800'></div>
                     <div class='square' :data-title='"6 " + v.graph.square_title' style='margin-right: 3px;background-color: #007a02'></div>
-                    <div class='square' :data-title='"4 " + v.graph.square_title' style='margin-right: 3px;background-color: #8ce981'></div>
-                    <div class='square' :data-title='"1 " + v.graph.square_title' style='margin-right: 3px;background-color: #caff75'></div>
+                    <div class='square' :data-title='"4 " + v.graph.square_title' style='margin-right: 3px;background-color: #6bec5f'></div>
+                    <div class='square' :data-title='"1 " + v.graph.square_title' style='margin-right: 3px;background-color: #d2e896'></div>
                     <div class='square' :data-title='"0 " + v.graph.square_title' style='margin-right: 3px;margin-left: 8px'></div>
                     <span class='text'><%= __('Less_actions') %></span>
                 </div>
@@ -100,7 +100,7 @@
                         <template v-if='v.user[i - 1].tag == "calendar"'>
                         <template v-if='isTheSelectedDate(v.user[i - 1])'>
                             <div class='action'>
-                                    <div class='card action__header alignContent'>
+                                <div class='card action__header alignContent'>
                                     <div class='action__title alignContent'>
                                         <span class='text'> {{ v.user[i - 1].title }} <span class='dark--text'>| </span>{{ v.user[i - 1].calendar.time}}</span>
                                     </div>

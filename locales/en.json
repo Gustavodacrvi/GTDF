@@ -91,5 +91,7 @@
 	"Dec": "Dec",
 	"More_actions": "More actions",
 	"Less_actions": "Less actions",
-	"actions": "ações"
+  "actions": "ações",
+  "Edit_title": "Edit title",
+  "Missing credentials": "User field can not be empty."
 }

@@ -45,7 +45,7 @@
                             <template v-if='v.user'>
                                 <template v-for='i in v.projects[j - 1].actions.length'>
                                     <div class='action'>
-                                            <div class='card action__header alignContent'>
+                                        <div class='card action__header alignContent'>
                                             <div class='action__title alignContent'>
                                                 <template v-if='displayProjectAction(v.projects[j - 1].actions[i - 1].id).calendar'>
                                                     <span class='text'>{{ displayProjectAction(v.projects[j - 1].actions[i - 1].id).project.order }} <span class='dark--text'>|</span> {{ displayProjectAction(v.projects[j - 1].actions[i - 1].id).title }} <span class='dark--text'> | </span> {{ displayProjectAction(v.projects[j - 1].actions[i - 1].id).calendar.date}} <span class='dark--text'> | </span> {{ displayProjectAction(v.projects[j - 1].actions[i - 1].id).calendar.time}} </span>
