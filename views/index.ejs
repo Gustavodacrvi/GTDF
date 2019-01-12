@@ -8,11 +8,25 @@
 
 <body>
 <div id='app'>
-  {{ msg }}
+  <fixed>
+    <login-form :show='transitionsAndAnimations.userForms.show'>
+      <div style='opacity:0'>
+        <p>asdfasdfasdfasdfasdfasdf</p>
+        <p>asdfasdfasdfasdfasdfasdf</p>
+        <p>asdfasdfasdfasdfasdfasdf</p>
+        <p>asdfasdfasdfasdfasdfasdf</p>
+        <p>asdfasdfasdfasdfasdfasdf</p>
+        <p>asdfasdfasdfasdfasdfasdf</p>
+        <p>asdfasdfasdfasdfasdfasdf</p>
+        <p>asdfasdfasdfasdfasdfasdf</p>
+      </div>
+    </login-form>
+  </fixed>
+
 </div>
 
 
 <% include partials/footer %>
 </body>
 
-<h1><%= __('hi') %></h1>
+</html>

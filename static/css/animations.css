@@ -1,0 +1,30 @@
+@media screen and (min-width: 789px){
+  @keyframes goUpGetBiggerSlide{
+    0%{
+      flex-basis: 0;
+      opacity: 0;
+    }
+    15%{
+      opacity: .8;
+    }
+    50%{
+      flex-basis: 470px;
+    }
+    60%{
+      flex-basis: 420px;
+    }
+    70%{
+      flex-basis: 460px;
+    }
+    80%{
+      flex-basis: 430px;
+    }
+    90%{
+      flex-basis: 450px;
+    }
+    100%{
+      opacity: 1;
+      flex-basis: 440px;
+    }
+  }
+}

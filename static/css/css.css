@@ -1,0 +1,43 @@
+@font-face{
+  font-family: 'Work Sans Light';
+  src: url('/fontes/WorkSans-Light.otf');
+}
+
+.centralizeContent{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+body {
+  background-color: #1F253D;
+  margin: 0;
+  font-family: 'Work Sans Light';
+  color: #B9B9B9;
+}
+
+.card{
+  background-color: #394264;
+  border-radius: 8px
+}
+
+.form{
+  flex-basis: 440px;
+  margin: 10px;
+  overflow: hidden;
+}
+
+.fade-enter-active, .fade-leave-active {
+  animation: goUpGetBiggerSlide;
+  animation-duration: .5s;
+}
+
+#fixedElements{
+  position: fixed;
+  left: 0;
+  top: 0;
+  pointer-events: none;
+  height: 100vh;
+  width: 100%;
+}
