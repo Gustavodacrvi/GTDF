@@ -22,6 +22,9 @@ let app = express()
 app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, 'views'))
 
+// STATIC
+app.use(express.static(path.join(__dirname, 'static')))
+
 // I18N
 app.use(i18n.init)
 
