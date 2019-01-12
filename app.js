@@ -1,13 +1,19 @@
 let express = require('express')
+let path = require('path')
+let ejs = require('ejs')
 
 
 
 let app = express()
 
+// VIEW ENGINE
+app.set('view engine', 'ejs')
+app.set('views', path.join(__dirname, 'views'))
+
 
 
 app.get('/', function(req, res){
-  res.send('GTDF')
+  res.render('index.ejs')
 })
 
 
