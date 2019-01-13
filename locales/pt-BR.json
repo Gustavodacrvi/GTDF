@@ -1,4 +1,10 @@
 {
 	"lang": "lang",
-	"hi": "hi"
+	"hi": "hi",
+	"LOGIN": "LOGIN",
+	"Username": "Username",
+	"Password": "Password",
+	"Doesn't have an account? Sign up!": "Doesn't have an account? Sign up!",
+	"Get things done": "Get things done",
+	"Forgot password/username?": "Forgot password/username?"
 }

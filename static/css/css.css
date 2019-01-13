@@ -9,6 +9,64 @@
   align-items: center;
 }
 
+.formButton{
+  border: 3px solid #E64C65;
+  outline: none;
+  color: #E64C65;
+  font-family: 'Work Sans Light';
+  font-size: 1em;
+  position: relative;
+  overflow: hidden;
+  border-radius: 6px;
+  cursor: pointer; 
+  background-color: #E64C65;
+  padding: 10px;
+  transition-duration: .3s;
+  z-index: 1;
+}
+.formButton::before{
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  left: 0;
+  top: 0;
+  border-radius: 6px;
+  background-color: #394264;
+  transition-duration: .3s;
+}
+.formButton:hover::before{
+  width: 0;
+  height: 0;
+  top: 50%;
+  left: 50%;
+}
+.formButton:hover{
+  color: #B9B9B9;
+}
+
+
+a{
+  color: #11a8ab;
+  text-decoration: none;
+  position: relative;
+}
+
+a::before{
+  content: '';
+  width: 0;
+  position: absolute;
+  height: 2px;
+  background-color: #11a8ab;
+  left: 0;
+  bottom: 0;
+  transition-duration: .2s;
+}
+
+a:hover::before{
+  width: 100%;
+}
 
 body {
   background-color: #1F253D;
@@ -26,11 +84,108 @@ body {
   flex-basis: 440px;
   margin: 10px;
   overflow: hidden;
+  padding: 28px 30px 0 30px;
+  pointer-events: all;
 }
 
-.fade-enter-active, .fade-leave-active {
-  animation: goUpGetBiggerSlide;
+.formElement{
+  margin-bottom: 30px;
+}
+
+.icon-tiny{
+  font-size: 20px;
+  color: #949494; 
+}
+
+.titleBig{
+  font-size: 1.8em;
+  color: #E64C65;
+  margin: 0; 
+}
+
+.form-input{
+  position: relative;
+  width: 100%;
+  height: 20px;
+}
+
+.form-input > div{
+  position: relative;
+}
+
+.form-input input{
+  background-color: #263056;
+  position: absolute;
+  color: #B9B9B9;
+  width: 80%;
+  padding: 10px;
+  border: 0;
+  font-size: 1em;
+  outline: none;
+  border-radius: 4px;
+  transition-duration: .3s;
+}
+
+.form-input input:focus{
+  width: 100%;
+  padding: 12px;
+}
+
+.form-input span{
+  position: absolute;
+  right: 15.7%;
+  top: 1px;
+  transition-duration: .3s;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 789px){
+  .form-input span{
+    right: 17%;
+  }
+}
+
+.form-input input:focus ~ span{
+  right: 16px;
+}
+
+.form-input i{
+  position: absolute;
+}
+
+.double-slide-bounce-enter-active, .double-slide-bounce-leave-active {
+  animation: doubleSlideBounce;
+  animation-duration: 1s;
+}
+
+.pop1-enter-active{
+  animation: pop;
+  animation-duration: .3s;
+}
+
+.pop2-enter-active, .pop1-leave-active{
+  animation: pop;
+  animation-duration: .4s;
+}
+
+.pop3-enter-active, .pop1-leave-active{
+  animation: pop;
   animation-duration: .5s;
+}
+
+.pop4-enter-active, .pop4-leave-active{
+  animation: pop;
+  animation-duration: .6s;
+}
+
+.pop5-enter-active, .pop5-leave-active{
+  animation: pop;
+  animation-duration: .7s;
+}
+
+.pop6-enter-active, .pop6-leave-active{
+  animation: pop;
+  animation-duration: .7s;
 }
 
 #fixedElements{
