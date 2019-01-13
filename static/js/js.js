@@ -70,6 +70,16 @@ Vue.component('form-button', {
     <button type='submit' class='formButton'><slot></slot></button>
   `
 })
+Vue.component('alert',{
+  template: `
+    <span class='alert-alert'><slot></slot></span>
+  `
+})
+Vue.component('success', {
+  template: `
+    <span class='alert-success'><slot></slot></span>
+  `
+})
 
 let vm = new Vue({
   el: '#app',

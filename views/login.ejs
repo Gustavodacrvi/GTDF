@@ -19,13 +19,18 @@
       <form-element class='centralizeContent' animation='pop3'>
         <input-form placeholder='<%= __("Username") %>:' name='username'></input-form>
       </form-element>
-      <form-element animation='pop4'>
+      <% if (locals.success_msg) { %>
+        <form-element animation='pop5'>
+          <success><%= __(String(success_msg)) %></success>
+        </form-element>
+      <% } %>
+      <form-element animation='pop5'>
         <a href='/sign-up'><%= __("Doesn't have an account? Sign up!") %></a>
       </form-element>
-      <form-element class='centralizeContent' animation='pop5'> 
+      <form-element class='centralizeContent' animation='pop6'> 
         <form-button><%= __("Get things done") %></form-button>
       </form-element>
-      <form-element animation='pop6'>
+      <form-element animation='pop7'>
         <a href='#'><%= __("Forgot password/username?") %></a>
       </form-element>
     </login-form>

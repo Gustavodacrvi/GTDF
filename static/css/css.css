@@ -146,6 +146,14 @@ body {
   cursor: pointer;
 }
 
+.alert-alert{
+  color: #fcb150;
+}
+
+.alert-success{
+  color: #07B541;
+}
+
 @media screen and (max-width: 789px){
   .form-input span{
     right: 17%;
@@ -193,6 +201,11 @@ body {
 .pop6-enter-active, .pop6-leave-active{
   animation: pop;
   animation-duration: .9s;
+}
+
+.pop7-enter-active, .pop7-leave-active{
+  animation: pop;
+  animation-duration: 1s;
 }
 
 #fixedElements{

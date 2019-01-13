@@ -11,5 +11,13 @@
 	"SIGN UP": "SIGN UP",
 	"Email": "Email",
 	"Confirm password": "Confirm password",
-	"Create account": "Create account"
+	"Create account": "Create account",
+	"Username required": "Username required",
+	"Email required": "Email required",
+	"Invalid email": "Invalid email",
+	"Password required": "Password required",
+	"Password not matching": "Password not matching",
+	"You created an account and can now login.": "You created an account and can now login.",
+	"Someone already used that username.": "Someone already used that username.",
+	"Someone already used that email.": "Someone already used that email."
 }
