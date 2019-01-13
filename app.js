@@ -35,6 +35,14 @@ app.get('/', function(req, res){
   res.render('index.ejs')
 })
 
+app.get('/login', function(req, res){
+  res.render('login.ejs')
+})
+
+
+app.get('/sign-up', function(req, res){
+  res.render('signup.ejs')
+})
 
 app.listen(3000, '0.0.0.0', function(req, res){
   console.log('Server started at port 3000...')

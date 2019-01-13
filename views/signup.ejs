@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang='<%= __("lang") %>'>
+
+<head>
+  <% include partials/header %>
+  <title>Sign up</title>
+</head>
+
+<body>
+<div id='app'>
+  <fixed>
+    <login-form :show='transitionsAndAnimations.userForms.show'>
+      <form-element animation='pop1' class='centralizeContent'>
+        <title-big><%= __('SIGN UP') %></title-big>
+      </form-element>
+      <form-element class='centralizeContent' animation='pop2'>
+        <input-form placeholder='<%= __("Username") %>:' name='username'></input-form>
+      </form-element>
+      <form-element class='centralizeContent' animation='pop3'>
+        <input-form placeholder='<%= __("Email") %>:' name='email'></input-form>
+      </form-element>
+      <form-element class='centralizeContent' animation='pop4'>
+        <input-pass :opened='transitionsAndAnimations.userForms.showPassword' name='password' placeholder='<%= __("Password") %>:' @click='togglePasswordVisiblity'></input-pass>
+      </form-element>
+      <form-element class='centralizeContent' animation='pop5'>
+        <input-pass :opened='transitionsAndAnimations.userForms.showPassword' name='confirm' placeholder='<%= __("Confirm password") %>:' @click='togglePasswordVisiblity'></input-pass>
+      </form-element>
+      <form-element class='centralizeContent' animation='pop6'> 
+        <form-button><%= __("Create account") %></form-button>
+      </form-element>
+    </login-form>
+  </fixed>
+
+</div>
+
+
+<% include partials/footer %>
+</body>
+
+</html>

@@ -3,6 +3,19 @@
   src: url('/fontes/WorkSans-Light.otf');
 }
 
+
+.formButton,
+.formButton::before,
+.form-input input,
+.form-input span{
+  transition-duration: .3s;
+}
+
+.formButton,
+.titleBig {
+  color: #E64C65;
+}
+
 .centralizeContent{
   display: flex;
   justify-content: center;
@@ -12,7 +25,6 @@
 .formButton{
   border: 3px solid #E64C65;
   outline: none;
-  color: #E64C65;
   font-family: 'Work Sans Light';
   font-size: 1em;
   position: relative;
@@ -21,7 +33,6 @@
   cursor: pointer; 
   background-color: #E64C65;
   padding: 10px;
-  transition-duration: .3s;
   z-index: 1;
 }
 .formButton::before{
@@ -34,7 +45,6 @@
   top: 0;
   border-radius: 6px;
   background-color: #394264;
-  transition-duration: .3s;
 }
 .formButton:hover::before{
   width: 0;
@@ -99,7 +109,6 @@ body {
 
 .titleBig{
   font-size: 1.8em;
-  color: #E64C65;
   margin: 0; 
 }
 
@@ -123,7 +132,6 @@ body {
   font-size: 1em;
   outline: none;
   border-radius: 4px;
-  transition-duration: .3s;
 }
 
 .form-input input:focus{
@@ -135,7 +143,6 @@ body {
   position: absolute;
   right: 15.7%;
   top: 1px;
-  transition-duration: .3s;
   cursor: pointer;
 }
 
@@ -158,34 +165,34 @@ body {
   animation-duration: 1s;
 }
 
-.pop1-enter-active{
-  animation: pop;
-  animation-duration: .3s;
-}
-
-.pop2-enter-active, .pop1-leave-active{
+.pop1-enter-active, .pop1-leave-active{
   animation: pop;
   animation-duration: .4s;
 }
 
-.pop3-enter-active, .pop1-leave-active{
+.pop2-enter-active, .pop2-leave-active{
   animation: pop;
   animation-duration: .5s;
 }
 
-.pop4-enter-active, .pop4-leave-active{
+.pop3-enter-active, .pop3-leave-active{
   animation: pop;
   animation-duration: .6s;
 }
 
-.pop5-enter-active, .pop5-leave-active{
+.pop4-enter-active, .pop4-leave-active{
   animation: pop;
   animation-duration: .7s;
 }
 
+.pop5-enter-active, .pop5-leave-active{
+  animation: pop;
+  animation-duration: .8s;
+}
+
 .pop6-enter-active, .pop6-leave-active{
   animation: pop;
-  animation-duration: .7s;
+  animation-duration: .9s;
 }
 
 #fixedElements{

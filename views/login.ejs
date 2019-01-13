@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang='<%= __("lang") %>'>
+
+<head>
+  <% include partials/header %>
+  <title>Login</title>
+</head>
+
+<body>
+<div id='app'>
+  <fixed>
+    <login-form :show='transitionsAndAnimations.userForms.show'>
+      <form-element class='centralizeContent' animation='pop1'>
+        <title-big><%= __('LOGIN') %></title-big>
+      </form-element>
+      <form-element class='centralizeContent' animation='pop2'>
+        <input-pass :opened='transitionsAndAnimations.userForms.showPassword' name='password' placeholder='<%= __("Password") %>:' @click='togglePasswordVisiblity'></input-pass>
+      </form-element>
+      <form-element class='centralizeContent' animation='pop3'>
+        <input-form placeholder='<%= __("Username") %>:' name='username'></input-form>
+      </form-element>
+      <form-element animation='pop4'>
+        <a href='/sign-up'><%= __("Doesn't have an account? Sign up!") %></a>
+      </form-element>
+      <form-element class='centralizeContent' animation='pop5'> 
+        <form-button><%= __("Get things done") %></form-button>
+      </form-element>
+      <form-element animation='pop6'>
+        <a href='#'><%= __("Forgot password/username?") %></a>
+      </form-element>
+    </login-form>
+  </fixed>
+
+</div>
+
+
+<% include partials/footer %>
+</body>
+
+</html>

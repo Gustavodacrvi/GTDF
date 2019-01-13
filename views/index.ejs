@@ -3,33 +3,12 @@
 
 <head>
   <% include partials/header %>
-  <title></title>
+  <title>GTDF</title>
 </head>
 
 <body>
 <div id='app'>
-  <fixed>
-    <login-form :show='transitionsAndAnimations.userForms.show'>
-      <form-element class='centralizeContent' animation='pop1'>
-        <title-big><%= __('LOGIN') %></title-big>
-      </form-element>
-      <form-element class='centralizeContent' animation='pop2'>
-        <input-pass placeholder='<%= __("Password") %>:' @click='togglePasswordVisiblity'></input-pass>
-      </form-element>
-      <form-element class='centralizeContent' animation='pop3'>
-        <input-form placeholder='<%= __("Username") %>:' name='username'></input-form>
-      </form-element>
-      <form-element animation='pop4'>
-        <a href='#'><%= __("Doesn't have an account? Sign up!") %></a>
-      </form-element>
-      <form-element class='centralizeContent' animation='pop5'> 
-        <form-button><%= __("Get things done") %></form-button>
-      </form-element>
-      <form-element animation='pop6'>
-        <a href='#'><%= __("Forgot password/username?") %></a>
-      </form-element>
-    </login-form>
-  </fixed>
+  <a href='/login'><%= __('Begin') %></a>
 
 </div>
 

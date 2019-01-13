@@ -41,12 +41,13 @@ Vue.component('title-big', {
 Vue.component('input-pass', {
   props: {
     placeholder: String,
-    opened: false
+    name: String,
+    opened: Boolean
   },
   template: `
     <div class='form-input centralizeContent'>
-      <input name='password' class='passwordField' type='password' autocomplete='off' :placeholder='placeholder' />
-      <span @click='opened = !opened;$emit("click", opened)'>
+      <input :name='name' class='passwordField' type='password' autocomplete='off' :placeholder='placeholder' />
+      <span @click='$emit("click", !opened)'>
         <i class="fas fa-eye icon-tiny" v-show='opened'></i>
         <i class="fas fa-eye-slash icon-tiny" v-show='!opened'></i>
       <span>
@@ -75,7 +76,8 @@ let vm = new Vue({
   data: {
     transitionsAndAnimations: {
       userForms: {
-        show: false
+        show: false,
+        showPassword: false
       }
     }
   },
@@ -85,6 +87,7 @@ let vm = new Vue({
     },
     togglePasswordVisiblity(opened){
       (opened) ? this.showPasswords() : this.hidePasswords()
+      this.transitionsAndAnimations.userForms.showPassword = opened
     },
     showPasswords(){
       let inputs = document.querySelectorAll('.passwordField')
