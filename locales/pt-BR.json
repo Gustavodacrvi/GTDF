@@ -19,5 +19,10 @@
 	"Password not matching": "Password not matching",
 	"You created an account and can now login.": "You created an account and can now login.",
 	"Someone already used that username.": "Someone already used that username.",
-	"Someone already used that email.": "Someone already used that email."
+	"Someone already used that email.": "Someone already used that email.",
+	"": "",
+	"Wrong password": "Wrong password",
+	"Missing credentials": "Missing credentials",
+	"Unknown username": "Unknown username",
+	"You logged out.": "You logged out."
 }

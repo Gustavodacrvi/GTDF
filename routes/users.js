@@ -15,6 +15,13 @@ router.get('/sign-up', function(req, res){
   res.render('signup')
 })
 
+// LOGOUT
+router.get('/logout', function(req, res){
+  req.logOut()
+  req.flash('success_msg', 'You logged out.')
+  res.redirect('/login')
+})
+
 router.post('/login',
     passport.authenticate('local', {successRedirect:'/user', failureRedirect:'/login', failureFlash: true}),
     function(req, res){

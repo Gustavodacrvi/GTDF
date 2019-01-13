@@ -10,18 +10,24 @@
 <div id='app'>
   <fixed>
     <login-form :show='transitionsAndAnimations.userForms.show'>
+      <form method='post' action='/login'>
       <form-element class='centralizeContent' animation='pop1'>
         <title-big><%= __('LOGIN') %></title-big>
-      </form-element>
-      <form-element class='centralizeContent' animation='pop2'>
-        <input-pass :opened='transitionsAndAnimations.userForms.showPassword' name='password' placeholder='<%= __("Password") %>:' @click='togglePasswordVisiblity'></input-pass>
       </form-element>
       <form-element class='centralizeContent' animation='pop3'>
         <input-form placeholder='<%= __("Username") %>:' name='username'></input-form>
       </form-element>
+      <form-element class='centralizeContent' animation='pop2'>
+        <input-pass :opened='transitionsAndAnimations.userForms.showPassword' name='password' placeholder='<%= __("Password") %>:' @click='togglePasswordVisiblity'></input-pass>
+      </form-element>
       <% if (locals.success_msg) { %>
         <form-element animation='pop5'>
           <success><%= __(String(success_msg)) %></success>
+        </form-element>
+      <% } %>
+      <% if (locals.error) { %>
+        <form-element animation='pop6'>
+          <alert><%= __(String(error)) %></alert>
         </form-element>
       <% } %>
       <form-element animation='pop5'>
@@ -33,6 +39,7 @@
       <form-element animation='pop7'>
         <a href='#'><%= __("Forgot password/username?") %></a>
       </form-element>
+      </form>
     </login-form>
   </fixed>
 
