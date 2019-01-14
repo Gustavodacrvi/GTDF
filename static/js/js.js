@@ -181,11 +181,18 @@ Vue.component('nav-dropdown',{
 })
 Vue.component('sub-dropdown',{
   props: {
-    placeholder: String
+    placeholder: String,
+    show: false
   },
   template: `
-    <article class='sub-dropdown'>
+    <article class='sub-dropdown'  @mouseleave='show = false' @mouseover='show = true'>
       <a class='dropdown-link'>{{placeholder}}</a>
+      <transition name='right-to-left-bounce-nav-drop'>
+      <div class='card angle-right-nav' v-if='show'>
+        <drop-link href='/en'>English</drop-link>
+        <drop-link href='/pt-BR'>Português(Brasil)</drop-link>
+      </div>
+      </transition>
     </article>
   `
 })

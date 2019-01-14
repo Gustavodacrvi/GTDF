@@ -293,17 +293,26 @@ body {
   max-height: 200px;
 }
 
-.dropdown > div > div > :last-child, .dropdown > div > :last-child, article.sub-dropdown > a{
+.dropdown > div > div > :last-child, .dropdown > div > :last-child, article.sub-dropdown > a, .sub-dropdown > div :last-child{
   border-bottom-left-radius: 6px; 
   border-bottom-right-radius: 6px;
   cursor: pointer; 
 }
 
-.dropdown > div > div > :first-child, .dropdown > div > :first-child{
+.dropdown > div > div > :first-child, .dropdown > div > :first-child, .sub-dropdown > div :first-child{
   border-top-left-radius: 6px; 
   border-top-right-radius: 6px;
 }
 
+.sub-dropdown{
+  position: relative;
+}
+
+.sub-dropdown > div{
+  position: absolute;
+  right: 110%;
+  top: 0;
+}
 
 .dropdown-link{
   display: block;
@@ -341,6 +350,15 @@ body {
   border: 16px solid transparent;
   border-bottom: 16px solid #E64C65;
   z-index: 1;
+}
+
+.angle-right-nav::after{
+  content: '';
+  position: absolute;
+  right: -30px;
+  top: 5px;
+  border: 16px solid transparent;
+  border-left: 16px solid #E64C65; 
 }
 
 .position-left{
