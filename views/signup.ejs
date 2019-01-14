@@ -9,7 +9,7 @@
 <body>
 <div id='app'>
   <fixed>
-    <login-form :show='transitionsAndAnimations.userForms.show'>
+    <login-form :show='transitionsAndAnimations.initialTransitions'>
       <form method='post' action='/sign-up'>
       <form-element animation='pop1' class='centralizeContent'>
         <title-big><%= __('SIGN UP') %></title-big>
@@ -37,7 +37,6 @@
       </form>
     </login-form>
   </fixed>
-
 </div>
 
 

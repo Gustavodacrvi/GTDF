@@ -80,13 +80,69 @@ Vue.component('success', {
     <span class='alert-success'><slot></slot></span>
   `
 })
+Vue.component('navigation-bar', {
+  props: {
+    show: Boolean
+  },
+  template: `
+    <transition name='slide-from-top-bounce'>
+      <nav id='navBar' v-if='show' class='alignContent'>
+        <div id='desktop' class='alignContent'>
+          <div id='left' class='flex'>
+            <slot name='left'></slot>
+          </div>
+          <div id='right' class='rowReversed'>
+            <slot name='right'></slot>
+          </div>
+        </div>
+        <div id='mobile'>
+          <div id='left'>
+            <slot name='left'></slot>
+          </div>
+          <div id='right' class='rowReversed'>
+            <slot name='right'></slot>
+          </div>
+        </div>
+      </nav>
+    </transition>
+  `
+})
+Vue.component('nav-element', {
+  props: {
+    animation: String
+  },
+  template: `
+    <transition :name='animation'>
+      <div class='nav-element'>
+        <slot></slot>
+      </div>
+    </transition>
+  `
+})
+Vue.component('link-red', {
+  props: {
+    href: String
+  },
+  template: `
+    <a class='link-red' :href='href'><slot></slot></a>
+  `
+})
+Vue.component('link-blue', {
+  props: {
+    href: String
+  },
+  template: `
+    <a class='link-blue' :href='href'><slot></slot></a>
+  `
+})
+
 
 let vm = new Vue({
   el: '#app',
   data: {
     transitionsAndAnimations: {
+      initialTransitions: false,
       userForms: {
-        show: false,
         showPassword: false
       }
     }
@@ -95,6 +151,10 @@ let vm = new Vue({
     runInitialTransitionsAndAnimations(){
       setTimeout(this.userFormsAnimation, 10)
     },
+    userFormsAnimation(){
+      this.transitionsAndAnimations.initialTransitions = true
+    },
+
     togglePasswordVisiblity(opened){
       (opened) ? this.showPasswords() : this.hidePasswords()
       this.transitionsAndAnimations.userForms.showPassword = opened
@@ -111,9 +171,6 @@ let vm = new Vue({
         el.setAttribute('type', 'password')
       })
     },
-    userFormsAnimation(){
-      this.transitionsAndAnimations.userForms.show = true
-    }
   }
 })
 

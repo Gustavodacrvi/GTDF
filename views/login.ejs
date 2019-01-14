@@ -9,7 +9,18 @@
 <body>
 <div id='app'>
   <fixed>
-    <login-form :show='transitionsAndAnimations.userForms.show'>
+    <navigation-bar :show='transitionsAndAnimations.initialTransitions'>
+      <template slot='left'>
+        <nav-element animation='pop1'><link-red href='#'>Home</link-red></nav-element>
+        <nav-element animation='pop2'><link-red href='#'>Login</link-red></nav-element>
+      </template>
+      <template slot='right'>
+        <nav-element animation='pop2'>
+          
+        </nav-element>
+      </template>
+    </navigation-bar>
+    <login-form :show='transitionsAndAnimations.initialTransitions'>
       <form method='post' action='/login'>
       <form-element class='centralizeContent' animation='pop1'>
         <title-big><%= __('LOGIN') %></title-big>
@@ -31,13 +42,13 @@
         </form-element>
       <% } %>
       <form-element animation='pop5'>
-        <a href='/sign-up'><%= __("Doesn't have an account? Sign up!") %></a>
+        <link-blue href='/sign-up'><%= __("Doesn't have an account? Sign up!") %></link-blue>
       </form-element>
       <form-element class='centralizeContent' animation='pop6'> 
         <form-button><%= __("Get things done") %></form-button>
       </form-element>
       <form-element animation='pop7'>
-        <a href='#'><%= __("Forgot password/username?") %></a>
+        <link-blue href='#'><%= __("Forgot password/username?") %></link-blue>
       </form-element>
       </form>
     </login-form>

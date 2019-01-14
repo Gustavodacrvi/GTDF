@@ -26,6 +26,34 @@
     flex-basis: 440px;
   }
 }
+@keyframes slideFromTopBounce{
+  0%{
+    height: 0;
+    opacity: 0;
+  }
+  15%{
+    opacity: .8;
+  }
+  20%{
+    height: 65px;
+  }
+  36%{
+    height: 35px;
+  }
+  52%{
+    height: 60px;
+  }
+  68%{
+    height: 40px;
+  }
+  84%{
+    height: 55px;
+  }
+  100%{
+    opacity: 1;
+    height: 50px;
+  }
+}
 
 @keyframes pop{
   0%{
@@ -40,4 +68,49 @@
   100%{
     transform: scale(1, 1);
   }
+}
+
+.double-slide-bounce-enter-active, .double-slide-bounce-leave-active {
+  animation: doubleSlideBounce;
+  animation-duration: 1s;
+}
+
+.slide-from-top-bounce-enter-active, .slide-from-top-bounce-leave-active {
+  animation: slideFromTopBounce;
+  animation-duration: 1s; 
+}
+
+.pop1-enter-active, .pop1-leave-active{
+  animation: pop;
+  animation-duration: .4s;
+}
+
+.pop2-enter-active, .pop2-leave-active{
+  animation: pop;
+  animation-duration: .5s;
+}
+
+.pop3-enter-active, .pop3-leave-active{
+  animation: pop;
+  animation-duration: .6s;
+}
+
+.pop4-enter-active, .pop4-leave-active{
+  animation: pop;
+  animation-duration: .7s;
+}
+
+.pop5-enter-active, .pop5-leave-active{
+  animation: pop;
+  animation-duration: .8s;
+}
+
+.pop6-enter-active, .pop6-leave-active{
+  animation: pop;
+  animation-duration: .9s;
+}
+
+.pop7-enter-active, .pop7-leave-active{
+  animation: pop;
+  animation-duration: 1s;
 }

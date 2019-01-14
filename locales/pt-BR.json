@@ -24,5 +24,6 @@
 	"Wrong password": "Wrong password",
 	"Missing credentials": "Missing credentials",
 	"Unknown username": "Unknown username",
-	"You logged out.": "You logged out."
+	"You logged out.": "You logged out.",
+	"English": "English"
 }
