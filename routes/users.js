@@ -2,16 +2,25 @@ var express = require('express')
 var router = express.Router()
 var passport = require('passport')
 var LocalStrategy = require('passport-local').Strategy
+let i18n = require('i18n')
+
 
 var User = require('../models/user')
 
+function checkAndChangeLocale(req, res){
+  if (req.session.chosen_locale)
+      i18n.setLocale(res, req.session.chosen_locale)
+}
+
 // LOGIN
 router.get('/login', function(req, res){
+  checkAndChangeLocale(req, res)
   res.render('login')
 })
 
 // SIGN UP
 router.get('/sign-up', function(req, res){
+  checkAndChangeLocale(req, res)
   res.render('signup')
 })
 

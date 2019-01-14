@@ -86,10 +86,23 @@ app.use(cookieParser())
 app.use('/', gtdf)
 app.use('/', users)
 
-
+function checkAndChangeLocale(req, res){
+  if (req.session.chosen_locale)
+      i18n.setLocale(res, req.session.chosen_locale)
+}
 
 app.get('/', function(req, res){
+  checkAndChangeLocale(req, res)
   res.render('index')
+})
+
+app.get('/en', function(req, res){
+  req.session.chosen_locale = 'en'
+  res.redirect('/')
+})
+app.get('/pt-BR', function(req, res){
+  req.session.chosen_locale = 'pt-BR'
+  res.redirect('/')
 })
 
 app.listen(3000, '0.0.0.0', function(req, res){
