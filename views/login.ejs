@@ -10,17 +10,29 @@
 <div id='app'>
   <fixed>
     <navigation-bar :show='transitionsAndAnimations.initialTransitions'>
-      <template slot='left'>
-        <nav-element animation='pop1'><link-red href='#'>Home</link-red></nav-element>
-        <nav-element animation='pop2'><link-red href='#'>Login</link-red></nav-element>
+      <template slot='desktop-left'>
+        <nav-element animation='pop1'><link-red href='/'>Home</link-red></nav-element>
+        <nav-element animation='pop2'><link-red href='/login'>Login</link-red></nav-element>
       </template>
-      <template slot='right'>
+      <template slot='desktop-right'>
         <nav-element animation='pop2'>
           <dropdown type='link-red' placeholder="<%= __('default_language') %>">
             <drop-link href='/pt-BR'>Português(Brasil)</drop-link>
             <drop-link href='/en'>English</drop-link>
           </dropdown>
         </nav-element>
+      </template>
+      <template slot='mobile-right'>
+        <transition name='pop2'>
+          <nav-dropdown>
+            <drop-link href='/'>Home</drop-link>
+            <drop-link href='/login'>Login</drop-link>
+            <sub-dropdown placeholder="<%= __('default_language') %>">
+              <drop-link href='/pt-BR'>Português(Brasil)</drop-link>
+              <drop-link href='/en'>English</drop-link>
+            </nav-dropdown>
+          </dropdown-icon>
+        </transition>
       </template>
     </navigation-bar>
     <login-form :show='transitionsAndAnimations.initialTransitions'>

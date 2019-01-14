@@ -89,18 +89,18 @@ Vue.component('navigation-bar', {
       <nav id='navBar' v-if='show' class='alignContent'>
         <div id='desktop' class='alignContent'>
           <div id='left' class='flex'>
-            <slot name='left'></slot>
+            <slot name='desktop-left'></slot>
           </div>
           <div id='right' class='rowReversed'>
-            <slot name='right'></slot>
+            <slot name='desktop-right'></slot>
           </div>
         </div>
-        <div id='mobile'>
-          <div id='left'>
-            <slot name='left'></slot>
+        <div id='mobile' class='alignContent'>
+          <div id='left' class='flex'>
+            <slot name='mobile-left'></slot>
           </div>
           <div id='right' class='rowReversed'>
-            <slot name='right'></slot>
+            <slot name='mobile-right'></slot>
           </div>
         </div>
       </nav>
@@ -150,7 +150,7 @@ Vue.component('dropdown', {
       <a :class='type'>{{ placeholder }}</a>
       <div class='centered'>
       <transition name='pop-long'>
-        <div v-show='opened' class='card apontamento-cima'>
+        <div v-show='opened' class='card angle-up'>
           <slot></slot>
         </div>
       </transition>
@@ -158,6 +158,28 @@ Vue.component('dropdown', {
     </div>
   `
 })
+Vue.component('nav-dropdown',{
+  props: {
+    opened: false
+  },
+  template: `
+    <div class='dropdown' @mouseleave='opened = false' @mouseover='opened = true'>
+      <button class='reset-button'>
+        <div class="hamburger-icon">
+          <div class="bar top"></div>
+          <div class="bar middle"></div>
+          <div class="bar bottom"></div>
+        </div>
+      </button>
+      <transition name='pop-long'>
+        <div v-show='opened' class='card angle-up angle-up-nav' style='width: 150px;right: -12px'>
+          <slot></slot>
+        </div>
+      </transition>
+    </div>
+  `
+})
+
 Vue.component('drop-link',{
   props: {
     href: String
