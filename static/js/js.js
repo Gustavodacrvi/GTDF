@@ -179,6 +179,16 @@ Vue.component('nav-dropdown',{
     </div>
   `
 })
+Vue.component('sub-dropdown',{
+  props: {
+    placeholder: String
+  },
+  template: `
+    <article class='sub-dropdown'>
+      <a class='dropdown-link'>{{placeholder}}</a>
+    </article>
+  `
+})
 
 Vue.component('drop-link',{
   props: {
