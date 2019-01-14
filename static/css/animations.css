@@ -3,11 +3,9 @@
     flex-basis: 0;
     opacity: 0;
   }
-  15%{
-    opacity: .8;
-  }
   20%{
     flex-basis: 470px;
+    opacity: .6;
   }
   36%{
     flex-basis: 420px;
@@ -26,16 +24,15 @@
     flex-basis: 440px;
   }
 }
+
 @keyframes slideFromTopBounce{
   0%{
     height: 0;
     opacity: 0;
   }
-  15%{
-    opacity: .8;
-  }
   20%{
     height: 65px;
+    opacity: .4;
   }
   36%{
     height: 35px;
@@ -70,47 +67,93 @@
   }
 }
 
-.double-slide-bounce-enter-active, .double-slide-bounce-leave-active {
+@keyframes popLong{
+  0%{
+    opacity: 0;
+  }
+  52%{
+    transform: scale(1.2,1.2);
+    opacity: .4;
+  }
+  68%{
+    transform: scale(0.9,0.9);
+  }
+  84%{
+    transform: scale(1.1,1.1);
+  }
+  100%{
+    transform: scale(1,1);
+    opacity: 1;
+  }
+}
+
+@keyframes unpop{
+  0%{
+    transform: scale(1,1);
+    opacity: 1;
+  }
+  65%{
+    transform: scale(1.2,1.2);
+    opacity: .8;
+  }
+  100%{
+    transform: scale(0,0);
+    opacity: 0;
+  }
+}
+
+.double-slide-bounce-enter-active {
   animation: doubleSlideBounce;
   animation-duration: 1s;
 }
 
-.slide-from-top-bounce-enter-active, .slide-from-top-bounce-leave-active {
+
+.slide-from-top-bounce-enter-active {
   animation: slideFromTopBounce;
   animation-duration: 1s; 
 }
 
-.pop1-enter-active, .pop1-leave-active{
+.pop-long-enter-active{
+  animation: popLong;
+  animation-duration: .3s;
+}
+
+.pop-long-leave-active{
+  animation: unpop;
+  animation-duration: .3s; 
+}
+
+.pop1-enter-active{
   animation: pop;
   animation-duration: .4s;
 }
 
-.pop2-enter-active, .pop2-leave-active{
+.pop2-enter-active{
   animation: pop;
   animation-duration: .5s;
 }
 
-.pop3-enter-active, .pop3-leave-active{
+.pop3-enter-active{
   animation: pop;
   animation-duration: .6s;
 }
 
-.pop4-enter-active, .pop4-leave-active{
+.pop4-enter-active{
   animation: pop;
   animation-duration: .7s;
 }
 
-.pop5-enter-active, .pop5-leave-active{
+.pop5-enter-active{
   animation: pop;
   animation-duration: .8s;
 }
 
-.pop6-enter-active, .pop6-leave-active{
+.pop6-enter-active{
   animation: pop;
   animation-duration: .9s;
 }
 
-.pop7-enter-active, .pop7-leave-active{
+.pop7-enter-active{
   animation: pop;
   animation-duration: 1s;
 }

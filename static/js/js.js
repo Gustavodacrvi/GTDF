@@ -12,7 +12,7 @@ Vue.component('login-form', {
   },
   template: `
     <transition name='double-slide-bounce'>
-      <div class='card form' v-if='show'><slot></slot></div>
+      <div class='card form' v-show='show'><slot></slot></div>
     </transition>
   `
 })
@@ -22,7 +22,7 @@ Vue.component('form-element', {
   },
   template: `
     <transition :name='animation'>
-      <div class='formElement' v-if='this.$parent.show'>
+      <div class='formElement' v-show='this.$parent.show'>
         <slot></slot>
       </div>
     </transition>
@@ -133,6 +133,37 @@ Vue.component('link-blue', {
   },
   template: `
     <a class='link-blue' :href='href'><slot></slot></a>
+  `
+})
+Vue.component('dropdown', {
+  props: {
+    placeholder: String,
+    type: String
+  },
+  data: () => {
+    return {
+      opened: false
+    }
+  },
+  template: `
+    <div class='dropdown' @mouseleave='opened = false' @mouseover='opened = true'>
+      <a :class='type'>{{ placeholder }}</a>
+      <div class='centered'>
+      <transition name='pop-long'>
+        <div v-show='opened' class='card apontamento-cima'>
+          <slot></slot>
+        </div>
+      </transition>
+      </div>
+    </div>
+  `
+})
+Vue.component('drop-link',{
+  props: {
+    href: String
+  },
+  template: `
+    <a :href='href' class='dropdown-link'><slot></slot></a>
   `
 })
 
