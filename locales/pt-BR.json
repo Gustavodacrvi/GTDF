@@ -24,5 +24,7 @@
 	"Unknown username": "Nome de usuário desconhecido",
 	"You logged out.": "Voce saiu.",
 	"default_language": "Português(Brasil)",
-	"": ""
+	"": "",
+	"defaultlanguage": "defaultlanguage",
+	"in-basket": "in-basket"
 }

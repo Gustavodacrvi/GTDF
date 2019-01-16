@@ -138,6 +138,72 @@
   }
 }
 
+@keyframes leftToRightBounceSideNav{
+  0%{
+    width: 0;
+    opacity: 0;
+  }
+  20%{
+    width: 265px;
+    opacity: .4;
+  }
+  36%{
+    width: 240px;
+  }
+  52%{
+    width: 260px;
+  }
+  68%{
+    width: 245px;
+  }
+  84%{
+    width: 255px;
+  }
+  100%{
+    opacity: 1;
+    width: 250px;
+  }
+}
+
+@keyframes linkUnderlineOver{
+  0%{
+    left: -60px;
+    width: 0;
+  }
+  52%{
+    width: 100%;
+    left: 10px;
+  }
+  68%{
+    left: 0;
+  }
+  84%{
+    left: 5px;
+  }
+  100%{
+    left: 0;
+  }
+}
+
+@keyframes linkUnderlineOut{
+  0%{
+    left: 0;
+    width: 100%;
+  }
+  65%{
+    left: -10px;
+  }
+  100%{
+    left: 130px;
+    width: 100%;
+  }
+}
+
+.left-to-right-bounce-side-nav-enter-active{
+  animation: leftToRightBounceSideNav;
+  animation-duration: 1s;
+}
+
 .right-to-left-bounce-nav-drop-enter-active{
   animation: rightToLeftBounceNavDrop;
   animation-duration: .3s; 
