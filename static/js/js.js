@@ -34,14 +34,16 @@ let vm = new Vue({
     },
 
     applyAnimationsToUnderlineLinksEventHandler(){
-      let links = document.querySelectorAll('.underline-link')
-      let func = function(){
-        this.classList.add('underline-link-animation')
-        this.removeEventListener('mouseover', func)   
-      }
-      links.forEach((el) => {
-        el.addEventListener('mouseover', func)
-      })
+      setTimeout(function(){
+        let links = document.querySelectorAll('.underline-link')
+        let func = function(){
+          this.classList.add('underline-link-animation')
+          this.removeEventListener('mouseover', func)   
+        }
+        links.forEach((el) => {
+          el.addEventListener('mouseover', func)
+        })
+      }, 10)
     }
   }
 })

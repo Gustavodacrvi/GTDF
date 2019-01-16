@@ -22,6 +22,11 @@
           </dropdown>
         </nav-element>
       </template>
+      <template slot='mobile-left'>
+        <transition name='pop1'>
+          <toggle-icon icon='fa fa-user' elid='navBar'></toggle-icon>
+        </template>
+      </template>
       <template slot='mobile-right'>
         <transition name='pop2'>
           <nav-dropdown>
@@ -39,34 +44,33 @@
       <side-title>
         <%= user.username %>
       </side-title>
-      <side-link>
+      <side-link animation='pop2'>
         <%= __('in-basket') %>
       </side-link>
-      <side-link>
+      <side-link animation='pop3'>
         <%= __('calendar') %>
       </side-link>
-      <side-link>
+      <side-link animation='pop4'>
         <%= __('next actions') %>
       </side-link>
       </br>
       </br>
-      <side-link>
+      <side-link animation='pop5'>
         <%= __('projects') %>
       </side-link>
-      <side-link>
+      <side-link animation='pop6'>
         <%= __('someday/maybe') %>
       </side-link>
-      <side-link>
+      <side-link animation='pop7'>
         <%= __('waiting') %>
       </side-link>
       </br>
       </br>
-      <side-link href='/logout'>
+      <side-link href='/logout' animation='pop8'>
         <%= __('logout') %>
       </side-link>
     </side-nav>
   </fixed>
-  <a href='/logout'>logout</a>
 </div>
 
 

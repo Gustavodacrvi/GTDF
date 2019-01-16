@@ -204,7 +204,6 @@ Vue.component('drop-link',{
     <a :href='href' class='dropdown-link'><slot></slot></a>
   `
 })
-
 Vue.component('side-nav', {
   props: {
     show: Boolean,
@@ -218,23 +217,38 @@ Vue.component('side-nav', {
     </transition>
   `
 })
-
 Vue.component('side-title', {
   template: `
-    <div class='side-title'>
-      Logged as <span class='red'><slot></slot></span>
-    </div>
+    <transition name='pop1'>
+      <div class='side-title' v-if='$parent.show'>
+        Logged as <span class='red'><slot></slot></span>
+      </div>
+    </transition>
   `
 })
 Vue.component('side-link', {
   props: {
-    href: String 
+    href: String,
+    animation: String
   },
   template: `
-    <div class='side-link'>
-      <transition name='link-under-line-over'>
-        <a class='underline-link' :href='href'><slot></slot></a>
-      </transition>
+    <transition :name='animation'>
+      <div class='side-link' v-if='$parent.show'>
+        <transition name='link-under-line-over'>
+          <a class='underline-link' :href='href'><slot></slot></a>
+        </transition>
+      </div>
+    </transition>
+  `
+})
+Vue.component('toggle-icon', {
+  props: {
+    elid: String,
+    icon: String
+  },
+  template: `
+    <div class='toggle-icon'>
+      <i :class='icon + " icon-big"'></i>
     </div>
   `
 })

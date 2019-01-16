@@ -4,7 +4,7 @@
 }
 
 body {
-  background-color: #1F253D;
+  background-color: #242930;
   margin: 0;
   font-family: 'Work Sans Light';
   color: #B9B9B9;
@@ -21,7 +21,7 @@ body {
 
 .formButton,
 .titleBig {
-  color: #E64C65;
+  color: #F8CC63;
 }
 
 .alignContent,
@@ -53,7 +53,7 @@ body {
 }
 
 .card, .card-shadow{
-  background-color: #394264;
+  background-color: #32373f;
   border-radius: 8px;
 }
 
@@ -140,13 +140,13 @@ a{
 
 .link-red:hover{
   transform: scale(1.2, 1.2);
-  color: #E64C65;
+  color: #F8CC63;
 }
 
 /* FORMS */
 
 .formButton{
-  border: 3px solid #E64C65;
+  border: 3px solid #F8CC63;
   outline: none;
   font-family: 'Work Sans Light';
   font-size: 1em;
@@ -154,7 +154,7 @@ a{
   overflow: hidden;
   border-radius: 6px;
   cursor: pointer; 
-  background-color: #E64C65;
+  background-color: #F8CC63;
   padding: 10px;
   z-index: 1;
 }
@@ -167,7 +167,7 @@ a{
   left: 0;
   top: 0;
   border-radius: 6px;
-  background-color: #394264;
+  background-color: #32373f;
 }
 .formButton:hover::before{
   width: 0;
@@ -176,7 +176,7 @@ a{
   left: 50%;
 }
 .formButton:hover{
-  color: #B9B9B9;
+  color: black;
 }
 
 .form{
@@ -202,7 +202,7 @@ a{
 }
 
 .form-input input{
-  background-color: #263056;
+  background-color: #242930;
   position: absolute;
   color: #B9B9B9;
   width: 80%;
@@ -249,7 +249,7 @@ a{
   width: 90%;
   padding: 0 5%;
   pointer-events: all;
-  background-color: #394264;
+  background-color: #32373f;
   z-index: 2;
   box-shadow: 0 6px 6px rgba(50,50,50,0.3); 
 }
@@ -335,7 +335,8 @@ a{
 }
 
 .dropdown-link:hover{
-  background-color: #E64C65;
+  background-color: #F8CC63;
+  color: black;
   transform: scale(1.03,1.03);
 }
 
@@ -351,7 +352,7 @@ a{
 }
 
 .angle-up-nav::after, .angle-up::after{
-  border-bottom: 16px solid #E64C65;
+  border-bottom: 16px solid #F8CC63;
   transform: translateX(-50%);
   top: -32px;
 }
@@ -367,7 +368,7 @@ a{
 .angle-right-nav::after{
   right: -30px;
   top: 5px;
-  border-left: 16px solid #E64C65; 
+  border-left: 16px solid #F8CC63; 
 }
 
 .position-left{
@@ -395,7 +396,7 @@ a{
 }
 
 .hamburger-icon:hover .bar {
-  background-color: #E64C65;
+  background-color: #F8CC63;
 }
 
 .hamburger-icon:hover{
@@ -420,11 +421,11 @@ a{
 
 #side-nav{
   position: absolute;
-  width: 250px;
+  width: 225px;
   height: 100vh;
   z-index: 1;
   left: 0;
-  background-color: #394264;
+  background-color: #32373f;
   pointer-events: all;
   overflow: hidden;
 }
@@ -440,7 +441,7 @@ a{
 }
 
 .red{
-  color: #E64C65;
+  color: #F8CC63;
 }
 
 .side-link{
@@ -456,7 +457,7 @@ a{
 }
 
 .underline-link:hover{
-  color: #E64C65;
+  color: #F8CC63;
 }
 
 .underline-link-animation::after{
@@ -466,16 +467,26 @@ a{
   height: 3px;
   left: -60px;
   bottom: 0;
-  background-color: #E64C65;
+  background-color: #F8CC63;
   transition-delay: 0;
   animation: linkUnderlineOut;
-  animation-duration: .3s;
+  animation-duration: .4s;
 }
 
 .underline-link-animation:hover::after{
   animation: linkUnderlineOver;
-  animation-duration: .3s;
+  animation-duration: .4s;
   transition-delay: .3s;
   left: 0;
   width: 100%;
+}
+
+@media screen and (max-width: 678px){
+  #side-nav{
+    display: none;
+  }
+}
+
+@media screen and (min-width: 677px){
+
 }
