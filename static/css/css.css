@@ -102,6 +102,11 @@ body {
 
 /* LINKS */
 
+a{
+  color: #B9B9B9;
+  text-decoration: none;
+}
+
 .link-blue{
   color: #11a8ab;
   text-decoration: none;
@@ -421,6 +426,7 @@ body {
   left: 0;
   background-color: #394264;
   pointer-events: all;
+  overflow: hidden;
 }
 
 #side-nav > :first-child{
@@ -430,6 +436,7 @@ body {
 .side-title{
   margin-left: 40px;
   font-size: 1.2em;
+  margin-bottom: 40px;
 }
 
 .red{
@@ -437,13 +444,11 @@ body {
 }
 
 .side-link{
-  margin-top: 30px;
   font-size: 1.1em;  
 }
 
 .underline-link{
   display: inline-block;
-  padding: 8px 0;
   margin-left: 40px; 
   cursor: pointer;
   transition-duration: .3s;

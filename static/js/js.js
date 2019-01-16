@@ -37,7 +37,7 @@ let vm = new Vue({
       let links = document.querySelectorAll('.underline-link')
       let func = function(){
         this.classList.add('underline-link-animation')
-        this.removeEventListener('mouseover', func)        
+        this.removeEventListener('mouseover', func)   
       }
       links.forEach((el) => {
         el.addEventListener('mouseover', func)

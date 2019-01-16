@@ -26,5 +26,11 @@
 	"default_language": "Português(Brasil)",
 	"": "",
 	"defaultlanguage": "defaultlanguage",
-	"in-basket": "in-basket"
+	"in-basket": "in-basket",
+	"calendar": "calendar",
+	"next actions": "next actions",
+	"projects": "projects",
+	"someday/maybe": "someday/maybe",
+	"waiting": "waiting",
+	"logout": "logout"
 }

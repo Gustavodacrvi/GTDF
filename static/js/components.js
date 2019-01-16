@@ -227,10 +227,13 @@ Vue.component('side-title', {
   `
 })
 Vue.component('side-link', {
+  props: {
+    href: String 
+  },
   template: `
     <div class='side-link'>
       <transition name='link-under-line-over'>
-        <a class='underline-link'><slot></slot></a>
+        <a class='underline-link' :href='href'><slot></slot></a>
       </transition>
     </div>
   `
