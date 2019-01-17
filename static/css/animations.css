@@ -217,17 +217,14 @@
 @keyframes slideLeftToRightBounce{
   0%{
     flex-basis: 0;
-    opacity: 0;
     left: -100%;
   }
   50%{
     flex-basis: 0;
-    opacity: 0;
-    left: -30%;
+    left: -100%;
   }
   50.00001%{
     left: -15%;
-    opacity: .6;
   }
   60%{
     left: 12%;
@@ -242,15 +239,7 @@
     left: -3%;
   }
   100%{
-    opacity: 1;
     left: 0;
-  }
-}
-
-@keyframes slideLeftToRightBounceOnce{
-  0%{
-    left: -15%;
-    opacity: .
   }
 }
 
@@ -258,26 +247,23 @@
 @keyframes slideRightToLeftUnpop{
   0%{
     left: 0;
-    opacity: 1;
   }
   66%{
     left: 15%;
   }
   100%{
     left: -50%;
-    opacity: .2;
   }
 }
 
 .component-animation-enter-active{
   animation: slideLeftToRightBounce;
-  animation-duration: 1s;
-
+  animation-duration: .8s;
 }
 
 .component-animation-leave-active{
   animation: slideRightToLeftUnpop;
-  animation-duration: .5s;
+  animation-duration: .4s;
 }
 
 .left-to-right-bounce-side-nav-enter-active{
