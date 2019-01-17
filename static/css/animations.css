@@ -214,6 +214,72 @@
   }
 }
 
+@keyframes slideLeftToRightBounce{
+  0%{
+    flex-basis: 0;
+    opacity: 0;
+    left: -100%;
+  }
+  50%{
+    flex-basis: 0;
+    opacity: 0;
+    left: -30%;
+  }
+  50.00001%{
+    left: -15%;
+    opacity: .6;
+  }
+  60%{
+    left: 12%;
+  }
+  70%{
+    left: -9%;
+  }
+  80%{
+    left: 6%;
+  }
+  90%{
+    left: -3%;
+  }
+  100%{
+    opacity: 1;
+    left: 0;
+  }
+}
+
+@keyframes slideLeftToRightBounceOnce{
+  0%{
+    left: -15%;
+    opacity: .
+  }
+}
+
+
+@keyframes slideRightToLeftUnpop{
+  0%{
+    left: 0;
+    opacity: 1;
+  }
+  66%{
+    left: 15%;
+  }
+  100%{
+    left: -50%;
+    opacity: .2;
+  }
+}
+
+.component-animation-enter-active{
+  animation: slideLeftToRightBounce;
+  animation-duration: 1s;
+
+}
+
+.component-animation-leave-active{
+  animation: slideRightToLeftUnpop;
+  animation-duration: .5s;
+}
+
 .left-to-right-bounce-side-nav-enter-active{
   animation: leftToRightBounceSideNav;
   animation-duration: 1s;
@@ -238,7 +304,6 @@
   animation: doubleSlideBounce;
   animation-duration: 1s;
 }
-
 
 .slide-from-top-bounce-enter-active {
   animation: slideFromTopBounce;

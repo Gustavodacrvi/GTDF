@@ -250,7 +250,7 @@ a{
   padding: 0 5%;
   pointer-events: all;
   background-color: #32373f;
-  z-index: 2;
+  z-index: 3;
   box-shadow: 0 6px 6px rgba(50,50,50,0.3); 
 }
 
@@ -423,7 +423,7 @@ a{
   position: absolute;
   width: 225px;
   height: 100vh;
-  z-index: 1;
+  z-index: 2;
   left: 0;
   background-color: #32373f;
   pointer-events: all;
@@ -492,21 +492,32 @@ a{
   margin-left: 225px;
   margin-top: 50px;
   display: flex;
+  position: relative;
+  z-index: -1;
 }
 
 #content > :first-child{
   width: 75%;
-  display: flex;
-  justify-content: center;
 }
 
 #content > :last-child{
   width: 25%;
 }
 
-#content > :first-child > div{
-  flex-basis: 775px;
+
+#content > div > :last-child{
+  width: 25%;
 }
+
+#content > :first-child > div{
+  width: 100%;
+  position: relative;
+}
+
+#content > :first-child > div > div{
+  margin: 0 30px;
+}
+
 
 @media screen and (max-width: 795px){
   #content{
@@ -515,8 +526,5 @@ a{
   }
   #content > :first-child, #content > :last-child{
     width: 100%;
-  }
-  #content > :first-child > div{
-    margin: 0 13px;
   }
 }

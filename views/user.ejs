@@ -44,24 +44,24 @@
       <side-title>
         <%= user.username %>
       </side-title>
-      <side-link animation='pop2'>
+      <side-link animation='pop2' compo='basket' @click='changeComponent'>
         <%= __('in-basket') %>
       </side-link>
-      <side-link animation='pop3'>
+      <side-link animation='pop3' compo='calendar' @click='changeComponent'>
         <%= __('calendar') %>
       </side-link>
-      <side-link animation='pop4'>
+      <side-link animation='pop4' compo='next-actions' @click='changeComponent'>
         <%= __('next actions') %>
       </side-link>
       </br>
       </br>
-      <side-link animation='pop5'>
+      <side-link animation='pop5' compo='projects' @click='changeComponent'>
         <%= __('projects') %>
       </side-link>
-      <side-link animation='pop6'>
+      <side-link animation='pop6' compo='maybe' @click='changeComponent'>
         <%= __('someday/maybe') %>
       </side-link>
-      <side-link animation='pop7'>
+      <side-link animation='pop7' compo='waiting' @click='changeComponent'>
         <%= __('waiting') %>
       </side-link>
       </br>
@@ -72,13 +72,17 @@
     </side-nav>
   </fixed>
   <user-content>
-    <keep-alive>
-      <component v-bind:is="currentSectionComponent"></component>
-    </keep-alive>
-    <adds>
-      <h1>ADDS</h1>
-      <h1>ADDS</h1>
-    </adds>
+    <template slot='content'>
+      <transition name='component-animation'>
+        <keep-alive>
+          <component v-bind:is="currentSectionComponent"></component>
+        </keep-alive>
+      </transition>
+    </template>
+    <template slot='adds'>
+      <adds>asdf
+      </adds>
+    </template>
   </user-content>
 </div>
 

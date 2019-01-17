@@ -8,7 +8,7 @@ let vm = new Vue({
         showPassword: false
       }
     },
-    currentSectionComponent: 'basket'
+    currentSectionComponent: undefined
   },
   methods: {
     runInitialTransitionsAndAnimations(){
@@ -17,7 +17,6 @@ let vm = new Vue({
     userFormsAnimation(){
       this.transitionsAndAnimations.initialTransitions = true
     },
-
     togglePasswordVisiblity(opened){
       (opened) ? this.showPasswords() : this.hidePasswords()
       this.transitionsAndAnimations.userForms.showPassword = opened
@@ -34,7 +33,6 @@ let vm = new Vue({
         el.setAttribute('type', 'password')
       })
     },
-
     applyAnimationsToUnderlineLinksEventHandler(){
       setTimeout(function(){
         let links = document.querySelectorAll('.underline-link')
@@ -47,12 +45,13 @@ let vm = new Vue({
         })
       }, 10)
     },
-
+    applyContentAnimation(){
+      this.currentSectionComponent = 'basket'
+    },
     toggleSideNav(){
       this.transitionsAndAnimations.sideBar = !this.transitionsAndAnimations.sideBar
       this.applyAnimationsToUnderlineLinksEventHandler()
     },
-
     checkScreenVersion(){
       let width = window.innerWidth
       if (width >= 796){
@@ -61,12 +60,16 @@ let vm = new Vue({
       }
       else
         this.transitionsAndAnimations.sideBar = false
-    }
+    },
+    changeComponent(compo){
+      this.currentSectionComponent = compo
+    },
   }
 })
 
 vm.runInitialTransitionsAndAnimations()
 vm.applyAnimationsToUnderlineLinksEventHandler()
 vm.checkScreenVersion()
+vm.applyContentAnimation()
 
 window.addEventListener('resize', vm.checkScreenVersion)

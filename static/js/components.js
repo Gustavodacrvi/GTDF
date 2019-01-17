@@ -229,13 +229,14 @@ Vue.component('side-title', {
 Vue.component('side-link', {
   props: {
     href: String,
-    animation: String
+    animation: String,
+    compo: String
   },
   template: `
     <transition :name='animation'>
       <div class='side-link' v-if='$parent.show'>
         <transition name='link-under-line-over'>
-          <a class='underline-link' :href='href'><slot></slot></a>
+          <a class='underline-link' :href='href' @click='$emit("click", compo)'><slot></slot></a>
         </transition>
       </div>
     </transition>
@@ -256,7 +257,13 @@ Vue.component('toggle-icon', {
 Vue.component('user-content', {
   template: `
     <div id='content'>
-      <slot></slot>
+      <div>
+        <slot name='content'>
+        </slot>
+      </div>
+      <div>
+        <slot name='adds'></slot>
+      </div>
     </div>
   `
 })
@@ -271,7 +278,65 @@ Vue.component('basket', {
   template: `
   <div>
     <div>
+      <h1>basket</h1>
+      <div class='card' style='width: 100%'>asdf</div>
+      <h1>basket</h1>
+      <h1>basket</h1>
+      <h1>basket</h1>
+      <h1>basket</h1>
+      <h1>basket</h1>
+    </div>
+  </div>
+  `
+})
+Vue.component('calendar', {
+  template: `
+  <div>
+    <div>
+      <h1>calendar</h1>
+      <h1>calendar</h1>
+      <h1>calendar</h1>
+      <h1>calendar</h1>
+      <h1>calendar</h1>
+    </div>
+  </div>
+  `
+})
+Vue.component('next-actions', {
+  template: `
+  <div>
+    <div>
+      <h1>next actions</h1>
       <h1>asdffffffffffffffasdf</h1>
+    </div>
+  </div>
+  `
+})
+Vue.component('projects', {
+  template: `
+  <div>
+    <div>
+      <h1>projects</h1>
+      <h1>asdffffffffffffffasdf</h1>
+    </div>
+  </div>
+  `
+})
+Vue.component('maybe', {
+  template: `
+  <div>
+    <div>
+      <h1>maybe</h1>
+      <h1>asdffffffffffffffasdf</h1>
+    </div>
+  </div>
+  `
+})
+Vue.component('waiting', {
+  template: `
+  <div>
+    <div>
+      <h1>waiting</h1>
       <h1>asdffffffffffffffasdf</h1>
     </div>
   </div>
