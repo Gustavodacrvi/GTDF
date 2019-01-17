@@ -488,9 +488,35 @@ a{
   cursor: pointer;
 }
 
-@media screen and (max-width: 678px){
+#content{
+  margin-left: 225px;
+  margin-top: 50px;
+  display: flex;
 }
 
-@media screen and (min-width: 677px){
+#content > :first-child{
+  width: 75%;
+  display: flex;
+  justify-content: center;
+}
 
+#content > :last-child{
+  width: 25%;
+}
+
+#content > :first-child > div{
+  flex-basis: 775px;
+}
+
+@media screen and (max-width: 795px){
+  #content{
+    margin-left: 0;
+    flex-direction: column-reverse; 
+  }
+  #content > :first-child, #content > :last-child{
+    width: 100%;
+  }
+  #content > :first-child > div{
+    margin: 0 13px;
+  }
 }

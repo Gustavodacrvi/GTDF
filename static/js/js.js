@@ -7,7 +7,8 @@ let vm = new Vue({
       userForms: {
         showPassword: false
       }
-    }
+    },
+    currentSectionComponent: 'basket'
   },
   methods: {
     runInitialTransitionsAndAnimations(){

@@ -253,3 +253,27 @@ Vue.component('toggle-icon', {
     </div>
   `
 })
+Vue.component('user-content', {
+  template: `
+    <div id='content'>
+      <slot></slot>
+    </div>
+  `
+})
+Vue.component('adds', {
+  template: `
+    <div id='adds'>
+      <slot></slot>
+    </div>
+  `
+})
+Vue.component('basket', {
+  template: `
+  <div>
+    <div>
+      <h1>asdffffffffffffffasdf</h1>
+      <h1>asdffffffffffffffasdf</h1>
+    </div>
+  </div>
+  `
+})
