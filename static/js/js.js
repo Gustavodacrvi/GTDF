@@ -49,12 +49,14 @@ let vm = new Vue({
 
     toggleSideNav(){
       this.transitionsAndAnimations.sideBar = !this.transitionsAndAnimations.sideBar
+      this.applyAnimationsToUnderlineLinksEventHandler()
     },
 
     checkScreenVersion(){
       let width = window.innerWidth
-      if (width >= 796)
+      if (width >= 796){
         this.transitionsAndAnimations.sideBar = true
+      }
       else
         this.transitionsAndAnimations.sideBar = false
     }
