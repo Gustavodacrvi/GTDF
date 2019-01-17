@@ -56,6 +56,7 @@ let vm = new Vue({
       let width = window.innerWidth
       if (width >= 796){
         this.transitionsAndAnimations.sideBar = true
+        this.applyAnimationsToUnderlineLinksEventHandler()
       }
       else
         this.transitionsAndAnimations.sideBar = false
