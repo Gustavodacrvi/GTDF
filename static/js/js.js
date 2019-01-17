@@ -3,6 +3,7 @@ let vm = new Vue({
   data: {
     transitionsAndAnimations: {
       initialTransitions: false,
+      sideBar: undefined,
       userForms: {
         showPassword: false
       }
@@ -44,9 +45,24 @@ let vm = new Vue({
           el.addEventListener('mouseover', func)
         })
       }, 10)
+    },
+
+    toggleSideNav(){
+      this.transitionsAndAnimations.sideBar = !this.transitionsAndAnimations.sideBar
+    },
+
+    checkScreenVersion(){
+      let width = window.innerWidth
+      if (width >= 796)
+        this.transitionsAndAnimations.sideBar = true
+      else
+        this.transitionsAndAnimations.sideBar = false
     }
   }
 })
 
 vm.runInitialTransitionsAndAnimations()
 vm.applyAnimationsToUnderlineLinksEventHandler()
+vm.checkScreenVersion()
+
+window.addEventListener('resize', vm.checkScreenVersion)

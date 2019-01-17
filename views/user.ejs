@@ -24,7 +24,7 @@
       </template>
       <template slot='mobile-left'>
         <transition name='pop1'>
-          <toggle-icon icon='fa fa-user' elid='navBar'></toggle-icon>
+          <toggle-icon icon='fa fa-user' elid='side-nav' @toggle='toggleSideNav' :show='transitionsAndAnimations.sideBar'></toggle-icon>
         </template>
       </template>
       <template slot='mobile-right'>
@@ -40,7 +40,7 @@
         </transition>
       </template>
     </navigation-bar>
-    <side-nav :show='transitionsAndAnimations.initialTransitions'>
+    <side-nav :show='transitionsAndAnimations.sideBar'>
       <side-title>
         <%= user.username %>
       </side-title>

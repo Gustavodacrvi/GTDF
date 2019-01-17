@@ -244,11 +244,12 @@ Vue.component('side-link', {
 Vue.component('toggle-icon', {
   props: {
     elid: String,
-    icon: String
+    icon: String,
+    show: Boolean
   },
   template: `
-    <div class='toggle-icon'>
-      <i :class='icon + " icon-big"'></i>
+    <div class='toggle-icon' @click='$emit("toggle");show = !show'>
+      <i id='mobile-side-bar-icon' :class='icon + " icon-big"'></i>
     </div>
   `
 })

@@ -481,10 +481,14 @@ a{
   width: 100%;
 }
 
+#mobile-side-bar-icon:hover{
+  color: #F8CC63;
+  transform: scale(1.1, 1.1) rotate(15deg);
+  transition-duration: .3s;
+  cursor: pointer;
+}
+
 @media screen and (max-width: 678px){
-  #side-nav{
-    display: none;
-  }
 }
 
 @media screen and (min-width: 677px){
