@@ -44,24 +44,24 @@
       <side-title>
         <%= user.username %>
       </side-title>
-      <side-link animation='pop2' compo='basket' @click='changeComponent'>
+      <side-link animation='pop2' :i='0' compo='basket' @click='changeComponent' :active='openedComponents[0]'>
         <%= __('in-basket') %>
       </side-link>
-      <side-link animation='pop3' compo='calendar' @click='changeComponent'>
+      <side-link animation='pop3' :i='1' compo='calendar' @click='changeComponent' :active='openedComponents[1]'>
         <%= __('calendar') %>
       </side-link>
-      <side-link animation='pop4' compo='next-actions' @click='changeComponent'>
+      <side-link animation='pop4' :i='2' compo='next-actions' @click='changeComponent' :active='openedComponents[2]'>
         <%= __('next actions') %>
       </side-link>
       </br>
       </br>
-      <side-link animation='pop5' compo='projects' @click='changeComponent'>
+      <side-link animation='pop5' :i='3' compo='projects' @click='changeComponent' :active='openedComponents[3]'>
         <%= __('projects') %>
       </side-link>
-      <side-link animation='pop6' compo='maybe' @click='changeComponent'>
+      <side-link animation='pop6' :i='4' compo='maybe' @click='changeComponent' :active='openedComponents[4]'>
         <%= __('someday/maybe') %>
       </side-link>
-      <side-link animation='pop7' compo='waiting' @click='changeComponent'>
+      <side-link animation='pop7' :i='5' compo='waiting' @click='changeComponent' :active='openedComponents[5]'>
         <%= __('waiting') %>
       </side-link>
       </br>

@@ -230,14 +230,14 @@ Vue.component('side-link', {
   props: {
     href: String,
     animation: String,
-    compo: String
+    compo: String,
+    active: false,
+    i: Number
   },
   template: `
     <transition :name='animation'>
       <div class='side-link' v-if='$parent.show'>
-        <transition name='link-under-line-over'>
-          <a class='underline-link' :href='href' @click='$emit("click", compo)'><slot></slot></a>
-        </transition>
+        <a :class='{"underline-link": !active, "active-underline-link": active}' :href='href' @click='$emit("click", {compo, i})'><slot></slot></a>
       </div>
     </transition>
   `

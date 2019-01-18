@@ -6,9 +6,17 @@ let vm = new Vue({
       sideBar: undefined,
       userForms: {
         showPassword: false
-      }
+      },
     },
-    currentSectionComponent: undefined
+    currentSectionComponent: undefined,
+    openedComponents: [
+      true,
+      false,
+      false,
+      false,
+      false,
+      false
+    ]
   },
   methods: {
     runInitialTransitionsAndAnimations(){
@@ -61,9 +69,20 @@ let vm = new Vue({
       else
         this.transitionsAndAnimations.sideBar = false
     },
-    changeComponent(compo){
-      this.currentSectionComponent = compo
+    changeComponent(dt){
+      this.currentSectionComponent = dt.compo
+      this.closeAllComponentLinks()
+      this.openComponentLink(dt.i)
+      this.applyAnimationsToUnderlineLinksEventHandler()
     },
+    openComponentLink(i){
+      this.openedComponents[i] = true
+    },
+    closeAllComponentLinks(){
+      let length = this.openedComponents.length
+      for (let i = 0;i < length;i++)
+        this.openedComponents[i] = false
+    }
   }
 })
 

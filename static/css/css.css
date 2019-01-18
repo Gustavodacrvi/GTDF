@@ -461,6 +461,23 @@ a{
   color: #F8CC63;
 }
 
+.active-underline-link{
+  color: #F8CC63;
+  cursor: pointer;
+  margin-left: 40px;
+  position: relative;
+}
+
+.active-underline-link::after{
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 3px;
+  left: 0;
+  bottom: 0;
+  background-color: #F8CC63;
+}
+
 .underline-link-animation::after{
   content: '';
   position: absolute;
