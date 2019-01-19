@@ -84,6 +84,17 @@
         <form-button>Add action</form-button>
       </form-element>
     </action-form>
+    <action-form :currentform='currentOpenedUserForm' id='addProject' @close='closeActionForm'>
+      <form-element animation='pop1'>
+        <title-big class='centralizeContent'>ADD PROJECT</title-big>
+      </form-element>
+      <form-element animation='pop2'>
+        <text-box :rows='2' placeholder='TITLE'></text-box>
+      </form-element>
+      <form-element animation='pop3' class='centralizeContent'>
+        <form-button>Add project</form-button>
+      </form-element>
+    </action-form>
   </fixed>
   <user-content>
     <template slot='content'>

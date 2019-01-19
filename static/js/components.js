@@ -46,7 +46,7 @@ Vue.component('input-pass', {
   },
   template: `
     <div class='form-input centralizeContent'>
-      <input :name='name' class='passwordField' type='password' autocomplete='off' :placeholder='placeholder' />
+      <input :name='name' autocomplete='off' class='passwordField' type='password' autocomplete='off' :placeholder='placeholder' />
       <span @click='$emit("click", !opened)'>
         <i class="fas fa-eye icon-tiny" v-show='opened'></i>
         <i class="fas fa-eye-slash icon-tiny" v-show='!opened'></i>
@@ -61,7 +61,7 @@ Vue.component('input-form', {
   },
   template: `
     <div class='form-input centralizeContent'>
-      <input :name='name' type='text' :placeholder='placeholder'/>
+      <input :name='name' autocomplete='off' type='text' :placeholder='placeholder'/>
     </div>
   `
 })
@@ -357,11 +357,17 @@ Vue.component('projects', {
   template: `
   <div>
     <div>
-      <h1>projects</h1>
-      <h1>asdffffffffffffffasdf</h1>
+      <action-bar>
+        <action-bar-icon icon='fa fa-plus' id='addProject' tag='projects' @click='openUserForm'></action-bar-icon>
+      </action-bar>
     </div>
   </div>
-  `
+  `,
+  methods: {
+    openUserForm(id){
+      this.$emit('openform', id)
+    }
+  }
 })
 Vue.component('maybe', {
   template: `

@@ -80,6 +80,7 @@ let vm = new Vue({
       this.closeAllComponentLinks()
       this.openComponentLink(dt.i)
       this.applyAnimationsToUnderlineLinksEventHandler()
+      this.closeActionForm()
     },
     openComponentLink(i){
       this.openedComponents[i] = true
