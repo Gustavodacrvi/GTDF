@@ -13,6 +13,7 @@ function checkAndChangeLocale(req, res){
 
 router.get('/user', function(req, res){
   checkAndChangeLocale(req, res)
+
   if (!req.isAuthenticated()) res.redirect('/login')
   res.render('user', {
     user: req.user

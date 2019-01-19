@@ -8,7 +8,16 @@ let vm = new Vue({
         showPassword: false
       },
     },
-    currentSectionComponent: undefined,
+    tempUser: {
+      action: {
+        tag: undefined
+      },
+      project: {
+
+      }
+    },
+    currentSectionComponent: 'basket',
+    currentOpenedUserForm: undefined,
     openedComponents: [
       true,
       false,
@@ -53,9 +62,6 @@ let vm = new Vue({
         })
       }, 10)
     },
-    applyContentAnimation(){
-      this.currentSectionComponent = 'basket'
-    },
     toggleSideNav(){
       this.transitionsAndAnimations.sideBar = !this.transitionsAndAnimations.sideBar
       this.applyAnimationsToUnderlineLinksEventHandler()
@@ -82,6 +88,14 @@ let vm = new Vue({
       let length = this.openedComponents.length
       for (let i = 0;i < length;i++)
         this.openedComponents[i] = false
+    },
+    
+    openUserForm(dt){
+      this.tempUser.action.tag = dt.tag
+      this.currentOpenedUserForm = dt.id
+    },
+    closeActionForm(){
+      this.currentOpenedUserForm = undefined
     }
   }
 })
@@ -89,6 +103,5 @@ let vm = new Vue({
 vm.runInitialTransitionsAndAnimations()
 vm.applyAnimationsToUnderlineLinksEventHandler()
 vm.checkScreenVersion()
-vm.applyContentAnimation()
 
 window.addEventListener('resize', vm.checkScreenVersion)

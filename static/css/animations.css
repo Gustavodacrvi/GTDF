@@ -256,6 +256,16 @@
   }
 }
 
+.double-slide-bounce-unpop-enter-active{
+  animation: doubleSlideBounce;
+  animation-duration: .4s;
+}
+
+.double-slide-bounce-unpop-leave-active{
+  animation: unpop;
+  animation-duration: .4s;
+}
+
 .component-animation-enter-active{
   animation: slideLeftToRightBounce;
   animation-duration: .8s;

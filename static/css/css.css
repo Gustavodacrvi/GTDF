@@ -101,6 +101,7 @@ body {
   font-size: 30px;
 }
 
+
 /* LINKS */
 
 a{
@@ -540,4 +541,34 @@ a{
   #content > :first-child, #content > :last-child{
     width: 100%;
   }
+}
+
+/* ACTION CARDS */
+
+.action-bar{
+  margin-top: 40px;
+  height: 40px;
+  padding: 0 10px;
+  display: flex;
+  align-items: center; 
+}
+
+.user-icon{
+  transition-duration: .3s;
+}
+
+.user-icon:hover{
+  transform: rotate(15deg) scale(1.2, 1.2);
+  color: #F8CC63;
+  cursor: pointer;
+}
+
+.action-form{
+  position: relative;
+}
+
+.close-icon{
+  position: absolute;
+  right: 5px;
+  top: 1px;
 }

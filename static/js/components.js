@@ -274,19 +274,57 @@ Vue.component('adds', {
     </div>
   `
 })
+Vue.component('action-bar',{
+  template: `
+    <div class='action-bar card'>
+      <slot></slot>
+    </div>
+  `
+})
+Vue.component('action-bar-icon',{
+  props: {
+    icon: String,
+    id: String,
+    tag: String
+  },
+  template: `
+    <i :class='icon + " icon-big user-icon"' @click="$emit('click', {id, tag})"></i>
+  `
+})
 Vue.component('basket', {
   template: `
   <div>
     <div>
-      <h1>basket</h1>
-      <div class='card' style='width: 100%'>asdf</div>
-      <h1>basket</h1>
-      <h1>basket</h1>
-      <h1>basket</h1>
-      <h1>basket</h1>
-      <h1>basket</h1>
+      <action-bar>
+        <action-bar-icon icon='fa fa-plus' id='addAction' tag='basket' @click='openUserForm'></action-bar-icon>
+      </action-bar>
     </div>
   </div>
+  `,
+  methods: {
+    openUserForm(id){
+      this.$emit('openform', id)
+    }
+  }
+})
+Vue.component('action-form', {
+  props: {
+    currentform: String,
+    id: String
+  },
+  methods: {
+    show(){
+      if (this.currentform == this.id) return true
+      return false
+    }
+  },
+  template: `
+    <transition name='double-slide-bounce-unpop'>
+      <div class='card form action-form' v-show='show()'>
+        <i class='fa fa-times icon-big user-icon close-icon' @click='$emit("close")'></i>
+        <slot></slot>
+      </div>
+    </transition>
   `
 })
 Vue.component('calendar', {

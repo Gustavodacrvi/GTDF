@@ -70,12 +70,15 @@
         <%= __('logout') %>
       </side-link>
     </side-nav>
+    <action-form :currentform='currentOpenedUserForm' id='addAction' @close='closeActionForm'>
+    asfd
+    </action-form>
   </fixed>
   <user-content>
     <template slot='content'>
-      <transition name='component-animation'>
+      <transition name='component-animation' appear>
         <keep-alive>
-          <component v-bind:is="currentSectionComponent"></component>
+          <component :is="currentSectionComponent" @openform='openUserForm'></component>
         </keep-alive>
       </transition>
     </template>
