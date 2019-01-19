@@ -16,6 +16,9 @@ let vm = new Vue({
 
       }
     },
+    user: {
+
+    },
     currentSectionComponent: 'basket',
     currentOpenedUserForm: undefined,
     openedComponents: [
@@ -97,6 +100,23 @@ let vm = new Vue({
     },
     closeActionForm(){
       this.currentOpenedUserForm = undefined
+    },
+
+    request(method, route, callback){
+      let xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          callback(this.responseText)
+        }
+      };
+      xhttp.open(method, route, true);
+      xhttp.send();
+    },
+
+    getUser(){
+      this.request('GET', '/get-user',function(data){
+        this.user = JSON.parse(data)
+      })
     }
   }
 })

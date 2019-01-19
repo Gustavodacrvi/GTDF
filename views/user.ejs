@@ -42,7 +42,9 @@
     </navigation-bar>
     <side-nav :show='transitionsAndAnimations.sideBar'>
       <side-title>
-        <%= user.username %>
+        <% if (locals.user) { %>
+          <%= user.username %>
+        <% } %>
       </side-title>
       <side-link animation='pop2' :i='0' compo='basket' @click='changeComponent' :active='openedComponents[0]'>
         <%= __('in-basket') %>
@@ -113,6 +115,9 @@
 
 
 <% include partials/footer %>
+<script>
+  vm.getUser()
+</script>
 </body>
 
 </html>

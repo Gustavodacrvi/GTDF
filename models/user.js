@@ -15,11 +15,14 @@ var userSchema = mongoose.Schema({
         required: true,
         unique: true
     },
-    actions: [
-    ],
-    projects: [
+    data: {
+      actions: [
 
-    ],
+      ],
+      projects: [
+
+      ]
+    }
 })
 
 var User = module.exports = mongoose.model('User', userSchema)

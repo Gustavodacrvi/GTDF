@@ -14,9 +14,19 @@ function checkAndChangeLocale(req, res){
 router.get('/user', function(req, res){
   checkAndChangeLocale(req, res)
 
-  if (!req.isAuthenticated()) res.redirect('/login')
-  res.render('user', {
-    user: req.user
+  if (!req.isAuthenticated()) {
+    res.redirect('/login')
+  } else {
+    res.render('user', {
+      user: req.user
+    })
+  }
+})
+
+router.get('/get-user', function(req, res){
+  User.getUserById(req.user.id, function(err, user){
+    if (err) handlerror(err)
+    res.send(JSON.stringify(user.data))
   })
 })
 
