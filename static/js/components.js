@@ -310,18 +310,21 @@ Vue.component('basket', {
 Vue.component('action-form', {
   props: {
     currentform: String,
-    id: String
+    id: String,
+    show: false
   },
   methods: {
-    show(){
-      if (this.currentform == this.id) return true
-      return false
+    display(){
+      (this.currentform == this.id) ? this.show = true : this.show = false
+      return this.show
     }
   },
   template: `
     <transition name='double-slide-bounce-unpop'>
-      <div class='card form action-form' v-show='show()'>
-        <i class='fa fa-times icon-big user-icon close-icon' @click='$emit("close")'></i>
+      <div class='card form action-form' v-show='display()'>
+        <transition name='pop1'>
+        <i class='fa fa-times icon-big user-icon close-icon' v-show='show' @click='$emit("close")'></i>
+        </transition>
         <slot></slot>
       </div>
     </transition>
@@ -378,5 +381,18 @@ Vue.component('waiting', {
       <h1>asdffffffffffffffasdf</h1>
     </div>
   </div>
+  `
+})
+Vue.component('text-box',{
+  props: {
+    placeholder: String,
+    rows: Number
+  },
+  template: `
+    <div class='text-box'>
+      <span>{{placeholder}}</span>
+      <textarea :rows='rows'>
+      </textarea>
+    </div>
   `
 })

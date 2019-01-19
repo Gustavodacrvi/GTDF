@@ -71,7 +71,18 @@
       </side-link>
     </side-nav>
     <action-form :currentform='currentOpenedUserForm' id='addAction' @close='closeActionForm'>
-    asfd
+      <form-element animation='pop1'>
+        <title-big class='centralizeContent'>ADD ACTION</title-big>
+      </form-element>
+      <form-element animation='pop2'>
+        <text-box placeholder='TITLE' :rows='2'></text-box>
+      </form-element>
+      <form-element animation='pop3'>
+        <text-box placeholder='DESCRIPTION' :rows='4'></text-box>
+      </form-element animation='pop4'>
+      <form-element class='centralizeContent' animation='pop5'>
+        <form-button>Add action</form-button>
+      </form-element>
     </action-form>
   </fixed>
   <user-content>

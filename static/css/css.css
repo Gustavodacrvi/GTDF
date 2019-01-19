@@ -572,3 +572,29 @@ a{
   right: 5px;
   top: 1px;
 }
+
+.text-box{
+  position: relative;
+}
+
+.text-box > textarea{
+  background-color: transparent;
+  resize: none;
+  outline: none;
+  border-radius: 4px;
+  border: 0.5px solid #F8CC63;
+  color: #B9B9B9;
+  font-family: 'Work Sans Light';
+  width: 100%;
+}
+
+.text-box > span{
+  position: absolute;
+  top: -20px;
+  display: inline-block;
+  left: 8px;
+  padding: 0 3px; 
+  font-size: 1.2em;
+  background-color: #32373f;
+  color: #F8CC63;
+}

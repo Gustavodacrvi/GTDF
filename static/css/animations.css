@@ -321,9 +321,17 @@
   animation-duration: .4s;
 }
 
+.pop1-leave-active{
+  animation-duration: .2s;
+}
+
 .pop2-enter-active{
   animation: pop;
   animation-duration: .5s;
+}
+
+.pop2-leave-active{
+  animation-duration: .2s;
 }
 
 .pop3-enter-active{
@@ -331,9 +339,17 @@
   animation-duration: .6s;
 }
 
+.pop3-leave-active{
+  animation-duration: .2s;
+}
+
 .pop4-enter-active{
   animation: pop;
   animation-duration: .7s;
+}
+
+.pop4-leave-active{
+  animation-duration: .2s;
 }
 
 .pop5-enter-active{
@@ -341,9 +357,17 @@
   animation-duration: .8s;
 }
 
+.pop5-leave-active{
+  animation-duration: .2s;
+}
+
 .pop6-enter-active{
   animation: pop;
   animation-duration: .9s;
+}
+
+.pop6-leave-active{
+  animation-duration: .2s;
 }
 
 .pop7-enter-active{
