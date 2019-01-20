@@ -28,7 +28,8 @@ let vm = new Vue({
       false,
       false
     ],
-    showIconGroups: false
+    showIconGroups: false,
+    openedActionContents: undefined
   },
   methods: {
     runInitialTransitionsAndAnimations(){
@@ -125,6 +126,15 @@ let vm = new Vue({
       this.request('GET', '/get-user', (data) =>{
         this.user = JSON.parse(data)
       })
+    },
+    applyDragAndDrop(){
+      let sortables = document.querySelectorAll('.sortable')
+      sortables.forEach((el) => {
+        new Sortable(el, {
+          animation: 200,
+          handle: '.draggable'
+        })
+      })
     }
   }
 })
@@ -133,6 +143,7 @@ vm.runInitialTransitionsAndAnimations()
 vm.applyAnimationsToUnderlineLinksEventHandler()
 vm.checkScreenVersion()
 vm.iconGroupEventHandlers()
+vm.applyDragAndDrop()
 
 window.addEventListener('resize', vm.checkScreenVersion)
 window.addEventListener('resize', vm.iconGroupEventHandlers)

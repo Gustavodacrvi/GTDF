@@ -619,6 +619,10 @@ a{
   padding: 0 10px; 
 }
 
+.action > :first-child span{
+  margin-left: 10px;
+}
+
 .action > :first-child > :first-child{
   flex-basis: 90%;
   height: 40px;

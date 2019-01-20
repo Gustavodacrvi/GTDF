@@ -301,10 +301,16 @@ Vue.component('basket', {
       <action-bar>
         <action-bar-icon icon='fa fa-plus' id='addAction' tag='basket' @click='openUserForm'></action-bar-icon>
       </action-bar>
-      <action title='test' description='desc' id='id' :icongroup='icongroups'>
-      </action>
-      <action title='two' description='trhe' id='i' :icongroup='icongroups'>
-      </action>
+      <div class='sortable'>
+        <action title='test' description='desc' id='id' :icongroup='icongroups'>
+        </action>
+        <action title='test' description='desc' id='id' :icongroup='icongroups'>
+        </action>
+        <action title='test' description='desc' id='id' :icongroup='icongroups'>
+        </action>
+        <action title='test' description='desc' id='id' :icongroup='icongroups'>
+        </action>
+      </div>
     </div>
   </div>
   `,
@@ -325,6 +331,7 @@ Vue.component('action',{
     <div class='action'>
       <div class='card'>
         <div>
+          <i class='fa fa-list icon-tiny user-icon draggable'></i>
           <span> {{ title }}</span>
         </div>
         <div>
@@ -336,7 +343,7 @@ Vue.component('action',{
           </icon-group>
         </div>
       </div>
-      <div class='card'>
+      <div class='card' style='display: none'>
         <span>{{ description }}</span>
       </div>
     </div>
