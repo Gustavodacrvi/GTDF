@@ -100,9 +100,10 @@
   </fixed>
   <user-content>
     <template slot='content'>
+      {{showIconGroups}}
       <transition name='component-animation' appear>
         <keep-alive>
-          <component :is="currentSectionComponent" @openform='openUserForm'></component>
+          <component :is="currentSectionComponent" @openform='openUserForm' :icongroups='showIconGroups'></component>
         </keep-alive>
       </transition>
     </template>

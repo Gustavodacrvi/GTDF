@@ -292,12 +292,19 @@ Vue.component('action-bar-icon',{
   `
 })
 Vue.component('basket', {
+  props: {
+    icongroups: Boolean
+  },
   template: `
   <div>
     <div>
       <action-bar>
         <action-bar-icon icon='fa fa-plus' id='addAction' tag='basket' @click='openUserForm'></action-bar-icon>
       </action-bar>
+      <action title='test' description='desc' id='id' :icongroup='icongroups'>
+      </action>
+      <action title='two' description='trhe' id='i' :icongroup='icongroups'>
+      </action>
     </div>
   </div>
   `,
@@ -306,6 +313,69 @@ Vue.component('basket', {
       this.$emit('openform', id)
     }
   }
+})
+Vue.component('action',{
+  props: {
+    title: String,
+    description: String,
+    id: String,
+    icongroup: Boolean
+  },
+  template: `
+    <div class='action'>
+      <div class='card'>
+        <div>
+          <span> {{ title }}</span>
+        </div>
+        <div>
+          <icon-group :show='icongroup'>
+            <action-icon icon='fa fa-times'></action-icon>
+            <action-icon icon='fa fa-edit'></action-icon>
+            <action-icon icon='fa fa-tag'></action-icon>
+            <action-icon icon='fa fa-project-diagram'></action-icon>
+          </icon-group>
+        </div>
+      </div>
+      <div class='card'>
+        <span>{{ description }}</span>
+      </div>
+    </div>
+  `
+})
+Vue.component('icon-group', {
+  props: {
+    show: Boolean,
+    dropdown: false
+  },
+  template: `
+    <div class='icon-group' @mouseover='dropdown = true' @mouseleave='dropdown = false'>
+      <action-icon icon='fa fa-ellipsis-h' v-show='!show' ></action-icon>
+      <transition name='pop-long'>
+        <div :class='{"card-shadow": !show}' v-show='dropdownShow()'>
+          <slot></slot>
+        </div>
+      </transition>
+    </div>
+  `,
+  methods: {
+    dropdownShow(){
+      if (this.dropdown){
+        return true
+      }
+      else if (this.show == true){
+        this.dropdown = true
+        return true
+      }
+    }
+  }
+})
+Vue.component('action-icon', {
+  props: {
+    icon: String,
+  },
+  template: `
+    <i :class='icon + " icon-big user-icon action-icon"'></i>
+  `
 })
 Vue.component('action-form', {
   props: {

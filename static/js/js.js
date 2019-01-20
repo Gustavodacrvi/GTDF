@@ -1,6 +1,7 @@
 let vm = new Vue({
   el: '#app',
   data: {
+    desktop: undefined,
     transitionsAndAnimations: {
       initialTransitions: false,
       sideBar: undefined,
@@ -16,9 +17,7 @@ let vm = new Vue({
 
       }
     },
-    user: {
-
-    },
+    user: undefined,
     currentSectionComponent: 'basket',
     currentOpenedUserForm: undefined,
     openedComponents: [
@@ -28,7 +27,8 @@ let vm = new Vue({
       false,
       false,
       false
-    ]
+    ],
+    showIconGroups: false
   },
   methods: {
     runInitialTransitionsAndAnimations(){
@@ -36,6 +36,14 @@ let vm = new Vue({
     },
     userFormsAnimation(){
       this.transitionsAndAnimations.initialTransitions = true
+    },
+    iconGroupEventHandlers(){
+      let iconGroups = document.querySelectorAll('.icon-group')
+      if (this.desktop){
+        this.showIconGroups = true
+      } else {
+        this.showIconGroups = false
+      }
     },
     togglePasswordVisiblity(opened){
       (opened) ? this.showPasswords() : this.hidePasswords()
@@ -72,11 +80,14 @@ let vm = new Vue({
     checkScreenVersion(){
       let width = window.innerWidth
       if (width >= 796){
+        this.desktop = true
         this.transitionsAndAnimations.sideBar = true
         this.applyAnimationsToUnderlineLinksEventHandler()
       }
-      else
+      else{
         this.transitionsAndAnimations.sideBar = false
+        this.desktop = false
+      }
     },
     changeComponent(dt){
       this.currentSectionComponent = dt.compo
@@ -93,7 +104,6 @@ let vm = new Vue({
       for (let i = 0;i < length;i++)
         this.openedComponents[i] = false
     },
-    
     openUserForm(dt){
       this.tempUser.action.tag = dt.tag
       this.currentOpenedUserForm = dt.id
@@ -101,7 +111,6 @@ let vm = new Vue({
     closeActionForm(){
       this.currentOpenedUserForm = undefined
     },
-
     request(method, route, callback){
       let xhttp = new XMLHttpRequest();
       xhttp.onreadystatechange = function() {
@@ -112,9 +121,8 @@ let vm = new Vue({
       xhttp.open(method, route, true);
       xhttp.send();
     },
-
     getUser(){
-      this.request('GET', '/get-user',function(data){
+      this.request('GET', '/get-user', (data) =>{
         this.user = JSON.parse(data)
       })
     }
@@ -124,5 +132,7 @@ let vm = new Vue({
 vm.runInitialTransitionsAndAnimations()
 vm.applyAnimationsToUnderlineLinksEventHandler()
 vm.checkScreenVersion()
+vm.iconGroupEventHandlers()
 
 window.addEventListener('resize', vm.checkScreenVersion)
+window.addEventListener('resize', vm.iconGroupEventHandlers)

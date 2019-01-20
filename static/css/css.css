@@ -541,12 +541,16 @@ a{
   #content > :first-child, #content > :last-child{
     width: 100%;
   }
+  #content > :first-child > div > div{
+    margin: 0 10px;
+  }
 }
 
 /* ACTION CARDS */
 
 .action-bar{
   margin-top: 40px;
+  margin-bottom: 60px;
   height: 40px;
   padding: 0 10px;
   display: flex;
@@ -597,4 +601,63 @@ a{
   font-size: 1.2em;
   background-color: #32373f;
   color: #F8CC63;
+}
+
+.action-icon{
+  margin: 0 4px;
+}
+
+.action{
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.action > :first-child{
+  display: flex;
+  padding: 0 10px; 
+}
+
+.action > :first-child > :first-child{
+  flex-basis: 90%;
+  height: 40px;
+  display: flex;
+  align-items: center;
+}
+
+.action > :first-child > :last-child{
+  display: flex;
+  align-items: center;
+}
+
+.action > :first-child > :last-child > div > div{
+  flex-basis: 10%;
+  display: flex;
+  align-items: center;
+  flex-direction: row-reverse;
+}
+
+.action > :last-child{
+  min-height: 60px;
+  margin-top: 2px; 
+  padding: 10px;
+}
+
+
+.action + .action{
+  margin-top: 10px;
+}
+
+@media screen and (max-width: 796px){
+  .action > :first-child > :last-child{
+    position: relative;
+  }
+
+  .action > :first-child > :last-child > div > div{
+    position: absolute;
+    top: -100%;
+    padding: 6px;
+    right: -15px;
+  }
 }
