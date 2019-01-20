@@ -67,7 +67,7 @@ Vue.component('input-form', {
 })
 Vue.component('form-button', {
   template: `
-    <button type='submit' class='formButton'><slot></slot></button>
+    <button type='submit' class='formButton' @click='$emit("click")'><slot></slot></button>
   `
 })
 Vue.component('alert',{
@@ -294,7 +294,7 @@ Vue.component('action-bar-icon',{
 Vue.component('basket', {
   props: {
     icongroups: Boolean,
-    actions: Object,
+    user: Object,
     first: true
   },
   template: `
@@ -303,12 +303,14 @@ Vue.component('basket', {
       <action-bar>
         <action-bar-icon icon='fa fa-plus' id='addAction' tag='basket' @click='openUserForm'></action-bar-icon>
       </action-bar>
-      <draggable v-model='actions'>
-        <transition-group name='flip-list' >
-          <action v-for='action in actions' v-if='action.tag == "basket"' :title='action.title' :description='action.description' :key='action.id' :icongroup='icongroups'>
+      <template v-if='user'>
+      <draggable v-model='user.actions' :options="{handle:'.draggable'}">
+        <transition-group name='flip-list'>
+          <action v-for='action in user.actions' v-if='action.tag == "basket"' :title='action.title' :description='action.description' :key='action.id' :icongroup='icongroups'>
           </action>
         </transition-group>
       </draggable>
+      </template>
     </div>
   </div>
   `,
@@ -339,13 +341,14 @@ Vue.component('action',{
     title: String,
     description: String,
     id: String,
-    icongroup: Boolean
+    icongroup: Boolean,
+    dropdown: false
   },
   template: `
     <div class='action'>
       <div class='card'>
-        <div>
-          <i class='fa fa-list icon-tiny user-icon draggable'></i>
+        <div @click='dropdown = !dropdown'>
+          <i class='fa fa-list icon-tiny draggable'></i>
           <span> {{ title }}</span>
         </div>
         <div>
@@ -357,9 +360,11 @@ Vue.component('action',{
           </icon-group>
         </div>
       </div>
-      <div class='card' style='display: none'>
-        <span>{{ description }}</span>
-      </div>
+      <transition name='pop-long'>
+        <div class='card' v-show='dropdown'>
+          <span>{{ description }}</span>
+        </div>
+      </transition>
     </div>
   `
 })
@@ -412,7 +417,7 @@ Vue.component('action-form', {
   },
   template: `
     <transition name='double-slide-bounce-unpop'>
-      <div class='card form action-form' v-show='display()'>
+      <div class='card-shadow form action-form' v-show='display()'>
         <transition name='pop1'>
         <i class='fa fa-times icon-big user-icon close-icon' v-show='show' @click='$emit("close")'></i>
         </transition>
@@ -483,13 +488,19 @@ Vue.component('waiting', {
 Vue.component('text-box',{
   props: {
     placeholder: String,
-    rows: Number
+    rows: Number,
+    value: String
   },
   template: `
     <div class='text-box'>
       <span>{{placeholder}}</span>
-      <textarea :rows='rows'>
+      <textarea :rows='rows' v-model='value'>
       </textarea>
     </div>
-  `
+  `,
+  watch: {
+    value: function(){
+      this.$emit('change', this.value)
+    }
+  }
 })

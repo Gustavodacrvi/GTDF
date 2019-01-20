@@ -26,9 +26,22 @@ router.get('/user', function(req, res){
 router.get('/get-user', function(req, res){
   User.getUserById(req.user.id, function(err, user){
     if (err) handlerror(err)
-    res.send(JSON.stringify(user.data))
+    res.send(user.data)
   })
 })
 
+router.post('/add-action', (req, res) => {
+  User.getUserById(req.user.id, (err, user) => {
+    if (err) handlerror(err)
+    let b = req.body
+
+    user.data.actions.push({ title: b.title, id: b.id, description: b.description, tag: b.tag})
+    
+    user.save((err) => {
+      if (err) handleError(err)
+      res.send()
+  })
+  })
+})
 
 module.exports = router

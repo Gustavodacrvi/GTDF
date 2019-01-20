@@ -1,7 +1,9 @@
+
 let vm = new Vue({
   el: '#app',
   data: {
     desktop: undefined,
+    guest: false,
     transitionsAndAnimations: {
       initialTransitions: false,
       sideBar: undefined,
@@ -11,19 +13,16 @@ let vm = new Vue({
     },
     tempUser: {
       action: {
-        tag: undefined
+        tag: undefined,
+        title: undefined,
+        description: undefined
       },
       project: {
 
       }
     },
-    user: {
-      actions: [
-        { id: 0, title: 1, description: 1, tag: 'hey'},
-        { id: 0, title: 1, description: 1, tag: 'basket'},
-        { id: 1, title: 2, description: 2, tag: 'basket'},
-      ]
-    },
+    d: 3,
+    user: undefined,
     currentSectionComponent: 'basket',
     currentOpenedUserForm: undefined,
     openedComponents: [
@@ -111,25 +110,38 @@ let vm = new Vue({
       for (let i = 0;i < length;i++)
         this.openedComponents[i] = false
     },
+    cleanTempData() {
+      this.tempUser.action.tag = undefined
+      this.tempUser.action.title = undefined
+      this.tempUser.action.description = undefined
+    },
     openUserForm(dt){
+      this.cleanTempData()
       this.tempUser.action.tag = dt.tag
       this.currentOpenedUserForm = dt.id
     },
     closeActionForm(){
       this.currentOpenedUserForm = undefined
+      this.cleanTempData()
     },
-    request(method, route, callback){
+    GETrequest(route, callback){
       let xhttp = new XMLHttpRequest();
       xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
           callback(this.responseText)
         }
       };
-      xhttp.open(method, route, true);
+      xhttp.open('GET', route, true);
       xhttp.send();
     },
+    POSTrequest(route, params) {
+      let xhttp = new XMLHttpRequest();
+      xhttp.open('POST', route, true);
+      xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+      xhttp.send(params);
+    },
     getUser(){
-      this.request('GET', '/get-user', (data) =>{
+      this.GETrequest('/get-user', (data) =>{
         this.user = JSON.parse(data)
       })
     },
@@ -144,6 +156,13 @@ let vm = new Vue({
     },
     test(ids){
       console.log(ids)
+    },
+    addAction(){
+      let dt = this.tempUser.action
+      this.user.actions.push({ tag: dt.tag, title: dt.title, description: dt.description, id: this.user.actions.length})
+      if (!this.guest)
+        this.POSTrequest('/add-action', 'title='+dt.title+'&description='+dt.description+'&id='+(this.user.actions.length-1)+'&tag='+dt.tag)
+      this.closeActionForm()
     }
   }
 })

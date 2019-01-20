@@ -77,13 +77,13 @@
         <title-big class='centralizeContent'>ADD ACTION</title-big>
       </form-element>
       <form-element animation='pop2'>
-        <text-box placeholder='TITLE' :rows='2'></text-box>
+        <text-box placeholder='TITLE' :rows='2' :value='tempUser.action.title' @change='(v) => tempUser.action.title = v'></text-box>
       </form-element>
       <form-element animation='pop3'>
-        <text-box placeholder='DESCRIPTION' :rows='4'></text-box>
+        <text-box placeholder='DESCRIPTION' :rows='4' :value='tempUser.action.description' @change='(v) => tempUser.action.description = v'></text-box>
       </form-element animation='pop4'>
       <form-element class='centralizeContent' animation='pop5'>
-        <form-button>Add action</form-button>
+        <form-button @click='addAction'>Add action</form-button>
       </form-element>
     </action-form>
     <action-form :currentform='currentOpenedUserForm' id='addProject' @close='closeActionForm'>
@@ -100,10 +100,9 @@
   </fixed>
   <user-content>
     <template slot='content'>
-      {{showIconGroups}}
       <transition name='component-animation' appear>
         <keep-alive>
-          <component :is="currentSectionComponent" @openform='openUserForm' :icongroups='showIconGroups' :actions='user.actions' @rearrange='test'></component>
+          <component v-if='user' :is="currentSectionComponent" @openform='openUserForm' :icongroups='showIconGroups' :user='user' @rearrange='test'></component>
         </keep-alive>
       </transition>
     </template>
@@ -117,7 +116,7 @@
 
 <% include partials/footer %>
 <script>
-  // vm.getUser()
+  vm.getUser()
 </script>
 </body>
 

@@ -569,6 +569,7 @@ a{
 
 .action-form{
   position: relative;
+  z-index: 3;
 }
 
 .close-icon{
@@ -616,7 +617,8 @@ a{
 
 .action > :first-child{
   display: flex;
-  padding: 0 10px; 
+  padding: 0 10px;
+  cursor: pointer;
 }
 
 .action > :first-child span{
@@ -651,6 +653,10 @@ a{
 
 .action + .action{
   margin-top: 6px;
+}
+
+.draggable{
+  cursor: grab;
 }
 
 @media screen and (max-width: 796px){
