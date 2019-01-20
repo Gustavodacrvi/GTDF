@@ -17,7 +17,13 @@ let vm = new Vue({
 
       }
     },
-    user: undefined,
+    user: {
+      actions: [
+        { id: 0, title: 1, description: 1, tag: 'hey'},
+        { id: 0, title: 1, description: 1, tag: 'basket'},
+        { id: 1, title: 2, description: 2, tag: 'basket'},
+      ]
+    },
     currentSectionComponent: 'basket',
     currentOpenedUserForm: undefined,
     openedComponents: [
@@ -135,6 +141,9 @@ let vm = new Vue({
           handle: '.draggable'
         })
       })
+    },
+    test(ids){
+      console.log(ids)
     }
   }
 })

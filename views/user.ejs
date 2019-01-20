@@ -103,7 +103,7 @@
       {{showIconGroups}}
       <transition name='component-animation' appear>
         <keep-alive>
-          <component :is="currentSectionComponent" @openform='openUserForm' :icongroups='showIconGroups'></component>
+          <component :is="currentSectionComponent" @openform='openUserForm' :icongroups='showIconGroups' :actions='user.actions' @rearrange='test'></component>
         </keep-alive>
       </transition>
     </template>
@@ -117,7 +117,7 @@
 
 <% include partials/footer %>
 <script>
-  vm.getUser()
+  // vm.getUser()
 </script>
 </body>
 

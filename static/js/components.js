@@ -293,7 +293,9 @@ Vue.component('action-bar-icon',{
 })
 Vue.component('basket', {
   props: {
-    icongroups: Boolean
+    icongroups: Boolean,
+    actions: Object,
+    first: true
   },
   template: `
   <div>
@@ -301,22 +303,34 @@ Vue.component('basket', {
       <action-bar>
         <action-bar-icon icon='fa fa-plus' id='addAction' tag='basket' @click='openUserForm'></action-bar-icon>
       </action-bar>
-      <div class='sortable'>
-        <action title='test' description='desc' id='id' :icongroup='icongroups'>
-        </action>
-        <action title='test' description='desc' id='id' :icongroup='icongroups'>
-        </action>
-        <action title='test' description='desc' id='id' :icongroup='icongroups'>
-        </action>
-        <action title='test' description='desc' id='id' :icongroup='icongroups'>
-        </action>
-      </div>
+      <draggable v-model='actions'>
+        <transition-group name='flip-list' >
+          <action v-for='action in actions' v-if='action.tag == "basket"' :title='action.title' :description='action.description' :key='action.id' :icongroup='icongroups'>
+          </action>
+        </transition-group>
+      </draggable>
     </div>
   </div>
   `,
   methods: {
     openUserForm(id){
       this.$emit('openform', id)
+    }
+  },
+  watch: {
+    actions: function(){
+      let ids = []
+      let length = this.actions.length
+      for (let i = 0;i < length;i++)
+        ids.push(this.actions[i].id)
+      this.$emit('rearrange', ids)
+    }
+  },
+  computed: {
+    rearranged(){
+      if (this.first)
+        this.$emit('rearrange', actions)
+      this.first = false
     }
   }
 })
