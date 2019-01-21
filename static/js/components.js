@@ -18,11 +18,12 @@ Vue.component('login-form', {
 })
 Vue.component('form-element', {
   props: {
-    animation: String
+    animation: String,
+    tabindex: String
   },
   template: `
     <transition :name='animation'>
-      <div class='formElement' v-show='this.$parent.show'>
+      <div class='formElement' v-show='this.$parent.show' :tabindex='tabindex'>
         <slot></slot>
       </div>
     </transition>
@@ -42,11 +43,12 @@ Vue.component('input-pass', {
   props: {
     placeholder: String,
     name: String,
-    opened: Boolean
+    opened: Boolean,
+    tabindex: String
   },
   template: `
     <div class='form-input centralizeContent'>
-      <input :name='name' autocomplete='off' class='passwordField' type='password' autocomplete='off' :placeholder='placeholder' />
+      <input :name='name' autocomplete='off' class='passwordField' type='password' autocomplete='off' :placeholder='placeholder' :tabindex='tabindex' />
       <span @click='$emit("click", !opened)'>
         <i class="fas fa-eye icon-tiny" v-show='opened'></i>
         <i class="fas fa-eye-slash icon-tiny" v-show='!opened'></i>
@@ -57,17 +59,21 @@ Vue.component('input-pass', {
 Vue.component('input-form', {
   props: {
     placeholder: String,
-    name: String
+    name: String,
+    tabindex: String
   },
   template: `
     <div class='form-input centralizeContent'>
-      <input :name='name' autocomplete='off' type='text' :placeholder='placeholder'/>
+      <input :name='name' autocomplete='off' type='text' :placeholder='placeholder' :tabindex='tabindex'/>
     </div>
   `
 })
 Vue.component('form-button', {
+  props: {
+    tabindex: String
+  },
   template: `
-    <button type='submit' class='formButton' @click='$emit("click")'><slot></slot></button>
+    <button :tabindex='tabindex' type='submit' class='formButton' @click='$emit("click")'><slot></slot></button>
   `
 })
 Vue.component('alert',{
@@ -322,10 +328,10 @@ Vue.component('basket', {
       this.$emit('openform', id)
     },
     calculateIds(){
-      let ids = ''
+      let ids = []
       let length = this.user.actions.length
       for (let i = 0;i < length;i++)
-        ids += this.user.actions[i].id
+        ids.push(this.user.actions[i].id)
       return ids
     },
     setHttpTimeOut(seconds){
@@ -340,7 +346,7 @@ Vue.component('basket', {
   watch: {
     'user.actions'(){
       // wait some seconds before sending the https request
-      let seconds = 1750
+      let seconds = 3000
       if (!this.sent){
         this.setHttpTimeOut(seconds)
       } else {

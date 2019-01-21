@@ -40,12 +40,25 @@ router.post('/add-action', (req, res) => {
     user.save((err) => {
       if (err) handleError(err)
       res.send()
-  })
+    })
   })
 })
 
 router.post('/test', (req, res) => {
-  console.log(req.body.message)
+  User.getUserById(req.user.id, (err, user) => {
+    if (err) handleError(err)
+    let u = user.data
+
+    User.rearrangeActions(u.actions, req.body.a)
+    
+    user.markModified('data.actions')
+    user.save((err, user) => {
+      if (err) handleError(err)
+      
+      res.send()
+    })
+  })
 })
+
 
 module.exports = router

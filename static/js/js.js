@@ -154,8 +154,14 @@ let vm = new Vue({
         })
       })
     },
-    test(ids){
-      this.POSTrequest('/test', 'message='+ids)
+    saveNewActionOrder(ids){
+      let str = ''
+      let length = ids.length
+      for (let i = 0;i < length;i++){
+        str += 'a=' + ids[i] + '&'
+      }
+      str = str.slice(0, -1)
+      this.POSTrequest('/test', str)
     },
     addAction(){
       let dt = this.tempUser.action

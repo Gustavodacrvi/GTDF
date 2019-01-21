@@ -102,7 +102,7 @@
     <template slot='content'>
       <transition name='component-animation' appear>
         <keep-alive>
-          <component v-if='user' :is="currentSectionComponent" @openform='openUserForm' :icongroups='showIconGroups' :user='user' @rearrange='test'></component>
+          <component v-if='user' :is="currentSectionComponent" @openform='openUserForm' :icongroups='showIconGroups' :user='user' @rearrange='saveNewActionOrder'></component>
         </keep-alive>
       </transition>
     </template>

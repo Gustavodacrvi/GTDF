@@ -41,16 +41,16 @@
         <title-big><%= __('SIGN UP') %></title-big>
       </form-element>
       <form-element class='centralizeContent' animation='pop2'>
-        <input-form placeholder='<%= __("Username") %>:' name='username'></input-form>
+        <input-form tabindex='1' placeholder='<%= __("Username") %>:' name='username'></input-form>
       </form-element>
       <form-element class='centralizeContent' animation='pop3'>
-        <input-form placeholder='<%= __("Email") %>:' name='email'></input-form>
+        <input-form tabindex='2' placeholder='<%= __("Email") %>:' name='email'></input-form>
       </form-element>
       <form-element class='centralizeContent' animation='pop4'>
-        <input-pass :opened='transitionsAndAnimations.userForms.showPassword' name='password' placeholder='<%= __("Password") %>:' @click='togglePasswordVisiblity'></input-pass>
+        <input-pass tabindex='3' :opened='transitionsAndAnimations.userForms.showPassword' name='password' placeholder='<%= __("Password") %>:' @click='togglePasswordVisiblity'></input-pass>
       </form-element>
       <form-element class='centralizeContent' animation='pop5'>
-        <input-pass :opened='transitionsAndAnimations.userForms.showPassword' name='confirm' placeholder='<%= __("Confirm password") %>:' @click='togglePasswordVisiblity'></input-pass>
+        <input-pass tabindex='4' :opened='transitionsAndAnimations.userForms.showPassword' name='confirm' placeholder='<%= __("Confirm password") %>:' @click='togglePasswordVisiblity'></input-pass>
       </form-element>
       <% if (locals.errors) {%>
         <form-element animation='pop6'>
@@ -58,7 +58,7 @@
         </form-element>
       <% } %>
       <form-element class='centralizeContent' animation='pop7'> 
-        <form-button><%= __("Create account") %></form-button>
+        <form-button tabindex='5'><%= __("Create account") %></form-button>
       </form-element>
       </form>
     </login-form>

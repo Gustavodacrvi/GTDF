@@ -53,3 +53,22 @@ module.exports.comparePassword = function(candidatePassword, hash, caLLback){
         caLLback(null, isMatch)
     })
 }
+
+module.exports.rearrangeActions = function(arr, newArr){
+  let length = arr.length
+  
+  for (let i = 0;i < length;i++){
+    if (arr[i].id == newArr[i])
+      continue
+    else {
+      for (let j = i + 1;j < length;j++){
+        if (newArr[i] == arr[j].id){
+          let temp = arr[j]
+          arr[j] = arr[i]
+          arr[i] = temp
+          break
+        }
+      }
+    }
+  }
+}
