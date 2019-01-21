@@ -111,9 +111,9 @@ let vm = new Vue({
         this.openedComponents[i] = false
     },
     cleanTempData() {
-      this.tempUser.action.tag = undefined
-      this.tempUser.action.title = undefined
-      this.tempUser.action.description = undefined
+      this.tempUser.action.tag = ''
+      this.tempUser.action.title = ''
+      this.tempUser.action.description = ''
     },
     openUserForm(dt){
       this.cleanTempData()
@@ -144,6 +144,14 @@ let vm = new Vue({
       this.GETrequest('/get-user', (data) =>{
         this.user = JSON.parse(data)
       })
+    },
+    editAction(){
+
+    },
+    getDataFromAction(action){
+      let a = this.tempUser.action
+      a.title = action.title
+      a.description = action.description
     },
     applyDragAndDrop(){
       let sortables = document.querySelectorAll('.sortable')

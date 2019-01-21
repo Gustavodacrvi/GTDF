@@ -97,6 +97,20 @@
         <form-button>Add project</form-button>
       </form-element>
     </action-form>
+    <action-form :currentform='currentOpenedUserForm' id='editAction' @close='closeActionForm'>
+     <form-element animation='pop1'>
+        <title-big class='centralizeContent'><%= __('EDIT ACTION') %></title-big>
+      </form-element>
+      <form-element animation='pop2'>
+        <text-box placeholder='TITLE' :rows='2' :value='tempUser.action.title' @change='(v) => tempUser.action.title = v'></text-box>
+      </form-element>
+      <form-element animation='pop3'>
+        <text-box placeholder='DESCRIPTION' :rows='4' :value='tempUser.action.description' @change='(v) => tempUser.action.description = v'></text-box>
+      </form-element animation='pop4'>
+      <form-element class='centralizeContent' animation='pop5'>
+        <form-button @click='editAction'>Add action</form-button>
+      </form-element>
+    </action-form>
   </fixed>
   <user-content>
     <template slot='content'>
@@ -107,7 +121,7 @@
       </transition>
     </template>
     <template slot='adds'>
-      <adds>
+      <adds>{{user}}
       </adds>
     </template>
   </user-content>

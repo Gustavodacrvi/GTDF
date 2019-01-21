@@ -314,7 +314,7 @@ Vue.component('basket', {
       <template v-if='user'>
       <draggable v-model='user.actions' :options="{handle:'.draggable'}">
         <transition-group name='flip-list' tag='div'>
-          <action v-for='action in user.actions' v-if='action.tag == "basket"' :title='action.title' :description='action.description' :key='action.id' :icongroup='icongroups' >
+          <action v-for='action in user.actions' v-if='action.tag == "basket"' :title='action.title' :description='action.description' :key='action.id' :id='action.id' :icongroup='icongroups' >
           </action>
         </transition-group>
       </draggable>
@@ -363,22 +363,21 @@ Vue.component('action',{
   props: {
     title: String,
     description: String,
-    id: String,
     icongroup: Boolean,
     dropdown: false,
-    key: Number
+    id: Number
   },
   template: `
-    <div class='action' :key='key'>
+    <div class='action' :key='id'>
       <div class='card'>
         <div @click='dropdown = !dropdown'>
           <i class='fa fa-list icon-tiny draggable'></i>
           <span> {{ title }}</span>
         </div>
         <div>
-          <icon-group :show='icongroup' @delete='deleteAction'>
-            <action-icon icon='fa fa-times'></action-icon>
-            <action-icon icon='fa fa-edit'></action-icon>
+          <icon-group :show='icongroup' @delete='deleteAction' @edit='editAction'>
+            <action-icon icon='fa fa-times' event='delete'></action-icon>
+            <action-icon icon='fa fa-edit' event='edit'></action-icon>
             <action-icon icon='fa fa-tag'></action-icon>
             <action-icon icon='fa fa-project-diagram'></action-icon>
           </icon-group>
@@ -401,6 +400,10 @@ Vue.component('action',{
         for (let i = 0;i < length;i++)
           arr[i].id = i
       }
+    },
+    editAction(){
+      this.$root.openUserForm({id: 'editAction'})
+      this.$root.getDataFromAction(this.$root.user.actions[this.id])
     }
   }
 })
@@ -434,9 +437,10 @@ Vue.component('icon-group', {
 Vue.component('action-icon', {
   props: {
     icon: String,
+    event: String
   },
   template: `
-    <i :class='icon + " icon-big user-icon action-icon"' @click='$parent.$emit("delete")'></i>
+    <i :class='icon + " icon-big user-icon action-icon"' @click='$parent.$emit(event)'></i>
   `
 })
 Vue.component('action-form', {
