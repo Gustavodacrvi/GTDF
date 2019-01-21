@@ -304,6 +304,7 @@ Vue.component('basket', {
     first: true,
     sent: false,
     func: Function,
+    dropdowns: Object
   },
   template: `
   <div>
@@ -314,7 +315,7 @@ Vue.component('basket', {
       <template v-if='user'>
       <draggable v-model='user.actions' :options="{handle:'.draggable'}">
         <transition-group name='flip-list' tag='div'>
-          <action v-for='action in user.actions' v-if='action.tag == "basket"' :title='action.title' :description='action.description' :key='action.id' :id='action.id' :icongroup='icongroups' >
+          <action v-for='action in user.actions' v-if='action.tag == "basket"' :title='action.title' :description='action.description' :key='action.id' :id='action.id' :dropdown='dropdowns[action.id]' :icongroup='icongroups' @changed-dropdown='changeDrodpownState'>
           </action>
         </transition-group>
       </draggable>
@@ -344,6 +345,9 @@ Vue.component('basket', {
         this.sent = false
       }, seconds)
       this.sent = true
+    },
+    changeDrodpownState(data){
+      this.$emit('dropdown-state', {state: data.state, id: data.id})
     }
   },
   watch: {
@@ -404,6 +408,11 @@ Vue.component('action',{
     editAction(){
       this.$root.openUserForm({id: 'editAction'})
       this.$root.getDataFromAction(this.$root.user.actions[this.id])
+    }
+  },
+  watch: {
+    dropdown(){
+      this.$emit('changed-dropdown', {state: this.dropdown, id: this. id})
     }
   }
 })

@@ -143,6 +143,10 @@ let vm = new Vue({
     getUser(){
       this.GETrequest('/get-user', (data) =>{
         this.user = JSON.parse(data)
+        let length = this.user.actions.length
+        this.openedActionContents = []
+        for (let i = 0;i < length;i++)
+          this.openedActionContents.push(false)
       })
     },
     editAction(){
@@ -159,6 +163,9 @@ let vm = new Vue({
       a.title = action.title
       a.description = action.description
       a.id = action.id
+    },
+    changeDropdownSate(dt){
+      this.openedActionContents[dt.id] = dt.state
     },
     applyDragAndDrop(){
       let sortables = document.querySelectorAll('.sortable')
