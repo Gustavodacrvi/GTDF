@@ -52,9 +52,23 @@ router.post('/test', (req, res) => {
     User.rearrangeActions(u.actions, req.body.a)
     
     user.markModified('data.actions')
-    user.save((err, user) => {
+    user.save((err) => {
       if (err) handleError(err)
       
+      res.send()
+    })
+  })
+})
+
+router.post('/delete-action', (req, res) => {
+  User.getUserById(req.user.id, (err, user) => {
+    if (err) handleError(err)
+
+    User.deleteAction(req.body.id, user.data.actions)
+
+    user.save((err) => {
+      if (err) handleError(err)
+
       res.send()
     })
   })

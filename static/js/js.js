@@ -169,6 +169,9 @@ let vm = new Vue({
       if (!this.guest)
         this.POSTrequest('/add-action', 'title='+dt.title+'&description='+dt.description+'&id='+(this.user.actions.length-1)+'&tag='+dt.tag)
       this.closeActionForm()      
+    },
+    deleteAction(id){
+      this.user.actions.splice(id, 1)
     }
   }
 })

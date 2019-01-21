@@ -72,3 +72,10 @@ module.exports.rearrangeActions = function(arr, newArr){
     }
   }
 }
+
+module.exports.deleteAction = function(id, arr){
+  arr.splice(id, 1)
+  let length = arr.length
+  for (let i = 0;i < length;i++)
+    arr[i].id = i
+}

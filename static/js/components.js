@@ -314,7 +314,7 @@ Vue.component('basket', {
       <template v-if='user'>
       <draggable v-model='user.actions' :options="{handle:'.draggable'}">
         <transition-group name='flip-list' tag='div'>
-          <action v-for='action in user.actions' v-if='action.tag == "basket"' :title='action.title' :description='action.description' :key='action.id' :icongroup='icongroups'>
+          <action v-for='action in user.actions' v-if='action.tag == "basket"' :title='action.title' :description='action.description' :key='action.id' :icongroup='icongroups' >
           </action>
         </transition-group>
       </draggable>
@@ -324,6 +324,9 @@ Vue.component('basket', {
   </div>
   `,
   methods: {
+    deleteAction(id){
+      this.$emit('delete-action', id)
+    },
     openUserForm(id){
       this.$emit('openform', id)
     },
@@ -373,7 +376,7 @@ Vue.component('action',{
           <span> {{ title }}</span>
         </div>
         <div>
-          <icon-group :show='icongroup'>
+          <icon-group :show='icongroup' @delete='deleteAction'>
             <action-icon icon='fa fa-times'></action-icon>
             <action-icon icon='fa fa-edit'></action-icon>
             <action-icon icon='fa fa-tag'></action-icon>
@@ -387,7 +390,19 @@ Vue.component('action',{
         </div>
       </transition>
     </div>
-  `
+  `,
+  methods: {
+    deleteAction(){
+      let arr = this.$root.user.actions
+      arr.splice(this.id, 1)
+      if (!this.$root.guest){
+        this.$root.POSTrequest('/delete-action', 'id=' + this.id)
+        let length = arr.length
+        for (let i = 0;i < length;i++)
+          arr[i].id = i
+      }
+    }
+  }
 })
 Vue.component('icon-group', {
   props: {
@@ -421,7 +436,7 @@ Vue.component('action-icon', {
     icon: String,
   },
   template: `
-    <i :class='icon + " icon-big user-icon action-icon"'></i>
+    <i :class='icon + " icon-big user-icon action-icon"' @click='$parent.$emit("delete")'></i>
   `
 })
 Vue.component('action-form', {

@@ -78,7 +78,7 @@ body {
 }
 
 .icon-tiny{
-  font-size: 20px;
+  font-size: 16px;
   color: #949494; 
 }
 
@@ -114,7 +114,7 @@ body {
 
 .icon-big{
   color: #B9B9B9;
-  font-size: 30px;
+  font-size: 26px;
 }
 
 
@@ -566,7 +566,7 @@ a{
 .action-bar{
   margin-top: 40px;
   margin-bottom: 60px;
-  height: 40px;
+  height: 36px;
   padding: 0 10px;
   display: flex;
   align-items: center; 
@@ -602,7 +602,7 @@ a{
   resize: none;
   outline: none;
   border-radius: 4px;
-  border: 0.5px solid #F8CC63;
+  border: 0.5px solid #464b53;
   color: #B9B9B9;
   font-family: 'Work Sans Light';
   width: 100%;
@@ -642,7 +642,7 @@ a{
 
 .action > :first-child > :first-child{
   flex-basis: 90%;
-  height: 40px;
+  height: 36px;
   display: flex;
   align-items: center;
 }
@@ -667,7 +667,7 @@ a{
 
 
 .action + .action{
-  margin-top: 6px;
+  margin-top: 4px;
 }
 
 .draggable{
