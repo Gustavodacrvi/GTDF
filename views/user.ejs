@@ -9,7 +9,7 @@
 <body>
 <div id='app'>
   <fixed>
-    <navigation-bar :show='transitionsAndAnimations.initialTransitions'>
+    <navigation-bar>
       <template slot='desktop-left'>
         <nav-element animation='pop1'><link-red href='/'>Home</link-red></nav-element>
         <nav-element animation='pop2'><link-red href='/login'>Login</link-red></nav-element>
@@ -24,7 +24,7 @@
       </template>
       <template slot='mobile-left'>
         <transition name='pop1'>
-          <toggle-icon icon='fa fa-user' elid='side-nav' @toggle='toggleSideNav' :show='transitionsAndAnimations.sideBar'></toggle-icon>
+          <toggle-icon icon='fa fa-user' elid='side-nav' @toggle='toggleSideNav' :show='showSideBar'></toggle-icon>
         </template>
       </template>
       <template slot='mobile-right'>
@@ -40,30 +40,30 @@
         </transition>
       </template>
     </navigation-bar>
-    <side-nav :show='transitionsAndAnimations.sideBar'>
+    <side-nav :show='showSideBar'>
       <side-title>
         <% if (locals.user) { %>
           <%= user.username %>
         <% } %>
       </side-title>
-      <side-link animation='pop2' :i='0' compo='basket' @click='changeComponent' :active='openedComponents[0]'>
+      <side-link animation='pop2' :i='0' compo='basket' @click='changeSectionComponent' :active='openedComponents[0]'>
         <%= __('in-basket') %>
       </side-link>
-      <side-link animation='pop3' :i='1' compo='calendar' @click='changeComponent' :active='openedComponents[1]'>
+      <side-link animation='pop3' :i='1' compo='calendar' @click='changeSectionComponent' :active='openedComponents[1]'>
         <%= __('calendar') %>
       </side-link>
-      <side-link animation='pop4' :i='2' compo='next-actions' @click='changeComponent' :active='openedComponents[2]'>
+      <side-link animation='pop4' :i='2' compo='next-actions' @click='changeSectionComponent' :active='openedComponents[2]'>
         <%= __('next actions') %>
       </side-link>
       </br>
       </br>
-      <side-link animation='pop5' :i='3' compo='projects' @click='changeComponent' :active='openedComponents[3]'>
+      <side-link animation='pop5' :i='3' compo='projects' @click='changeSectionComponent' :active='openedComponents[3]'>
         <%= __('projects') %>
       </side-link>
-      <side-link animation='pop6' :i='4' compo='maybe' @click='changeComponent' :active='openedComponents[4]'>
+      <side-link animation='pop6' :i='4' compo='maybe' @click='changeSectionComponent' :active='openedComponents[4]'>
         <%= __('someday/maybe') %>
       </side-link>
-      <side-link animation='pop7' :i='5' compo='waiting' @click='changeComponent' :active='openedComponents[5]'>
+      <side-link animation='pop7' :i='5' compo='waiting' @click='changeSectionComponent' :active='openedComponents[5]'>
         <%= __('waiting') %>
       </side-link>
       </br>
@@ -111,6 +111,22 @@
         <form-button @click='editAction'>Add action</form-button>
       </form-element>
     </action-form>
+    <action-form :currentform='currentOpenedUserForm' id='editTag' @close='closeActionForm'>
+      <form-element animation='pop1'>
+        <title-big class='centralizeContent'><%= __('CHANGE/ADD TAG') %></title-big>
+      </form-element>
+      <form-element class='centralizeContent' animation='pop2'>
+        <icon-selection :selected='tempUser.action.tag'>
+          <icon-option icon='fa fa-hourglass-half' option='waiting'></icon-option>
+          <icon-option icon='fa fa-question' option='maybe'></icon-option>
+          <icon-option icon='fa fa-forward' option='nextAction'></icon-option>
+          <icon-option icon='fa fa-calendar-alt' option='calendar'></icon-option>
+        </icon-selection>
+      </form-element>
+      <form-element class='centralizeContent' animation='pop3'>
+        <form-button @click='editAction'>Add action</form-button>
+      </form-element>
+    </action-form>
   </fixed>
   <user-content>
     <template slot='content'>
@@ -121,7 +137,7 @@
       </transition>
     </template>
     <template slot='adds'>
-      <adds>
+      <adds>{{tempUser.action.tag}}
       </adds>
     </template>
   </user-content>

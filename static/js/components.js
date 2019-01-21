@@ -8,11 +8,11 @@ Vue.component('fixed', {
 })
 Vue.component('login-form', {
   props: {
-    show: Boolean
+    show: true
   },
   template: `
-    <transition name='double-slide-bounce'>
-      <div class='card form' v-show='show'><slot></slot></div>
+    <transition name='double-slide-bounce' appear>
+      <div class='card form'><slot></slot></div>
     </transition>
   `
 })
@@ -22,8 +22,8 @@ Vue.component('form-element', {
     tabindex: String
   },
   template: `
-    <transition :name='animation'>
-      <div class='formElement' v-show='this.$parent.show' :tabindex='tabindex'>
+    <transition :name='animation' appear>
+      <div class='formElement' :tabindex='tabindex'>
         <slot></slot>
       </div>
     </transition>
@@ -87,12 +87,9 @@ Vue.component('success', {
   `
 })
 Vue.component('navigation-bar', {
-  props: {
-    show: Boolean
-  },
   template: `
-    <transition name='slide-from-top-bounce'>
-      <nav id='navBar' v-if='show' class='alignContent'>
+    <transition name='slide-from-top-bounce' appear>
+      <nav id='navBar' class='alignContent'>
         <div id='desktop' class='alignContent'>
           <div id='left' class='flex'>
             <slot name='desktop-left'></slot>
@@ -315,7 +312,7 @@ Vue.component('basket', {
       <template v-if='user'>
       <draggable v-model='user.actions' :options="{handle:'.draggable'}">
         <transition-group name='flip-list' tag='div'>
-          <action v-for='action in user.actions' v-if='action.tag == "basket"' :title='action.title' :description='action.description' :key='action.id' :id='action.id' :dropdown='dropdowns[action.id]' :icongroup='icongroups' @changed-dropdown='changeDrodpownState'>
+          <action v-for='action in user.actions' v-if='action.tag == "basket"' :title='action.title' :description='action.description' :key='action.id' :id='action.id' :dropdown='dropdowns[action.id]' :icongroup='icongroups' @changed-dropdown='changeDropdownState'>
           </action>
         </transition-group>
       </draggable>
@@ -346,7 +343,7 @@ Vue.component('basket', {
       }, seconds)
       this.sent = true
     },
-    changeDrodpownState(data){
+    changeDropdownState(data){
       this.$emit('dropdown-state', {state: data.state, id: data.id})
     }
   },
@@ -379,10 +376,10 @@ Vue.component('action',{
           <span> {{ title }}</span>
         </div>
         <div>
-          <icon-group :show='icongroup' @delete='deleteAction' @edit='editAction'>
+          <icon-group :show='icongroup' @delete='deleteAction' @edit='editAction' @editTag='editActionTag'>
             <action-icon icon='fa fa-times' event='delete'></action-icon>
             <action-icon icon='fa fa-edit' event='edit'></action-icon>
-            <action-icon icon='fa fa-tag'></action-icon>
+            <action-icon icon='fa fa-tag' event='editTag'></action-icon>
             <action-icon icon='fa fa-project-diagram'></action-icon>
           </icon-group>
         </div>
@@ -407,6 +404,10 @@ Vue.component('action',{
     },
     editAction(){
       this.$root.openUserForm({id: 'editAction'})
+      this.$root.getDataFromAction(this.$root.user.actions[this.id])
+    },
+    editActionTag(){
+      this.$root.openUserForm({id: 'editTag'})
       this.$root.getDataFromAction(this.$root.user.actions[this.id])
     }
   },
@@ -550,6 +551,37 @@ Vue.component('text-box',{
   watch: {
     value: function(){
       this.$emit('change', this.value)
+    }
+  }
+})
+Vue.component('icon-selection', {
+  props: {
+    selected: String
+  },
+  template: `
+    <div class='icon-selection'>
+      <slot></slot>
+    </div>
+  `,
+  watch: {
+    selected(){
+      this.$root.tempUser.action.tag = this.selected
+    }
+  }
+})
+Vue.component('icon-option',{
+  props: {
+    icon: String,
+    option: String
+  },
+  template: `
+    <div :class='{selected: selected}' @click='$parent.selected = option'>
+      <i :class='icon + " icon-extra-big"'></i>
+    </div>
+  `,
+  computed: {
+    selected(){
+      return (this.option == this.$parent.selected) ? true : false
     }
   }
 })

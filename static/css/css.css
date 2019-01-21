@@ -690,3 +690,38 @@ a{
     right: -15px;
   }
 }
+
+.icon-selection{
+  display: flex;
+  height: 80px;
+  width: 300px;
+}
+
+.icon-selection > :first-child{
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px; 
+}
+
+.icon-selection > :last-child{
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
+.icon-selection > .selected, .icon-selection > div:hover{
+  background-color: #F8CC63;
+  color: black;
+  transform: scale(1.05,1.05);
+}
+
+.icon-selection > div{
+  flex-basis: 25%;
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+  align-items: center;
+  border: 0.5px solid #555a62; 
+}
+
+.icon-extra-big{
+  font-size: 40px; 
+}

@@ -4,13 +4,8 @@ let vm = new Vue({
   data: {
     desktop: undefined,
     guest: false,
-    transitionsAndAnimations: {
-      initialTransitions: false,
-      sideBar: undefined,
-      userForms: {
-        showPassword: false
-      },
-    },
+    showPasswords: false,
+    showSideBar: false,
     tempUser: {
       action: {
         tag: undefined,
@@ -21,7 +16,6 @@ let vm = new Vue({
 
       }
     },
-    d: 3,
     user: undefined,
     currentSectionComponent: 'basket',
     currentOpenedUserForm: undefined,
@@ -37,12 +31,61 @@ let vm = new Vue({
     openedActionContents: undefined
   },
   methods: {
-    runInitialTransitionsAndAnimations(){
-      setTimeout(this.userFormsAnimation, 10)
-    },
-    userFormsAnimation(){
-      this.transitionsAndAnimations.initialTransitions = true
-    },
+    // PASSWORDS
+      togglePasswordVisiblity(opened){
+        (opened) ? this.displayPasswords() : this.hidePasswords()
+        this.showPasswords = opened
+      },
+      displayPasswords(){
+        let inputs = document.querySelectorAll('.passwordField')
+        inputs.forEach(el => {
+          el.setAttribute('type', 'text')
+        })
+      },
+      hidePasswords(){
+        let inputs = document.querySelectorAll('.passwordField')
+        inputs.forEach(el => {
+          el.setAttribute('type', 'password')
+        })
+      },
+    // SIDE BAR AND DESKTOP CHECK
+      checkScreenVersion(){
+        let width = window.innerWidth
+        if (width >= 796){
+          this.desktop = true
+          this.showSideBar = true
+          this.applyAnimationsToUnderlineLinksEventHandler()
+        }
+        else{
+          this.showSideBar = false
+          this.desktop = false
+        }
+      },
+      toggleSideNav(){
+        this.showSideBar = !this.showSideBar
+        this.applyAnimationsToUnderlineLinksEventHandler()
+      },
+      changeSectionComponent(dt){
+        this.currentSectionComponent = dt.compo
+        let length = this.openedComponents.length
+        for (let i = 0;i < length;i++)
+          this.openedComponents[i] = false
+        this.openedComponents[dt.i] = true
+        this.applyAnimationsToUnderlineLinksEventHandler()
+        this.closeActionForm()
+      },
+      applyAnimationsToUnderlineLinksEventHandler(){
+        setTimeout(function(){
+          let links = document.querySelectorAll('.underline-link')
+          let func = function(){
+            this.classList.add('underline-link-animation')
+            this.removeEventListener('mouseover', func)   
+          }
+          links.forEach((el) => {
+            el.addEventListener('mouseover', func)
+          })
+        }, 10)
+      },
     iconGroupEventHandlers(){
       let iconGroups = document.querySelectorAll('.icon-group')
       if (this.desktop){
@@ -50,65 +93,6 @@ let vm = new Vue({
       } else {
         this.showIconGroups = false
       }
-    },
-    togglePasswordVisiblity(opened){
-      (opened) ? this.showPasswords() : this.hidePasswords()
-      this.transitionsAndAnimations.userForms.showPassword = opened
-    },
-    showPasswords(){
-      let inputs = document.querySelectorAll('.passwordField')
-      inputs.forEach(el => {
-        el.setAttribute('type', 'text')
-      })
-    },
-    hidePasswords(){
-      let inputs = document.querySelectorAll('.passwordField')
-      inputs.forEach(el => {
-        el.setAttribute('type', 'password')
-      })
-    },
-    applyAnimationsToUnderlineLinksEventHandler(){
-      setTimeout(function(){
-        let links = document.querySelectorAll('.underline-link')
-        let func = function(){
-          this.classList.add('underline-link-animation')
-          this.removeEventListener('mouseover', func)   
-        }
-        links.forEach((el) => {
-          el.addEventListener('mouseover', func)
-        })
-      }, 10)
-    },
-    toggleSideNav(){
-      this.transitionsAndAnimations.sideBar = !this.transitionsAndAnimations.sideBar
-      this.applyAnimationsToUnderlineLinksEventHandler()
-    },
-    checkScreenVersion(){
-      let width = window.innerWidth
-      if (width >= 796){
-        this.desktop = true
-        this.transitionsAndAnimations.sideBar = true
-        this.applyAnimationsToUnderlineLinksEventHandler()
-      }
-      else{
-        this.transitionsAndAnimations.sideBar = false
-        this.desktop = false
-      }
-    },
-    changeComponent(dt){
-      this.currentSectionComponent = dt.compo
-      this.closeAllComponentLinks()
-      this.openComponentLink(dt.i)
-      this.applyAnimationsToUnderlineLinksEventHandler()
-      this.closeActionForm()
-    },
-    openComponentLink(i){
-      this.openedComponents[i] = true
-    },
-    closeAllComponentLinks(){
-      let length = this.openedComponents.length
-      for (let i = 0;i < length;i++)
-        this.openedComponents[i] = false
     },
     cleanTempData() {
       this.tempUser.action.tag = ''
@@ -163,6 +147,7 @@ let vm = new Vue({
       a.title = action.title
       a.description = action.description
       a.id = action.id
+      a.tag = action.tag
     },
     changeDropdownSate(dt){
       this.openedActionContents[dt.id] = dt.state
@@ -198,7 +183,6 @@ let vm = new Vue({
   }
 })
 
-vm.runInitialTransitionsAndAnimations()
 vm.applyAnimationsToUnderlineLinksEventHandler()
 vm.checkScreenVersion()
 vm.iconGroupEventHandlers()

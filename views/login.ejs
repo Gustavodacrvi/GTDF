@@ -9,7 +9,7 @@
 <body>
 <div id='app'>
   <fixed>
-    <navigation-bar :show='transitionsAndAnimations.initialTransitions'>
+    <navigation-bar>
       <template slot='desktop-left'>
         <nav-element animation='pop1'><link-red href='/'>Home</link-red></nav-element>
         <nav-element animation='pop2'><link-red href='/login'>Login</link-red></nav-element>
@@ -35,7 +35,7 @@
         </transition>
       </template>
     </navigation-bar>
-    <login-form :show='transitionsAndAnimations.initialTransitions'>
+    <login-form>
       <form method='post' action='/login'>
       <form-element class='centralizeContent' animation='pop1'>
         <title-big><%= __('LOGIN') %></title-big>
@@ -44,7 +44,7 @@
         <input-form tabindex="1" placeholder='<%= __("Username") %>:' name='username'></input-form>
       </form-element>
       <form-element class='centralizeContent' animation='pop2'>
-        <input-pass tabindex="2" :opened='transitionsAndAnimations.userForms.showPassword' name='password' placeholder='<%= __("Password") %>:' @click='togglePasswordVisiblity'></input-pass>
+        <input-pass tabindex="2" :opened='showPasswords' name='password' placeholder='<%= __("Password") %>:' @click='togglePasswordVisiblity'></input-pass>
       </form-element>
       <% if (locals.success_msg) { %>
         <form-element animation='pop5'>
