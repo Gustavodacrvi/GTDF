@@ -79,3 +79,9 @@ module.exports.deleteAction = function(id, arr){
   for (let i = 0;i < length;i++)
     arr[i].id = i
 }
+
+module.exports.editAction = function(title, desc, id, arr){
+  let a = arr[id]
+  a.title = title
+  a.description  = desc
+}

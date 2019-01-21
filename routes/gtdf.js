@@ -74,5 +74,20 @@ router.post('/delete-action', (req, res) => {
   })
 })
 
+router.post('/edit-action', (req, res) => {
+  User.getUserById(req.user.id, (err, user) => {
+    if (err) handleError(err)
+    let b = req.body
+
+    User.editAction(b.title, b.description, b.id, user.data.actions)
+
+    user.markModified('data.actions')
+    user.save((err) => {
+      if (err) handleError(err)
+
+      res.send()
+    })
+  })
+})
 
 module.exports = router

@@ -146,12 +146,19 @@ let vm = new Vue({
       })
     },
     editAction(){
-
+      let dt = this.tempUser.action
+      let a = this.user.actions[dt.id]
+      a.title = dt.title
+      a.description = dt.description
+      if (!this.guest)
+        this.POSTrequest('/edit-action', 'title='+dt.title+'&description='+dt.description+'&id='+dt.id)
+      this.closeActionForm()
     },
     getDataFromAction(action){
       let a = this.tempUser.action
       a.title = action.title
       a.description = action.description
+      a.id = action.id
     },
     applyDragAndDrop(){
       let sortables = document.querySelectorAll('.sortable')
