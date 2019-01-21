@@ -305,12 +305,13 @@ Vue.component('basket', {
       </action-bar>
       <template v-if='user'>
       <draggable v-model='user.actions' :options="{handle:'.draggable'}">
-        <transition-group name='flip-list'>
+        <transition-group name='flip-list' tag='div'>
           <action v-for='action in user.actions' v-if='action.tag == "basket"' :title='action.title' :description='action.description' :key='action.id' :icongroup='icongroups'>
           </action>
         </transition-group>
       </draggable>
       </template>
+      <div class='space'></div>
     </div>
   </div>
   `,
@@ -342,10 +343,11 @@ Vue.component('action',{
     description: String,
     id: String,
     icongroup: Boolean,
-    dropdown: false
+    dropdown: false,
+    key: Number
   },
   template: `
-    <div class='action'>
+    <div class='action' :key='key'>
       <div class='card'>
         <div @click='dropdown = !dropdown'>
           <i class='fa fa-list icon-tiny draggable'></i>

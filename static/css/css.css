@@ -659,6 +659,10 @@ a{
   cursor: grab;
 }
 
+.space{
+  height: 100px;
+}
+
 @media screen and (max-width: 796px){
   .action > :first-child > :last-child{
     position: relative;

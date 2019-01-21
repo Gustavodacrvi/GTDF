@@ -327,9 +327,16 @@
   animation-duration: .3s; 
 }
 
+
 .flip-list-move {
-  transition: transform .3s;
+  transition: transform .6s;
 }
+
+.flip-list-enter-active{
+  animation: popLong;
+  animation-duration: .4s;
+}
+
 
 .right-to-left-bounce-nav-drop-leave-active{
   animation: leftToRightNavDrop;
