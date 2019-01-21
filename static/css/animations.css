@@ -337,6 +337,10 @@
   animation-duration: .4s;
 }
 
+.flip-list-leave-active{
+  animation: unpop;
+  animation-duration: .4s;
+}
 
 .right-to-left-bounce-nav-drop-leave-active{
   animation: leftToRightNavDrop;
