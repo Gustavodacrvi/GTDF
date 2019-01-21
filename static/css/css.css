@@ -3,6 +3,22 @@
   src: url('/fontes/WorkSans-Light.otf');
 }
 
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: #32373f; 
+}
+
+::-webkit-scrollbar-thumb {
+  background: #464b53; 
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555a62; 
+}
+
 body {
   background-color: #242930;
   margin: 0;

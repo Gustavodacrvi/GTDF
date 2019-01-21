@@ -25,14 +25,14 @@ router.get('/user', function(req, res){
 
 router.get('/get-user', function(req, res){
   User.getUserById(req.user.id, function(err, user){
-    if (err) handlerror(err)
+    if (err) handleError(err)
     res.send(user.data)
   })
 })
 
 router.post('/add-action', (req, res) => {
   User.getUserById(req.user.id, (err, user) => {
-    if (err) handlerror(err)
+    if (err) handleError(err)
     let b = req.body
 
     user.data.actions.push({ title: b.title, id: b.id, description: b.description, tag: b.tag})
@@ -42,6 +42,10 @@ router.post('/add-action', (req, res) => {
       res.send()
   })
   })
+})
+
+router.post('/test', (req, res) => {
+  console.log(req.body.message)
 })
 
 module.exports = router

@@ -295,7 +295,9 @@ Vue.component('basket', {
   props: {
     icongroups: Boolean,
     user: Object,
-    first: true
+    first: true,
+    sent: false,
+    func: Function,
   },
   template: `
   <div>
@@ -318,22 +320,33 @@ Vue.component('basket', {
   methods: {
     openUserForm(id){
       this.$emit('openform', id)
+    },
+    calculateIds(){
+      let ids = ''
+      let length = this.user.actions.length
+      for (let i = 0;i < length;i++)
+        ids += this.user.actions[i].id
+      return ids
+    },
+    setHttpTimeOut(seconds){
+      this.func = setTimeout(() => {
+        let ids = this.calculateIds()
+        this.$emit('rearrange', ids)
+        this.sent = false
+      }, seconds)
+      this.sent = true
     }
   },
   watch: {
-    actions: function(){
-      let ids = []
-      let length = this.actions.length
-      for (let i = 0;i < length;i++)
-        ids.push(this.actions[i].id)
-      this.$emit('rearrange', ids)
-    }
-  },
-  computed: {
-    rearranged(){
-      if (this.first)
-        this.$emit('rearrange', actions)
-      this.first = false
+    'user.actions'(){
+      // wait some seconds before sending the https request
+      let seconds = 1750
+      if (!this.sent){
+        this.setHttpTimeOut(seconds)
+      } else {
+        clearTimeout(this.func)
+        this.setHttpTimeOut(seconds)
+      }
     }
   }
 })

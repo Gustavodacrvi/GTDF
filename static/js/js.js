@@ -155,7 +155,7 @@ let vm = new Vue({
       })
     },
     test(ids){
-      console.log(ids)
+      this.POSTrequest('/test', 'message='+ids)
     },
     addAction(){
       let dt = this.tempUser.action
