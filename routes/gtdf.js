@@ -90,4 +90,20 @@ router.post('/edit-action', (req, res) => {
   })
 })
 
+router.post('/edit-tag', (req, res) => {
+  User.getUserById(req.user.id, (err, user) => {
+    if (err) handleError(err)
+    let b = req.body
+
+    User.editTag(b.id, b.tag, user.data.actions)
+
+    user.markModified('data.actions')
+    user.save((err) => {
+      if (err) handleError(err)
+
+      res.send()
+    })
+  })
+})
+
 module.exports = router

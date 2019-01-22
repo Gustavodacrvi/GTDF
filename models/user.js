@@ -85,3 +85,7 @@ module.exports.editAction = function(title, desc, id, arr){
   a.title = title
   a.description  = desc
 }
+
+module.exports.editTag = function(id, tag, arr){
+  arr[id].tag = tag
+}

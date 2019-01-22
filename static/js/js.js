@@ -86,6 +86,42 @@ let vm = new Vue({
           })
         }, 10)
       },
+    // ACTION RELATED
+      getUser(){
+        this.GETrequest('/get-user', (data) =>{
+          this.user = JSON.parse(data)
+          let length = this.user.actions.length
+          this.openedActionContents = []
+          for (let i = 0;i < length;i++)
+            this.openedActionContents.push(false)
+        })
+      },
+      addAction(){
+        let dt = this.tempUser.action
+        this.user.actions.push({ tag: dt.tag, title: dt.title, description: dt.description, id: this.user.actions.length})
+        if (!this.guest)
+          this.POSTrequest('/add-action', 'title='+dt.title+'&description='+dt.description+'&id='+(this.user.actions.length-1)+'&tag='+dt.tag)
+        this.closeActionForm()      
+      },
+      editAction(){
+        let dt = this.tempUser.action
+        let a = this.user.actions[dt.id]
+        a.title = dt.title
+        a.description = dt.description
+        if (!this.guest)
+          this.POSTrequest('/edit-action', 'title='+dt.title+'&description='+dt.description+'&id='+dt.id)
+        this.closeActionForm()
+      },
+      deleteAction(id){
+        this.user.actions.splice(id, 1)
+      },
+      editTag(){
+        let dt = this.tempUser.action
+        this.user.actions[dt.id].tag = dt.tag
+        if (!this.guest)
+          this.POSTrequest('/edit-tag', 'id='+dt.id+'&tag='+dt.tag)
+        this.closeActionForm()
+      },
     iconGroupEventHandlers(){
       let iconGroups = document.querySelectorAll('.icon-group')
       if (this.desktop){
@@ -124,24 +160,6 @@ let vm = new Vue({
       xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
       xhttp.send(params);
     },
-    getUser(){
-      this.GETrequest('/get-user', (data) =>{
-        this.user = JSON.parse(data)
-        let length = this.user.actions.length
-        this.openedActionContents = []
-        for (let i = 0;i < length;i++)
-          this.openedActionContents.push(false)
-      })
-    },
-    editAction(){
-      let dt = this.tempUser.action
-      let a = this.user.actions[dt.id]
-      a.title = dt.title
-      a.description = dt.description
-      if (!this.guest)
-        this.POSTrequest('/edit-action', 'title='+dt.title+'&description='+dt.description+'&id='+dt.id)
-      this.closeActionForm()
-    },
     getDataFromAction(action){
       let a = this.tempUser.action
       a.title = action.title
@@ -170,16 +188,6 @@ let vm = new Vue({
       str = str.slice(0, -1)
       this.POSTrequest('/test', str)
     },
-    addAction(){
-      let dt = this.tempUser.action
-      this.user.actions.push({ tag: dt.tag, title: dt.title, description: dt.description, id: this.user.actions.length})
-      if (!this.guest)
-        this.POSTrequest('/add-action', 'title='+dt.title+'&description='+dt.description+'&id='+(this.user.actions.length-1)+'&tag='+dt.tag)
-      this.closeActionForm()      
-    },
-    deleteAction(id){
-      this.user.actions.splice(id, 1)
-    }
   }
 })
 
