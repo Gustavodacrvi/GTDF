@@ -8,13 +8,17 @@ Vue.component('fixed', {
 })
 Vue.component('login-form', {
   props: {
-    show: true
+    show: false
   },
   template: `
+    {{repairTransition}}
     <transition name='double-slide-bounce' appear>
       <div class='card form'><slot></slot></div>
     </transition>
-  `
+  `,
+  mounted(){
+    setTimeout(() => {this.show = true;console.log(3)}, 1)
+  }
 })
 Vue.component('form-element', {
   props: {
@@ -23,7 +27,7 @@ Vue.component('form-element', {
   },
   template: `
     <transition :name='animation' appear>
-      <div class='formElement' :tabindex='tabindex'>
+      <div class='formElement' v-show='$parent.show' :tabindex='tabindex'>
         <slot></slot>
       </div>
     </transition>
@@ -298,7 +302,6 @@ Vue.component('basket', {
   props: {
     icongroups: Boolean,
     user: Object,
-    first: true,
     sent: false,
     func: Function,
     dropdowns: Object
@@ -360,75 +363,13 @@ Vue.component('basket', {
     }
   }
 })
-Vue.component('action',{
-  props: {
-    title: String,
-    description: String,
-    icongroup: Boolean,
-    dropdown: false,
-    id: Number
-  },
-  template: `
-    <div class='action' :key='id'>
-      <div class='card'>
-        <div @click='dropdown = !dropdown'>
-          <i class='fa fa-list icon-tiny draggable'></i>
-          <span> {{ title }}</span>
-        </div>
-        <div>
-          <icon-group :show='icongroup' @delete='deleteAction' @edit='editAction' @editTag='editActionTag' @project='manajeProject'>
-            <action-icon icon='fa fa-times' event='delete'></action-icon>
-            <action-icon icon='fa fa-edit' event='edit'></action-icon>
-            <action-icon icon='fa fa-tag' event='editTag'></action-icon>
-            <action-icon icon='fa fa-project-diagram' event='project'></action-icon>
-          </icon-group>
-        </div>
-      </div>
-      <transition name='pop-long'>
-        <div class='card' v-show='dropdown'>
-          <span>{{ description }}</span>
-        </div>
-      </transition>
-    </div>
-  `,
-  methods: {
-    deleteAction(){
-      let arr = this.$root.user.actions
-      arr.splice(this.id, 1)
-      if (!this.$root.guest){
-        this.$root.POSTrequest('/delete-action', 'id=' + this.id)
-        let length = arr.length
-        for (let i = 0;i < length;i++)
-          arr[i].id = i
-      }
-    },
-    openActionForm(id){
-      this.$root.openUserForm({id: '' + id})
-      this.$root.getDataFromAction(this.$root.user.actions[this.id])
-    },
-    editAction(){
-      this.openActionForm('editAction')
-    },
-    editActionTag(){
-      this.openActionForm('editTag')
-    },
-    manajeProject(){
-      this.openActionForm('actionToProject')
-    }
-  },
-  watch: {
-    dropdown(){
-      this.$emit('changed-dropdown', {state: this.dropdown, id: this. id})
-    }
-  }
-})
 Vue.component('icon-group', {
   props: {
     show: Boolean,
     dropdown: false
   },
   template: `
-    <div class='icon-group' @mouseover='dropdown = true' @mouseleave='dropdown = false'>
+    <div @mouseover='dropdown = true' @mouseleave='dropdown = false'>
       <action-icon icon='fa fa-ellipsis-h' v-show='!show' ></action-icon>
       <transition name='pop-long'>
         <div :class='{"card-shadow": !show}' v-show='dropdownShow()'>
@@ -505,18 +446,133 @@ Vue.component('next-actions', {
   `
 })
 Vue.component('projects', {
+  props: {
+    dropdowns: Object,
+    icongroups: Boolean,
+    user: Object
+  },
   template: `
   <div>
     <div>
       <action-bar>
         <action-bar-icon icon='fa fa-plus' id='addProject' tag='projects' @click='openUserForm'></action-bar-icon>
       </action-bar>
+      <project :key='0' :id='0' title='please work' :dropdowns='dropdowns' :icongroup='icongroups' :dropdown='false'></project>
     </div>
   </div>
   `,
   methods: {
-    openUserForm(id){
-      this.$emit('openform', id)
+    openUserForm(){
+
+    }
+  }
+})
+Vue.component('project', {
+  props: {
+    id: Number,
+    dropdown: false,
+    dropdowns: Object,
+    title: String,
+    icongroup: Boolean
+  },
+  template: `
+    <div class='project' :key='id'>
+      <div class='card'>
+        <div @click='dropdown = !dropdown'>
+          <i class='fa fa-list icon-tiny draggable'></i>
+          <span>{{ title }}</span>
+        </div>
+        <div>
+          <icon-group :show='icongroup' @delete='deleteProject' @edit='editProject' @project='addActionToProject'>
+            <action-icon icon='fa fa-times' event='delete'></action-icon>
+            <action-icon icon='fa fa-edit' event='edit'></action-icon>
+            <action-icon icon='fa fa-plus' event='project'></action-icon>
+          </icon-group>
+        </div>
+      </div>
+      <div v-show='dropdown'>
+        <div>
+          <action title='action1' description='description1' key='0' id='0' :dropdown='false' :icongroup='icongroup'>
+          </action>
+          <action title='action1' description='description1' key='0' id='0' :dropdown='false' :icongroup='icongroup'>
+          </action>
+          <action title='action1' description='description1' key='0' id='0' :dropdown='false' :icongroup='icongroup'>
+          </action>
+        </div>
+      </div>
+    </div>
+  `,
+  methods: {
+    deleteProject(){
+
+    },
+    editProject(){
+
+    },
+    addActionToProject(){
+
+    },
+  }
+})
+Vue.component('action',{
+  props: {
+    title: String,
+    description: String,
+    icongroup: Boolean,
+    dropdown: false,
+    id: Number
+  },
+  template: `
+    <div class='action' :key='id'>
+      <div class='card'>
+        <div @click='dropdown = !dropdown'>
+          <i class='fa fa-list icon-tiny draggable'></i>
+          <span> {{ title }}</span>
+        </div>
+        <div>
+          <icon-group :show='icongroup' @delete='deleteAction' @edit='editAction' @editTag='editActionTag' @project='manajeProject'>
+            <action-icon icon='fa fa-times' event='delete'></action-icon>
+            <action-icon icon='fa fa-edit' event='edit'></action-icon>
+            <action-icon icon='fa fa-tag' event='editTag'></action-icon>
+            <action-icon icon='fa fa-project-diagram' event='project'></action-icon>
+          </icon-group>
+        </div>
+      </div>
+      <transition name='pop-long'>
+        <div class='card' v-show='dropdown'>
+          <span>{{ description }}</span>
+        </div>
+      </transition>
+    </div>
+  `,
+  methods: {
+    deleteAction(){
+      let arr = this.$root.user.actions
+      arr.splice(this.id, 1)
+      if (!this.$root.guest){
+        this.$root.POSTrequest('/delete-action', 'id=' + this.id)
+        let length = arr.length
+        for (let i = 0;i < length;i++)
+          arr[i].id = i
+      }
+    },
+    openActionForm(id){
+      this.$root.openUserForm({id: '' + id})
+      this.$root.getDataFromAction(this.$root.user.actions[this.id])
+    },
+    editAction(){
+      this.openActionForm('editAction')
+    },
+    editActionTag(){
+      this.openActionForm('editTag')
+    },
+    manajeProject(){
+      this.openActionForm('actionToProject')
+    }
+  },
+  watch: {
+    dropdown(){
+      this.$emit('changed-dropdown', {state: this.dropdown, id: this. id})
     }
   }
 })
@@ -626,9 +682,9 @@ Vue.component('create-project', {
       <form-element animation='pop2'>
         <check-box :value='$root.tempUser.project.delete' @change='invertValue' placeholder='delete action'></check-box>
       </form-element>
-      <form-element class='centralizeContent' animation='pop3'>
-        <form-button @click='$root.transformActionToProject'></form-button>
-      </form-element>
+      <div class='centralizeContent'>
+        <form-button @click='$root.transformActionToProject'>Create project</form-button>
+      </div>
     </div>
   `,
   methods: {

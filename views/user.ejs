@@ -128,8 +128,8 @@
       </form-element>
     </action-form>
     <action-form :currentform='currentOpenedUserForm' id='actionToProject' @close='closeActionForm'>
-      <form-element animation='pop1'>
-        <title-big class='centralizeContent'><%= __('CREATE/ADD TO PROJECT') %></title-big>
+      <form-element animation='pop1' class='centralizeContent'>
+        <title-big><%= __('CREATE/ADD TO PROJECT') %></title-big>
       </form-element>
       <form-element animation='pop2' class='centralizeContent'>
         <comp-selector selected='create-project'>

@@ -623,37 +623,38 @@ a{
   margin: 0 4px;
 }
 
-.action{
+.action, .project{
   position: relative;
   display: flex;
   flex-direction: column;
   width: 100%;
 }
 
-.action > :first-child{
+.action > :first-child, .project > :first-child{
   display: flex;
   padding: 0 10px;
   cursor: pointer;
 }
 
-.action > :first-child span{
+.action > :first-child span, .project > :first-child span{
   margin-left: 10px;
 }
 
-.action > :first-child > :first-child{
+.action > :first-child > :first-child, .project > :first-child > :first-child{
   flex-basis: 90%;
   height: 36px;
   display: flex;
   align-items: center;
 }
 
-.action > :first-child > :last-child{
+.action > :first-child > :last-child, .project > :first-child > :last-child{
   display: flex;
   align-items: center;
+  flex-basis: 10%;
+  justify-content: flex-end;
 }
 
-.action > :first-child > :last-child > div > div{
-  flex-basis: 10%;
+.action > :first-child > :last-child > div > div, .project > :first-child > :last-child > div > div{
   display: flex;
   align-items: center;
   flex-direction: row-reverse;
@@ -666,7 +667,7 @@ a{
 }
 
 
-.action + .action{
+.action + .action, .project + .project{
   margin-top: 4px;
 }
 
@@ -678,33 +679,10 @@ a{
   height: 100px;
 }
 
-@media screen and (max-width: 796px){
-  .action > :first-child > :last-child{
-    position: relative;
-  }
-
-  .action > :first-child > :last-child > div > div{
-    position: absolute;
-    top: -100%;
-    padding: 6px;
-    right: -15px;
-  }
-}
-
 .icon-selection{
   display: flex;
   height: 80px;
   width: 300px;
-}
-
-.icon-selection > :first-child{
-  border-top-left-radius: 8px;
-  border-bottom-left-radius: 8px; 
-}
-
-.icon-selection > :last-child{
-  border-top-right-radius: 8px;
-  border-bottom-right-radius: 8px;
 }
 
 .icon-selection > .selected, .icon-selection > div:hover{
@@ -719,7 +697,6 @@ a{
   justify-content: center;
   cursor: pointer;
   align-items: center;
-  border: 0.5px solid #555a62; 
 }
 
 .icon-extra-big{
@@ -739,26 +716,16 @@ a{
 .comp-selector > :first-child > span{
   flex-basis: 100%;
   display: block;
-  border: 0.5px solid #555a62;
   text-align: center;
   padding: 4px 0;
 }
+
 
 .comp-selector > :first-child > span:hover, .comp-selector .selected{
   color: black;
   background-color: #F8CC63;
   transform: scale(1.03,1.03);
   cursor: pointer;
-}
-
-.comp-selector > :first-child > :first-child{
-  border-top-left-radius: 6px;
-  border-bottom-left-radius: 6px;
-}
-
-.comp-selector > :first-child > :last-child{
-  border-top-right-radius: 6px;
-  border-bottom-right-radius: 6px;
 }
 
 .checkbox > div{
@@ -776,4 +743,27 @@ a{
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
+}
+
+.project > :last-child{
+  display: flex;
+  flex-direction: row-reverse;
+  margin-top: 6px; 
+}
+
+.project > :last-child > :last-child{
+  width: 95%;
+}
+
+@media screen and (max-width: 796px){
+  .action > :first-child > :last-child, .project > :first-child > :last-child{
+    position: relative;
+  }
+
+  .action > :first-child > :last-child > div > div, .project > :first-child > :last-child > div > div{
+    position: absolute;
+    top: -100%;
+    padding: 6px;
+    right: -15px;
+  }
 }

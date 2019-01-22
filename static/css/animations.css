@@ -289,12 +289,12 @@
 
 .action-dropdown-enter-active{
   animation: popLong;
-  animation-duration: .3s; 
+  animation-duration: .4s; 
 }
 
 .double-slide-bounce-unpop-enter-active{
   animation: doubleSlideBounceActionForm;
-  animation-duration: .6s;
+  animation-duration: .8s;
 }
 
 .double-slide-bounce-unpop-leave-active{
