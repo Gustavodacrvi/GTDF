@@ -138,6 +138,33 @@
         </comp-selector>
       </form-element>
     </action-form>
+    <action-form :currentform='currentOpenedUserForm' id='addActionToProject' @close='closeActionForm'>
+      <form-element class='centralizeContent' animation='pop1'>
+        <title-big><%= __('ADD ACTION TO PROJECT') %></title-big>
+      </form-element>
+      <form-element class='centralizeContent' animation='pop2'>
+        <form-button @click='openUserForm({id: "projectAddAction"})'><%= __('Add existing project') %></form-button>
+      </form-element>
+      <form-element class='centralizeContent' animation='pop3'>
+        <form-button @click='openUserForm({id: "projectCreateAction"})'><%= __('Create new action') %></form-button>
+      </form-element>
+    </action-form>
+    <action-form :currentform='currentOpenedUserForm' id='projectAddAction' @close='closeActionForm'>
+      <form-element class='centralizeContent' animation='pop1'>
+        <title-big><%= __('ADD ACTION') %></title-big>
+      </form-element>
+    </action-form>
+    <action-form :currentform='currentOpenedUserForm' id='projectCreateAction' @close='closeActionForm'>
+      <form-element class='centralizeContent' animation='pop1'>
+        <title-big><%= __('CREATE ACTION') %></title-big>
+      </form-element>
+      <form-element animation='pop2'>
+        <text-box :rows='2' placeholder='TITLE' :value='tempUser.project.title' @change='(v) => tempUser.project.title = v'></text-box>
+      </form-element>
+      <form-element class='centralizeContent' animation='pop3'>
+        <form-button><%= __('Add action') %></form-button>
+      </form-element>
+    </action-form>
   </fixed>
   <user-content>
     <template slot='content'>
@@ -151,7 +178,7 @@
       <adds>
         <template v-if='user'>
           {{ user.projects }}
-          {{ tempUser.project.title}}
+          {{ tempUser.action.title}}
         </template>
       </adds>
     </template>

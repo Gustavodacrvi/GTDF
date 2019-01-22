@@ -512,11 +512,15 @@ Vue.component('project', {
         this.$root.POSTrequest('/delete-project', 'id='+this.id)
       }
     },
+    openActionForm(id){
+      this.$root.openUserForm({id: '' + id})
+      this.$root.getDataFromAction(this.$root.user.actions[this.id])
+    },
     editProject(){
 
     },
     addActionToProject(){
-
+      this.openActionForm('addActionToProject')
     },
   }
 })

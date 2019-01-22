@@ -42,5 +42,11 @@
 	"CHANGE/ADD ": "CHANGE/ADD ",
 	"CREATE/ADD TO PROJECT": "CREATE/ADD TO PROJECT",
 	"Create project": "Create project",
-	"Add to project": "Add to project"
+	"Add to project": "Add to project",
+	"ADD ACTION TO PROJECT": "ADD ACTION TO PROJECT",
+	"Add existing project": "Add existing project",
+	"Create new action": "Create new action",
+	"ADD ACTION": "ADD ACTION",
+	"CREATE ACTION": "CREATE ACTION",
+	"Add   action": "Add   action"
 }
