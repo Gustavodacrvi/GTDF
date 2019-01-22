@@ -121,4 +121,19 @@ router.post('/add-project', (req, res) => {
   })
 })
 
+router.post('/delete-project', (req, res) => {
+  User.getUserById(req.user.id, (err, user) => {
+    if (err) handleError(err)
+    let b = req.body
+
+    User.deleteProject(user.data.projects, b.id)
+
+    user.save((err) => {
+      if (err) handleError(err)
+
+      res.send()
+    })
+  })
+})
+
 module.exports = router

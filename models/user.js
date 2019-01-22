@@ -93,9 +93,13 @@ module.exports.editTag = function(id, tag, arr){
 module.exports.addProject = function(arr, title){
   arr.push({
     id: arr.length,
-    title: arr.title,
+    title: title,
     actions: [
-      
+
     ]
   })
+}
+
+module.exports.deleteProject = function(arr, id){
+  arr.splice(id, 1)
 }

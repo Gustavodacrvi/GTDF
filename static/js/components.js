@@ -17,7 +17,7 @@ Vue.component('login-form', {
     </transition>
   `,
   mounted(){
-    setTimeout(() => {this.show = true;console.log(3)}, 1)
+    setTimeout(() => this.show = true, 1)
   }
 })
 Vue.component('form-element', {
@@ -507,7 +507,10 @@ Vue.component('project', {
   `,
   methods: {
     deleteProject(){
-
+      this.$root.user.projects.splice(this.id, 1)
+      if (!this.$root.guest){
+        this.$root.POSTrequest('/delete-project', 'id='+this.id)
+      }
     },
     editProject(){
 
