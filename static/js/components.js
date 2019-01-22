@@ -461,7 +461,7 @@ Vue.component('projects', {
       <template v-if='user'>
       <draggable v-model='user.projects' :options="{handle:'.draggable'}">
         <transition-group name='flip-list' tag='div'>
-          <project v-for='prj in user.projects' :title='prj.title' :icongroup='icongroups' :dropdowns='dropdowns' :dropdown='projectdropdowns[prj.id]' :id='prj.id' :key='prj.id'></project>
+          <project v-for='prj in user.projects' :title='prj.title' :icongroup='icongroups' :dropdowns='dropdowns' :dropdown='projectdropdowns[prj.id]' :id='prj.id' :key='prj.id' :user='user'></project>
         </transition-group>
       </draggable>
       </template>
@@ -480,7 +480,8 @@ Vue.component('project', {
     dropdown: false,
     dropdowns: Object,
     title: String,
-    icongroup: Boolean
+    icongroup: Boolean,
+    user: Object
   },
   template: `
     <div class='project' :key='id'>
@@ -500,6 +501,14 @@ Vue.component('project', {
       <transition name='pop-long'>
         <div v-show='dropdown'>
           <div>
+            <draggable v-model='user.actions' :options="{handle:'.draggable'}">
+            {{ user.projects[this.id].actions}}
+            {{ user.projects}}
+              <transition-group name='flip-list' tag='div'>
+                <project-action v-for='i in user.projects[this.id].actions' :title='user.actions[i].title' :description='user.actions[i].description' :key='user.actions[i].id' :id='user.actions[i].id' :dropdown='dropdowns[user.actions[i].id]' :icongroup='icongroup'>
+                </project-action>
+              </transition-group>
+            </draggable>
           </div>
         </div>
       </transition>
@@ -514,7 +523,7 @@ Vue.component('project', {
     },
     openActionForm(id){
       this.$root.openUserForm({id: '' + id})
-      this.$root.getDataFromAction(this.$root.user.actions[this.id])
+      this.$root.getDataFromProject(this.$root.user.projects[this.id])
     },
     editProject(){
 
@@ -522,6 +531,67 @@ Vue.component('project', {
     addActionToProject(){
       this.openActionForm('addActionToProject')
     },
+  }
+})
+Vue.component('project-action', {
+  props: {
+    title: String,
+    description: String,
+    icongroup: Boolean,
+    dropdown: false,
+    id: Number
+  },
+  template: `
+    <div class='action' :key='id'>
+      <div class='card'>
+        <div @click='dropdown = !dropdown'>
+          <i class='fa fa-list icon-tiny draggable'></i>
+          <span> {{ title }}</span>
+        </div>
+        <div>
+          <icon-group :show='icongroup' @delete='deleteAction' @edit='editAction' @editTag='editActionTag' @project='manajeProject'>
+            <action-icon icon='fa fa-times' event='delete'></action-icon>
+            <action-icon icon='fa fa-edit' event='edit'></action-icon>
+            <action-icon icon='fa fa-tag' event='editTag'></action-icon>
+          </icon-group>
+        </div>
+      </div>
+      <transition name='pop-long'>
+        <div class='card' v-show='dropdown'>
+          <span>{{ description }}</span>
+        </div>
+      </transition>
+    </div>
+  `,
+  methods: {
+    deleteAction(){
+      let arr = this.$root.user.actions
+      arr.splice(this.id, 1)
+      if (!this.$root.guest){
+        this.$root.POSTrequest('/delete-action', 'id=' + this.id)
+        let length = arr.length
+        for (let i = 0;i < length;i++)
+          arr[i].id = i
+      }
+    },
+    openActionForm(id){
+      this.$root.openUserForm({id: '' + id})
+      this.$root.getDataFromAction(this.$root.user.actions[this.id])
+    },
+    editAction(){
+      this.openActionForm('editAction')
+    },
+    editActionTag(){
+      this.openActionForm('editTag')
+    },
+    manajeProject(){
+      this.openActionForm('actionToProject')
+    }
+  },
+  watch: {
+    dropdown(){
+      this.$emit('changed-dropdown', {state: this.dropdown, id: this. id})
+    }
   }
 })
 Vue.component('action',{

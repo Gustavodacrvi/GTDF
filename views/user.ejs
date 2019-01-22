@@ -143,10 +143,10 @@
         <title-big><%= __('ADD ACTION TO PROJECT') %></title-big>
       </form-element>
       <form-element class='centralizeContent' animation='pop2'>
-        <form-button @click='openUserForm({id: "projectAddAction"})'><%= __('Add existing project') %></form-button>
+        <form-button @click='openUserForm({id: "projectAddAction"}, false)'><%= __('Add existing project') %></form-button>
       </form-element>
       <form-element class='centralizeContent' animation='pop3'>
-        <form-button @click='openUserForm({id: "projectCreateAction"})'><%= __('Create new action') %></form-button>
+        <form-button @click='openUserForm({id: "projectCreateAction"}, false)'><%= __('Create new action') %></form-button>
       </form-element>
     </action-form>
     <action-form :currentform='currentOpenedUserForm' id='projectAddAction' @close='closeActionForm'>
@@ -159,10 +159,13 @@
         <title-big><%= __('CREATE ACTION') %></title-big>
       </form-element>
       <form-element animation='pop2'>
-        <text-box :rows='2' placeholder='TITLE' :value='tempUser.project.title' @change='(v) => tempUser.project.title = v'></text-box>
+        <text-box :rows='2' placeholder='TITLE' :value='tempUser.action.title' @change='(v) => tempUser.action.title = v'></text-box>
       </form-element>
+      <form-element animation='pop3'>
+        <text-box placeholder='DESCRIPTION' :rows='4' :value='tempUser.action.description' @change='(v) => tempUser.action.description = v'></text-box>
+      </form-element animation='pop4'>
       <form-element class='centralizeContent' animation='pop3'>
-        <form-button><%= __('Add action') %></form-button>
+        <form-button @click='projectCreateAndAddAction'><%= __('Add action') %></form-button>
       </form-element>
     </action-form>
   </fixed>
@@ -177,8 +180,7 @@
     <template slot='adds'>
       <adds>
         <template v-if='user'>
-          {{ user.projects }}
-          {{ tempUser.action.title}}
+          {{ user }}
         </template>
       </adds>
     </template>

@@ -103,3 +103,8 @@ module.exports.addProject = function(arr, title){
 module.exports.deleteProject = function(arr, id){
   arr.splice(id, 1)
 }
+
+module.exports.createAndAddActionToProject = function(user, id, projectId, title, description){
+  user.actions.push({title: title, description: description, id: id, projectId: projectId})
+  user.projects[projectId].actions.push(id)
+}

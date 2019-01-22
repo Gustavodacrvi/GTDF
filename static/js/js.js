@@ -30,9 +30,7 @@ let vm = new Vue({
     ],
     showIconGroups: false,
     openedActionContents: undefined,
-    openedProjectDropdowns: [
-      true
-    ]
+    openedProjectDropdowns: undefined
   },
   methods: {
     // PASSWORDS
@@ -98,6 +96,10 @@ let vm = new Vue({
           this.openedActionContents = []
           for (let i = 0;i < length;i++)
             this.openedActionContents.push(false)
+          length = this.user.projects.length
+          this.openedProjectDropdowns = []
+          for (let i = 0;i < length;i++)
+            this.openedActionContents.push(false)
         })
       },
       addAction(){
@@ -137,6 +139,16 @@ let vm = new Vue({
         }
         this.closeActionForm()
       },
+      projectCreateAndAddAction(){
+        let dt = this.tempUser.action
+        let length = this.user.actions.length
+        let projectId = this.tempUser.project.id
+        this.user.actions.push({id: length, title: dt.title, description: dt.description, projectId: projectId})
+        this.user.projects[projectId].actions.push(length)
+        if (!this.guest)
+          this.POSTrequest('/create-add-action-project', 'id='+length+'&title='+dt.title+'&description='+dt.description+'&projectId='+projectId)
+        this.closeActionForm()
+      },
     iconGroupEventHandlers(){
       let iconGroups = document.querySelectorAll('.icon-group')
       if (this.desktop){
@@ -150,8 +162,8 @@ let vm = new Vue({
       this.tempUser.action.title = ''
       this.tempUser.action.description = ''
     },
-    openUserForm(dt){
-      this.cleanTempData()
+    openUserForm(dt, cleanData = true){
+      if (cleanData) this.cleanTempData()
       this.tempUser.action.tag = dt.tag
       this.currentOpenedUserForm = dt.id
     },
@@ -181,6 +193,11 @@ let vm = new Vue({
       a.description = action.description
       a.id = action.id
       a.tag = action.tag
+    },
+    getDataFromProject(project){
+      let t = this.tempUser.project
+      t.title = project.title
+      t.id = project.id
     },
     changeDropdownSate(dt){
       this.openedActionContents[dt.id] = dt.state

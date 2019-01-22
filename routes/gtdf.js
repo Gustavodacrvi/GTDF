@@ -136,4 +136,19 @@ router.post('/delete-project', (req, res) => {
   })
 })
 
+router.post('/create-add-action-project', (req, res) => {
+  User.getUserById(req.user.id, (err, user) => {
+    if (err) handleError(err)
+    let dt = req.body
+
+    User.createAndAddActionToProject(user.data, dt.id, dt.projectId, dt.title, dt.description)
+
+    user.save((err) => {
+      if (err) handleError(err)
+
+      res.send()
+    })
+  })
+})
+
 module.exports = router
