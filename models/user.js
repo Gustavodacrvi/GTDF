@@ -89,3 +89,13 @@ module.exports.editAction = function(title, desc, id, arr){
 module.exports.editTag = function(id, tag, arr){
   arr[id].tag = tag
 }
+
+module.exports.addProject = function(arr, title){
+  arr.push({
+    id: arr.length,
+    title: arr.title,
+    actions: [
+      
+    ]
+  })
+}

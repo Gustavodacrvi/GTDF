@@ -449,7 +449,8 @@ Vue.component('projects', {
   props: {
     dropdowns: Object,
     icongroups: Boolean,
-    user: Object
+    user: Object,
+    projectdropdowns: Object
   },
   template: `
   <div>
@@ -457,14 +458,20 @@ Vue.component('projects', {
       <action-bar>
         <action-bar-icon icon='fa fa-plus' id='addProject' tag='projects' @click='openUserForm'></action-bar-icon>
       </action-bar>
-      <project :key='0' :id='0' title='please work' :dropdowns='dropdowns' :icongroup='icongroups' :dropdown='false'></project>
+      <template v-if='user'>
+      <draggable v-model='user.projects' :options="{handle:'.draggable'}">
+        <transition-group name='flip-list' tag='div'>
+          <project v-for='prj in user.projects' :title='prj.title' :icongroup='icongroups' :dropdowns='dropdowns' :dropdown='projectdropdowns[prj.id]' :id='prj.id' :key='prj.id'></project>
+        </transition-group>
+      </draggable>
+      </template>
     </div>
   </div>
   `,
   methods: {
-    openUserForm(){
-
-    }
+    openUserForm(id){
+      this.$emit('openform', id)
+    },
   }
 })
 Vue.component('project', {
@@ -490,16 +497,12 @@ Vue.component('project', {
           </icon-group>
         </div>
       </div>
-      <div v-show='dropdown'>
-        <div>
-          <action title='action1' description='description1' key='0' id='0' :dropdown='false' :icongroup='icongroup'>
-          </action>
-          <action title='action1' description='description1' key='0' id='0' :dropdown='false' :icongroup='icongroup'>
-          </action>
-          <action title='action1' description='description1' key='0' id='0' :dropdown='false' :icongroup='icongroup'>
-          </action>
+      <transition name='pop-long'>
+        <div v-show='dropdown'>
+          <div>
+          </div>
         </div>
-      </div>
+      </transition>
     </div>
   `,
   methods: {

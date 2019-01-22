@@ -106,4 +106,19 @@ router.post('/edit-tag', (req, res) => {
   })
 })
 
+router.post('/add-project', (req, res) => {
+  User.getUserById(req.user.id, (err, user) => {
+    if (err) handleError(err)
+    let b = req.body
+
+    User.addProject(user.data.projects, b.title)
+
+    user.save((err) => {
+      if (err) handleError(err)
+
+      res.send()
+    })
+  })
+})
+
 module.exports = router

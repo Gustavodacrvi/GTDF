@@ -13,7 +13,8 @@ let vm = new Vue({
         description: undefined
       },
       project: {
-        delete: true
+        delete: true,
+        title: '',
       }
     },
     user: undefined,
@@ -28,7 +29,10 @@ let vm = new Vue({
       false
     ],
     showIconGroups: false,
-    openedActionContents: undefined
+    openedActionContents: undefined,
+    openedProjectDropdowns: [
+      true
+    ]
   },
   methods: {
     // PASSWORDS
@@ -123,7 +127,15 @@ let vm = new Vue({
         this.closeActionForm()
       },
       transformActionToProject(){
-        
+
+      },
+      addProject(){
+        let dt = this.tempUser.project
+        this.user.projects.push({id: this.user.projects.length, title: dt.title})
+        if (!this.guest){
+          this.POSTrequest('/add-project', 'title='+dt.title)
+        }
+        this.closeActionForm()
       },
     iconGroupEventHandlers(){
       let iconGroups = document.querySelectorAll('.icon-group')

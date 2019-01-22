@@ -91,10 +91,10 @@
         <title-big class='centralizeContent'>ADD PROJECT</title-big>
       </form-element>
       <form-element animation='pop2'>
-        <text-box :rows='2' placeholder='TITLE'></text-box>
+        <text-box :rows='2' placeholder='TITLE' :value='tempUser.project.title' @change='(v) => tempUser.project.title = v'></text-box>
       </form-element>
       <form-element animation='pop3' class='centralizeContent'>
-        <form-button><%= __('Add project') %></form-button>
+        <form-button @click='addProject'><%= __('Add project') %></form-button>
       </form-element>
     </action-form>
     <action-form :currentform='currentOpenedUserForm' id='editAction' @close='closeActionForm'>
@@ -143,12 +143,16 @@
     <template slot='content'>
       <transition name='component-animation' appear>
         <keep-alive>
-          <component v-if='user' :is="currentSectionComponent" @openform='openUserForm' :icongroups='showIconGroups' :user='user' @rearrange='saveNewActionOrder' :dropdowns='openedActionContents' @dropdown-state='changeDropdownSate'></component>
+          <component v-if='user' :is="currentSectionComponent" @openform='openUserForm' :icongroups='showIconGroups' :user='user' @rearrange='saveNewActionOrder' :dropdowns='openedActionContents' @dropdown-state='changeDropdownSate' :projectdropdowns='openedProjectDropdowns'></component>
         </keep-alive>
       </transition>
     </template>
     <template slot='adds'>
       <adds>
+        <template v-if='user'>
+          {{ user.projects }}
+          {{ tempUser.project.title}}
+        </template>
       </adds>
     </template>
   </user-content>
