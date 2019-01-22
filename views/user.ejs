@@ -83,7 +83,7 @@
         <text-box placeholder='DESCRIPTION' :rows='4' :value='tempUser.action.description' @change='(v) => tempUser.action.description = v'></text-box>
       </form-element animation='pop4'>
       <form-element class='centralizeContent' animation='pop5'>
-        <form-button @click='addAction'>Add action</form-button>
+        <form-button @click='addAction'><%= __('Add action') %></form-button>
       </form-element>
     </action-form>
     <action-form :currentform='currentOpenedUserForm' id='addProject' @close='closeActionForm'>
@@ -94,11 +94,11 @@
         <text-box :rows='2' placeholder='TITLE'></text-box>
       </form-element>
       <form-element animation='pop3' class='centralizeContent'>
-        <form-button>Add project</form-button>
+        <form-button><%= __('Add project') %></form-button>
       </form-element>
     </action-form>
     <action-form :currentform='currentOpenedUserForm' id='editAction' @close='closeActionForm'>
-     <form-element animation='pop1'>
+      <form-element animation='pop1'>
         <title-big class='centralizeContent'><%= __('EDIT ACTION') %></title-big>
       </form-element>
       <form-element animation='pop2'>
@@ -108,7 +108,7 @@
         <text-box placeholder='DESCRIPTION' :rows='4' :value='tempUser.action.description' @change='(v) => tempUser.action.description = v'></text-box>
       </form-element animation='pop4'>
       <form-element class='centralizeContent' animation='pop5'>
-        <form-button @click='editAction'>Add action</form-button>
+        <form-button @click='editAction'><%= __('Edit action') %></form-button>
       </form-element>
     </action-form>
     <action-form :currentform='currentOpenedUserForm' id='editTag' @close='closeActionForm'>
@@ -124,7 +124,18 @@
         </icon-selection>
       </form-element>
       <form-element class='centralizeContent' animation='pop3'>
-        <form-button @click='editTag'>Add action</form-button>
+        <form-button @click='editTag'><%= __('Edit tag') %></form-button>
+      </form-element>
+    </action-form>
+    <action-form :currentform='currentOpenedUserForm' id='actionToProject' @close='closeActionForm'>
+      <form-element animation='pop1'>
+        <title-big class='centralizeContent'><%= __('CREATE/ADD TO PROJECT') %></title-big>
+      </form-element>
+      <form-element animation='pop2' class='centralizeContent'>
+        <comp-selector selected='create-project'>
+          <comp-option compname='create-project'><%= __('Create project') %></comp-option>
+          <comp-option compname='add-to-project'><%= __('Add to project') %></comp-option>
+        </comp-selector>
       </form-element>
     </action-form>
   </fixed>

@@ -13,7 +13,7 @@ let vm = new Vue({
         description: undefined
       },
       project: {
-
+        delete: true
       }
     },
     user: undefined,
@@ -121,6 +121,9 @@ let vm = new Vue({
         if (!this.guest)
           this.POSTrequest('/edit-tag', 'id='+dt.id+'&tag='+dt.tag)
         this.closeActionForm()
+      },
+      transformActionToProject(){
+        
       },
     iconGroupEventHandlers(){
       let iconGroups = document.querySelectorAll('.icon-group')

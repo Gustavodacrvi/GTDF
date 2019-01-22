@@ -376,11 +376,11 @@ Vue.component('action',{
           <span> {{ title }}</span>
         </div>
         <div>
-          <icon-group :show='icongroup' @delete='deleteAction' @edit='editAction' @editTag='editActionTag'>
+          <icon-group :show='icongroup' @delete='deleteAction' @edit='editAction' @editTag='editActionTag' @project='manajeProject'>
             <action-icon icon='fa fa-times' event='delete'></action-icon>
             <action-icon icon='fa fa-edit' event='edit'></action-icon>
             <action-icon icon='fa fa-tag' event='editTag'></action-icon>
-            <action-icon icon='fa fa-project-diagram'></action-icon>
+            <action-icon icon='fa fa-project-diagram' event='project'></action-icon>
           </icon-group>
         </div>
       </div>
@@ -402,13 +402,18 @@ Vue.component('action',{
           arr[i].id = i
       }
     },
-    editAction(){
-      this.$root.openUserForm({id: 'editAction'})
+    openActionForm(id){
+      this.$root.openUserForm({id: '' + id})
       this.$root.getDataFromAction(this.$root.user.actions[this.id])
     },
+    editAction(){
+      this.openActionForm('editAction')
+    },
     editActionTag(){
-      this.$root.openUserForm({id: 'editTag'})
-      this.$root.getDataFromAction(this.$root.user.actions[this.id])
+      this.openActionForm('editTag')
+    },
+    manajeProject(){
+      this.openActionForm('actionToProject')
     }
   },
   watch: {
@@ -584,4 +589,65 @@ Vue.component('icon-option',{
       return (this.option == this.$parent.selected) ? true : false
     }
   }
+})
+Vue.component('comp-selector', {
+  props: {
+    selected: undefined
+  },
+  template: `
+    <div class='comp-selector'>
+      <div>
+        <slot></slot>
+      </div>
+      <div>
+        <component :is='selected'></component>
+      </div>
+    </div>
+  `
+})
+Vue.component('comp-option', {
+  props: {
+    compname: String
+  },
+  template: `
+    {{selected}}
+    <span :class='{selected: selected}' @click='$parent.selected = compname'><slot></slot></span>
+  `,
+  computed: {
+    selected(){
+      return (this.compname == this.$parent.selected) ? true : false
+    }
+  }
+})
+Vue.component('create-project', {
+  template: `
+    <div class='create-project'>
+      <div style='height:30px'></div>
+      <form-element animation='pop2'>
+        <check-box :value='$root.tempUser.project.delete' @change='invertValue' placeholder='delete action'></check-box>
+      </form-element>
+      <form-element class='centralizeContent' animation='pop3'>
+        <form-button @click='$root.transformActionToProject'></form-button>
+      </form-element>
+    </div>
+  `,
+  methods: {
+    invertValue(){
+      this.$root.tempUser.project.delete = !this.$root.tempUser.project.delete
+    }
+  }
+})
+Vue.component('check-box', {
+  props: {
+    value: Boolean,
+    placeholder: String
+  },
+  template: `
+    <div class='checkbox' @click='$emit("change")'>
+      <div>
+        <i v-show='value' class='fa fa-check icon-extra-tiny'></i>
+      </div>
+      <span>{{placeholder}}</span>
+    </div>
+  `
 })

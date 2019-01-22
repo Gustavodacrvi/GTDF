@@ -34,5 +34,13 @@
 	"waiting": "waiting",
 	"logout": "logout",
 	"EDIT ACTION": "EDIT ACTION",
-	"CHANGE/ADD TAG": "CHANGE/ADD TAG"
+	"CHANGE/ADD TAG": "CHANGE/ADD TAG",
+	"Add action": "Add action",
+	"Add project": "Add project",
+	"Edit action": "Edit action",
+	"Edit tag": "Edit tag",
+	"CHANGE/ADD ": "CHANGE/ADD ",
+	"CREATE/ADD TO PROJECT": "CREATE/ADD TO PROJECT",
+	"Create project": "Create project",
+	"Add to project": "Add to project"
 }
