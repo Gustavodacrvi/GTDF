@@ -326,7 +326,10 @@ Vue.component('basket', {
       <action-bar>
         <action-bar-icon icon='fa fa-plus' id='addAction' tag='basket' @click='openUserForm'></action-bar-icon>
       </action-bar>
-      <h1>Non project actions</h1>
+      <h2>Non project actions</h2>
+      <template v-if='!hasTagAction("basket")'>
+        <span class='faded'>Your non project actions with the tag "basket" will be shown here.</br></br>Click on the plus icon to add an action.</span> 
+      </template>
       <template v-if='user'>
         <draggable v-model='user.actions' :options="{handle:'.draggable'}">
           <transition-group name='flip-list' tag='div'>
@@ -334,7 +337,10 @@ Vue.component('basket', {
             </action>
           </transition-group>
         </draggable>
-        <h1>Project actions</h1>
+        <h2>Project actions</h2>
+        <template v-if='!thereIsAtLeastOneProjectAction'>
+          <span class='faded'>Your project actions with the tag "basket" will be shown here.</br></br>Go to the project section to create projects.</span>
+        </template>
         <draggable v-model='user.actions' :options="{handle:'.draggable'}">
           <transition-group name='flip-list' tag='div'>
           <template v-for='project in user.projects'>
@@ -349,6 +355,14 @@ Vue.component('basket', {
   </div>
   `,
   methods: {
+    hasTagAction(tag){
+      let act = this.user.actions
+      let length = act.length
+      for (let i = 0;i < length;i++)
+        if (act[i].tag == tag)
+          return true
+      return false
+    },
     openUserForm(id){
       this.$emit('openform', id)
     },
@@ -376,6 +390,16 @@ Vue.component('basket', {
     },
     changeDropdownState(data){
       this.$emit('dropdown-state', {state: data.state, id: data.id})
+    }
+  },
+  computed: {
+    thereIsAtLeastOneProjectAction(){
+      let pro = this.$root.user.projects
+      let length = pro.length
+      for (let i = 0;i < length;i++)
+        if (pro[i].actions.length > 0)
+          return true
+      return false
     }
   },
   watch: {
@@ -852,6 +876,11 @@ Vue.component('comp-option', {
   }
 })
 Vue.component('create-project', {
+  data(){
+    return {
+      show: true
+    }
+  },
   template: `
     <div class='create-project'>
       <div style='height:30px'></div>

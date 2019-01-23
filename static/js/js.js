@@ -186,14 +186,28 @@ let vm = new Vue({
         this.closeActionForm()
       },
       transformActionToProject(){
+        let dt = this.tempUser
+        let act = this.user.actions
 
+        dt.project.title = act[dt.action.id].title
+        let title = dt.project.title
+        this.addProject()
+        if (dt.project.delete){
+          act.splice(dt.action.id, 1)
+
+          let oldActionIds = this.getIds(act)
+          this.resetIds(act)
+          this.updateProjectActionIds(oldActionIds)
+        }
+        if (!this.guest)
+          this.POSTrequest('/transform-action-to-project', 'title='+title+'&actionId='+dt.action.id+'&delete='+dt.project.delete)
+        this.closeActionForm()
       },
       addProject(){
         let dt = this.tempUser.project
         this.user.projects.push({id: this.user.projects.length, title: dt.title, actions: []})
-        if (!this.guest){
+        if (!this.guest)
           this.POSTrequest('/add-project', 'title='+dt.title)
-        }
         this.closeActionForm()
       },
       projectCreateAndAddAction(){

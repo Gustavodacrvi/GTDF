@@ -237,6 +237,23 @@ router.post('/remove-action-from-project', (req, res) => {
   })
 })
 
+router.post('/transform-action-to-project', (req, res) => {
+  User.getUserById(req.user.id, (err, user) => {
+    if (err) handleError(err)
+    let dt = req.body
+    
+    User.addProject(user.data.projects, dt.title)
+    if (dt.delete){
+      User.deleteAction(user.data, dt.actionId)
+    }
 
+    user.markModified('data')
+    user.save((err) => {
+      if (err) handleError(err)
+
+      res.send()
+    })
+  })
+})
 
 module.exports = router
