@@ -143,7 +143,7 @@
         <title-big><%= __('ADD ACTION TO PROJECT') %></title-big>
       </form-element>
       <form-element class='centralizeContent' animation='pop2'>
-        <form-button @click='openUserForm({id: "projectAddAction"}, false)'><%= __('Add existing project') %></form-button>
+        <form-button @click='openUserForm({id: "projectAddAction"}, false)'><%= __('Add existing action') %></form-button>
       </form-element>
       <form-element class='centralizeContent' animation='pop3'>
         <form-button @click='openUserForm({id: "projectCreateAction"}, false)'><%= __('Create new action') %></form-button>
@@ -166,6 +166,17 @@
       </form-element animation='pop4'>
       <form-element class='centralizeContent' animation='pop3'>
         <form-button @click='projectCreateAndAddAction'><%= __('Add action') %></form-button>
+      </form-element>
+    </action-form>
+    <action-form :currentform='currentOpenedUserForm' id='editProject' @close='closeActionForm'>
+      <form-element class='centralizeContent' animation='pop1'>
+        <title-big><%= __('EDIT PROJECT TITLE') %></title-big>
+      </form-element>
+      <form-element animation='pop3'>
+        <text-box :rows='2' placeholder='TITLE' :value='tempUser.project.title' @change='(v) => tempUser.project.title = v'></text-box>
+      </form-element>
+      <form-element class='centralizeContent' animation='pop3'>
+        <form-button @click='editProjectTitle'><%= __('Edit title') %></form-button>
       </form-element>
     </action-form>
   </fixed>

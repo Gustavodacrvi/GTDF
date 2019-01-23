@@ -186,4 +186,22 @@ router.post('/create-add-action-project', (req, res) => {
   })
 })
 
+router.post('/edit-project', (req, res) => {
+  User.getUserById(req.user.id, (err, user) => {
+    if (err) handleError(err)
+    let dt = req.body
+
+    user.data.projects[dt.id].title = dt.title
+
+    user.markModified('data.projects')
+    user.save((err) => {
+      if (err) handleError(err)
+
+      res.send()
+    })
+  })
+})
+
+
+
 module.exports = router

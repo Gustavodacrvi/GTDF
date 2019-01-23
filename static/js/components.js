@@ -607,7 +607,7 @@ Vue.component('project', {
       this.$root.getDataFromProject(this.$root.user.projects[this.id])
     },
     editProject(){
-
+      this.openActionForm('editProject')
     },
     addActionToProject(){
       this.openActionForm('addActionToProject')

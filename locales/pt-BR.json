@@ -48,5 +48,8 @@
 	"Create new action": "Create new action",
 	"ADD ACTION": "ADD ACTION",
 	"CREATE ACTION": "CREATE ACTION",
-	"Add   action": "Add   action"
+	"Add   action": "Add   action",
+	"Add existing action": "Add existing action",
+	"EDIT PROJECT TITLE": "EDIT PROJECT TITLE",
+	"Edit title": "Edit title"
 }

@@ -137,6 +137,13 @@ let vm = new Vue({
           pro[projectId].actions[actionId] = act[i].id
         }
       },
+      editProjectTitle(){
+        let t = this.tempUser.project
+        this.user.projects[t.id].title = t.title
+        if (!this.guest)
+          this.POSTrequest('/edit-project', 'title='+t.title+'&id='+t.id)
+        this.closeActionForm()
+      },
     // ACTION RELATED
       getUser(){
         this.GETrequest('/get-user', (data) =>{

@@ -173,7 +173,7 @@ module.exports.removeActionsFromProject = function(data, projectId){
 module.exports.deleteProject = function(data, id){
   let pro = data.projects
 
-  module.exports.removeActionsFromProject(id)
+  module.exports.removeActionsFromProject(data, id)
   pro.splice(id, 1)
   module.exports.resetIds(pro)
 }
