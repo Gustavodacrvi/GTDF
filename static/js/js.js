@@ -235,6 +235,15 @@ let vm = new Vue({
           this.POSTrequest('/add-existing-action-project', 'projectId='+dt.id+'&actionId='+dt.id2)
         rt.closeActionForm()
       },
+      removeActionFromProject(actionId){
+        let i = this.getIndexOfProjectThatHasTheGivenActionId(actionId)
+        let j = this.getIndexOfProjectActionThatHasTheGivenActionId(i, actionId)
+
+        this.user.projects[i].actions.splice(j, 1)
+        delete this.user.actions[actionId].projectId
+        if (!this.guest)
+          this.POSTrequest('/remove-action-from-project', 'actionId='+actionId)
+      },
     iconGroupEventHandlers(){
       let iconGroups = document.querySelectorAll('.icon-group')
       if (this.desktop){

@@ -182,3 +182,15 @@ module.exports.createAndAddActionToProject = function(user, id, projectId, title
   user.actions.push({tag: 'basket',title: title, description: description, id: id, projectId: projectId})
   user.projects[projectId].actions.push(id)
 }
+
+module.exports.removeActionFromProject = function(data, actionId){
+  let u = module.exports
+  let pro = data.projects
+  let act = data.actions
+
+  let i = u.getIndexOfProjectThatHasTheGivenActionId(data, actionId)
+  let j = u.getIndexOfProjectActionThatHasTheGivenActionId(data, i, actionId)
+
+  pro[i].actions.splice(j, 1)
+  delete act[actionId].projectId
+}

@@ -631,10 +631,11 @@ Vue.component('project-action', {
           <span> {{ title }}</span>
         </div>
         <div>
-          <icon-group :show='icongroup' @delete='deleteProjectAction' @edit='editAction' @editTag='editActionTag' @project='manajeProject'>
+          <icon-group :show='icongroup' @delete='deleteProjectAction' @edit='editAction' @editTag='editActionTag' @project='manajeProject' @removeFromProject='removeActionFromProject'>
             <action-icon icon='fa fa-times' event='delete'></action-icon>
             <action-icon icon='fa fa-edit' event='edit'></action-icon>
             <action-icon icon='fa fa-tag' event='editTag'></action-icon>
+            <action-icon icon='fa fa-sign-out-alt' event='removeFromProject'></action-icon>
           </icon-group>
         </div>
       </div>
@@ -660,6 +661,11 @@ Vue.component('project-action', {
       rt.updateProjectActionIds(oldActionIds)
       if (!this.$root.guest)
         this.$root.POSTrequest('/delete-project-action', 'id=' + this.id)
+    },
+    removeActionFromProject(){
+      let rt = this.$root
+
+      rt.removeActionFromProject(this.id)
     },
     openActionForm(id){
       this.$root.openUserForm({id: '' + id})

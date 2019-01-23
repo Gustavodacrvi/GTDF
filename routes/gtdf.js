@@ -221,6 +221,21 @@ router.post('/add-existing-action-project', (req, res) => {
   })
 })
 
+router.post('/remove-action-from-project', (req, res) => {
+  User.getUserById(req.user.id, (err, user) => {
+    if (err) handleError(err)
+    let dt = req.body
+    
+    User.removeActionFromProject(user.data, dt.actionId)
+
+    user.markModified('data')
+    user.save((err) => {
+      if (err) handleError(err)
+
+      res.send()
+    })
+  })
+})
 
 
 
