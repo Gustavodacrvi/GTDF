@@ -890,11 +890,9 @@ Vue.component('option-selection', {
   template: `
     <div class='option-selection' @mouseleave='openedDropdown = false' @mouseover='openedDropdown = true'>
       <span>{{selected}}</span>
-      <transition name='pop-long'>
         <div v-show='openedDropdown' class='card-shadow'>
           <slot></slot>
         </div>
-      </transition>
     </div>
   `,
   watch: {

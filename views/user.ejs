@@ -159,7 +159,7 @@
         </option-selection>
       </form-element>
       <form-element class='centralizeContent' animation='pop3'>
-      <form-button><%= __('Add action') %></form-button>
+      <form-button @click='addAlreadyExistingAction'><%= __('Add action') %></form-button>
       </form-element>
     </action-form>
     <action-form :currentform='currentOpenedUserForm' id='projectCreateAction' @close='closeActionForm'>
