@@ -44,12 +44,12 @@ router.post('/add-action', (req, res) => {
   })
 })
 
-router.post('/test', (req, res) => {
+router.post('/save-new-action-order', (req, res) => {
   User.getUserById(req.user.id, (err, user) => {
     if (err) handleError(err)
     let u = user.data
 
-    User.rearrangeActions(u.actions, req.body.a)
+    User.rearrange(u.actions, req.body.a)
     
     user.markModified('data.actions')
     user.save((err) => {
@@ -59,6 +59,23 @@ router.post('/test', (req, res) => {
     })
   })
 })
+
+router.post('/save-new-project-order', (req, res) => {
+  User.getUserById(req.user.id, (err, user) => {
+    if (err) handleError(err)
+    let u = user.data
+
+    User.rearrange(u.projects, req.body.a)
+    
+    user.markModified('data.projects')
+    user.save((err) => {
+      if (err) handleError(err)
+      
+      res.send()
+    })
+  })
+})
+
 
 router.post('/delete-action', (req, res) => {
   User.getUserById(req.user.id, (err, user) => {
@@ -143,6 +160,7 @@ router.post('/create-add-action-project', (req, res) => {
 
     User.createAndAddActionToProject(user.data, dt.id, dt.projectId, dt.title, dt.description)
 
+    user.markModified('data.projects')
     user.save((err) => {
       if (err) handleError(err)
 

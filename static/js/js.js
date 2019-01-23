@@ -133,7 +133,7 @@ let vm = new Vue({
       },
       addProject(){
         let dt = this.tempUser.project
-        this.user.projects.push({id: this.user.projects.length, title: dt.title})
+        this.user.projects.push({id: this.user.projects.length, title: dt.title, actions: []})
         if (!this.guest){
           this.POSTrequest('/add-project', 'title='+dt.title)
         }
@@ -148,6 +148,24 @@ let vm = new Vue({
         if (!this.guest)
           this.POSTrequest('/create-add-action-project', 'id='+length+'&title='+dt.title+'&description='+dt.description+'&projectId='+projectId)
         this.closeActionForm()
+      },
+      parseArrayToHTTPparams(arr, arrName){
+        let str = ''
+        let length = arr.length
+        for (let i = 0;i < length;i++){
+          str += arrName+'=' + arr[i] + '&'
+        }
+        str = str.slice(0, -1)
+        return str
+      },
+      saveNewProjectOrder(ids){
+        if (ids.pop())
+          this.POSTrequest('/save-new-project-order', this.parseArrayToHTTPparams(ids, 'a'))
+      },
+      saveNewActionOrder(ids){
+        console.log(ids[ids.length-1])
+        if (ids.pop())
+          this.POSTrequest('/save-new-action-order', this.parseArrayToHTTPparams(ids, 'a'))
       },
     iconGroupEventHandlers(){
       let iconGroups = document.querySelectorAll('.icon-group')
@@ -210,15 +228,6 @@ let vm = new Vue({
           handle: '.draggable'
         })
       })
-    },
-    saveNewActionOrder(ids){
-      let str = ''
-      let length = ids.length
-      for (let i = 0;i < length;i++){
-        str += 'a=' + ids[i] + '&'
-      }
-      str = str.slice(0, -1)
-      this.POSTrequest('/test', str)
     },
   }
 })

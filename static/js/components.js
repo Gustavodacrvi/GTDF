@@ -302,9 +302,22 @@ Vue.component('basket', {
   props: {
     icongroups: Boolean,
     user: Object,
-    sent: false,
-    func: Function,
     dropdowns: Object
+  },
+  data(){
+    return {
+      func: Function,
+      sent: false,
+      changed: Boolean,
+      oldids: Array,
+      isEqual(arr1, arr2){
+        let length = arr1.length
+        for (let i = 0;i < length;i++)
+          if (arr1[i] != arr2[i])
+            return false
+        return true
+      }
+    }
   },
   template: `
   <div>
@@ -341,6 +354,9 @@ Vue.component('basket', {
     setHttpTimeOut(seconds){
       this.func = setTimeout(() => {
         let ids = this.calculateIds()
+        this.changed = !this.isEqual(ids, this.oldids)
+        this.oldids = ids
+        ids.push(this.changed)
         this.$emit('rearrange', ids)
         this.sent = false
       }, seconds)
@@ -351,7 +367,7 @@ Vue.component('basket', {
     }
   },
   watch: {
-    'user.actions'(){
+    'user.actions': function(){
       // wait some seconds before sending the https request
       let seconds = 3000
       if (!this.sent){
@@ -452,6 +468,21 @@ Vue.component('projects', {
     user: Object,
     projectdropdowns: Object
   },
+  data() {
+    return {
+      funcp: Function,
+      sent: false,
+      changed: Boolean,
+      oldids: Array,
+      isEqual(arr1, arr2){
+        let length = arr1.length
+        for (let i = 0;i < length;i++)
+          if (arr1[i] != arr2[i])
+            return false
+        return true
+      }
+    }
+  },
   template: `
   <div>
     <div>
@@ -472,6 +503,36 @@ Vue.component('projects', {
     openUserForm(id){
       this.$emit('openform', id)
     },
+    calculateProjectIds(){
+      let ids = []
+      let length = this.user.projects.length
+      for (let i = 0;i < length;i++)
+        ids.push(this.user.projects[i].id)
+      return ids
+    },
+    setHttpTimeOutProject(seconds){
+      this.funcp = setTimeout(() => {
+        let ids = this.calculateProjectIds()
+        this.changed = !this.isEqual(ids, this.oldids)
+        this.oldids = ids
+        ids.push(this.changed)
+        this.$emit('rearrangeproject', ids)
+        this.sent = false
+      }, seconds)
+      this.sent = true
+    },
+  },
+  watch: {
+    'user.projects'(){
+      // wait some seconds before sending the https request
+      let seconds = 3000
+      if (!this.sent){
+        this.setHttpTimeOutProject(seconds)
+      } else {
+        clearTimeout(this.funcp)
+        this.setHttpTimeOutProject(seconds)
+      }
+    }
   }
 })
 Vue.component('project', {
@@ -502,10 +563,8 @@ Vue.component('project', {
         <div v-show='dropdown'>
           <div>
             <draggable v-model='user.actions' :options="{handle:'.draggable'}">
-            {{ user.projects[this.id].actions}}
-            {{ user.projects}}
               <transition-group name='flip-list' tag='div'>
-                <project-action v-for='i in user.projects[this.id].actions' :title='user.actions[i].title' :description='user.actions[i].description' :key='user.actions[i].id' :id='user.actions[i].id' :dropdown='dropdowns[user.actions[i].id]' :icongroup='icongroup'>
+                <project-action v-for='i in user.projects[this.id].actions' :title='user.actions[i].title' :description='user.actions[i].description' :key='user.actions[i].id' :id='user.actions[i].id' :dropdown='dropdowns[user.actions[i].id]' :icongroup='icongroup' :projectId='user.actions[i].projectId'>
                 </project-action>
               </transition-group>
             </draggable>
@@ -531,7 +590,7 @@ Vue.component('project', {
     addActionToProject(){
       this.openActionForm('addActionToProject')
     },
-  }
+  },
 })
 Vue.component('project-action', {
   props: {
@@ -539,7 +598,8 @@ Vue.component('project-action', {
     description: String,
     icongroup: Boolean,
     dropdown: false,
-    id: Number
+    id: Number,
+    projectId: Number
   },
   template: `
     <div class='action' :key='id'>
@@ -549,7 +609,7 @@ Vue.component('project-action', {
           <span> {{ title }}</span>
         </div>
         <div>
-          <icon-group :show='icongroup' @delete='deleteAction' @edit='editAction' @editTag='editActionTag' @project='manajeProject'>
+          <icon-group :show='icongroup' @delete='deleteProjectAction' @edit='editAction' @editTag='editActionTag' @project='manajeProject'>
             <action-icon icon='fa fa-times' event='delete'></action-icon>
             <action-icon icon='fa fa-edit' event='edit'></action-icon>
             <action-icon icon='fa fa-tag' event='editTag'></action-icon>
@@ -564,9 +624,13 @@ Vue.component('project-action', {
     </div>
   `,
   methods: {
-    deleteAction(){
+    deleteProjectAction(){
       let arr = this.$root.user.actions
       arr.splice(this.id, 1)
+      let i = this.$root.user.projects[this.projectId].actions.findIndex((el) => {
+        return el == this.id
+      })
+      this.$root.user.projects[this.projectId].actions.splice(i, 1)
       if (!this.$root.guest){
         this.$root.POSTrequest('/delete-action', 'id=' + this.id)
         let length = arr.length

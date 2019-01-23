@@ -54,7 +54,7 @@ module.exports.comparePassword = function(candidatePassword, hash, caLLback){
     })
 }
 
-module.exports.rearrangeActions = function(arr, newArr){
+module.exports.rearrange = function(arr, newArr){
   let length = arr.length
   
   for (let i = 0;i < length;i++){
@@ -102,9 +102,12 @@ module.exports.addProject = function(arr, title){
 
 module.exports.deleteProject = function(arr, id){
   arr.splice(id, 1)
+  let length = arr.length
+  for (let i = 0;i < length;i++)
+    arr[i].id = i
 }
 
 module.exports.createAndAddActionToProject = function(user, id, projectId, title, description){
-  user.actions.push({title: title, description: description, id: id, projectId: projectId})
+  user.actions.push({title: title, description: description, id: id, projectId: projectId, tag: 'basket'})
   user.projects[projectId].actions.push(id)
 }
