@@ -877,3 +877,52 @@ Vue.component('check-box', {
     </div>
   `
 })
+Vue.component('option-selection', {
+  props: {
+    selected: String
+  },
+  data(){
+    return {
+      openedDropdown: false,
+      id: Number
+    }
+  },
+  template: `
+    <div class='option-selection' @mouseleave='openedDropdown = false' @mouseover='openedDropdown = true'>
+      <span>{{selected}}</span>
+      <transition name='pop-long'>
+        <div v-show='openedDropdown' class='card-shadow'>
+          <slot></slot>
+        </div>
+      </transition>
+    </div>
+  `,
+  watch: {
+    selected(){
+      this.$emit('change', {name: this.selected, id: this.id})
+    }
+  }
+})
+Vue.component('select-option', {
+  props: {
+    name: String,
+    id: Number
+  },
+  template: `
+    <div :class='{"option-selected": selected}' @click='select'>
+      <span>{{name}}</span>
+    </div>
+  `,
+  methods: {
+    select(){
+      this.$parent.selected = this.name
+      this.$parent.id = this.id
+      this.$parent.openedDropdown = false
+    }
+  },
+  computed: {
+    selected(){
+      return this.$parent.selected == this.name
+    }
+  }
+})

@@ -14,7 +14,10 @@ let vm = new Vue({
       },
       project: {
         delete: true,
+        id: '',
+        id2: '',
         title: '',
+        selected: 'select an action'
       }
     },
     user: undefined,
@@ -234,6 +237,9 @@ let vm = new Vue({
       u.action.title = ''
       u.action.description = ''
       u.project.title = ''
+      u.project.id = ''
+      u.project.id2 = ''
+      u.project.selected = 'select an action'
     },
     openUserForm(dt, cleanData = true){
       if (cleanData) this.cleanTempData()

@@ -153,6 +153,14 @@
       <form-element class='centralizeContent' animation='pop1'>
         <title-big><%= __('ADD ACTION') %></title-big>
       </form-element>
+      <form-element class='centralizeContent' animation='pop2'>
+        <option-selection v-if='user' :selected='tempUser.project.selected' @change='(v) => {tempUser.project.selected = v.name;tempUser.project.id2 = v.id}'>
+          <select-option v-for='action in user.actions' v-if='!action.projectId && action.projectId != 0' :name='action.title' :id='action.id'></select-option>
+        </option-selection>
+      </form-element>
+      <form-element class='centralizeContent' animation='pop3'>
+      <form-button><%= __('Add action') %></form-button>
+      </form-element>
     </action-form>
     <action-form :currentform='currentOpenedUserForm' id='projectCreateAction' @close='closeActionForm'>
       <form-element class='centralizeContent' animation='pop1'>
@@ -192,12 +200,16 @@
       <adds>
         <template v-if='user'>
           <div>
-            <h1>ACTIONS</h1>
+            <h3>ACTIONS</h3>
             <h5 v-for='action in user.actions'>{{action}}<h5>
           </div>
           <div>
-            <h1>PROJECTS</h1>
+            <h3>PROJECTS</h3>
             <h5 v-for='project in user.projects'>{{project}}<h5>
+          </div>
+          <div>
+            <h3>TEMP USER</h3>
+            <h5 v-for='project in user.projects'>{{tempUser}}<h5>
           </div>
         </template>
       </adds>
