@@ -101,6 +101,14 @@ let vm = new Vue({
           return el == actionId
         })
       },
+      removeActionsFromProject(projectId){
+        let pro = this.user.projects[projectId]
+        let act = this.user.actions
+
+        let length = pro.actions.length
+        for (let i = 0;i < length;i++)
+          delete act[pro.actions[i]].projectId
+      },
       getIds(arr){
         let newArr = []
         let length = arr.length

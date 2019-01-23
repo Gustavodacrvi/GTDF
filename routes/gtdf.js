@@ -159,7 +159,7 @@ router.post('/delete-project', (req, res) => {
     if (err) handleError(err)
     let b = req.body
 
-    User.deleteProject(user.data.projects, b.id)
+    User.deleteProject(user.data, b.id)
 
     user.markModified('data')
     user.save((err) => {

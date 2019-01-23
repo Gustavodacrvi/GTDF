@@ -161,9 +161,21 @@ module.exports.addProject = function(arr, title){
   })
 }
 
-module.exports.deleteProject = function(arr, id){
-  arr.splice(id, 1)
-  module.exports.resetIds(arr)
+module.exports.removeActionsFromProject = function(data, projectId){
+  let pro = data.projects[projectId]
+  let act = data.actions
+
+  let length = pro.actions.length
+  for (let i = 0;i < length;i++)
+    delete act[pro.actions[i]].projectId
+}
+
+module.exports.deleteProject = function(data, id){
+  let pro = data.projects
+
+  module.exports.removeActionsFromProject(id)
+  pro.splice(id, 1)
+  module.exports.resetIds(pro)
 }
 
 module.exports.createAndAddActionToProject = function(user, id, projectId, title, description){

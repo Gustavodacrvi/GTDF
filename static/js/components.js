@@ -592,7 +592,12 @@ Vue.component('project', {
   `,
   methods: {
     deleteProject(){
-      this.$root.user.projects.splice(this.id, 1)
+      let rt = this.$root
+      let pro = rt.user.projects
+
+      rt.removeActionsFromProject(this.id)
+      rt.user.projects.splice(this.id, 1)
+      rt.resetIds(pro)
       if (!this.$root.guest){
         this.$root.POSTrequest('/delete-project', 'id='+this.id)
       }
