@@ -180,7 +180,14 @@
     <template slot='adds'>
       <adds>
         <template v-if='user'>
-          {{ user }}
+          <div>
+            <h1>ACTIONS</h1>
+            <h5 v-for='action in user.actions'>{{action}}<h5>
+          </div>
+          <div>
+            <h1>PROJECTS</h1>
+            <h5 v-for='project in user.projects'>{{project}}<h5>
+          </div>
         </template>
       </adds>
     </template>

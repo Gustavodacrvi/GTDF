@@ -309,6 +309,7 @@ Vue.component('basket', {
       func: Function,
       sent: false,
       changed: Boolean,
+      first: true,
       oldids: Array,
       isEqual(arr1, arr2){
         let length = arr1.length
@@ -325,22 +326,29 @@ Vue.component('basket', {
       <action-bar>
         <action-bar-icon icon='fa fa-plus' id='addAction' tag='basket' @click='openUserForm'></action-bar-icon>
       </action-bar>
+      <h1>Non project actions</h1>
       <template v-if='user'>
-      <draggable v-model='user.actions' :options="{handle:'.draggable'}">
-        <transition-group name='flip-list' tag='div'>
-          <action v-for='action in user.actions' v-if='action.tag == "basket"' :title='action.title' :description='action.description' :key='action.id' :id='action.id' :dropdown='dropdowns[action.id]' :icongroup='icongroups' @changed-dropdown='changeDropdownState'>
-          </action>
-        </transition-group>
-      </draggable>
+        <draggable v-model='user.actions' :options="{handle:'.draggable'}">
+          <transition-group name='flip-list' tag='div'>
+            <action v-for='action in user.actions' v-if='action.tag == "basket"' v-if='!action.projectId && action.projectId != 0' :title='action.title' :description='action.description' :key='action.id' :id='action.id' :dropdown='dropdowns[action.id]' :icongroup='icongroups' @changed-dropdown='changeDropdownState'>
+            </action>
+          </transition-group>
+        </draggable>
+        <h1>Project actions</h1>
+        <draggable v-model='user.actions' :options="{handle:'.draggable'}">
+          <transition-group name='flip-list' tag='div'>
+          <template v-for='project in user.projects'>
+            <project-action v-for='i in user.projects[project.id].actions' :title='user.actions[i].title' :description='user.actions[i].description' :key='user.actions[i].id' :id='user.actions[i].id' :dropdown='dropdowns[user.actions[i].id]' :icongroup='icongroups' :projectId='user.actions[i].projectId'>
+            </project-action>
+        </template>
+          </transition-group>
+        </draggable>
       </template>
       <div class='space'></div>
     </div>
   </div>
   `,
   methods: {
-    deleteAction(id){
-      this.$emit('delete-action', id)
-    },
     openUserForm(id){
       this.$emit('openform', id)
     },
@@ -354,7 +362,11 @@ Vue.component('basket', {
     setHttpTimeOut(seconds){
       this.func = setTimeout(() => {
         let ids = this.calculateIds()
-        this.changed = !this.isEqual(ids, this.oldids)
+        if (!this.first)
+          this.changed = !this.isEqual(ids, this.oldids)
+        else
+          this.changed = true
+          this.first = false
         this.oldids = ids
         ids.push(this.changed)
         this.$emit('rearrange', ids)
@@ -474,6 +486,7 @@ Vue.component('projects', {
       sent: false,
       changed: Boolean,
       oldids: Array,
+      first: true,
       isEqual(arr1, arr2){
         let length = arr1.length
         for (let i = 0;i < length;i++)
@@ -513,7 +526,11 @@ Vue.component('projects', {
     setHttpTimeOutProject(seconds){
       this.funcp = setTimeout(() => {
         let ids = this.calculateProjectIds()
-        this.changed = !this.isEqual(ids, this.oldids)
+        if (!this.first)
+          this.changed = !this.isEqual(ids, this.oldids)
+        else
+          this.changed = true
+          this.first = false
         this.oldids = ids
         ids.push(this.changed)
         this.$emit('rearrangeproject', ids)
@@ -625,18 +642,19 @@ Vue.component('project-action', {
   `,
   methods: {
     deleteProjectAction(){
-      let arr = this.$root.user.actions
-      arr.splice(this.id, 1)
-      let i = this.$root.user.projects[this.projectId].actions.findIndex((el) => {
-        return el == this.id
-      })
-      this.$root.user.projects[this.projectId].actions.splice(i, 1)
-      if (!this.$root.guest){
-        this.$root.POSTrequest('/delete-action', 'id=' + this.id)
-        let length = arr.length
-        for (let i = 0;i < length;i++)
-          arr[i].id = i
-      }
+      let rt = this.$root
+      let act = rt.user.actions
+      let pro = rt.user.projects
+
+      let j = rt.getIndexOfProjectActionThatHasTheGivenActionId(this.projectId, this.id)
+      pro[this.projectId].actions.splice(j, 1)
+      act.splice(this.id, 1)
+
+      let oldActionIds = rt.getIds(act)
+      rt.resetIds(act)
+      rt.updateProjectActionIds(oldActionIds)
+      if (!this.$root.guest)
+        this.$root.POSTrequest('/delete-project-action', 'id=' + this.id)
     },
     openActionForm(id){
       this.$root.openUserForm({id: '' + id})
@@ -691,14 +709,17 @@ Vue.component('action',{
   `,
   methods: {
     deleteAction(){
-      let arr = this.$root.user.actions
-      arr.splice(this.id, 1)
-      if (!this.$root.guest){
+      let data = this.$root
+      let act = data.user.actions
+
+      act.splice(this.id, 1)
+    
+      let oldActionIds = data.getIds(act)
+      data.resetIds(act)
+      data.updateProjectActionIds(oldActionIds)
+
+      if (!this.$root.guest)
         this.$root.POSTrequest('/delete-action', 'id=' + this.id)
-        let length = arr.length
-        for (let i = 0;i < length;i++)
-          arr[i].id = i
-      }
     },
     openActionForm(id){
       this.$root.openUserForm({id: '' + id})

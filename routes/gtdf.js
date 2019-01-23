@@ -81,8 +81,24 @@ router.post('/delete-action', (req, res) => {
   User.getUserById(req.user.id, (err, user) => {
     if (err) handleError(err)
 
-    User.deleteAction(req.body.id, user.data.actions)
+    User.deleteAction(user.data, req.body.id)
 
+    user.markModified('data')
+    user.save((err) => {
+      if (err) handleError(err)
+
+      res.send()
+    })
+  })
+})
+
+router.post('/delete-project-action', (req, res) => {
+  User.getUserById(req.user.id, (err, user) => {
+    if (err) handleError(err)
+
+    User.deleteProjectAction(req.body.id, user.data)
+
+    user.markModified('data')
     user.save((err) => {
       if (err) handleError(err)
 
@@ -145,6 +161,7 @@ router.post('/delete-project', (req, res) => {
 
     User.deleteProject(user.data.projects, b.id)
 
+    user.markModified('data')
     user.save((err) => {
       if (err) handleError(err)
 

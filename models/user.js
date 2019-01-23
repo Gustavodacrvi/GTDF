@@ -73,11 +73,72 @@ module.exports.rearrange = function(arr, newArr){
   }
 }
 
-module.exports.deleteAction = function(id, arr){
-  arr.splice(id, 1)
+module.exports.getIndexOfProjectThatHasTheGivenActionId = function(data, actionId){
+  return data.projects.findIndex((el) => {
+    return el.actions.some((ele) => {
+      return ele == actionId
+    })
+  })
+}
+
+module.exports.getIndexOfProjectActionThatHasTheGivenActionId = function(data, projectId, actionId){
+  return data.projects[projectId].actions.findIndex((el) => {
+    return el == actionId
+  })
+}
+
+module.exports.getIds = function(arr){
+  let newArr = []
+  let length = arr.length
+  for (let i = 0;i < length;i++)
+    newArr.push(arr[i].id)
+  return newArr
+}
+
+module.exports.resetIds = function(arr){
   let length = arr.length
   for (let i = 0;i < length;i++)
     arr[i].id = i
+}
+
+module.exports.updateProjectActionIds = function(data, oldActionIds){
+  let pro = data.projects
+  let act = data.actions
+  let old = oldActionIds
+
+  let length = act.length
+  let projectId
+  let actionId
+  for (let i = 0;i < length;i++){
+    if (!act[i].projectId && act[i].projectId != 0)
+      continue
+    projectId = module.exports.getIndexOfProjectThatHasTheGivenActionId(data, old[i])
+    actionId = module.exports.getIndexOfProjectActionThatHasTheGivenActionId(data, projectId, old[i])
+    pro[projectId].actions[actionId] = act[i].id
+  }
+}
+
+module.exports.deleteAction = function(data, id){
+  let act = data.actions
+
+  act.splice(id, 1)
+
+  let oldActionIds = module.exports.getIds(act)
+  module.exports.resetIds(act)
+  module.exports.updateProjectActionIds(data, oldActionIds)
+}
+
+module.exports.deleteProjectAction = function(id, data){
+  let act = data.actions
+  let pro = data.projects
+  let i = module.exports.getIndexOfProjectThatHasTheGivenActionId(data, id)
+  let j = module.exports.getIndexOfProjectActionThatHasTheGivenActionId(data, i, id)
+  pro[i].actions.splice(j, 1)
+  act.splice(id, 1)
+
+  let oldActionIds = module.exports.getIds(act)
+  module.exports.resetIds(act)
+  module.exports.updateProjectActionIds(data, oldActionIds)
 }
 
 module.exports.editAction = function(title, desc, id, arr){
@@ -102,12 +163,10 @@ module.exports.addProject = function(arr, title){
 
 module.exports.deleteProject = function(arr, id){
   arr.splice(id, 1)
-  let length = arr.length
-  for (let i = 0;i < length;i++)
-    arr[i].id = i
+  module.exports.resetIds(arr)
 }
 
 module.exports.createAndAddActionToProject = function(user, id, projectId, title, description){
-  user.actions.push({title: title, description: description, id: id, projectId: projectId, tag: 'basket'})
+  user.actions.push({tag: 'basket',title: title, description: description, id: id, projectId: projectId})
   user.projects[projectId].actions.push(id)
 }

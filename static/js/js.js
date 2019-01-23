@@ -88,6 +88,47 @@ let vm = new Vue({
           })
         }, 10)
       },
+    // UTILITY
+      getIndexOfProjectThatHasTheGivenActionId(actionId){
+        return this.user.projects.findIndex((el) => {
+          return el.actions.some((ele) => {
+            return ele == actionId
+          })
+        })
+      },
+      getIndexOfProjectActionThatHasTheGivenActionId(projectId, actionId){
+        return this.user.projects[projectId].actions.findIndex((el) => {
+          return el == actionId
+        })
+      },
+      getIds(arr){
+        let newArr = []
+        let length = arr.length
+        for (let i = 0;i < length;i++)
+          newArr.push(arr[i].id)
+        return newArr
+      },
+      resetIds(arr){
+        let length = arr.length
+        for (let i = 0;i < length;i++)
+          arr[i].id = i
+      },
+      updateProjectActionIds(oldActionIds){
+        let pro = this.user.projects
+        let act = this.user.actions
+        let old = oldActionIds
+
+        let length = act.length
+        let projectId
+        let actionId
+        for (let i = 0;i < length;i++){
+          if (!act[i].projectId && act[i].projectId != 0)
+            continue
+          projectId = this.getIndexOfProjectThatHasTheGivenActionId(old[i])
+          actionId = this.getIndexOfProjectActionThatHasTheGivenActionId(projectId, old[i])
+          pro[projectId].actions[actionId] = act[i].id
+        }
+      },
     // ACTION RELATED
       getUser(){
         this.GETrequest('/get-user', (data) =>{
@@ -96,6 +137,7 @@ let vm = new Vue({
           this.openedActionContents = []
           for (let i = 0;i < length;i++)
             this.openedActionContents.push(false)
+          
           length = this.user.projects.length
           this.openedProjectDropdowns = []
           for (let i = 0;i < length;i++)
@@ -117,9 +159,6 @@ let vm = new Vue({
         if (!this.guest)
           this.POSTrequest('/edit-action', 'title='+dt.title+'&description='+dt.description+'&id='+dt.id)
         this.closeActionForm()
-      },
-      deleteAction(id){
-        this.user.actions.splice(id, 1)
       },
       editTag(){
         let dt = this.tempUser.action
@@ -143,7 +182,7 @@ let vm = new Vue({
         let dt = this.tempUser.action
         let length = this.user.actions.length
         let projectId = this.tempUser.project.id
-        this.user.actions.push({id: length, title: dt.title, description: dt.description, projectId: projectId})
+        this.user.actions.push({tag:'basket',id: length, title: dt.title, description: dt.description, projectId: projectId})
         this.user.projects[projectId].actions.push(length)
         if (!this.guest)
           this.POSTrequest('/create-add-action-project', 'id='+length+'&title='+dt.title+'&description='+dt.description+'&projectId='+projectId)
@@ -163,7 +202,6 @@ let vm = new Vue({
           this.POSTrequest('/save-new-project-order', this.parseArrayToHTTPparams(ids, 'a'))
       },
       saveNewActionOrder(ids){
-        console.log(ids[ids.length-1])
         if (ids.pop())
           this.POSTrequest('/save-new-action-order', this.parseArrayToHTTPparams(ids, 'a'))
       },
@@ -176,9 +214,11 @@ let vm = new Vue({
       }
     },
     cleanTempData() {
-      this.tempUser.action.tag = ''
-      this.tempUser.action.title = ''
-      this.tempUser.action.description = ''
+      let u = this.tempUser
+      u.action.tag = ''
+      u.action.title = ''
+      u.action.description = ''
+      u.project.title = ''
     },
     openUserForm(dt, cleanData = true){
       if (cleanData) this.cleanTempData()
