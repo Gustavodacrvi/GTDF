@@ -82,7 +82,6 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cookieParser())
 
 
-
 app.use('/', gtdf)
 app.use('/', users)
 

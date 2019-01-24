@@ -57,19 +57,24 @@ module.exports.comparePassword = function(candidatePassword, hash, caLLback){
 module.exports.rearrange = function(arr, newArr){
   let length = arr.length
   
-  for (let i = 0;i < length;i++){
-    if (arr[i].id == newArr[i])
-      continue
-    else {
-      for (let j = i + 1;j < length;j++){
-        if (newArr[i] == arr[j].id){
-          let temp = arr[j]
-          arr[j] = arr[i]
-          arr[i] = temp
-          break
+  try {
+    for (let i = 0;i < length;i++){
+      if (arr[i].id == newArr[i])
+        continue
+      else {
+        for (let j = i + 1;j < length;j++){
+          if (newArr[i] == arr[j].id){
+            let temp = arr[j]
+            arr[j] = arr[i]
+            arr[i] = temp
+            break
+          }
         }
       }
     }
+  }
+  catch(err) {
+    console.log(err)
   }
 }
 
@@ -193,4 +198,23 @@ module.exports.removeActionFromProject = function(data, actionId){
 
   pro[i].actions.splice(j, 1)
   delete act[actionId].projectId
+}
+
+module.exports.getIndexOfactionThatHasTheGivenProjectId = function(data, projectId){
+  return data.actions.findIndex((el) => {
+    return el.projectId == projectId
+  })
+}
+
+module.exports.updateActionsIds = function(data, oldProjectIds){
+  let pro = data.projects
+  let act = data.actions
+  let old = oldProjectIds
+
+  let length = pro.length
+  let actionId
+  for (let i = 0;i < length;i++){
+    actionId = module.exports.getIndexOfactionThatHasTheGivenProjectId(data, old[i])
+    act[actionId] = pro[i].id
+  }
 }

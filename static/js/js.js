@@ -141,6 +141,23 @@ let vm = new Vue({
           pro[projectId].actions[actionId] = act[i].id
         }
       },
+      getIndexOfactionThatHasTheGivenProjectId(projectId){
+        return this.user.actions.findIndex((el) => {
+          return el.projectId == projectId
+        })
+      },
+      updateActionsIds(oldProjectIds){
+        let pro = this.user.projects
+        let act = this.user.actions
+        let old = oldProjectIds
+
+        let length = pro.length
+        let actionId
+        for (let i = 0;i < length;i++){
+          actionId = this.getIndexOfactionThatHasTheGivenProjectId(old[i])
+          act[actionId] = pro[i].id
+        }
+      },
       editProjectTitle(){
         let t = this.tempUser.project
         this.user.projects[t.id].title = t.title
@@ -231,15 +248,25 @@ let vm = new Vue({
         return str
       },
       saveNewProjectOrder(ids){
-        if (ids.pop())
+        let oldProjectIds = this.getIds(this.user.projects)
+        this.resetIds(this.user.projects)
+        this.updateActionsIds(oldProjectIds)
+
+        if (!this.guest){
           this.POSTrequest('/save-new-project-order', this.parseArrayToHTTPparams(ids, 'a'))
+        }
       },
       saveNewActionOrder(ids){
-        if (ids.pop())
+        let oldActionIds = this.getIds(this.user.actions)
+        this.resetIds(this.user.actions)
+        this.updateProjectActionIds(oldActionIds)
+
+        if (!this.guest){
           this.POSTrequest('/save-new-action-order', this.parseArrayToHTTPparams(ids, 'a'))
+        }
       },
       addAlreadyExistingAction(){
-        if (dt.id2 != ''){
+        if (this.id2 != ''){
           let rt = this
           let pro = rt.user.projects
           let act = rt.user.actions
@@ -328,6 +355,13 @@ let vm = new Vue({
         })
       })
     },
+  },
+  watch: {
+    currentSectionComponent(){
+      if (!this.desktop){
+        this.toggleSideNav()
+      }
+    }
   }
 })
 

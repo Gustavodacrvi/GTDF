@@ -641,7 +641,7 @@ a{
 
 .action > :first-child > :first-child, .project > :first-child > :first-child{
   flex-basis: 90%;
-  height: 36px;
+  min-height: 36px;
   display: flex;
   align-items: center;
 }
