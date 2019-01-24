@@ -82,8 +82,8 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cookieParser())
 
 
-app.use('/', gtdf)
 app.use('/', users)
+app.use('/', gtdf)
 
 function checkAndChangeLocale(req, res){
   if (req.session.chosen_locale)
@@ -103,6 +103,17 @@ app.get('/pt-BR', function(req, res){
   req.session.chosen_locale = 'pt-BR'
   res.redirect('/')
 })
+
+//  Handle 404
+app.use(function(req, res) {
+  res.status(404)
+  res.render('404')
+});
+//  Handle 500
+app.use(function(error, req, res, next){
+  res.status(500)
+  res.render('500')
+});
 
 app.listen(3000, '0.0.0.0', function(req, res){
   console.log('Server started at port 3000...')

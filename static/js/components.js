@@ -1195,3 +1195,8 @@ Vue.component('faded-action-icon', {
     <i :class='icon + " icon-big action-icon faded"'></i>
   `
 })
+Vue.component('massive-title',{
+  template: `
+    <h1 style='font-size:4em'><slot></slot></h1>
+  `
+})

@@ -1,4 +1,5 @@
 {
+	"404": "404",
 	"lang": "pt-BR",
 	"LOGIN": "ENTRAR",
 	"Username": "Nome de usuário",
@@ -51,5 +52,17 @@
 	"Add   action": "Add   action",
 	"Add existing action": "Add existing action",
 	"EDIT PROJECT TITLE": "EDIT PROJECT TITLE",
-	"Edit title": "Edit title"
+	"Edit title": "Edit title",
+	"404: Page Not Found": "404: Page Not Found",
+	"404 - Page Not Found": "404 - Page Not Found",
+	"Oopsie! Looks like this page does not exist.": "Oopsie! Looks like this page does not exist.",
+	"Try: ": "Try: ",
+	"Oopsie!!! Looks like this page does not exist!": "Oopsie!!! Looks like this page does not exist!",
+	"Oopsie!!! Looks like this page does not exist...": "Oopsie!!! Looks like this page does not exist...",
+	"404 - Internal Server Error": "404 - Internal Server Error",
+	"Website has been shut down for some reasons...": "Website has been shut down for some reasons...",
+	"500 - Internal Server Error": "500 - Internal Server Error",
+	"Oopsie!!! Website has been shut down for some reasons...": "Oopsie!!! Website has been shut down for some reasons...",
+	"Try loading this page later.": "Try loading this page later.",
+	"Oopsie!!! The website has been shut down for some reasons...": "Oopsie!!! The website has been shut down for some reasons..."
 }
