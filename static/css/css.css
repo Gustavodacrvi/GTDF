@@ -802,9 +802,9 @@ a{
 .calendar-graph{
   width: 100%;
   height: 175px;
-  margin: 40px 0; 
+  margin-top: 40px; 
   position: relative;
-  overflow: auto;
+  overflow: visible;
 }
 
 .calendar-graph > h2{
@@ -820,7 +820,8 @@ a{
   height: 66%;
   width: 97%;
   margin-left: 10px;
-  margin-top: 25px;
+  top: 25px;
+  overflow: visible;
 }
 
 .calendar-graph > div > div:nth-child(1){
@@ -871,16 +872,40 @@ a{
   margin-top: 3px;
 }
 
-.calendar-graph .square{
-  background-color: #B9B9B9;
-}
-
 .calendar-graph .dark-square{
   background-color: #32373f;
 }
 
 .square + .square, .dark-square + .dark-square{
   margin-top: 3px;
+}
+
+.calendar-graph .square{
+  background-color: #B9B9B9;
+  cursor: pointer;
+  transition-duration: .2s;
+}
+
+.calendar-graph .square:hover{
+  background-color: #F8CC63;
+  transform: scale(1.2,1.2);
+}
+
+
+
+[data-title]::after {
+  content: attr(data-title);
+  visibility: hidden;
+  position: absolute;
+  bottom: 20px;
+  left: -33px;
+  background-color: #464b53;
+  padding: 6px;
+  border-radius: 6px;
+}
+
+[data-title]:hover::after {
+  visibility: visible;  
 }
 
 @media screen and (max-width: 796px){

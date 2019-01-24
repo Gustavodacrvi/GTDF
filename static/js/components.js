@@ -776,7 +776,6 @@ Vue.component('graph', {
     returnAndAddDate(){
       let date = this.date.stringify()
       this.date.addDay(1)
-      console.log(date)
       return date
     }
   }
@@ -786,7 +785,7 @@ Vue.component('square', {
     date: String
   },
   template: `
-    <div class='square' :title='date'></div>
+    <div class='square' :data-title='date'></div>
   `
 })
 Vue.component('dark-square', {
