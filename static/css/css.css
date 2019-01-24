@@ -461,7 +461,7 @@ a{
 }
 
 .side-link{
-  font-size: 1.1em;  
+  font-size: 1.15em;  
 }
 
 .underline-link{
@@ -766,7 +766,6 @@ a{
 .option-selection > div{
   position: absolute;
   z-index: 5;
-  top: 105%;
   width: 100%;
 }
 

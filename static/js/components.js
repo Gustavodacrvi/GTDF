@@ -338,13 +338,13 @@ Vue.component('basket', {
           </transition-group>
         </draggable>
         <h2>Project actions</h2>
-        <template v-if='!thereIsAtLeastOneProjectAction'>
+        <template v-if='!thereIsAtLeastOneProjectAction("basket")'>
           <span class='faded'>Your project actions with the tag "basket" will be shown here.</br></br>Go to the project section to create projects.</span>
         </template>
         <draggable v-model='user.actions' :options="{handle:'.draggable'}">
           <transition-group name='flip-list' tag='div'>
           <template v-for='project in user.projects'>
-            <project-action v-for='i in user.projects[project.id].actions' :title='user.actions[i].title' :description='user.actions[i].description' :key='user.actions[i].id' :id='user.actions[i].id' :dropdown='dropdowns[user.actions[i].id]' :icongroup='icongroups' :projectId='user.actions[i].projectId'>
+            <project-action v-for='i in user.projects[project.id].actions' v-if='user.actions[i].tag == "basket"' :title='user.actions[i].title' :description='user.actions[i].description' :key='user.actions[i].id' :id='user.actions[i].id' :dropdown='dropdowns[user.actions[i].id]' :icongroup='icongroups' :projectId='user.actions[i].projectId'>
             </project-action>
         </template>
           </transition-group>
@@ -359,7 +359,7 @@ Vue.component('basket', {
       let act = this.user.actions
       let length = act.length
       for (let i = 0;i < length;i++)
-        if (act[i].tag == tag)
+        if (act[i].tag == tag && !act[i].projectId && act[i].projectId != 0)
           return true
       return false
     },
@@ -372,6 +372,15 @@ Vue.component('basket', {
       for (let i = 0;i < length;i++)
         ids.push(this.user.actions[i].id)
       return ids
+    },
+    thereIsAtLeastOneProjectAction(tag){
+      let act = this.$root.user.actions
+      let length = act.length
+      for (let i = 0;i < length;i++)
+        if (!act[i].projectId && act[i].projectId != 0)
+          if (act[i].tag == tag)
+            return true
+      return false
     },
     setHttpTimeOut(seconds){
       this.func = setTimeout(() => {
@@ -390,16 +399,6 @@ Vue.component('basket', {
     },
     changeDropdownState(data){
       this.$emit('dropdown-state', {state: data.state, id: data.id})
-    }
-  },
-  computed: {
-    thereIsAtLeastOneProjectAction(){
-      let pro = this.$root.user.projects
-      let length = pro.length
-      for (let i = 0;i < length;i++)
-        if (pro[i].actions.length > 0)
-          return true
-      return false
     }
   },
   watch: {
@@ -488,14 +487,120 @@ Vue.component('calendar', {
   `
 })
 Vue.component('next-actions', {
+  props: {
+    icongroups: Boolean,
+    user: Object,
+    dropdowns: Object
+  },
+  data(){
+    return {
+      func: Function,
+      sent: false,
+      changed: Boolean,
+      first: true,
+      oldids: Array,
+      isEqual(arr1, arr2){
+        let length = arr1.length
+        for (let i = 0;i < length;i++)
+          if (arr1[i] != arr2[i])
+            return false
+        return true
+      }
+    }
+  },
   template: `
   <div>
     <div>
-      <h1>next actions</h1>
-      <h1>asdffffffffffffffasdf</h1>
+      <action-bar>
+        <action-bar-icon icon='fa fa-plus' id='addAction' tag='nextAction' @click='openUserForm'></action-bar-icon>
+      </action-bar>
+      <h2>Non project actions</h2>
+      <template v-if='!hasTagAction("nextAction")'>
+        <span class='faded'>Your non project actions with the tag "next action" will be shown here.</br></br>Click on the plus icon to add an action.</span> 
+      </template>
+      <template v-if='user'>
+        <draggable v-model='user.actions' :options="{handle:'.draggable'}">
+          <transition-group name='flip-list' tag='div'>
+            <action v-for='action in user.actions' v-if='action.tag == "nextAction"' v-if='!action.projectId && action.projectId != 0' :title='action.title' :description='action.description' :key='action.id' :id='action.id' :dropdown='dropdowns[action.id]' :icongroup='icongroups' @changed-dropdown='changeDropdownState'>
+            </action>
+          </transition-group>
+        </draggable>
+        <h2>Project actions</h2>
+        <template v-if='!thereIsAtLeastOneProjectAction("nextAction")'>
+          <span class='faded'>Your project actions with the tag "next action" will be shown here.</br></br>Go to the project section to create projects.</span>
+        </template>
+        <draggable v-model='user.actions' :options="{handle:'.draggable'}">
+          <transition-group name='flip-list' tag='div'>
+          <template v-for='project in user.projects'>
+            <project-action v-for='i in user.projects[project.id].actions' v-if='user.actions[i].tag == "nextAction"' :title='user.actions[i].title' :description='user.actions[i].description' :key='user.actions[i].id' :id='user.actions[i].id' :dropdown='dropdowns[user.actions[i].id]' :icongroup='icongroups' :projectId='user.actions[i].projectId'>
+            </project-action>
+        </template>
+          </transition-group>
+        </draggable>
+      </template>
+      <div class='space'></div>
     </div>
   </div>
-  `
+  `,
+  methods: {
+    hasTagAction(tag){
+      let act = this.user.actions
+      let length = act.length
+      for (let i = 0;i < length;i++)
+        if (act[i].tag == tag && !act[i].projectId && act[i].projectId != 0)
+          return true
+      return false
+    },
+    thereIsAtLeastOneProjectAction(tag){
+      let act = this.$root.user.actions
+      let length = act.length
+      for (let i = 0;i < length;i++)
+        if (!act[i].projectId && act[i].projectId != 0)
+          if (act[i].tag == tag)
+            return false
+      return true
+    },
+    openUserForm(id){
+      this.$emit('openform', id)
+    },
+    calculateIds(){
+      let ids = []
+      let length = this.user.actions.length
+      for (let i = 0;i < length;i++)
+        ids.push(this.user.actions[i].id)
+      return ids
+    },
+    setHttpTimeOut(seconds){
+      this.func = setTimeout(() => {
+        let ids = this.calculateIds()
+        if (!this.first)
+          this.changed = !this.isEqual(ids, this.oldids)
+        else
+          this.changed = true
+          this.first = false
+        this.oldids = ids
+        ids.push(this.changed)
+        this.$emit('rearrange', ids)
+        this.sent = false
+      }, seconds)
+      this.sent = true
+    },
+    changeDropdownState(data){
+      this.$emit('dropdown-state', {state: data.state, id: data.id})
+    }
+  },
+  watch: {
+    'user.actions': function(){
+      // wait some seconds before sending the https request
+      let seconds = 3000
+      if (!this.sent){
+        this.setHttpTimeOut(seconds)
+      } else {
+        clearTimeout(this.func)
+        this.setHttpTimeOut(seconds)
+      }
+    }
+  }
 })
 Vue.component('projects', {
   props: {
@@ -785,24 +890,236 @@ Vue.component('action',{
   }
 })
 Vue.component('maybe', {
+  props: {
+    icongroups: Boolean,
+    user: Object,
+    dropdowns: Object
+  },
+  data(){
+    return {
+      func: Function,
+      sent: false,
+      changed: Boolean,
+      first: true,
+      oldids: Array,
+      isEqual(arr1, arr2){
+        let length = arr1.length
+        for (let i = 0;i < length;i++)
+          if (arr1[i] != arr2[i])
+            return false
+        return true
+      }
+    }
+  },
   template: `
   <div>
     <div>
-      <h1>maybe</h1>
-      <h1>asdffffffffffffffasdf</h1>
+      <action-bar>
+        <action-bar-icon icon='fa fa-plus' id='addAction' tag='maybe' @click='openUserForm'></action-bar-icon>
+      </action-bar>
+      <h2>Non project actions</h2>
+      <template v-if='!hasTagAction("maybe")'>
+        <span class='faded'>Your non project actions with the tag "someday/maybe" will be shown here.</br></br>Click on the plus icon to add an action.</span> 
+      </template>
+      <template v-if='user'>
+        <draggable v-model='user.actions' :options="{handle:'.draggable'}">
+          <transition-group name='flip-list' tag='div'>
+            <action v-for='action in user.actions' v-if='action.tag == "maybe"' v-if='!action.projectId && action.projectId != 0' :title='action.title' :description='action.description' :key='action.id' :id='action.id' :dropdown='dropdowns[action.id]' :icongroup='icongroups' @changed-dropdown='changeDropdownState'>
+            </action>
+          </transition-group>
+        </draggable>
+        <h2>Project actions</h2>
+        <template v-if='!thereIsAtLeastOneProjectAction("maybe")'>
+          <span class='faded'>Your project actions with the tag "someday/maybe" will be shown here.</br></br>Go to the project section to create projects.</span>
+        </template>
+        <draggable v-model='user.actions' :options="{handle:'.draggable'}">
+          <transition-group name='flip-list' tag='div'>
+          <template v-for='project in user.projects'>
+            <project-action v-for='i in user.projects[project.id].actions' v-if='user.actions[i].tag == "maybe"' :title='user.actions[i].title' :description='user.actions[i].description' :key='user.actions[i].id' :id='user.actions[i].id' :dropdown='dropdowns[user.actions[i].id]' :icongroup='icongroups' :projectId='user.actions[i].projectId'>
+            </project-action>
+        </template>
+          </transition-group>
+        </draggable>
+      </template>
+      <div class='space'></div>
     </div>
   </div>
-  `
+  `,
+  methods: {
+    hasTagAction(tag){
+      let act = this.user.actions
+      let length = act.length
+      for (let i = 0;i < length;i++)
+        if (act[i].tag == tag && !act[i].projectId && act[i].projectId != 0)
+          return true
+      return false
+    },
+    thereIsAtLeastOneProjectAction(tag){
+      let act = this.$root.user.actions
+      let length = act.length
+      for (let i = 0;i < length;i++)
+        if (!act[i].projectId && act[i].projectId != 0)
+          if (act[i].tag == tag)
+            return true
+      return false
+    },
+    openUserForm(id){
+      this.$emit('openform', id)
+    },
+    calculateIds(){
+      let ids = []
+      let length = this.user.actions.length
+      for (let i = 0;i < length;i++)
+        ids.push(this.user.actions[i].id)
+      return ids
+    },
+    setHttpTimeOut(seconds){
+      this.func = setTimeout(() => {
+        let ids = this.calculateIds()
+        if (!this.first)
+          this.changed = !this.isEqual(ids, this.oldids)
+        else
+          this.changed = true
+          this.first = false
+        this.oldids = ids
+        ids.push(this.changed)
+        this.$emit('rearrange', ids)
+        this.sent = false
+      }, seconds)
+      this.sent = true
+    },
+    changeDropdownState(data){
+      this.$emit('dropdown-state', {state: data.state, id: data.id})
+    }
+  },
+  watch: {
+    'user.actions': function(){
+      // wait some seconds before sending the https request
+      let seconds = 3000
+      if (!this.sent){
+        this.setHttpTimeOut(seconds)
+      } else {
+        clearTimeout(this.func)
+        this.setHttpTimeOut(seconds)
+      }
+    }
+  }
 })
 Vue.component('waiting', {
+  props: {
+    icongroups: Boolean,
+    user: Object,
+    dropdowns: Object
+  },
+  data(){
+    return {
+      func: Function,
+      sent: false,
+      changed: Boolean,
+      first: true,
+      oldids: Array,
+      isEqual(arr1, arr2){
+        let length = arr1.length
+        for (let i = 0;i < length;i++)
+          if (arr1[i] != arr2[i])
+            return false
+        return true
+      }
+    }
+  },
   template: `
   <div>
     <div>
-      <h1>waiting</h1>
-      <h1>asdffffffffffffffasdf</h1>
+      <action-bar>
+        <action-bar-icon icon='fa fa-plus' id='addAction' tag='waiting' @click='openUserForm'></action-bar-icon>
+      </action-bar>
+      <h2>Non project actions</h2>
+      <template v-if='!hasTagAction("waiting")'>
+        <span class='faded'>Your non project actions with the tag "waiting" will be shown here.</br></br>Click on the plus icon to add an action.</span> 
+      </template>
+      <template v-if='user'>
+        <draggable v-model='user.actions' :options="{handle:'.draggable'}">
+          <transition-group name='flip-list' tag='div'>
+            <action v-for='action in user.actions' v-if='action.tag == "waiting"' v-if='!action.projectId && action.projectId != 0' :title='action.title' :description='action.description' :key='action.id' :id='action.id' :dropdown='dropdowns[action.id]' :icongroup='icongroups' @changed-dropdown='changeDropdownState'>
+            </action>
+          </transition-group>
+        </draggable>
+        <h2>Project actions</h2>
+        <template v-if='!thereIsAtLeastOneProjectAction("waiting")'>
+          <span class='faded'>Your project actions with the tag "waiting" will be shown here.</br></br>Go to the project section to create projects.</span>
+        </template>
+        <draggable v-model='user.actions' :options="{handle:'.draggable'}">
+          <transition-group name='flip-list' tag='div'>
+          <template v-for='project in user.projects'>
+            <project-action v-for='i in user.projects[project.id].actions' v-if='user.actions[i].tag == "waiting"' :title='user.actions[i].title' :description='user.actions[i].description' :key='user.actions[i].id' :id='user.actions[i].id' :dropdown='dropdowns[user.actions[i].id]' :icongroup='icongroups' :projectId='user.actions[i].projectId'>
+            </project-action>
+        </template>
+          </transition-group>
+        </draggable>
+      </template>
+      <div class='space'></div>
     </div>
   </div>
-  `
+  `,
+  methods: {
+    hasTagAction(tag){
+      let act = this.user.actions
+      let length = act.length
+      for (let i = 0;i < length;i++)
+        if (act[i].tag == tag && !act[i].projectId && act[i].projectId != 0)
+          return true
+      return false
+    },
+    openUserForm(id){
+      this.$emit('openform', id)
+    },
+    thereIsAtLeastOneProjectAction(tag){
+      let act = this.$root.user.actions
+      let length = act.length
+      for (let i = 0;i < length;i++)
+        if (!act[i].projectId && act[i].projectId != 0)
+          if (act[i].tag == tag)
+            return true
+      return false
+    },
+    calculateIds(){
+      let ids = []
+      let length = this.user.actions.length
+      for (let i = 0;i < length;i++)
+        ids.push(this.user.actions[i].id)
+      return ids
+    },
+    setHttpTimeOut(seconds){
+      this.func = setTimeout(() => {
+        let ids = this.calculateIds()
+        if (!this.first)
+          this.changed = !this.isEqual(ids, this.oldids)
+        else
+          this.changed = true
+          this.first = false
+        this.oldids = ids
+        ids.push(this.changed)
+        this.$emit('rearrange', ids)
+        this.sent = false
+      }, seconds)
+      this.sent = true
+    },
+    changeDropdownState(data){
+      this.$emit('dropdown-state', {state: data.state, id: data.id})
+    }
+  },
+  watch: {
+    'user.actions': function(){
+      // wait some seconds before sending the https request
+      let seconds = 3000
+      if (!this.sent){
+        this.setHttpTimeOut(seconds)
+      } else {
+        clearTimeout(this.func)
+        this.setHttpTimeOut(seconds)
+      }
+    }
+  }
 })
 Vue.component('text-box',{
   props: {
