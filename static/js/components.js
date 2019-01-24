@@ -532,6 +532,9 @@ Vue.component('projects', {
           <project v-for='prj in user.projects' :title='prj.title' :icongroup='icongroups' :dropdowns='dropdowns' :dropdown='projectdropdowns[prj.id]' :id='prj.id' :key='prj.id' :user='user'></project>
         </transition-group>
       </draggable>
+      <template v-if='!thereIsAtLeastOneProject'>
+        <span class='faded'>All of your projects and project actions will be shown here.</br></br>Click on the plus icon to create a project</span>
+      </template>
       </template>
     </div>
   </div>
@@ -573,6 +576,11 @@ Vue.component('projects', {
         clearTimeout(this.funcp)
         this.setHttpTimeOutProject(seconds)
       }
+    }
+  },
+  computed: {
+    thereIsAtLeastOneProject(){
+      return (this.$root.user.projects.length > 0)
     }
   }
 })
@@ -846,21 +854,6 @@ Vue.component('icon-option',{
     }
   }
 })
-Vue.component('comp-selector', {
-  props: {
-    selected: undefined
-  },
-  template: `
-    <div class='comp-selector'>
-      <div>
-        <slot></slot>
-      </div>
-      <div>
-        <component :is='selected'></component>
-      </div>
-    </div>
-  `
-})
 Vue.component('comp-option', {
   props: {
     compname: String
@@ -872,29 +865,6 @@ Vue.component('comp-option', {
   computed: {
     selected(){
       return (this.compname == this.$parent.selected) ? true : false
-    }
-  }
-})
-Vue.component('create-project', {
-  data(){
-    return {
-      show: true
-    }
-  },
-  template: `
-    <div class='create-project'>
-      <div style='height:30px'></div>
-      <form-element animation='pop2'>
-        <check-box :value='$root.tempUser.project.delete' @change='invertValue' placeholder='delete action'></check-box>
-      </form-element>
-      <div class='centralizeContent'>
-        <form-button @click='$root.transformActionToProject'>Create project</form-button>
-      </div>
-    </div>
-  `,
-  methods: {
-    invertValue(){
-      this.$root.tempUser.project.delete = !this.$root.tempUser.project.delete
     }
   }
 })
@@ -911,6 +881,29 @@ Vue.component('check-box', {
       <span>{{placeholder}}</span>
     </div>
   `
+})
+Vue.component('select-option', {
+  props: {
+    name: String,
+    id: Number
+  },
+  template: `
+    <div :class='{"option-selected": selected}' @click='select'>
+      <span>{{name}}</span>
+    </div>
+  `,
+  methods: {
+    select(){
+      this.$parent.selected = this.name
+      this.$parent.id = this.id
+      this.$parent.openedDropdown = false
+    }
+  },
+  computed: {
+    selected(){
+      return this.$parent.selected == this.name
+    }
+  }
 })
 Vue.component('option-selection', {
   props: {
@@ -936,26 +929,91 @@ Vue.component('option-selection', {
     }
   }
 })
-Vue.component('select-option', {
+Vue.component('comp-selector', {
   props: {
-    name: String,
-    id: Number
+    selected: undefined,
+    user: Object,
+    id: undefined
+  },
+  data(){
+    return {
+      selected2: 'select a project'      
+    }
   },
   template: `
-    <div :class='{"option-selected": selected}' @click='select'>
-      <span>{{name}}</span>
+    <div class='comp-selector'>
+      <div>
+        <slot></slot>
+      </div>
+      <div>
+        <component :is='selected'></component>
+      </div>
+    </div>
+  `,
+  watch: {
+    select(){
+      this.$emit('change', this.selected)
+    }
+  }
+})
+Vue.component('create-project', {
+  data(){
+    return {
+      show: true
+    }
+  },
+  template: `
+    <div class='create-project'>
+      <div style='height:30px'></div>
+      <form-element animation='pop2'>
+        <span>Create a project with the same title as this action.</span>
+      </form-element>
+      <form-element animation='pop3'>
+        <check-box :value='$root.tempUser.project.delete' @change='invertValue' placeholder='delete action'></check-box>
+      </form-element>
+      <form-element class='centralizeContent' animation='pop4'>
+        <form-button @click='$root.transformActionToProject'>Create project</form-button>
+      </form-element>
     </div>
   `,
   methods: {
-    select(){
-      this.$parent.selected = this.name
-      this.$parent.id = this.id
-      this.$parent.openedDropdown = false
+    invertValue(){
+      this.$root.tempUser.project.delete = !this.$root.tempUser.project.delete
+    }
+  }
+})
+Vue.component('add-to-project', {
+  data(){
+    return {
+      show: true
     }
   },
-  computed: {
-    selected(){
-      return this.$parent.selected == this.name
+  template: `
+    <div class='create-project'>
+      <div style='height:30px'></div>
+      <form-element animation='pop2'>
+        <span>Add this action to a project.</span>
+      </form-element>
+      <form-element animation='pop3'>
+        <option-selection :selected='$parent.selected2' @change='(v) => {this.$parent.selected2 = v.name;this.$parent.id = v.id}'>
+          <select-option v-for='project in $parent.user.projects' :name='project.title' :id='project.id'></select-option>
+        </option-selection>
+      </form-element>
+      <form-element class='centralizeContent' animation='pop4'>
+        <form-button @click='addActionToProject'>Create project</form-button>
+      </form-element>
+    </div>
+  `,
+  methods: {
+    addActionToProject() {
+      let rt = this.$root
+      let dt = rt.tempUser.action
+      let p = this.$parent
+      rt.user.actions[dt.id].projectId = p.id
+      rt.user.projects[p.id].actions.push(dt.id)
+      if (!rt.guest)
+        rt.POSTrequest('/add-existing-action-project-from-action', 'actionId='+dt.id+'&projectId='+p.id)
+      rt.closeActionForm()
     }
   }
 })

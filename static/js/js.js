@@ -33,7 +33,8 @@ let vm = new Vue({
     ],
     showIconGroups: false,
     openedActionContents: undefined,
-    openedProjectDropdowns: undefined
+    openedProjectDropdowns: undefined,
+    transformActionProject: 'create-project'
   },
   methods: {
     // PASSWORDS
@@ -238,16 +239,18 @@ let vm = new Vue({
           this.POSTrequest('/save-new-action-order', this.parseArrayToHTTPparams(ids, 'a'))
       },
       addAlreadyExistingAction(){
-        let rt = this
-        let pro = rt.user.projects
-        let act = rt.user.actions
-        let dt = rt.tempUser.project
-        
-        pro[dt.id].actions.push(dt.id2)
-        act[dt.id2].projectId = dt.id
-        if (!rt.guest)
-          this.POSTrequest('/add-existing-action-project', 'projectId='+dt.id+'&actionId='+dt.id2)
-        rt.closeActionForm()
+        if (dt.id2 != ''){
+          let rt = this
+          let pro = rt.user.projects
+          let act = rt.user.actions
+          let dt = rt.tempUser.project
+          
+          pro[dt.id].actions.push(dt.id2)
+          act[dt.id2].projectId = dt.id
+          if (!rt.guest)
+            this.POSTrequest('/add-existing-action-project', 'projectId='+dt.id+'&actionId='+dt.id2)
+          rt.closeActionForm()
+        }
       },
       removeActionFromProject(actionId){
         let i = this.getIndexOfProjectThatHasTheGivenActionId(actionId)

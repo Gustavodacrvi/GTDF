@@ -132,9 +132,9 @@
         <title-big><%= __('CREATE/ADD TO PROJECT') %></title-big>
       </form-element>
       <form-element animation='pop2' class='centralizeContent'>
-        <comp-selector selected='create-project'>
+        <comp-selector :selected='transformActionProject' @change='(v) => transformActionProject = v' :user='user'>
           <comp-option compname='create-project'><%= __('Create project') %></comp-option>
-          <comp-option compname='add-to-project'><%= __('Add to project') %></comp-option>
+          <comp-option compname='add-to-project' ><%= __('Add to project') %></comp-option>
         </comp-selector>
       </form-element>
     </action-form>

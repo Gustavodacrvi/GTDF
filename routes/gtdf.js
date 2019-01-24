@@ -256,4 +256,22 @@ router.post('/transform-action-to-project', (req, res) => {
   })
 })
 
+router.post('/add-existing-action-project-from-action', (req, res) => {
+  User.getUserById(req.user.id, (err, user) => {
+    if (err) handleError(err)
+    let dt = req.body
+    
+    user.data.actions[dt.actionId].projectId = dt.projectId
+    user.data.projects[dt.projectId].actions.push(dt.actionId)
+
+    user.markModified('data')
+    user.save((err) => {
+      if (err) handleError(err)
+
+      res.send()
+    })
+  })
+})
+
+
 module.exports = router
