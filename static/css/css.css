@@ -799,6 +799,90 @@ a{
   cursor: pointer;
 }
 
+.calendar-graph{
+  width: 100%;
+  height: 175px;
+  margin: 40px 0; 
+  position: relative;
+  overflow: auto;
+}
+
+.calendar-graph > h2{
+  position: absolute;
+  left: 4px;
+  margin: 0;
+  color: #F8CC63;
+  top: 4px;
+}
+
+.calendar-graph > div{
+  position: relative;
+  height: 66%;
+  width: 97%;
+  margin-left: 10px;
+  margin-top: 25px;
+}
+
+.calendar-graph > div > div:nth-child(1){
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+  width: 6%;
+  height: 79%;
+}
+
+.calendar-graph > div > div:nth-child(2){
+  position: absolute;
+  top: 0;
+  right: 3%;
+  display: flex;
+  justify-content: space-around;
+  width: 91%;
+  height: 21%;
+}
+
+.calendar-graph > div > div:nth-child(3){
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 94%;
+  height: 79%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-content: flex-start;
+}
+
+.calendar-graph > :last-child{
+  position: absolute;
+  right: 0;
+  bottom: 2px;
+  width: 100%;
+  height: 30px;
+}
+
+.calendar-graph .square, .calendar-graph .dark-square{
+  width: 10px;
+  height: 10px;
+  margin-left: 3px;
+  margin-top: 3px;
+}
+
+.calendar-graph .square{
+  background-color: #B9B9B9;
+}
+
+.calendar-graph .dark-square{
+  background-color: #32373f;
+}
+
+.square + .square, .dark-square + .dark-square{
+  margin-top: 3px;
+}
+
 @media screen and (max-width: 796px){
   .action > :first-child > :last-child, .project > :first-child > :last-child{
     position: relative;

@@ -196,20 +196,6 @@
     </template>
     <template slot='adds'>
       <adds>
-        <template v-if='user'>
-          <div>
-            <h3>ACTIONS</h3>
-            <h5 v-for='action in user.actions'>{{action}}<h5>
-          </div>
-          <div>
-            <h3>PROJECTS</h3>
-            <h5 v-for='project in user.projects'>{{project}}<h5>
-          </div>
-          <div>
-            <h3>TEMP USER</h3>
-            <h5>{{tempUser}}<h5>
-          </div>
-        </template>
       </adds>
     </template>
   </user-content>
