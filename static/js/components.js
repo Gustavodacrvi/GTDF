@@ -1,3 +1,4 @@
+
 class DateM {
   constructor(date_str){
       let splited = date_str.split('/')
@@ -706,13 +707,35 @@ Vue.component('action-form', {
   `
 })
 Vue.component('calendar', {
+  data() {
+    return {
+      date: ''
+    }
+  },
   template: `
   <div>
     <div>
-      <graph>
+      <graph @dateselected='selectDate'>
       </graph>
+      <calendar-action-bar>
+        <action-bar-icon icon='fa fa-plus' id='addTimedAction' tag='calendar' @click='openUserForm'></action-bar-icon>
+        <input class='calendar-input' v-model='date'></input>
+      </calendar-action-bar>
     </div>
   </div>
+  `,
+  methods: {
+    selectDate(date){
+      this.date = date
+    },
+    openUserForm(id){
+      this.$emit('openform', id)
+    },
+  }
+})
+Vue.component('calendar-action-bar', {
+  template: `
+    <div class='calendar-action-bar'><slot></slot></div>
   `
 })
 Vue.component('graph', {
@@ -733,6 +756,7 @@ Vue.component('graph', {
     this.numberOfDaysUntilFirstMonday = new DateM('1/1/'+this.date.year).getWeekDay()
 
     this.created = true
+    this.$emit('dateselected', this.currentDate)
   },
   template: `
     <div class='calendar-graph card'>
@@ -784,9 +808,21 @@ Vue.component('square', {
   props: {
     date: String
   },
+  data(){
+    return {
+      d: false
+    }
+  },
   template: `
-    <div class='square' :data-title='date'></div>
-  `
+    <div :class='{"selected-square": isSelected(), square: !d}' :data-title='date' @click='$parent.$emit("dateselected",date)'></div>
+  `,
+  methods: {
+    isSelected(){
+      this.d = (this.date == this.$parent.$parent.date)
+      console.log(this.d)
+      return this.d
+    }
+  }
 })
 Vue.component('dark-square', {
   template: `
