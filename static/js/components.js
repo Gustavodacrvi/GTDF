@@ -868,7 +868,7 @@ Vue.component('timed-action', {
           <span v-show='time != ""'> {{ title }}<span class='faded'>| {{ time }}</span></span>
         </div>
         <div>
-          <icon-group :show='icongroup' @delete='deleteAction'>
+          <icon-group :show='icongroup' @delete='deleteAction' @edit='editAction'>
             <action-icon icon='fa fa-times' event='delete'></action-icon>
             <action-icon icon='fa fa-edit' event='edit'></action-icon>
             <action-icon icon='fa fa-tag' event='editTag'></action-icon>
@@ -896,6 +896,13 @@ Vue.component('timed-action', {
 
       if (!this.$root.guest)
         this.$root.POSTrequest('/delete-action', 'id=' + this.id)
+    },
+    openActionForm(id){
+      this.$root.openUserForm({id: '' + id})
+      this.$root.getDataFromAction(this.$root.user.actions[this.id])
+    },
+    editAction(){
+      this.openActionForm('editTimedAction')
     }
   }
 })

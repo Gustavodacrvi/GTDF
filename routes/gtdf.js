@@ -294,4 +294,20 @@ router.post('/add-timed-action', (req, res) => {
   })
 })
 
+router.post('/edit-timed-action', (req, res) => {
+  User.getUserById(req.user.id, (err, user) => {
+    if (err) return handleError(err)
+    let dt = req.body
+    
+    User.editTimedAction(user.data.actions, dt.title, dt.description, dt.date, dt.time, dt.id)
+
+    user.markModified('data.actions')
+    user.save((err) => {
+      if (err) return handleError(err)
+
+      res.send()
+    })
+  })
+})
+
 module.exports = router

@@ -295,6 +295,19 @@ let vm = new Vue({
         if (!this.guest)
           this.POSTrequest('/remove-action-from-project', 'actionId='+actionId)
       },
+      editTimedAction(){
+        let rt = this.$root
+        let act = rt.user.actions
+        let dt = rt.tempUser.action
+
+        act[dt.id].title = dt.title
+        act[dt.id].description = dt.description
+        act[dt.id].calendar.date = dt.calendar.date
+        act[dt.id].calendar.time = dt.calendar.time
+        if (!rt.guest)
+          rt.POSTrequest('/edit-timed-action', 'id='+dt.id+'&description='+dt.description+'&date='+dt.calendar.date+'&time='+dt.calendar.time+'&title='+dt.title)
+        this.closeActionForm()
+      },
     iconGroupEventHandlers(){
       let iconGroups = document.querySelectorAll('.icon-group')
       if (this.desktop){
@@ -347,6 +360,10 @@ let vm = new Vue({
       a.description = action.description
       a.id = action.id
       a.tag = action.tag
+      if (action.calendar){
+        a.calendar.date = action.calendar.date
+        a.calendar.time = action.calendar.time
+      }
     },
     getDataFromProject(project){
       let t = this.tempUser.project

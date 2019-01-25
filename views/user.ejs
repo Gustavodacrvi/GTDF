@@ -203,6 +203,24 @@
         <form-button @click='addNonProjectTimedAction'><%= __('Add action') %></form-button>
       </form-element>
     </action-form>
+    <action-form :currentform='currentOpenedUserForm' id='editTimedAction' @close='closeActionForm'>
+      <form-element class='centralizeContent' animation='pop1'>
+        <title-big><%= __('EDIT TIMED ACTION') %></title-big>
+      </form-element>
+      <form-element animation='pop2'>
+        <text-box placeholder='TITLE' :rows='2' :value='tempUser.action.title' @change='(v) => tempUser.action.title = v'></text-box>
+      </form-element>
+      <form-element animation='pop3'>
+        <text-box placeholder='DESCRIPTION' :rows='4' :value='tempUser.action.description' @change='(v) => tempUser.action.description = v'></text-box>
+      </form-element animation='pop4'>
+      <form-element animation='pop5'>
+        <datetime-form :date='tempUser.action.calendar.date' :time='tempUser.action.calendar.time' @change='(dt) => {tempUser.action.calendar.date = dt.date;tempUser.action.calendar.time = dt.time}' @update='(dt) => {tempUser.action.calendar.validDate = dt.date;tempUser.action.calendar.validTime = dt.time}' :openedform='currentOpenedUserForm'>
+        </datetime-form>
+      </form-element>
+      <form-element class='centralizeContent' animation='pop6'>
+        <form-button @click='editTimedAction'><%= __('Edit action') %></form-button>
+      </form-element>
+    </action-form>
   </fixed>
   <user-content>
     <template slot='content'>
