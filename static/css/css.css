@@ -902,6 +902,17 @@ a{
   padding: 0 10px;
 }
 
+.calendar-action-bar > :last-child{
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.calendar-action-bar > :last-child > :first-child{
+  display: flex;
+  flex-wrap: wrap;
+}
+
 .calendar-input{
   background-color: #242930;
   border-radius: 6px;
@@ -941,6 +952,21 @@ a{
 .datetime-form > div > :first-child{
   display: flex;
   justify-content: space-around;
+}
+
+.link-yellow{
+  border: 0.5px solid rgba(100, 100, 100, .2);
+  border-radius: 30px;
+  padding: 2px 6px;
+  cursor: pointer;
+  transition-duration: .2s;
+  margin: 4px;
+}
+
+.link-yellow:hover, .link-yellow-active{
+  background-color: #F8CC63;
+  color: black;
+  border: none;
 }
 
 @media screen and (max-width: 796px){

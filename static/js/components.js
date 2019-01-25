@@ -794,6 +794,20 @@ Vue.component('datetime-form', {
 Vue.component('date', {
 
 })
+Vue.component('link-yellow', {
+  props: {
+    active: false,
+    argument: String
+  },
+  template: `
+    <span :class='{"link-yellow": true,"link-yellow-active": isActive()}' @click='$emit("click", argument)'><slot></slot></span>
+  `,
+  methods: {
+    isActive(){
+      return (this.active == this.argument)
+    }
+  }
+})
 Vue.component('calendar', {
   props: {
     user: Object,
@@ -802,7 +816,9 @@ Vue.component('calendar', {
   },
   data() {
     return {
-      date: ''
+      date: '',
+      year: '',
+      beforeafter: undefined
     }
   },
   template: `
@@ -811,22 +827,65 @@ Vue.component('calendar', {
       <graph @dateselected='selectDate'>
       </graph>
       <calendar-action-bar>
-        <action-bar-icon icon='fa fa-plus' id='addTimedAction' tag='calendar' @click='openUserForm'></action-bar-icon>
-        <input class='calendar-input' v-model='date'></input>
+        <div>
+          <action-bar-icon icon='fa fa-plus' id='addTimedAction' tag='calendar' @click='openUserForm'></action-bar-icon>
+        </div>
+        <div>
+          <div>
+            <link-yellow :active='beforeafter' argument='before' @click='selectButton'>Before {{year}}</link-yellow>
+            <link-yellow :active='beforeafter' argument='after' @click='selectButton'>After {{year}}</link-yellow>
+          </div>
+          <div style='width:20px;display: inline-block'></div>
+          <input class='calendar-input' v-model='date'></input>
+        </div>
       </calendar-action-bar>
       <h2>Non project actions</h2>
-      <template v-if='!thereIsAtLeastOneNonProjectTimedActionWithTheSelectedDate()'>
+      <template v-if='!thereIsAtLeastOneNonProjectTimedActionWithTheSelectedDate() && beforeafter == undefined'>
         <span class='faded'>Your non project actions with the "calendar" tag with the date {{date}} will be shown here.</br></br>Click on the plus icon to add an action with the date {{date}}.</span>
       </template>
-      <draggable v-model='user.actions' :options="{handle:'.draggable'}">
+      <template v-if='beforeafter == "after" && !thereIsAtLeastOneNonProjectTimedActionAfterThisYear()'>
+        <span class='faded'>Your non project actions with the "calendar" tag that comes after the year {{year}} will be shown here.</span>
+      </template>
+      <template v-if='beforeafter == "before" && !thereIsAtLeastOneNonProjectTimedActionBeforeThisYear()'>
+        <span class='faded'>Your non project actions with the "calendar" tag that comes before the year {{year}} will be shown here.</span>
+      </template>
+      <template v-if='beforeafter == undefined'>
+        <draggable v-model='user.actions' :options="{handle:'.draggable'}">
           <transition-group name='flip-list' tag='div'>
             <timed-action v-for='action in user.actions' v-if='action.calendar && action.calendar.date == date' :title='action.title' :description='action.description' :key='action.id' :id='action.id' :icongroup='icongroups' :dropdown='dropdowns[action.id]' :time='action.calendar.time'></timed-action>
           </transition-group>
         </draggable>
+      </template>
+      <template v-if='beforeafter == "before"'>
+        <draggable v-model='user.actions' :options="{handle:'.draggable'}">
+          <transition-group name='flip-list' tag='div'>
+            <timed-action v-for='action in user.actions' v-if='action.calendar && action.calendar.date.split("/")[2] < year' :title='action.title' :description='action.description' :key='action.id' :id='action.id' :icongroup='icongroups' :dropdown='dropdowns[action.id]' :time='action.calendar.time' :date='action.calendar.date'></timed-action>
+          </transition-group>
+        </draggable>
+      </template>
+      <template v-if='beforeafter == "after"'>
+        <draggable v-model='user.actions' :options="{handle:'.draggable'}">
+          <transition-group name='flip-list' tag='div'>
+            <timed-action v-for='action in user.actions' v-if='action.calendar && action.calendar.date.split("/")[2] > year' :title='action.title' :description='action.description' :key='action.id' :id='action.id' :icongroup='icongroups' :dropdown='dropdowns[action.id]' :time='action.calendar.time' :date='action.calendar.date'></timed-action>
+          </transition-group>
+        </draggable>
+      </template>
     </div>
   </div>
   `,
+  mounted(){
+    let splited = this.date.split('/')
+    this.year = splited[2]
+  },
+  afterUpdate(){
+    let splited = this.date.split('/')
+    this.year = splited[2]
+  },
   methods: {
+    selectButton(arg){
+      this.date = ''
+      setTimeout(() => this.beforeafter = arg, 10)
+    },
     selectDate(date){
       this.date = date
     },
@@ -842,11 +901,36 @@ Vue.component('calendar', {
           if (act[i].calendar && act[i].calendar.date == selectedDate)
             return true
       return false
+    },
+    thereIsAtLeastOneNonProjectTimedActionAfterThisYear(){
+      let act = this.user.actions
+      let year = parseInt(this.year)
+      let length = act.length
+      for (let i = 0;i < length;i++)
+        if (!act[i].projectId && act[i].projectId != 0 && act[i].calendar){
+          let splited = act[i].calendar.date.split('/')
+          if (parseInt(splited[2]) > year)
+            return true
+        }
+      return false
+    },
+    thereIsAtLeastOneNonProjectTimedActionBeforeThisYear(){
+      let act = this.user.actions
+      let year = parseInt(this.year)
+      let length = act.length
+      for (let i = 0;i < length;i++)
+        if (!act[i].projectId && act[i].projectId != 0 && act[i].calendar){
+          let splited = act[i].calendar.date.split('/')
+          if (parseInt(splited[2]) < year)
+            return true
+        }
+      return false
     }
   },
   watch: {
     date(){
       this.$root.tempUser.action.calendar.date = this.date
+      this.beforeafter = undefined
     }
   }
 })
@@ -857,15 +941,18 @@ Vue.component('timed-action', {
     id: Number,
     icongroup: Boolean,
     dropdown: Boolean,
-    time: String
+    time: String,
+    date: String
   },
   template: `
     <div class='action' :key='id'>
       <div class='card'>
         <div @click='dropdown = !dropdown'>
           <i class='fa fa-list icon-tiny draggable'></i>
-          <span v-show='time == ""'> {{ title }}</span>
-          <span v-show='time != ""'> {{ title }}<span class='faded'>| {{ time }}</span></span>
+          <span v-show='time == "" && date == undefined'> {{ title }}</span>
+          <span v-show='time != "" && date == undefined'> {{ title }}<span class='faded'>| {{ time }}</span></span>
+          <span v-show='time == "" && date != undefined'> {{ title }}<span class='faded'>| {{date}}</span><span class='faded'></span></span>
+          <span v-show='time != "" && date != undefined'> {{ title }}<span class='faded'>| {{date}}</span><span class='faded'>| {{ time }}</span></span>
         </div>
         <div>
           <icon-group :show='icongroup' @delete='deleteAction' @edit='editAction'>
