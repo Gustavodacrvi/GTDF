@@ -221,6 +221,21 @@
         <form-button @click='editTimedAction'><%= __('Edit action') %></form-button>
       </form-element>
     </action-form>
+    <action-form :currentform='currentOpenedUserForm' id='editTimedTag' @close='closeActionForm'>
+      <form-element animation='pop1'>
+        <title-big class='centralizeContent'><%= __('CHANGE/ADD TAG') %></title-big>
+      </form-element>
+      <form-element class='centralizeContent' animation='pop2'>
+        <icon-selection :selected='tempUser.action.tag'>
+          <icon-option icon='fa fa-hourglass-half' option='waiting'></icon-option>
+          <icon-option icon='fa fa-question' option='maybe'></icon-option>
+          <icon-option icon='fa fa-forward' option='nextAction'></icon-option>
+        </icon-selection>
+      </form-element>
+      <form-element class='centralizeContent' animation='pop3'>
+        <form-button @click='editTimedTag'><%= __('Edit tag') %></form-button>
+      </form-element>
+    </action-form>
   </fixed>
   <user-content>
     <template slot='content'>

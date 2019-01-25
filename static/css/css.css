@@ -691,7 +691,7 @@ a{
 }
 
 .icon-selection > div{
-  flex-basis: 25%;
+  flex-basis: 100%;
   display: flex;
   justify-content: center;
   cursor: pointer;

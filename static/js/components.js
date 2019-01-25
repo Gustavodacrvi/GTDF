@@ -843,27 +843,27 @@ Vue.component('calendar', {
       <template v-if='!thereIsAtLeastOneNonProjectTimedActionWithTheSelectedDate() && beforeafter == undefined'>
         <span class='faded'>Your non project actions with the "calendar" tag with the date {{date}} will be shown here.</br></br>Click on the plus icon to add an action with the date {{date}}.</span>
       </template>
-      <template v-if='beforeafter == "after" && !thereIsAtLeastOneNonProjectTimedActionAfterThisYear()'>
+      <template v-else-if='beforeafter == "after" && !thereIsAtLeastOneNonProjectTimedActionAfterThisYear()'>
         <span class='faded'>Your non project actions with the "calendar" tag that comes after the year {{year}} will be shown here.</span>
       </template>
-      <template v-if='beforeafter == "before" && !thereIsAtLeastOneNonProjectTimedActionBeforeThisYear()'>
+      <template v-else-if='beforeafter == "before" && !thereIsAtLeastOneNonProjectTimedActionBeforeThisYear()'>
         <span class='faded'>Your non project actions with the "calendar" tag that comes before the year {{year}} will be shown here.</span>
       </template>
       <template v-if='beforeafter == undefined'>
         <draggable v-model='user.actions' :options="{handle:'.draggable'}">
-          <transition-group name='flip-list' tag='div'>
+          <transition-group name='flip-list' tag='div'> 
             <timed-action v-for='action in user.actions' v-if='action.calendar && action.calendar.date == date' :title='action.title' :description='action.description' :key='action.id' :id='action.id' :icongroup='icongroups' :dropdown='dropdowns[action.id]' :time='action.calendar.time'></timed-action>
           </transition-group>
         </draggable>
       </template>
-      <template v-if='beforeafter == "before"'>
+      <template v-else-if='beforeafter == "before"'>
         <draggable v-model='user.actions' :options="{handle:'.draggable'}">
           <transition-group name='flip-list' tag='div'>
             <timed-action v-for='action in user.actions' v-if='action.calendar && action.calendar.date.split("/")[2] < year' :title='action.title' :description='action.description' :key='action.id' :id='action.id' :icongroup='icongroups' :dropdown='dropdowns[action.id]' :time='action.calendar.time' :date='action.calendar.date'></timed-action>
           </transition-group>
         </draggable>
       </template>
-      <template v-if='beforeafter == "after"'>
+      <template v-else-if='beforeafter == "after"'>
         <draggable v-model='user.actions' :options="{handle:'.draggable'}">
           <transition-group name='flip-list' tag='div'>
             <timed-action v-for='action in user.actions' v-if='action.calendar && action.calendar.date.split("/")[2] > year' :title='action.title' :description='action.description' :key='action.id' :id='action.id' :icongroup='icongroups' :dropdown='dropdowns[action.id]' :time='action.calendar.time' :date='action.calendar.date'></timed-action>
@@ -931,6 +931,12 @@ Vue.component('calendar', {
     date(){
       this.$root.tempUser.action.calendar.date = this.date
       this.beforeafter = undefined
+    },
+    user:{
+      handler(){
+        this.$forceUpdate()
+      },
+      deep: true
     }
   }
 })
@@ -945,7 +951,7 @@ Vue.component('timed-action', {
     date: String
   },
   template: `
-    <div class='action' :key='id'>
+    <div class='action'>
       <div class='card'>
         <div @click='dropdown = !dropdown'>
           <i class='fa fa-list icon-tiny draggable'></i>
@@ -955,10 +961,10 @@ Vue.component('timed-action', {
           <span v-show='time != "" && date != undefined'> {{ title }}<span class='faded'>| {{date}}</span><span class='faded'>| {{ time }}</span></span>
         </div>
         <div>
-          <icon-group :show='icongroup' @delete='deleteAction' @edit='editAction'>
+          <icon-group :show='icongroup' @delete='deleteAction' @edit='editAction' @tag='editTag'>
             <action-icon icon='fa fa-times' event='delete'></action-icon>
             <action-icon icon='fa fa-edit' event='edit'></action-icon>
-            <action-icon icon='fa fa-tag' event='editTag'></action-icon>
+            <action-icon icon='fa fa-tag' event='tag'></action-icon>
             <action-icon icon='fa fa-project-diagram' event='project'></action-icon>
           </icon-group>
         </div>
@@ -971,6 +977,9 @@ Vue.component('timed-action', {
     </div>
   `,
   methods: {
+    editTag(){
+      this.openActionForm('editTimedTag')
+    },
     deleteAction(){
       let data = this.$root
       let act = data.user.actions

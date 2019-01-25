@@ -308,6 +308,18 @@ let vm = new Vue({
           rt.POSTrequest('/edit-timed-action', 'id='+dt.id+'&description='+dt.description+'&date='+dt.calendar.date+'&time='+dt.calendar.time+'&title='+dt.title)
         this.closeActionForm()
       },
+      editTimedTag(){
+        let dt = this.tempUser.action
+        let act = this.user.actions
+
+        act[dt.id].tag = dt.tag
+        delete act[dt.id].calendar
+
+        if (!this.guest)
+          this.POSTrequest('/edit-timed-tag', 'id='+dt.id+'&tag='+dt.tag)
+
+        this.closeActionForm()
+      },
     iconGroupEventHandlers(){
       let iconGroups = document.querySelectorAll('.icon-group')
       if (this.desktop){

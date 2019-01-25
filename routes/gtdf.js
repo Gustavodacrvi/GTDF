@@ -310,4 +310,21 @@ router.post('/edit-timed-action', (req, res) => {
   })
 })
 
+router.post('/edit-timed-tag', (req, res) => {
+  User.getUserById(req.user.id, (err, user) => {
+    if (err) return handleError(err)
+    let dt = req.body
+    
+    delete user.data.actions[dt.id].calendar
+    user.data.actions[dt.id].tag = dt.tag
+
+    user.markModified('data.actions')
+    user.save((err) => {
+      if (err) return handleError(err)
+
+      res.send()
+    })
+  })
+})
+
 module.exports = router
