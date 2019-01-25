@@ -278,4 +278,20 @@ router.post('/add-existing-action-project-from-action', (req, res) => {
   })
 })
 
+router.post('/add-timed-action', (req, res) => {
+  User.getUserById(req.user.id, (err, user) => {
+    if (err) return handleError(err)
+    let dt = req.body
+    
+    User.addTimedAction(user.data.actions, dt.title, dt.description, dt.date, dt.time)
+
+    user.markModified('data.actions')
+    user.save((err) => {
+      if (err) return handleError(err)
+
+      res.send()
+    })
+  })
+})
+
 module.exports = router

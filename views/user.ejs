@@ -196,11 +196,11 @@
         <text-box placeholder='DESCRIPTION' :rows='4' :value='tempUser.action.description' @change='(v) => tempUser.action.description = v'></text-box>
       </form-element animation='pop4'>
       <form-element animation='pop5'>
-        <datetime-form :date='tempUser.action.calendar.date' @change='(dt) => {tempUser.action.calendar.date = dt.date;tempUser.action.calendar.time = dt.time}' @update='(dt) => {tempUser.action.calendar.validDate = dt.date;tempUser.action.calendar.validTime = dt.time}'>
+        <datetime-form :date='tempUser.action.calendar.date' :time='tempUser.action.calendar.time' @change='(dt) => {tempUser.action.calendar.date = dt.date;tempUser.action.calendar.time = dt.time}' @update='(dt) => {tempUser.action.calendar.validDate = dt.date;tempUser.action.calendar.validTime = dt.time}' :openedform='currentOpenedUserForm'>
         </datetime-form>
       </form-element>
       <form-element class='centralizeContent' animation='pop6'>
-        <form-button><%= __('Add action') %></form-button>
+        <form-button @click='addNonProjectTimedAction'><%= __('Add action') %></form-button>
       </form-element>
     </action-form>
   </fixed>
@@ -214,6 +214,10 @@
     </template>
     <template slot='adds'>
       <adds>
+      <template v-if='user'>
+        <h3>ACTIONS</h3>
+        <h5 v-for='action in user.actions'>{{action}}</h5>
+      </template>
       </adds>
     </template>
   </user-content>

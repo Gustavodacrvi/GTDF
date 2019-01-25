@@ -13,10 +13,10 @@ let vm = new Vue({
         title: undefined,
         description: undefined,
         calendar: {
-          time: String,
-          date: String,
+          time: '',
+          date: '',
           validTime: undefined,
-          validTimeDate: undefined
+          validDate: undefined
         }
       },
       project: {
@@ -308,6 +308,9 @@ let vm = new Vue({
       u.action.tag = ''
       u.action.title = ''
       u.action.description = ''
+      u.action.calendar.time = '' 
+      u.action.calendar.validTime = undefined 
+      u.action.calendar.validDate = undefined 
       u.project.title = ''
       u.project.id = ''
       u.project.id2 = ''
@@ -362,6 +365,21 @@ let vm = new Vue({
         })
       })
     },
+    addNonProjectTimedAction(){
+      let dt = this.tempUser.action
+      let act = this.user.actions
+      let validDate = dt.calendar.validDate
+      let validTime = dt.calendar.validTime
+
+      if (validDate && validTime){
+        let length = act.length
+        act.push({id: length, tag: 'calendar', title: dt.title, description: dt.description, calendar: {time: dt.calendar.time, date: dt.calendar.date}})
+
+        if (!this.guest)
+          this.POSTrequest('/add-timed-action', 'tag="calendar"&title='+dt.title+'&description='+dt.description+'&time='+dt.calendar.time+'&date='+dt.calendar.date)
+        this.closeActionForm()
+      }
+    }
   },
   watch: {
     currentSectionComponent(){

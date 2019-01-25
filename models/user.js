@@ -218,3 +218,7 @@ module.exports.updateActionsIds = function(data, oldProjectIds){
     act[actionId] = pro[i].id
   }
 }
+
+module.exports.addTimedAction = function(act, title, description, date, time){
+  act.push({id: act.length, tag: 'calendar', title: title, description: description, calendar: {time: time, date: date}})
+}

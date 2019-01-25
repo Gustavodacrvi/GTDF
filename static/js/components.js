@@ -1,3 +1,18 @@
+let strIsInteger = function(str){
+  if (str == undefined)
+    return false
+  if (str.length == 0)
+      return false
+  let containsLetter = false
+  for (let i = 0;i < str.length;i++)
+      if (str.charCodeAt(i) < 48 || str.charCodeAt(i) > 57){
+          containsLetter = true
+          break
+      }
+  if (containsLetter)
+      return false
+  return true
+}
 
 class DateM {
   constructor(date_str){
@@ -8,6 +23,12 @@ class DateM {
   }
   static isValidDate(date_str){
       let splited = date_str.split('/')
+
+      let length = splited.length
+      for (let i = 0;i < length;i++)
+        if (!strIsInteger(splited[i]))
+          return false
+
       let day = parseInt(splited[0])
       let month = parseInt(splited[1])
       let year = parseInt(splited[2])
@@ -154,6 +175,12 @@ class TimeM {
   }
   static isValidTime(time_str){
       let splited = time_str.split(':')
+
+      let length = splited.length
+      for (let i = 0;i < length;i++)
+        if (!strIsInteger(splited[i]))
+          return false
+
       let hour = parseInt(splited[0])
       let min = parseInt(splited[1])
 
@@ -708,11 +735,12 @@ Vue.component('action-form', {
 })
 Vue.component('datetime-form', {
   props: {
-    date: String
+    date: String,
+    time: String,
+    openedform: Boolean
   },
   data(){
     return {
-      time: '',
       validDate: true,
       validTime: true
     }
@@ -733,20 +761,33 @@ Vue.component('datetime-form', {
       </div>
     </div>
   `,
+  mounted(){
+    this.analise()
+    this.change()
+  },
   methods: {
     analise(){
       this.validDate = DateM.isValidDate(this.date)
       this.validTime = TimeM.isValidTime(this.time)
       if (this.time == '') this.validTime = true
       this.$emit('update', {date: this.validDate, time: this.validTime})
+    },
+    change(){
+      this.$emit('change', {date: this.date, time: this.time})
     }
   },
   watch: {
     date(){
       this.analise()
+      this.change()
     },
     time(){
       this.analise()
+      this.change()
+    },
+    openedform(){
+      this.analise()
+      this.change()
     }
   }
 })
