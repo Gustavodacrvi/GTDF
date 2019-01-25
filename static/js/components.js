@@ -820,7 +820,7 @@ Vue.component('calendar', {
       </template>
       <draggable v-model='user.actions' :options="{handle:'.draggable'}">
           <transition-group name='flip-list' tag='div'>
-            <timed-action v-for='action in user.actions' v-if='action.calendar && action.calendar.date == date' :title='action.title' :description='action.description' :key='action.id' :id='action.id' :icongroup='icongroups' :dropdown='action.id'></timed-action>
+            <timed-action v-for='action in user.actions' v-if='action.calendar && action.calendar.date == date' :title='action.title' :description='action.description' :key='action.id' :id='action.id' :icongroup='icongroups' :dropdown='dropdowns[action.id]' :time='action.calendar.time'></timed-action>
           </transition-group>
         </draggable>
     </div>
@@ -856,17 +856,19 @@ Vue.component('timed-action', {
     description: String,
     id: Number,
     icongroup: Boolean,
-    dropdown: Boolean
+    dropdown: Boolean,
+    time: String
   },
   template: `
     <div class='action' :key='id'>
       <div class='card'>
         <div @click='dropdown = !dropdown'>
           <i class='fa fa-list icon-tiny draggable'></i>
-          <span> {{ title }}</span>
+          <span v-show='time == ""'> {{ title }}</span>
+          <span v-show='time != ""'> {{ title }}<span class='faded'>| {{ time }}</span></span>
         </div>
         <div>
-          <icon-group :show='icongroup'>
+          <icon-group :show='icongroup' @delete='deleteAction'>
             <action-icon icon='fa fa-times' event='delete'></action-icon>
             <action-icon icon='fa fa-edit' event='edit'></action-icon>
             <action-icon icon='fa fa-tag' event='editTag'></action-icon>
@@ -880,7 +882,22 @@ Vue.component('timed-action', {
         </div>
       </transition>
     </div>
-  `
+  `,
+  methods: {
+    deleteAction(){
+      let data = this.$root
+      let act = data.user.actions
+
+      act.splice(this.id, 1)
+    
+      let oldActionIds = data.getIds(act)
+      data.resetIds(act)
+      data.updateProjectActionIds(oldActionIds)
+
+      if (!this.$root.guest)
+        this.$root.POSTrequest('/delete-action', 'id=' + this.id)
+    }
+  }
 })
 Vue.component('action',{
   props: {
@@ -1265,7 +1282,7 @@ Vue.component('project-action', {
       <div class='card'>
         <div @click='dropdown = !dropdown'>
           <i class='fa fa-list icon-tiny draggable'></i>
-          <span v-show='showprojectname'> {{ getprojectname }}<span class='faded'>|</span> {{ title }}</span>
+          <span v-show='showprojectname'> <span class='faded'>{{ getprojectname }}</span><span class='faded'>|</span> {{ title }}</span>
           <span v-show='!showprojectname'> {{ title }}</span>
         </div>
         <div>
