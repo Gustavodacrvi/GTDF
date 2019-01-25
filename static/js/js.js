@@ -11,7 +11,13 @@ let vm = new Vue({
       action: {
         tag: undefined,
         title: undefined,
-        description: undefined
+        description: undefined,
+        calendar: {
+          time: String,
+          date: String,
+          validTime: undefined,
+          validTimeDate: undefined
+        }
       },
       project: {
         delete: true,
