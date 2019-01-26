@@ -710,10 +710,10 @@ Vue.component('project-timed-action', {
       <div class='card'>
         <div @click='dropdown = !dropdown'>
           <i class='fa fa-list icon-tiny draggable'></i>
-          <span>title</span>
+          <span>{{title}}</span>
         </div>
         <div>
-          <icon-group :show='icongroup'>
+          <icon-group :show='icongroup' @delete='deleteTimedProjectAction'>
             <action-icon icon='fa fa-times' event='delete'></action-icon>
             <action-icon icon='fa fa-edit' event='edit'></action-icon>
             <action-icon icon='fa fa-tag' event='editTag'></action-icon>
@@ -727,7 +727,24 @@ Vue.component('project-timed-action', {
         </div>
       </transition>
     </div>
-  `
+  `,
+  methods: {
+    deleteTimedProjectAction(){
+      let rt = this.$root
+      let acts = rt.user.actions
+      let pros = rt.user.projects
+
+      let j = rt.getIndexOfProjectActionThatHasTheGivenActionId(this.projectid, this.id)
+      pros[this.projectid].actions.splice(j, 1)
+      acts.splice(this.id, 1)
+
+      let oldActionIds = rt.getIds(acts)
+      rt.resetIds(acts)
+      rt.updateProjectActionIds(oldActionIds)
+      if (!this.$root.guest)
+        this.$root.POSTrequest('/delete-project-action', 'id=' + this.id)
+    }
+  }
 })
 Vue.component('project-action', {
   props: {
