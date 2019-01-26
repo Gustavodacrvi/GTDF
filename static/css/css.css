@@ -887,6 +887,15 @@ a{
   background-color: #B9B9B9;
   cursor: pointer;
   transition-duration: .2s;
+  position: relative;
+}
+
+.selected-square{
+  z-index: 4;
+}
+
+.square:hover{
+  z-index: 5;
 }
 
 .calendar-graph .square:hover, .selected-square{
@@ -927,6 +936,7 @@ a{
   height: 25px;
   font-size: 1.1em;
 }
+
 
 [data-title]::after {
   content: attr(data-title);

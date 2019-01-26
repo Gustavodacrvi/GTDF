@@ -555,21 +555,38 @@ Vue.component('calendar', {
       <template v-if='beforeafter == undefined'>
         <draggable v-model='user.actions' :options="{handle:'.draggable'}">
           <transition-group name='flip-list' tag='div'> 
-            <timed-action v-for='action in user.actions' v-if='action.calendar && action.calendar.date == date' :title='action.title' :description='action.description' :key='action.id' :id='action.id' :icongroup='icongroups' :dropdown='dropdowns[action.id]' :time='action.calendar.time'></timed-action>
+            <timed-action v-for='action in user.actions' v-if='action.calendar && action.calendar.date == date && !action.projectId && action.projectId != 0' :title='action.title' :description='action.description' :key='action.id' :id='action.id' :icongroup='icongroups' :dropdown='dropdowns[action.id]' :time='action.calendar.time'></timed-action>
           </transition-group>
         </draggable>
       </template>
       <template v-else-if='beforeafter == "before"'>
         <draggable v-model='user.actions' :options="{handle:'.draggable'}">
           <transition-group name='flip-list' tag='div'>
-            <timed-action v-for='action in user.actions' v-if='action.calendar && action.calendar.date.split("/")[2] < year' :title='action.title' :description='action.description' :key='action.id' :id='action.id' :icongroup='icongroups' :dropdown='dropdowns[action.id]' :time='action.calendar.time' :date='action.calendar.date'></timed-action>
+            <timed-action v-for='action in user.actions' v-if='action.calendar && action.calendar.date.split("/")[2] < year && !action.projectId && action.projectId != 0' :title='action.title' :description='action.description' :key='action.id' :id='action.id' :icongroup='icongroups' :dropdown='dropdowns[action.id]' :time='action.calendar.time' :date='action.calendar.date'></timed-action>
           </transition-group>
         </draggable>
       </template>
       <template v-else-if='beforeafter == "after"'>
         <draggable v-model='user.actions' :options="{handle:'.draggable'}">
           <transition-group name='flip-list' tag='div'>
-            <timed-action v-for='action in user.actions' v-if='action.calendar && action.calendar.date.split("/")[2] > year' :title='action.title' :description='action.description' :key='action.id' :id='action.id' :icongroup='icongroups' :dropdown='dropdowns[action.id]' :time='action.calendar.time' :date='action.calendar.date'></timed-action>
+            <timed-action v-for='action in user.actions' v-if='action.calendar && action.calendar.date.split("/")[2] > year && !action.projectId && action.projectId != 0' :title='action.title' :description='action.description' :key='action.id' :id='action.id' :icongroup='icongroups' :dropdown='dropdowns[action.id]' :time='action.calendar.time' :date='action.calendar.date'></timed-action>
+          </transition-group>
+        </draggable>
+      </template>
+      <h2>Project actions</h2>
+      <template v-if='!thereIsAtLeastOneProjectTimedActionWithTheSelectedDate() && beforeafter == undefined'>
+        <span class='faded'>Your project actions with the the tag "calendar" with the date {{date}} will be shown here.<br></br>Go to the project section to create a project.</span>
+      </template>
+      <template v-else-if='beforeafter == "after" && !thereIsAtLeastOneProjectTimedActionAfterThisYear()'>
+        <span class='faded'>Your project actions with the "calendar" tag that comes after the year {{year}} will be shown here.</span>
+      </template>
+      <template v-else-if='beforeafter == "before" && !thereIsAtLeastOneProjectTimedActionBeforeThisYear()'>
+        <span class='faded'>Your project actions with the "calendar" tag that comes before the year {{year}} will be shown here.</span>
+      </template>
+      <template v-if='beforeafter == undefined'>
+        <draggable v-model='user.actions' :options="{handle:'.draggable'}">
+          <transition-group name='flip-list' tag='div'>
+            <project-timed-action v-for='action in user.actions' v-if='action.calendar && action.calendar.date == date && (action.projectId || action.projectId == 0)' :title='action.title' :description='action.description' :key='action.id' :id='action.id' :icongroup='icongroups' :dropdown='dropdowns[action.id]' :time='action.calendar.time' :date='action.calendar.date' :projectid='action.projectId'></project-timed-action>
           </transition-group>
         </draggable>
       </template>
@@ -605,12 +622,34 @@ Vue.component('calendar', {
             return true
       return false
     },
+    thereIsAtLeastOneProjectTimedActionWithTheSelectedDate(){
+      let act = this.user.actions
+      let selectedDate = this.date
+      let length = act.length
+      for (let i = 0;i < length;i++)
+        if (act[i].projectId || act[i].projectId == 0)
+          if (act[i].calendar && act[i].calendar.date == selectedDate)
+            return true
+      return false
+    },
     thereIsAtLeastOneNonProjectTimedActionAfterThisYear(){
       let act = this.user.actions
       let year = parseInt(this.year)
       let length = act.length
       for (let i = 0;i < length;i++)
         if (!act[i].projectId && act[i].projectId != 0 && act[i].calendar){
+          let splited = act[i].calendar.date.split('/')
+          if (parseInt(splited[2]) > year)
+            return true
+        }
+      return false
+    },
+    thereIsAtLeastOneProjectTimedActionAfterThisYear(){
+      let act = this.user.actions
+      let year = parseInt(this.year)
+      let length = act.length
+      for (let i = 0;i < length;i++)
+        if ((act[i].projectId || act[i].projectId == 0) && act[i].calendar){
           let splited = act[i].calendar.date.split('/')
           if (parseInt(splited[2]) > year)
             return true
@@ -628,6 +667,18 @@ Vue.component('calendar', {
             return true
         }
       return false
+    },
+    thereIsAtLeastOneProjectTimedActionBeforeThisYear(){
+      let act = this.user.actions
+      let year = parseInt(this.year)
+      let length = act.length
+      for (let i = 0;i < length;i++)
+        if ((act[i].projectId && act[i].projectId == 0) && act[i].calendar){
+          let splited = act[i].calendar.date.split('/')
+          if (parseInt(splited[2]) < year)
+            return true
+        }
+      return false
     }
   },
   watch: {
@@ -640,6 +691,134 @@ Vue.component('calendar', {
         this.$forceUpdate()
       },
       deep: true
+    }
+  }
+})
+Vue.component('project-timed-action', {
+  props: {
+    title: String,
+    description: String,
+    id: Number,
+    icongroup: Boolean,
+    dropdown: Boolean,
+    time: String,
+    date: String,
+    projectid: Number
+  },
+  template: `
+    <div class='action' :key='id'>
+      <div class='card'>
+        <div @click='dropdown = !dropdown'>
+          <i class='fa fa-list icon-tiny draggable'></i>
+          <span>title</span>
+        </div>
+        <div>
+          <icon-group :show='icongroup'>
+            <action-icon icon='fa fa-times' event='delete'></action-icon>
+            <action-icon icon='fa fa-edit' event='edit'></action-icon>
+            <action-icon icon='fa fa-tag' event='editTag'></action-icon>
+            <action-icon icon='fa fa-sign-out-alt' event='removeFromProject'></action-icon>
+          </icon-group>
+        </div>
+      </div>
+      <transition name='pop-long'>
+        <div class='card' v-show='dropdown'>
+          <span>{{ description }}</span>
+        </div>
+      </transition>
+    </div>
+  `
+})
+Vue.component('project-action', {
+  props: {
+    title: String,
+    description: String,
+    icongroup: Boolean,
+    dropdown: false,
+    id: Number,
+    projectId: Number,
+    showtagicon: false,
+    showprojectname: true,
+    tag: String
+  },
+  template: `
+    <div class='action' :key='id'>
+      <div class='card'>
+        <div @click='dropdown = !dropdown'>
+          <i class='fa fa-list icon-tiny draggable'></i>
+          <span v-show='showprojectname'> <span class='faded'>{{ getprojectname }}</span><span class='faded'>|</span> {{ title }}</span>
+          <span v-show='!showprojectname'> {{ title }}</span>
+        </div>
+        <div>
+          <icon-group :show='icongroup' @delete='deleteProjectAction' @edit='editAction' @editTag='editActionTag' @removeFromProject='removeActionFromProject'>
+            <action-icon icon='fa fa-times' event='delete'></action-icon>
+            <action-icon icon='fa fa-edit' event='edit'></action-icon>
+            <action-icon icon='fa fa-tag' event='editTag'></action-icon>
+            <action-icon icon='fa fa-sign-out-alt' event='removeFromProject'></action-icon>
+            <faded-action-icon :icon='returnTheClassIcon'></faded-action-icon>
+          </icon-group>
+        </div>
+      </div>
+      <transition name='pop-long'>
+        <div class='card' v-show='dropdown'>
+          <span>{{ description }}</span>
+        </div>
+      </transition>
+    </div>
+  `,
+  methods: {
+    deleteProjectAction(){
+      let rt = this.$root
+      let act = rt.user.actions
+      let pro = rt.user.projects
+
+      let j = rt.getIndexOfProjectActionThatHasTheGivenActionId(this.projectId, this.id)
+      pro[this.projectId].actions.splice(j, 1)
+      act.splice(this.id, 1)
+
+      let oldActionIds = rt.getIds(act)
+      rt.resetIds(act)
+      rt.updateProjectActionIds(oldActionIds)
+      if (!this.$root.guest)
+        this.$root.POSTrequest('/delete-project-action', 'id=' + this.id)
+    },
+    removeActionFromProject(){
+      let rt = this.$root
+
+      rt.removeActionFromProject(this.id)
+    },
+    openActionForm(id){
+      this.$root.openUserForm({id: '' + id})
+      this.$root.getDataFromAction(this.$root.user.actions[this.id])
+    },
+    editAction(){
+      this.openActionForm('editAction')
+    },
+    editActionTag(){
+      this.openActionForm('editTag')
+    }
+  },
+  computed: {
+    returnTheClassIcon(){
+      let tag = this.tag
+      if (tag == 'basket')
+        return ''
+      else if (tag == 'nextAction')
+        return 'fa fa-forward icon-big'
+      else if (tag == 'maybe')
+        return 'fa fa-question icon-big'
+      else if (tag == 'waiting')
+        return 'fa fa-hourglass-half icon-big'
+      else if (tag == 'calendar')
+        return 'fa fa-calendar-alt icon-big'
+    },
+    getprojectname(){
+      return this.$root.user.projects[this.projectId].title
+    }
+  },
+  watch: {
+    dropdown(){
+      this.$emit('changed-dropdown', {state: this.dropdown, id: this. id})
     }
   }
 })
@@ -1118,102 +1297,6 @@ Vue.component('project', {
     },
     addActionToProject(){
       this.openActionForm('addActionToProject')
-    }
-  }
-})
-Vue.component('project-action', {
-  props: {
-    title: String,
-    description: String,
-    icongroup: Boolean,
-    dropdown: false,
-    id: Number,
-    projectId: Number,
-    showtagicon: false,
-    showprojectname: true,
-    tag: String
-  },
-  template: `
-    <div class='action' :key='id'>
-      <div class='card'>
-        <div @click='dropdown = !dropdown'>
-          <i class='fa fa-list icon-tiny draggable'></i>
-          <span v-show='showprojectname'> <span class='faded'>{{ getprojectname }}</span><span class='faded'>|</span> {{ title }}</span>
-          <span v-show='!showprojectname'> {{ title }}</span>
-        </div>
-        <div>
-          <icon-group :show='icongroup' @delete='deleteProjectAction' @edit='editAction' @editTag='editActionTag' @project='manajeProject' @removeFromProject='removeActionFromProject'>
-            <action-icon icon='fa fa-times' event='delete'></action-icon>
-            <action-icon icon='fa fa-edit' event='edit'></action-icon>
-            <action-icon icon='fa fa-tag' event='editTag'></action-icon>
-            <action-icon icon='fa fa-sign-out-alt' event='removeFromProject'></action-icon>
-            <faded-action-icon :icon='returnTheClassIcon'></faded-action-icon>
-          </icon-group>
-        </div>
-      </div>
-      <transition name='pop-long'>
-        <div class='card' v-show='dropdown'>
-          <span>{{ description }}</span>
-        </div>
-      </transition>
-    </div>
-  `,
-  methods: {
-    deleteProjectAction(){
-      let rt = this.$root
-      let act = rt.user.actions
-      let pro = rt.user.projects
-
-      let j = rt.getIndexOfProjectActionThatHasTheGivenActionId(this.projectId, this.id)
-      pro[this.projectId].actions.splice(j, 1)
-      act.splice(this.id, 1)
-
-      let oldActionIds = rt.getIds(act)
-      rt.resetIds(act)
-      rt.updateProjectActionIds(oldActionIds)
-      if (!this.$root.guest)
-        this.$root.POSTrequest('/delete-project-action', 'id=' + this.id)
-    },
-    removeActionFromProject(){
-      let rt = this.$root
-
-      rt.removeActionFromProject(this.id)
-    },
-    openActionForm(id){
-      this.$root.openUserForm({id: '' + id})
-      this.$root.getDataFromAction(this.$root.user.actions[this.id])
-    },
-    editAction(){
-      this.openActionForm('editAction')
-    },
-    editActionTag(){
-      this.openActionForm('editTag')
-    },
-    manajeProject(){
-      this.openActionForm('actionToProject')
-    }
-  },
-  computed: {
-    returnTheClassIcon(){
-      let tag = this.tag
-      if (tag == 'basket')
-        return ''
-      else if (tag == 'nextAction')
-        return 'fa fa-forward icon-big'
-      else if (tag == 'maybe')
-        return 'fa fa-question icon-big'
-      else if (tag == 'waiting')
-        return 'fa fa-hourglass-half icon-big'
-      else if (tag == 'calendar')
-        return 'fa fa-calendar-alt icon-big'
-    },
-    getprojectname(){
-      return this.$root.user.projects[this.projectId].title
-    }
-  },
-  watch: {
-    dropdown(){
-      this.$emit('changed-dropdown', {state: this.dropdown, id: this. id})
     }
   }
 })
