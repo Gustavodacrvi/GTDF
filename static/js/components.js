@@ -583,10 +583,24 @@ Vue.component('calendar', {
       <template v-else-if='beforeafter == "before" && !thereIsAtLeastOneProjectTimedActionBeforeThisYear()'>
         <span class='faded'>Your project actions with the "calendar" tag that comes before the year {{year}} will be shown here.</span>
       </template>
+      <template v-if='beforeafter == "before"'>
+        <draggable v-model='user.actions' :options="{handle:'.draggable'}">
+          <transition-group name='flip-list' tag='div'>
+            <project-timed-action v-for='action in user.actions' v-if='action.calendar && action.calendar.date.split("/")[2] < year && (action.projectId || action.projectId == 0)' :title='action.title' :description='action.description' :key='action.id' :id='action.id' :icongroup='icongroups' :dropdown='dropdowns[action.id]' :time='action.calendar.time' :projectid='action.projectId' :date='action.calendar.date'></project-timed-action>
+          </transition-group>
+        </draggable>
+      </template>
+      <template v-if='beforeafter == "after"'>
+        <draggable v-model='user.actions' :options="{handle:'.draggable'}">
+          <transition-group name='flip-list' tag='div'>
+            <project-timed-action v-for='action in user.actions' v-if='action.calendar && action.calendar.date.split("/")[2] > year && (action.projectId || action.projectId == 0)' :title='action.title' :description='action.description' :key='action.id' :id='action.id' :icongroup='icongroups' :dropdown='dropdowns[action.id]' :time='action.calendar.time' :projectid='action.projectId' :date='action.calendar.date'></project-timed-action>
+          </transition-group>
+        </draggable>
+      </template>
       <template v-if='beforeafter == undefined'>
         <draggable v-model='user.actions' :options="{handle:'.draggable'}">
           <transition-group name='flip-list' tag='div'>
-            <project-timed-action v-for='action in user.actions' v-if='action.calendar && action.calendar.date == date && (action.projectId || action.projectId == 0)' :title='action.title' :description='action.description' :key='action.id' :id='action.id' :icongroup='icongroups' :dropdown='dropdowns[action.id]' :time='action.calendar.time' :date='action.calendar.date' :projectid='action.projectId'></project-timed-action>
+            <project-timed-action v-for='action in user.actions' v-if='action.calendar && action.calendar.date == date && (action.projectId || action.projectId == 0)' :title='action.title' :description='action.description' :key='action.id' :id='action.id' :icongroup='icongroups' :dropdown='dropdowns[action.id]' :time='action.calendar.time' :projectid='action.projectId'></project-timed-action>
           </transition-group>
         </draggable>
       </template>
@@ -710,10 +724,13 @@ Vue.component('project-timed-action', {
       <div class='card'>
         <div @click='dropdown = !dropdown'>
           <i class='fa fa-list icon-tiny draggable'></i>
-          <span>{{title}}</span>
+          <span v-show='time != "" && date == undefined'>{{title}}<span class='faded'>| {{time}}</span></span>
+          <span v-show='time == "" && date == undefined'>{{title}}</span>
+          <span v-show='time != "" && date != undefined'>{{title}}<span class='faded'>| {{date}} | {{time}}</span></span>
+          <span v-show='time == "" && date != undefined'>{{title}}<span class='faded'>| {{date}}</span></span>
         </div>
         <div>
-          <icon-group :show='icongroup' @delete='deleteTimedProjectAction' @removeFromProject='removeProjectTimedActionFromProject'>
+          <icon-group :show='icongroup' @delete='deleteTimedProjectAction' @removeFromProject='removeProjectTimedActionFromProject' @editTag='editTimedProjectActionTag'>
             <action-icon icon='fa fa-times' event='delete'></action-icon>
             <action-icon icon='fa fa-edit' event='edit'></action-icon>
             <action-icon icon='fa fa-tag' event='editTag'></action-icon>
@@ -743,6 +760,13 @@ Vue.component('project-timed-action', {
       rt.updateProjectActionIds(oldActionIds)
       if (!this.$root.guest)
         this.$root.POSTrequest('/delete-project-action', 'id=' + this.id)
+    },
+    editTimedProjectActionTag(){
+      this.openActionForm('editTimedTag')
+    },
+    openActionForm(id){
+      this.$root.openUserForm({id: '' + id})
+      this.$root.getDataFromAction(this.$root.user.actions[this.id])
     },
     removeProjectTimedActionFromProject(){
       this.$root.removeActionFromProject(this.id)
