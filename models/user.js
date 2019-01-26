@@ -5,29 +5,23 @@ var userSchema = mongoose.Schema({
     username: {
         type: String,
         required: true,
-        unique: true,
-        index: true
     },
     email: {
         type: String,
         required: true,
-        unique: true
     },
     password: {
         type: String,
         required: true,
         unique: true
     },
-    actions: [
-    ],
-    projects: [
+    data: {
+      actions: [
 
-    ],
-    resetPasswordToken: {
-        type: String
-    },
-    resetPasswordExpires: {
-        type: Date
+      ],
+      projects: [
+
+      ]
     }
 })
 
@@ -58,4 +52,180 @@ module.exports.comparePassword = function(candidatePassword, hash, caLLback){
         if(err) throw err
         caLLback(null, isMatch)
     })
+}
+
+module.exports.rearrange = function(arr, newArr){
+  let length = arr.length
+  
+  try {
+    for (let i = 0;i < length;i++){
+      if (arr[i].id == newArr[i])
+        continue
+      else {
+        for (let j = i + 1;j < length;j++){
+          if (newArr[i] == arr[j].id){
+            let temp = arr[j]
+            arr[j] = arr[i]
+            arr[i] = temp
+            break
+          }
+        }
+      }
+    }
+  }
+  catch(err) {
+    console.log(err)
+  }
+}
+
+module.exports.getIndexOfProjectThatHasTheGivenActionId = function(data, actionId){
+  return data.projects.findIndex((el) => {
+    return el.actions.some((ele) => {
+      return ele == actionId
+    })
+  })
+}
+
+module.exports.getIndexOfProjectActionThatHasTheGivenActionId = function(data, projectId, actionId){
+  return data.projects[projectId].actions.findIndex((el) => {
+    return el == actionId
+  })
+}
+
+module.exports.getIds = function(arr){
+  let newArr = []
+  let length = arr.length
+  for (let i = 0;i < length;i++)
+    newArr.push(arr[i].id)
+  return newArr
+}
+
+module.exports.resetIds = function(arr){
+  let length = arr.length
+  for (let i = 0;i < length;i++)
+    arr[i].id = i
+}
+
+module.exports.updateProjectActionIds = function(data, oldActionIds){
+  let pro = data.projects
+  let act = data.actions
+  let old = oldActionIds
+
+  let length = act.length
+  let projectId
+  let actionId
+  for (let i = 0;i < length;i++){
+    if (!act[i].projectId && act[i].projectId != 0)
+      continue
+    projectId = module.exports.getIndexOfProjectThatHasTheGivenActionId(data, old[i])
+    actionId = module.exports.getIndexOfProjectActionThatHasTheGivenActionId(data, projectId, old[i])
+    pro[projectId].actions[actionId] = act[i].id
+  }
+}
+
+module.exports.deleteAction = function(data, id){
+  let act = data.actions
+
+  act.splice(id, 1)
+
+  let oldActionIds = module.exports.getIds(act)
+  module.exports.resetIds(act)
+  module.exports.updateProjectActionIds(data, oldActionIds)
+}
+
+module.exports.deleteProjectAction = function(id, data){
+  let act = data.actions
+  let pro = data.projects
+  let i = module.exports.getIndexOfProjectThatHasTheGivenActionId(data, id)
+  let j = module.exports.getIndexOfProjectActionThatHasTheGivenActionId(data, i, id)
+  pro[i].actions.splice(j, 1)
+  act.splice(id, 1)
+
+  let oldActionIds = module.exports.getIds(act)
+  module.exports.resetIds(act)
+  module.exports.updateProjectActionIds(data, oldActionIds)
+}
+
+module.exports.editAction = function(title, desc, id, arr){
+  let a = arr[id]
+  a.title = title
+  a.description  = desc
+}
+
+module.exports.editTag = function(id, tag, arr){
+  arr[id].tag = tag
+}
+
+module.exports.addProject = function(arr, title){
+  arr.push({
+    id: arr.length,
+    title: title,
+    actions: [
+
+    ]
+  })
+}
+
+module.exports.removeActionsFromProject = function(data, projectId){
+  let pro = data.projects[projectId]
+  let act = data.actions
+
+  let length = pro.actions.length
+  for (let i = 0;i < length;i++)
+    delete act[pro.actions[i]].projectId
+}
+
+module.exports.deleteProject = function(data, id){
+  let pro = data.projects
+
+  module.exports.removeActionsFromProject(data, id)
+  pro.splice(id, 1)
+  module.exports.resetIds(pro)
+}
+
+module.exports.createAndAddActionToProject = function(user, id, projectId, title, description){
+  user.actions.push({tag: 'basket',title: title, description: description, id: id, projectId: projectId})
+  user.projects[projectId].actions.push(id)
+}
+
+module.exports.removeActionFromProject = function(data, actionId){
+  let u = module.exports
+  let pro = data.projects
+  let act = data.actions
+
+  let i = u.getIndexOfProjectThatHasTheGivenActionId(data, actionId)
+  let j = u.getIndexOfProjectActionThatHasTheGivenActionId(data, i, actionId)
+
+  pro[i].actions.splice(j, 1)
+  delete act[actionId].projectId
+}
+
+module.exports.getIndexOfactionThatHasTheGivenProjectId = function(data, projectId){
+  return data.actions.findIndex((el) => {
+    return el.projectId == projectId
+  })
+}
+
+module.exports.updateActionsIds = function(data, oldProjectIds){
+  let pro = data.projects
+  let act = data.actions
+  let old = oldProjectIds
+
+  let length = pro.length
+  let actionId
+  for (let i = 0;i < length;i++){
+    actionId = module.exports.getIndexOfactionThatHasTheGivenProjectId(data, old[i])
+    act[actionId] = pro[i].id
+  }
+}
+
+module.exports.addTimedAction = function(act, title, description, date, time){
+  act.push({id: act.length, tag: 'calendar', title: title, description: description, calendar: {time: time, date: date}})
+}
+
+module.exports.editTimedAction = function(act, title, description, date, time, id){
+  act[id].title = title
+  act[id].description = description
+  act[id].calendar.date = date
+  act[id].calendar.time = time
 }

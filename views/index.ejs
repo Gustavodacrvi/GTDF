@@ -1,29 +1,19 @@
 <!doctype html>
-
-<html lang='<%= __("_lang") %>"'>
+<html lang='<%= __("lang") %>'>
 
 <head>
-    <title>GTD</title>
-    <% include partials/head %>
-
-    <link rel="prefetch" href="/user/initial">
-    <link rel="prerender" href="/user/initial"> 
-    <link rel="prefetch" href="/user/login">
-    <link rel="prerender" href="/user/login">
+  <% include partials/header %>
+  <title>GTDF</title>
 </head>
 
 <body>
-<div id='background'>
-<% include partials/menu %>
-<div></div>
+<div id='app'>
+  <a href='/login'><%= __('Begin') %></a>
 
-
-<a href='/user/initial'><%= __('BEGIN!') %></a>
-
+</div>
 
 
 <% include partials/footer %>
-</div>
-<body>
+</body>
 
 </html>

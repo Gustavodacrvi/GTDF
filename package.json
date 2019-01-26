@@ -1,21 +1,21 @@
 {
-  "name": "projeto-gtd",
+  "name": "gtdf",
   "version": "1.0.0",
-  "description": "Sistema de organização baseado no livro \"\"\u001b[DGetting Things Done\".",
+  "description": "Organization system based on the book \"Getting Things Done\".",
   "main": "app.js",
   "scripts": {
-    "start": "node app"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Gustavodacrvi/Projeto-GTD.git"
+    "url": "git+https://github.com/Gustavodacrvi/GTDF.git"
   },
   "author": "Gustavo da Cruz Vieira",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Gustavodacrvi/Projeto-GTD/issues"
+    "url": "https://github.com/Gustavodacrvi/GTDF/issues"
   },
-  "homepage": "https://github.com/Gustavodacrvi/Projeto-GTD#readme",
+  "homepage": "https://github.com/Gustavodacrvi/GTDF#readme",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
@@ -25,10 +25,10 @@
     "express": "^4.16.4",
     "express-messages": "^1.0.1",
     "express-session": "^1.15.6",
-    "express-validator": "^5.3.0",
+    "express-validator": "^5.3.1",
     "i18n": "^0.8.3",
     "mongodb": "^3.1.10",
-    "mongoose": "^5.4.0",
+    "mongoose": "^5.4.3",
     "passport": "^0.4.0",
     "passport-http": "^0.3.0",
     "passport-local": "^1.0.0"

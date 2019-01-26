@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang='<%= __("lang") %>'>
+
+<head>
+  <% include partials/header %>
+  <title>User</title>
+</head>
+
+<body>
+<div id='app'>
+  <fixed>
+    <navigation-bar>
+      <template slot='desktop-left'>
+        <nav-element animation='pop1'><link-red href='/'>Home</link-red></nav-element>
+        <nav-element animation='pop2'><link-red href='/login'>Login</link-red></nav-element>
+      </template>
+      <template slot='desktop-right'>
+        <nav-element animation='pop2'>
+          <dropdown type='link-red' placeholder="<%= __('default_language') %>">
+            <drop-link href='/pt-BR'>Português(Brasil)</drop-link>
+            <drop-link href='/en'>English</drop-link>
+          </dropdown>
+        </nav-element>
+      </template>
+      <template slot='mobile-left'>
+        <transition name='pop1'>
+          <toggle-icon icon='fa fa-user' elid='side-nav' @toggle='toggleSideNav' :show='showSideBar'></toggle-icon>
+        </template>
+      </template>
+      <template slot='mobile-right'>
+        <transition name='pop2'>
+          <nav-dropdown>
+            <drop-link href='/'>Home</drop-link>
+            <drop-link href='/login'>Login</drop-link>
+            <sub-dropdown placeholder="<%= __('default_language') %>">
+              <drop-link href='/pt-BR'>Português(Brasil)</drop-link>
+              <drop-link href='/en'>English</drop-link>
+            </sub-dropdown>
+          </nav-dropdown>
+        </transition>
+      </template>
+    </navigation-bar>
+    <side-nav :show='showSideBar'>
+      <side-title>
+        <% if (locals.user) { %>
+          <%= user.username %>
+        <% } %>
+      </side-title>
+      <side-link animation='pop2' :i='0' compo='basket' @click='changeSectionComponent' :active='openedComponents[0]'>
+        <%= __('in-basket') %>
+      </side-link>
+      <side-link animation='pop3' :i='1' compo='calendar' @click='changeSectionComponent' :active='openedComponents[1]'>
+        <%= __('calendar') %>
+      </side-link>
+      <side-link animation='pop4' :i='2' compo='next-actions' @click='changeSectionComponent' :active='openedComponents[2]'>
+        <%= __('next actions') %>
+      </side-link>
+      </br>
+      <side-link animation='pop5' :i='3' compo='projects' @click='changeSectionComponent' :active='openedComponents[3]'>
+        <%= __('projects') %>
+      </side-link>
+      <side-link animation='pop6' :i='4' compo='maybe' @click='changeSectionComponent' :active='openedComponents[4]'>
+        <%= __('someday/maybe') %>
+      </side-link>
+      <side-link animation='pop7' :i='5' compo='waiting' @click='changeSectionComponent' :active='openedComponents[5]'>
+        <%= __('waiting') %>
+      </side-link>
+      </br>
+      <side-link href='/logout' animation='pop8'>
+        <%= __('logout') %>
+      </side-link>
+    </side-nav>
+    <action-form :currentform='currentOpenedUserForm' id='addAction' @close='closeActionForm'>
+      <form-element animation='pop1'>
+        <title-big class='centralizeContent'>ADD ACTION</title-big>
+      </form-element>
+      <form-element animation='pop2'>
+        <text-box placeholder='TITLE' :rows='2' :value='tempUser.action.title' @change='(v) => tempUser.action.title = v'></text-box>
+      </form-element>
+      <form-element animation='pop3'>
+        <text-box placeholder='DESCRIPTION' :rows='4' :value='tempUser.action.description' @change='(v) => tempUser.action.description = v'></text-box>
+      </form-element animation='pop4'>
+      <form-element class='centralizeContent' animation='pop5'>
+        <form-button @click='addAction'><%= __('Add action') %></form-button>
+      </form-element>
+    </action-form>
+    <action-form :currentform='currentOpenedUserForm' id='addProject' @close='closeActionForm'>
+      <form-element animation='pop1'>
+        <title-big class='centralizeContent'>ADD PROJECT</title-big>
+      </form-element>
+      <form-element animation='pop2'>
+        <text-box :rows='2' placeholder='TITLE' :value='tempUser.project.title' @change='(v) => tempUser.project.title = v'></text-box>
+      </form-element>
+      <form-element animation='pop3' class='centralizeContent'>
+        <form-button @click='addProject'><%= __('Add project') %></form-button>
+      </form-element>
+    </action-form>
+    <action-form :currentform='currentOpenedUserForm' id='editAction' @close='closeActionForm'>
+      <form-element animation='pop1'>
+        <title-big class='centralizeContent'><%= __('EDIT ACTION') %></title-big>
+      </form-element>
+      <form-element animation='pop2'>
+        <text-box placeholder='TITLE' :rows='2' :value='tempUser.action.title' @change='(v) => tempUser.action.title = v'></text-box>
+      </form-element>
+      <form-element animation='pop3'>
+        <text-box placeholder='DESCRIPTION' :rows='4' :value='tempUser.action.description' @change='(v) => tempUser.action.description = v'></text-box>
+      </form-element animation='pop4'>
+      <form-element class='centralizeContent' animation='pop5'>
+        <form-button @click='editAction'><%= __('Edit action') %></form-button>
+      </form-element>
+    </action-form>
+    <action-form :currentform='currentOpenedUserForm' id='editTag' @close='closeActionForm'>
+      <form-element animation='pop1'>
+        <title-big class='centralizeContent'><%= __('CHANGE/ADD TAG') %></title-big>
+      </form-element>
+      <form-element class='centralizeContent' animation='pop2'>
+        <icon-selection :selected='tempUser.action.tag'>
+          <icon-option icon='fa fa-hourglass-half' option='waiting'></icon-option>
+          <icon-option icon='fa fa-question' option='maybe'></icon-option>
+          <icon-option icon='fa fa-forward' option='nextAction'></icon-option>
+          <icon-option icon='fa fa-calendar-alt' option='calendar'></icon-option>
+        </icon-selection>
+      </form-element>
+      <form-element animation='pop3' v-if='tempUser.action.tag == "calendar"'>
+        <datetime-form :date='tempUser.action.calendar.date' :time='tempUser.action.calendar.time' @change='(dt) => {tempUser.action.calendar.date = dt.date;tempUser.action.calendar.time = dt.time}' @update='(dt) => {tempUser.action.calendar.validDate = dt.date;tempUser.action.calendar.validTime = dt.time}' :openedform='currentOpenedUserForm'>
+        </datetime-form>
+      </form-element>
+      <form-element class='centralizeContent' animation='pop4'>
+        <form-button @click='editTag'><%= __('Edit tag') %></form-button>
+      </form-element>
+    </action-form>
+    <action-form :currentform='currentOpenedUserForm' id='actionToProject' @close='closeActionForm'>
+      <form-element animation='pop1' class='centralizeContent'>
+        <title-big><%= __('CREATE/ADD TO PROJECT') %></title-big>
+      </form-element>
+      <form-element animation='pop2' class='centralizeContent'>
+        <comp-selector :selected='transformActionProject' @change='(v) => transformActionProject = v' :user='user'>
+          <comp-option compname='create-project'><%= __('Create project') %></comp-option>
+          <comp-option compname='add-to-project' ><%= __('Add to project') %></comp-option>
+        </comp-selector>
+      </form-element>
+    </action-form>
+    <action-form :currentform='currentOpenedUserForm' id='addActionToProject' @close='closeActionForm'>
+      <form-element class='centralizeContent' animation='pop1'>
+        <title-big><%= __('ADD ACTION TO PROJECT') %></title-big>
+      </form-element>
+      <form-element class='centralizeContent' animation='pop2'>
+        <form-button @click='openUserForm({id: "projectAddAction"}, false)'><%= __('Add existing action') %></form-button>
+      </form-element>
+      <form-element class='centralizeContent' animation='pop3'>
+        <form-button @click='openUserForm({id: "projectCreateAction"}, false)'><%= __('Create new action') %></form-button>
+      </form-element>
+    </action-form>
+    <action-form :currentform='currentOpenedUserForm' id='projectAddAction' @close='closeActionForm'>
+      <form-element class='centralizeContent' animation='pop1'>
+        <title-big><%= __('ADD ACTION') %></title-big>
+      </form-element>
+      <form-element class='centralizeContent' animation='pop2'>
+        <option-selection v-if='user' :selected='tempUser.project.selected' @change='(v) => {tempUser.project.selected = v.name;tempUser.project.id2 = v.id}'>
+          <select-option v-for='action in user.actions' v-if='!action.projectId && action.projectId != 0' :name='action.title' :id='action.id'></select-option>
+        </option-selection>
+      </form-element>
+      <form-element class='centralizeContent' animation='pop3'>
+      <form-button @click='addAlreadyExistingAction'><%= __('Add action') %></form-button>
+      </form-element>
+    </action-form>
+    <action-form :currentform='currentOpenedUserForm' id='projectCreateAction' @close='closeActionForm'>
+      <form-element class='centralizeContent' animation='pop1'>
+        <title-big><%= __('CREATE ACTION') %></title-big>
+      </form-element>
+      <form-element animation='pop2'>
+        <text-box :rows='2' placeholder='TITLE' :value='tempUser.action.title' @change='(v) => tempUser.action.title = v'></text-box>
+      </form-element>
+      <form-element animation='pop3'>
+        <text-box placeholder='DESCRIPTION' :rows='4' :value='tempUser.action.description' @change='(v) => tempUser.action.description = v'></text-box>
+      </form-element animation='pop4'>
+      <form-element class='centralizeContent' animation='pop3'>
+        <form-button @click='projectCreateAndAddAction'><%= __('Add action') %></form-button>
+      </form-element>
+    </action-form>
+    <action-form :currentform='currentOpenedUserForm' id='editProject' @close='closeActionForm'>
+      <form-element class='centralizeContent' animation='pop1'>
+        <title-big><%= __('EDIT PROJECT TITLE') %></title-big>
+      </form-element>
+      <form-element animation='pop3'>
+        <text-box :rows='2' placeholder='TITLE' :value='tempUser.project.title' @change='(v) => tempUser.project.title = v'></text-box>
+      </form-element>
+      <form-element class='centralizeContent' animation='pop3'>
+        <form-button @click='editProjectTitle'><%= __('Edit title') %></form-button>
+      </form-element>
+    </action-form>
+    <action-form :currentform='currentOpenedUserForm' id='addTimedAction' @close='closeActionForm'>
+      <form-element class='centralizeContent' animation='pop1'>
+        <title-big><%= __('ADD TIMED ACTION') %></title-big>
+      </form-element>
+      <form-element animation='pop2'>
+        <text-box placeholder='TITLE' :rows='2' :value='tempUser.action.title' @change='(v) => tempUser.action.title = v'></text-box>
+      </form-element>
+      <form-element animation='pop3'>
+        <text-box placeholder='DESCRIPTION' :rows='4' :value='tempUser.action.description' @change='(v) => tempUser.action.description = v'></text-box>
+      </form-element animation='pop4'>
+      <form-element animation='pop5'>
+        <datetime-form :date='tempUser.action.calendar.date' :time='tempUser.action.calendar.time' @change='(dt) => {tempUser.action.calendar.date = dt.date;tempUser.action.calendar.time = dt.time}' @update='(dt) => {tempUser.action.calendar.validDate = dt.date;tempUser.action.calendar.validTime = dt.time}' :openedform='currentOpenedUserForm'>
+        </datetime-form>
+      </form-element>
+      <form-element class='centralizeContent' animation='pop6'>
+        <form-button @click='addNonProjectTimedAction'><%= __('Add action') %></form-button>
+      </form-element>
+    </action-form>
+    <action-form :currentform='currentOpenedUserForm' id='editTimedAction' @close='closeActionForm'>
+      <form-element class='centralizeContent' animation='pop1'>
+        <title-big><%= __('EDIT TIMED ACTION') %></title-big>
+      </form-element>
+      <form-element animation='pop2'>
+        <text-box placeholder='TITLE' :rows='2' :value='tempUser.action.title' @change='(v) => tempUser.action.title = v'></text-box>
+      </form-element>
+      <form-element animation='pop3'>
+        <text-box placeholder='DESCRIPTION' :rows='4' :value='tempUser.action.description' @change='(v) => tempUser.action.description = v'></text-box>
+      </form-element animation='pop4'>
+      <form-element animation='pop5'>
+        <datetime-form :date='tempUser.action.calendar.date' :time='tempUser.action.calendar.time' @change='(dt) => {tempUser.action.calendar.date = dt.date;tempUser.action.calendar.time = dt.time}' @update='(dt) => {tempUser.action.calendar.validDate = dt.date;tempUser.action.calendar.validTime = dt.time}' :openedform='currentOpenedUserForm'>
+        </datetime-form>
+      </form-element>
+      <form-element class='centralizeContent' animation='pop6'>
+        <form-button @click='editTimedAction'><%= __('Edit action') %></form-button>
+      </form-element>
+    </action-form>
+    <action-form :currentform='currentOpenedUserForm' id='editTimedTag' @close='closeActionForm'>
+      <form-element animation='pop1'>
+        <title-big class='centralizeContent'><%= __('CHANGE/ADD TAG') %></title-big>
+      </form-element>
+      <form-element class='centralizeContent' animation='pop2'>
+        <icon-selection :selected='tempUser.action.tag'>
+          <icon-option icon='fa fa-hourglass-half' option='waiting'></icon-option>
+          <icon-option icon='fa fa-question' option='maybe'></icon-option>
+          <icon-option icon='fa fa-forward' option='nextAction'></icon-option>
+        </icon-selection>
+      </form-element>
+      <form-element class='centralizeContent' animation='pop3'>
+        <form-button @click='editTimedTag'><%= __('Edit tag') %></form-button>
+      </form-element>
+    </action-form>
+  </fixed>
+  <user-content>
+    <template slot='content'>
+      <transition name='component-animation' appear>
+        <keep-alive>
+          <component v-if='user' :is="currentSectionComponent" @openform='openUserForm' :icongroups='showIconGroups' :user='user' @rearrange='saveNewActionOrder' :dropdowns='openedActionContents' @dropdown-state='changeDropdownSate' :projectdropdowns='openedProjectDropdowns' @rearrangeproject='saveNewProjectOrder'></component>
+        </keep-alive>
+      </transition>
+    </template>
+    <template slot='adds'>
+      <adds>
+      <template v-if='user'>
+        <h3>ACTIONS</h3>
+        <h5 v-for='action in user.actions'>{{action}}</h5>
+      </template>
+      </adds>
+    </template>
+  </user-content>
+</div>
+
+
+<% include partials/footer %>
+<script>
+  vm.getUser()
+</script>
+</body>
+
+</html>

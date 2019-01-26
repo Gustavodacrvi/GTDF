@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang='<%= __("lang") %>'>
+
+<head>
+  <% include partials/header %>
+  <title>Login</title>
+</head>
+
+<body>
+<div id='app'>
+  <fixed>
+    <navigation-bar>
+      <template slot='desktop-left'>
+        <nav-element animation='pop1'><link-red href='/'>Home</link-red></nav-element>
+        <nav-element animation='pop2'><link-red href='/login'>Login</link-red></nav-element>
+      </template>
+      <template slot='desktop-right'>
+        <nav-element animation='pop2'>
+          <dropdown type='link-red' placeholder="<%= __('default_language') %>">
+            <drop-link href='/pt-BR'>Português(Brasil)</drop-link>
+            <drop-link href='/en'>English</drop-link>
+          </dropdown>
+        </nav-element>
+      </template>
+      <template slot='mobile-right'>
+        <transition name='pop2'>
+          <nav-dropdown>
+            <drop-link href='/'>Home</drop-link>
+            <drop-link href='/login'>Login</drop-link>
+            <sub-dropdown placeholder="<%= __('default_language') %>">
+              <drop-link href='/pt-BR'>Português(Brasil)</drop-link>
+              <drop-link href='/en'>English</drop-link>
+            </sub-dropdown>
+          </nav-dropdown>
+        </transition>
+      </template>
+    </navigation-bar>
+    <login-form>
+      <form method='post' action='/login'>
+      <form-element class='centralizeContent' animation='pop1'>
+        <title-big><%= __('LOGIN') %></title-big>
+      </form-element>
+      <form-element class='centralizeContent' animation='pop3'>
+        <input-form tabindex="1" placeholder='<%= __("Username") %>:' name='username'></input-form>
+      </form-element>
+      <form-element class='centralizeContent' animation='pop2'>
+        <input-pass tabindex="2" :opened='showPasswords' name='password' placeholder='<%= __("Password") %>:' @click='togglePasswordVisiblity'></input-pass>
+      </form-element>
+      <% if (locals.success_msg) { %>
+        <form-element animation='pop5'>
+          <success><%= __(String(success_msg)) %></success>
+        </form-element>
+      <% } %>
+      <% if (locals.error) { %>
+        <form-element animation='pop6'>
+          <alert><%= __(String(error)) %></alert>
+        </form-element>
+      <% } %>
+      <form-element animation='pop5'>
+        <link-blue href='/sign-up'><%= __("Doesn't have an account? Sign up!") %></link-blue>
+      </form-element>
+      <form-element class='centralizeContent' animation='pop6'> 
+        <form-button tabindex="3"><%= __("Get things done") %></form-button>
+      </form-element>
+      <form-element animation='pop7'>
+        <link-blue href='#'><%= __("Forgot password/username?") %></link-blue>
+      </form-element>
+      </form>
+    </login-form>
+  </fixed>
+
+</div>
+
+
+<% include partials/footer %>
+</body>
+
+</html>
