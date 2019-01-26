@@ -857,10 +857,13 @@ a{
   align-content: flex-start;
 }
 
-.calendar-graph > :last-child{
+.calendar-graph > div > :last-child{
   position: absolute;
-  right: 0;
-  bottom: 2px;
+  right: 35px;
+  bottom: -32px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
   width: 100%;
   height: 30px;
 }

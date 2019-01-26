@@ -172,6 +172,10 @@ let vm = new Vue({
           this.POSTrequest('/edit-project', 'title='+t.title+'&id='+t.id)
         this.closeActionForm()
       },
+      getCurrentDate(){
+        let date = DateM.getCurrentDay()
+        this.tempUser.action.calendar.date = date.stringify()
+      },
     // ACTION RELATED
       getUser(){
         this.GETrequest('/get-user', (data) =>{
@@ -205,10 +209,21 @@ let vm = new Vue({
       },
       editTag(){
         let dt = this.tempUser.action
-        this.user.actions[dt.id].tag = dt.tag
-        if (!this.guest)
-          this.POSTrequest('/edit-tag', 'id='+dt.id+'&tag='+dt.tag)
-        this.closeActionForm()
+        if (dt.tag != "calendar"){
+          this.user.actions[dt.id].tag = dt.tag
+          if (!this.guest)
+            this.POSTrequest('/edit-tag', 'id='+dt.id+'&tag='+dt.tag)
+          this.closeActionForm()
+        } else if (dt.calendar.validDate && dt.calendar.validTime){
+          this.user.actions[dt.id].tag = "calendar"
+          this.user.actions[dt.id].calendar = {
+            date: dt.calendar.date,
+            time: dt.calendar.time
+          }
+          if (!this.guest)
+            this.POSTrequest('/tag-to-calendar', 'id='+dt.id+'&time='+dt.calendar.time+'&date='+dt.calendar.date)
+          this.closeActionForm()
+        }
       },
       transformActionToProject(){
         let dt = this.tempUser
@@ -300,13 +315,15 @@ let vm = new Vue({
         let act = rt.user.actions
         let dt = rt.tempUser.action
 
-        act[dt.id].title = dt.title
-        act[dt.id].description = dt.description
-        act[dt.id].calendar.date = dt.calendar.date
-        act[dt.id].calendar.time = dt.calendar.time
-        if (!rt.guest)
-          rt.POSTrequest('/edit-timed-action', 'id='+dt.id+'&description='+dt.description+'&date='+dt.calendar.date+'&time='+dt.calendar.time+'&title='+dt.title)
-        this.closeActionForm()
+        if (dt.calendar.validDate && dt.calendar.validTime){
+          act[dt.id].title = dt.title
+          act[dt.id].description = dt.description
+          act[dt.id].calendar.date = dt.calendar.date
+          act[dt.id].calendar.time = dt.calendar.time
+          if (!rt.guest)
+            rt.POSTrequest('/edit-timed-action', 'id='+dt.id+'&description='+dt.description+'&date='+dt.calendar.date+'&time='+dt.calendar.time+'&title='+dt.title)
+          this.closeActionForm()
+        }
       },
       editTimedTag(){
         let dt = this.tempUser.action
@@ -343,6 +360,7 @@ let vm = new Vue({
     },
     openUserForm(dt, cleanData = true){
       if (cleanData) this.cleanTempData()
+      this.getCurrentDate()
       this.tempUser.action.tag = dt.tag
       this.currentOpenedUserForm = dt.id
     },
@@ -409,6 +427,9 @@ let vm = new Vue({
         this.closeActionForm()
       }
     }
+  },
+  mounted(){
+    this.getCurrentDate()
   },
   watch: {
     currentSectionComponent(){

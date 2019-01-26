@@ -121,7 +121,11 @@
           <icon-option icon='fa fa-calendar-alt' option='calendar'></icon-option>
         </icon-selection>
       </form-element>
-      <form-element class='centralizeContent' animation='pop3'>
+      <form-element animation='pop3' v-if='tempUser.action.tag == "calendar"'>
+        <datetime-form :date='tempUser.action.calendar.date' :time='tempUser.action.calendar.time' @change='(dt) => {tempUser.action.calendar.date = dt.date;tempUser.action.calendar.time = dt.time}' @update='(dt) => {tempUser.action.calendar.validDate = dt.date;tempUser.action.calendar.validTime = dt.time}' :openedform='currentOpenedUserForm'>
+        </datetime-form>
+      </form-element>
+      <form-element class='centralizeContent' animation='pop4'>
         <form-button @click='editTag'><%= __('Edit tag') %></form-button>
       </form-element>
     </action-form>
