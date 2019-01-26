@@ -930,8 +930,9 @@ a{
   visibility: hidden;
   position: absolute;
   bottom: 20px;
-  left: -33px;
+  left: -73px;
   background-color: #464b53;
+  white-space: nowrap;
   padding: 6px;
   border-radius: 8px;
 }
@@ -967,6 +968,26 @@ a{
   background-color: #F8CC63;
   color: black;
   border: none;
+}
+
+.one-action{
+  background-color: #c6e48b !important;
+}
+
+.four-actions{
+  background-color: #7bc96f !important;
+}
+
+.six-actions{
+  background-color: #239a3b !important;
+}
+
+.nine-actions{
+  background-color: #196127 !important;
+}
+
+.twelve-actions{
+  background-color: #00440a !important;
 }
 
 @media screen and (max-width: 796px){

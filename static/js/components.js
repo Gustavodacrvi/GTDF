@@ -1,3 +1,4 @@
+
 let strIsInteger = function(str){
   if (str == undefined)
     return false
@@ -121,7 +122,7 @@ class DateM {
   addDay(int){
       for (let i = 0;i < int;i++){
           if (this.day + 1 > DateM.getDaysInMonth(this.month, DateM.isLeapYear(this.year))){
-              this.month += 1
+              this.addMonth(1)
               this.day = 1
           } else 
               this.day += 1
@@ -1083,6 +1084,7 @@ Vue.component('graph', {
     this.date = DateM.getCurrentDay()
     this.currentDate = this.date.stringify()
 
+    this.currentYear = this.date.year
     this.date.year = this.date.year
     this.date.month = 1
     this.date.day = 1
@@ -1121,7 +1123,7 @@ Vue.component('graph', {
               <dark-square></dark-square>
             </template>
             <template v-for='day in numberOfDaysInYear'>
-              <square :date='returnAndAddDate()'></square>
+              <square :date='returnDate()' :numberofactions='getNumberOfActionsWithTheSpecifiedDate(returnAndAddDate())'></square>
             </template>
           </template>
         </div>
@@ -1131,16 +1133,35 @@ Vue.component('graph', {
     </div>
   `,
   methods: {
+    returnDate(){
+      let date = this.date.stringify()
+      return date
+    },
     returnAndAddDate(){
       let date = this.date.stringify()
       this.date.addDay(1)
+      if (this.date.year == this.currentYear + 1){
+        this.date.year = this.currentYear
+        this.date.month = 1
+        this.date.day = 1
+      }
       return date
-    }
+    },
+    getNumberOfActionsWithTheSpecifiedDate(date){
+      let acts = this.$root.user.actions
+      let length = acts.length
+      let numberOfActions = 0
+      for (let i = 0;i < length;i++)
+        if (acts[i].calendar && new DateM(acts[i].calendar.date).isEqual(new DateM(date)))
+          numberOfActions += 1
+      return numberOfActions
+    },
   }
 })
 Vue.component('square', {
   props: {
-    date: String
+    date: String,
+    numberofactions: Number
   },
   data(){
     return {
@@ -1148,12 +1169,32 @@ Vue.component('square', {
     }
   },
   template: `
-    <div :class='{"selected-square": isSelected(), square: !d}' :data-title='date' @click='$parent.$emit("dateselected",date)'></div>
+    <div :class='[isSelected() ? "selected-square" : "" , !d ? "square" : "", atLeastOneAction() ? "one-action": "", moreThanTwo() ? "four-actions": "", moreThanSix() ? "six-actions": "", moreThanNine() ? "nine-actions": "", moreThanTwelve() ? "twelve-actions": ""]' :data-title='date + " " + numberofactions + " actions"' @click='$parent.$emit("dateselected",date)'></div>
   `,
   methods: {
     isSelected(){
       this.d = (this.date == this.$parent.$parent.date)
       return this.d
+    },
+    atLeastOneAction(){
+      let n = this.numberofactions
+      if (n > 0 && n < 4) return true
+    },
+    moreThanTwo(){
+      let n = this.numberofactions
+      if (n > 3 && n < 6) return true
+    },
+    moreThanSix(){
+      let n = this.numberofactions
+      if (n > 5 && n < 9) return true
+    },
+    moreThanNine(){
+      let n = this.numberofactions
+      if (n > 7 && n < 12) return true
+    },
+    moreThanTwelve(){
+      let n = this.numberofactions
+      if (n > 11) return true
     }
   }
 })
