@@ -713,7 +713,7 @@ Vue.component('project-timed-action', {
           <span>{{title}}</span>
         </div>
         <div>
-          <icon-group :show='icongroup' @delete='deleteTimedProjectAction'>
+          <icon-group :show='icongroup' @delete='deleteTimedProjectAction' @removeFromProject='removeProjectTimedActionFromProject'>
             <action-icon icon='fa fa-times' event='delete'></action-icon>
             <action-icon icon='fa fa-edit' event='edit'></action-icon>
             <action-icon icon='fa fa-tag' event='editTag'></action-icon>
@@ -743,6 +743,9 @@ Vue.component('project-timed-action', {
       rt.updateProjectActionIds(oldActionIds)
       if (!this.$root.guest)
         this.$root.POSTrequest('/delete-project-action', 'id=' + this.id)
+    },
+    removeProjectTimedActionFromProject(){
+      this.$root.removeActionFromProject(this.id)
     }
   }
 })
