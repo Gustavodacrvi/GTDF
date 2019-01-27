@@ -244,19 +244,11 @@
   <user-content>
     <template slot='content'>
       <transition name='component-animation' appear>
-        <keep-alive>
           <component v-if='user' :is="currentSectionComponent" @openform='openUserForm' :icongroups='showIconGroups' :user='user' @rearrange='saveNewActionOrder' :dropdowns='openedActionContents' @dropdown-state='changeDropdownSate' :projectdropdowns='openedProjectDropdowns' @rearrangeproject='saveNewProjectOrder'></component>
-        </keep-alive>
       </transition>
     </template>
     <template slot='adds'>
       <adds>
-      <template v-if='user'>
-        <h3>ACTIONS</h3>
-        <h5 v-for='action in user.actions'>{{action}}</h5>
-        <h3>PROJECTS</h3>
-        <h5 v-for='project in user.projects'>{{project}}</h5>
-      </template>
       </adds>
     </template>
   </user-content>

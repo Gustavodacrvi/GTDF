@@ -1081,7 +1081,7 @@ Vue.component('graph', {
           <span>Less actions</span>
           <div style='width: 8px;display: inline-block'></div>
           <div class='square'></div>
-          <div class='square one-actions'></div>
+          <div class='square one-action'></div>
           <div class='square four-actions'></div>
           <div class='square six-actions'></div>
           <div class='square nine-actions'></div>
