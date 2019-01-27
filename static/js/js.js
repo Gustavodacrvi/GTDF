@@ -115,10 +115,11 @@ let vm = new Vue({
       removeActionsFromProject(projectId){
         let pro = this.user.projects[projectId]
         let act = this.user.actions
-
+        
         let length = pro.actions.length
-        for (let i = 0;i < length;i++)
+        for (let i = 0;i < length;i++){
           delete act[pro.actions[i]].projectId
+        }
       },
       getIds(arr){
         let newArr = []
@@ -162,7 +163,8 @@ let vm = new Vue({
         let actionId
         for (let i = 0;i < length;i++){
           actionId = this.getIndexOfactionThatHasTheGivenProjectId(old[i])
-          act[actionId] = pro[i].id
+          if (actionId == -1) continue
+          act[actionId].projectId = pro[i].id
         }
       },
       editProjectTitle(){
@@ -407,7 +409,6 @@ let vm = new Vue({
       let sortables = document.querySelectorAll('.sortable')
       sortables.forEach((el) => {
         new Sortable(el, {
-          animation: 200,
           handle: '.draggable'
         })
       })

@@ -597,7 +597,7 @@ a{
 }
 
 .text-box > textarea{
-  background-color: transparent;
+  background-color: #32373f;
   resize: none;
   outline: none;
   border-radius: 4px;
@@ -663,6 +663,7 @@ a{
   min-height: 60px;
   margin-top: 2px; 
   padding: 10px;
+  white-space: pre-line;
 }
 
 

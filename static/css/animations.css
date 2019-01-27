@@ -1,4 +1,4 @@
-@keyframes doubleSlideBounce{
+@keyframes doubleSlideBounce{ 
   0%{
     flex-basis: 0;
     opacity: 0;
@@ -299,7 +299,7 @@
 
 .double-slide-bounce-unpop-leave-active{
   animation: unpop;
-  animation-duration: .3s;
+  animation-duration: .2s;
 }
 
 .component-animation-enter-active{
@@ -325,21 +325,6 @@
 .right-to-left-bounce-nav-drop-enter-active{
   animation: rightToLeftBounceNavDrop;
   animation-duration: .3s; 
-}
-
-
-.flip-list-move {
-  transition: transform .6s;
-}
-
-.flip-list-enter-active{
-  animation: popLong;
-  animation-duration: .4s;
-}
-
-.flip-list-leave-active{
-  animation: unpop;
-  animation-duration: .4s;
 }
 
 .right-to-left-bounce-nav-drop-leave-active{

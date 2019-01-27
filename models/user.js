@@ -215,7 +215,8 @@ module.exports.updateActionsIds = function(data, oldProjectIds){
   let actionId
   for (let i = 0;i < length;i++){
     actionId = module.exports.getIndexOfactionThatHasTheGivenProjectId(data, old[i])
-    act[actionId] = pro[i].id
+    if (actionId == -1) continue
+    act[actionId].projectId = pro[i].id
   }
 }
 
