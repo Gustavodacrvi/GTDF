@@ -1286,16 +1286,20 @@ Vue.component('projects', {
     },
     calculateIds(){
       let ids = []
-      let length = this.user.projects.length
+      let length = this.user.actions.length
       for (let i = 0;i < length;i++)
-        ids.push(this.user.projects[i].id)
+        ids.push(this.user.actions[i].id)
       return ids
     },
   },
   watch: {
     'user.projects'(){
-      let ids = this.calculateIds()
+      let ids = this.calculateProjectIds()
       this.$emit('rearrangeproject', ids)
+    },
+    'user.actions'(){
+      let ids = this.calculateIds()
+      this.$emit('rearrange', ids)
     }
   },
   computed: {
