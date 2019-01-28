@@ -1012,7 +1012,7 @@ a{
 
 .menu{
   width: 100%;
-  min-height: 600px;
+  height: 600px;
   position: relative;
 }
 
@@ -1023,18 +1023,17 @@ a{
 
 .menu > :first-child > :last-child{
   position: absolute;
-  height: 100%;
   width: 100%;
   display: flex;
   padding-top: 50px;
   flex-direction: column;
 }
 
-.menu i{
+.menu > :last-child > i{
   position: absolute;
   left: 20px;
   top: 20px;
-  z-index: 10;
+  z-index: 1;
   height: 0 !important;
   display: inline-block !important;
   padding: 0 !important;
@@ -1054,6 +1053,23 @@ a{
 
 .space{
   height: 200px;
+}
+
+.change-username{
+  display: flex;
+  height: 500px;
+}
+
+.change-username > div{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.change-username > div > div{
+  flex-basis: 450px;
+  margin: 0 12px;
 }
 
 @media screen and (max-width: 796px){

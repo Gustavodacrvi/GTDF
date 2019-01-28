@@ -1853,3 +1853,30 @@ Vue.component('menu-settings', {
     </div>
   `
 })
+Vue.component('changeusername', {
+  data() {
+    return {
+      show: true,
+      username: ''
+    }
+  },
+  template: `
+    <div class='change-username'>
+      <div>
+        <div class='card'>
+          <form-element class='centralizeContent'>
+            <h2>CHANGE USERNAME</h2>
+          </form-element>
+          <form-element class='centralizeContent'>
+            <div v-model='' class='form-input centralizeContent' style='width: 80%'>
+              <input autocomplete='off' type='text' placeholder='New username: ' />
+            </div>
+          </form-element>
+          <form-element class='centralizeContent'>
+            <form-button>Change username</form-button>
+          </form-element>
+        </div>
+      </div>
+    </div>
+  `
+})
