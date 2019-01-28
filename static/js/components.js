@@ -599,6 +599,7 @@ Vue.component('calendar', {
             <project-timed-action v-for='action in user.actions' v-if='action.calendar && action.calendar.date == date && (action.projectId || action.projectId == 0)' :title='action.title' :description='action.description' :key='action.id' :id='action.id' :icongroup='icongroups' :dropdown='dropdowns[action.id]' :time='action.calendar.time' :projectid='action.projectId' @changed-dropdown='changeDropdownState'></project-timed-action>
         </draggable>
       </template>
+      <div class='space'></div>
     </div>
   </div>
   `,
@@ -1270,6 +1271,7 @@ Vue.component('projects', {
         <span class='faded'>All of your projects and project actions will be shown here.</br></br>Click on the plus icon to create a project</span>
       </template>
       </template>
+      <div class='space'></div>
     </div>
   </div>
   `,
@@ -1829,21 +1831,25 @@ Vue.component('menu-settings', {
   },
   template: `
     <div class='menu'>
-      <div v-if='selected == ""'>
-        <div>
-          <div><span class='faded'>email: {{this.email}}</span></div>
-          <div style='padding-top: 20px' class='faded'><span>username: {{this.username}}</span></div>
+      <transition name='fade'>
+        <div v-if='selected == ""'>
+          <div>
+            <div><span class='faded'>email: {{this.email}}</span></div>
+            <div style='padding-top: 20px' class='faded'><span>username: {{this.username}}</span></div>
+          </div>
+          <div>
+            <slot></slot>
+          </div>
         </div>
-        <div>
-          <slot></slot>
+      </transition>
+      <transition name='fade'>
+        <div v-if='selected != ""'>
+          <i @click='$emit("reset")' class='fa fa-times icon icon-big user-icon'></i>
+          <keep-alive>
+            <component :is='selected'></component>
+          </keep-alive>
         </div>
-      </div>
-      <div v-else>
-        <i @click='$emit("reset")' class='fa fa-times icon icon-big user-icon'></i>
-        <keep-alive>
-          <component :is='selected'></component>
-        </keep-alive>
-      </div>
+      </transition>
     </div>
   `
 })

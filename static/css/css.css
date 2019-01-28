@@ -1052,6 +1052,10 @@ a{
   transform: scale(1.15,1.15);
 }
 
+.space{
+  height: 200px;
+}
+
 @media screen and (max-width: 796px){
   .action > :first-child > :last-child, .project > :first-child > :last-child{
     position: relative;
