@@ -36,6 +36,7 @@ let vm = new Vue({
       false,
       false,
       false,
+      false,
       false
     ],
     showIconGroups: false,

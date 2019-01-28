@@ -92,7 +92,9 @@ function checkAndChangeLocale(req, res){
 
 app.get('/', function(req, res){
   checkAndChangeLocale(req, res)
-  res.render('index')
+  res.render('index', {
+    user: req.user
+  })
 })
 
 app.get('/en', function(req, res){
@@ -107,7 +109,9 @@ app.get('/pt-BR', function(req, res){
 //  Handle 404
 app.use(function(req, res) {
   res.status(404)
-  res.render('404')
+  res.render('404', {
+    user: req.user
+  })
 });
 //  Handle 500
 app.use(function(error, req, res, next){

@@ -131,7 +131,7 @@ Vue.component('link-red', {
     href: String
   },
   template: `
-    <a class='link-red' :href='href'><slot></slot></a>
+    <a class='link-red' :href='href' @click='$emit("click")'><slot></slot></a>
   `
 })
 Vue.component('link-blue', {
@@ -1767,5 +1767,79 @@ Vue.component('faded-action-icon', {
 Vue.component('massive-title',{
   template: `
     <h1 style='font-size:4em'><slot></slot></h1>
+  `
+})
+Vue.component('settings', {
+  data(){
+    return {
+      selectedOptionMenu: '',
+      email: undefined,
+      username: undefined
+    }
+  },
+  template: `
+    <div>
+      <div>
+        <menu-settings :selected='selectedOptionMenu' @change='selectOption' @reset='unselectOptions' :email='email' :username='username'>
+          <menu-option name='changepassword'>change password</menu-option>
+          <menu-option name='changeusername'>change username</menu-option>
+          <menu-option name='deleteaccount'>delete account</menu-option>
+        </menu-settings>
+      </div>
+    </div>
+  `,
+  mounted(){
+    this.$root.GETrequest('/get-user-data', (data)=>{
+      let dt = JSON.parse(data)
+      this.email = dt.email
+      this.username = dt.username
+    })
+  },
+  methods: {
+    selectOption(opt){
+      this.selectedOptionMenu = opt
+    },
+    unselectOptions(){
+      this.selectedOptionMenu = ''
+    }
+  }
+})
+Vue.component('menu-option', {
+  props: {
+    name: String
+  },
+  template: `
+    <link-settings @click='$parent.$emit("change", name)'><slot></slot></link-settings>
+  `
+})
+Vue.component('link-settings', {
+  template: `
+    <a class='link-settings' @click='$emit("click")'><slot></slot></a>
+  `
+})
+Vue.component('menu-settings', {
+  props: {
+    selected: String,
+    email: String,
+    username: String
+  },
+  template: `
+    <div class='menu'>
+      <div v-if='selected == ""'>
+        <div>
+          <div><span class='faded'>email: {{this.email}}</span></div>
+          <div style='padding-top: 20px' class='faded'><span>username: {{this.username}}</span></div>
+        </div>
+        <div>
+          <slot></slot>
+        </div>
+      </div>
+      <div v-else>
+        <i @click='$emit("reset")' class='fa fa-times icon icon-big user-icon'></i>
+        <keep-alive>
+          <component :is='selected'></component>
+        </keep-alive>
+      </div>
+    </div>
   `
 })

@@ -1010,6 +1010,48 @@ a{
   background-color: #00440a !important;
 }
 
+.menu{
+  width: 100%;
+  min-height: 600px;
+  position: relative;
+}
+
+.menu > :first-child > :first-child{
+  height: 100px;
+  padding-top: 40px; 
+}
+
+.menu > :first-child > :last-child{
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  padding-top: 50px;
+  flex-direction: column;
+}
+
+.menu i{
+  position: absolute;
+  left: 20px;
+  top: 20px;
+  z-index: 10;
+  height: 0 !important;
+  display: inline-block !important;
+  padding: 0 !important;
+}
+
+.link-settings{
+  font-size: 30px;
+  text-align: center;
+  color: #B9B9B9;
+  cursor: pointer;
+  transition-duration: .4s;
+}
+
+.link-settings:hover{
+  transform: scale(1.15,1.15);
+}
+
 @media screen and (max-width: 796px){
   .action > :first-child > :last-child, .project > :first-child > :last-child{
     position: relative;
