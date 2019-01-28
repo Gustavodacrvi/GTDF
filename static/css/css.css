@@ -1060,6 +1060,20 @@ a{
   height: 500px;
 }
 
+.act-bar-icon{
+  margin-left: 10px;
+  transition-duration: .2s;
+}
+
+.act-bar-icon:hover{
+  cursor: pointer;
+  color: #F8CC63;
+}
+
+.action-bar-active{
+  color: #F8CC63;
+}
+
 .change-username > div{
   display: flex;
   justify-content: center;

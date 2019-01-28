@@ -251,7 +251,9 @@
   <user-content>
     <template slot='content'>
       <transition name='component-animation' appear>
+        <keep-alive>
           <component v-if='user' :is="currentSectionComponent" @openform='openUserForm' :icongroups='showIconGroups' :user='user' @rearrange='saveNewActionOrder' :dropdowns='openedActionContents' @dropdown-state='changeDropdownSate' :projectdropdowns='openedProjectDropdowns' @rearrangeproject='saveNewProjectOrder'></component>
+        </keep-alive>
       </transition>
     </template>
     <template slot='adds'>
