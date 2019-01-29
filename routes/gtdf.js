@@ -371,4 +371,14 @@ router.post('/change-username', (req, res) => {
   })
 })
 
+router.post('/delete-account', (req, res) => {
+  User.getUserById(req.user.id, (err, user) => {
+    if (err) return handleError(err)
+
+    User.deleteOne({ username: req.body.username }, function (err) {
+      if (err) return handleError(err)
+    })
+  })
+})
+
 module.exports = router

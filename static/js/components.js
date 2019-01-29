@@ -2017,7 +2017,7 @@ Vue.component('changeusername', {
     }
   },
   template: `
-    <div class='change-username'>
+    <div class='settings-content'>
       <div>
         <div class='card'>
           <form-element class='centralizeContent'>
@@ -2049,7 +2049,47 @@ Vue.component('changeusername', {
         this.sent = true
         this.valid = dt.isValid
         rt.getUser()
+        if (this.valid){
+          this.$parent.$parent.username = this.username
+        }
       })
+    }
+  }
+})
+Vue.component('deleteaccount', {
+  data() {
+    return {
+      agree: false,
+      show: true
+    }
+  },
+  template: `
+    <div class='settings-content'>
+      <div>
+        <div class='card' style='padding: 0 30px;'>
+          <form-element class='centralizeContent'>
+            <h2 style='color: #F8CC63'>ARE YOU SURE?</h2>
+          </form-element>
+          <form-element>
+            <alert>Your action, projects, username, email, password... will all be lost.</alert>
+          </form-element>
+          <form-element>
+            <check-box :value='agree' @change='invertValue' placeholder='I want to delete my account.'></check-box>
+          </form-element>
+          <form-element class='centralizeContent' v-show='agree'>
+            <form-button @click='deleteAccount'>Delete account</form-button>
+          </form-element>
+        </div>
+      </div>
+    </div>
+  `,
+  methods: {
+    invertValue(){
+      this.agree = !this.agree
+    },
+    deleteAccount(){
+      this.$root.POSTrequest('/delete-account', 'username='+this.$root.username)
+      window.location.href = '/login'
     }
   }
 })

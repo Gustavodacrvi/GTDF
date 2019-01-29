@@ -1055,7 +1055,7 @@ a{
   height: 200px;
 }
 
-.change-username{
+.settings-content{
   display: flex;
   height: 500px;
 }
@@ -1074,14 +1074,14 @@ a{
   color: #F8CC63;
 }
 
-.change-username > div{
+.settings-content > div{
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100%;
 }
 
-.change-username > div > div{
+.settings-content > div > div{
   flex-basis: 450px;
   margin: 0 12px;
 }
