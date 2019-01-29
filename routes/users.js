@@ -43,9 +43,9 @@ router.get('/logout', function(req, res){
 })
 
 router.post('/login',
-    passport.authenticate('local', {successRedirect:'/user', failureRedirect:'/login', failureFlash: true}),
-    function(req, res){
-        res.redirect('/user')
+  passport.authenticate('local', {successRedirect:'/user', failureRedirect:'/login', failureFlash: true}),
+  function(req, res){
+      res.redirect('/user')
 })
 
 router.post('/sign-up', function(req, res){

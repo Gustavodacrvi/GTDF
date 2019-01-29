@@ -80,6 +80,15 @@ Vue.component('form-button', {
     <button :tabindex='tabindex' type='submit' class='formButton' @click='$emit("click")'><slot></slot></button>
   `
 })
+Vue.component('link-button', {
+  props: {
+    tabindex: String,
+    href: String
+  },
+  template: `
+    <a :tabindex='tabindex' class='link-button' :href='href'><slot></slot></a>
+  `
+})
 Vue.component('alert',{
   template: `
     <span class='alert-alert'><slot></slot></span>

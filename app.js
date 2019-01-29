@@ -97,6 +97,11 @@ app.get('/', function(req, res){
   })
 })
 
+app.get('/begin', function(req, res){
+  checkAndChangeLocale(req, res)
+  res.render('begin')
+})
+
 app.get('/en', function(req, res){
   req.session.chosen_locale = 'en'
   res.redirect('/')
