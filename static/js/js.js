@@ -441,7 +441,7 @@ let vm = new Vue({
         this.closeActionForm()
       }
     },
-    activateGuest(d){
+    activateGuest(){
       this.guest = true
     }
   },
