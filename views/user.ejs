@@ -48,9 +48,7 @@
     </navigation-bar>
     <side-nav :show='showSideBar'>
       <side-title>
-        <% if (locals.user) { %>
-          <%= user.username %>
-        <% } %>
+        {{ username }}
       </side-title>
       <side-link animation='pop2' :i='0' compo='basket' @click='changeSectionComponent' :active='openedComponents[0]'>
         <%= __('in-basket') %>
@@ -251,9 +249,7 @@
   <user-content>
     <template slot='content'>
       <transition name='component-animation' appear>
-        <keep-alive>
-          <component v-if='user' :is="currentSectionComponent" @openform='openUserForm' :icongroups='showIconGroups' :user='user' @rearrange='saveNewActionOrder' :dropdowns='openedActionContents' @dropdown-state='changeDropdownSate' :projectdropdowns='openedProjectDropdowns' @rearrangeproject='saveNewProjectOrder'></component>
-        </keep-alive>
+        <component v-if='user' :is="currentSectionComponent" @openform='openUserForm' :icongroups='showIconGroups' :user='user' @rearrange='saveNewActionOrder' :dropdowns='openedActionContents' @dropdown-state='changeDropdownSate' :projectdropdowns='openedProjectDropdowns' @rearrangeproject='saveNewProjectOrder'></component>
       </transition>
     </template>
     <template slot='adds'>

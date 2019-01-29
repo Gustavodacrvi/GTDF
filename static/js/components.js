@@ -292,10 +292,11 @@ Vue.component('action-bar-icon',{
   props: {
     icon: String,
     id: String,
-    tag: String
+    tag: String,
+    title: String
   },
   template: `
-    <i :class='icon + " icon-big user-icon"' @click="$emit('click', {id, tag})"></i>
+    <i :class='icon + " icon-big user-icon"' @click="$emit('click', {id, tag})" :title='title'></i>
   `
 })
 Vue.component('icon-group', {
@@ -328,10 +329,11 @@ Vue.component('icon-group', {
 Vue.component('action-icon', {
   props: {
     icon: String,
-    event: String
+    event: String,
+    title: String
   },
   template: `
-    <i :class='icon + " icon-big user-icon action-icon"' @click='$parent.$emit(event)'></i>
+    <i :class='icon + " icon-big user-icon action-icon"' @click='$parent.$emit(event)' :title='title'></i>
   `
 })
 Vue.component('action-form', {
@@ -447,7 +449,7 @@ Vue.component('basket', {
   <div>
     <div>
       <action-bar>
-        <action-bar-icon icon='fa fa-plus' id='addAction' tag='basket' @click='openUserForm'></action-bar-icon>
+        <action-bar-icon icon='fa fa-plus' id='addAction' tag='basket' @click='openUserForm' title='add action'></action-bar-icon>
         <action-bar-option :active='showOnlyFirstProjectAction' title='show only first action of project' icon='fa fa-list' @on='() => showOnlyFirstProjectAction = true' @off='() => showOnlyFirstProjectAction = false'></action-bar-option>
       </action-bar>
       <h2>Non project actions</h2>
@@ -557,7 +559,7 @@ Vue.component('calendar', {
       </graph>
       <calendar-action-bar>
         <div>
-          <action-bar-icon icon='fa fa-plus' id='addTimedAction' tag='calendar' @click='openUserForm'></action-bar-icon>
+          <action-bar-icon icon='fa fa-plus' id='addTimedAction' tag='calendar' @click='openUserForm' title='add action'></action-bar-icon>
           <action-bar-option :active='showOnlyFirstProjectAction' title='show only first action of project' icon='fa fa-list' @on='() => showOnlyFirstProjectAction = true' @off='() => showOnlyFirstProjectAction = false'></action-bar-option>
         </div>
         <div>
@@ -801,10 +803,10 @@ Vue.component('project-timed-action', {
         </div>
         <div>
           <icon-group :show='icongroup' @delete='deleteTimedProjectAction' @removeFromProject='removeProjectTimedActionFromProject' @editTag='editTimedProjectActionTag' @edit='editProjectTimedAction'>
-            <action-icon icon='fa fa-times' event='delete'></action-icon>
-            <action-icon icon='fa fa-edit' event='edit'></action-icon>
-            <action-icon icon='fa fa-tag' event='editTag'></action-icon>
-            <action-icon icon='fa fa-sign-out-alt' event='removeFromProject'></action-icon>
+            <action-icon icon='fa fa-times' event='delete' title='delete action'></action-icon>
+            <action-icon icon='fa fa-edit' event='edit' title='edit action'></action-icon>
+            <action-icon icon='fa fa-tag' event='editTag' title='edit action tag'></action-icon>
+            <action-icon icon='fa fa-sign-out-alt' event='removeFromProject' title='remove action from project'></action-icon>
           </icon-group>
         </div>
       </div>
@@ -879,10 +881,10 @@ Vue.component('project-action', {
         </div>
         <div>
           <icon-group :show='icongroup' @delete='deleteProjectAction' @edit='editAction' @editTag='editActionTag' @removeFromProject='removeActionFromProject'>
-            <action-icon icon='fa fa-times' event='delete'></action-icon>
-            <action-icon icon='fa fa-edit' event='edit'></action-icon>
-            <action-icon icon='fa fa-tag' event='editTag'></action-icon>
-            <action-icon icon='fa fa-sign-out-alt' event='removeFromProject'></action-icon>
+            <action-icon icon='fa fa-times' event='delete' title='delete action'></action-icon>
+            <action-icon icon='fa fa-edit' event='edit' title='edit action'></action-icon>
+            <action-icon icon='fa fa-tag' event='editTag' title='edit action tag'></action-icon>
+            <action-icon icon='fa fa-sign-out-alt' event='removeFromProject' title='remove action from project'></action-icon>
             <faded-action-icon :icon='returnTheClassIcon'></faded-action-icon>
           </icon-group>
         </div>
@@ -977,10 +979,10 @@ Vue.component('timed-action', {
         </div>
         <div>
           <icon-group :show='icongroup' @delete='deleteAction' @edit='editAction' @tag='editTag' @project='manajeProject'>
-            <action-icon icon='fa fa-times' event='delete'></action-icon>
-            <action-icon icon='fa fa-edit' event='edit'></action-icon>
-            <action-icon icon='fa fa-tag' event='tag'></action-icon>
-            <action-icon icon='fa fa-project-diagram' event='project'></action-icon>
+            <action-icon icon='fa fa-times' event='delete' title='delete action'></action-icon>
+            <action-icon icon='fa fa-edit' event='edit' title='edit action'></action-icon>
+            <action-icon icon='fa fa-tag' event='tag' title='edit action tag'></action-icon>
+            <action-icon icon='fa fa-project-diagram' event='project' title='add to/create project'></action-icon>
           </icon-group>
         </div>
       </div>
@@ -1042,10 +1044,10 @@ Vue.component('action',{
         </div>
         <div>
           <icon-group :show='icongroup' @delete='deleteAction' @edit='editAction' @editTag='editActionTag' @project='manajeProject'>
-            <action-icon icon='fa fa-times' event='delete'></action-icon>
-            <action-icon icon='fa fa-edit' event='edit'></action-icon>
-            <action-icon icon='fa fa-tag' event='editTag'></action-icon>
-            <action-icon icon='fa fa-project-diagram' event='project'></action-icon>
+            <action-icon icon='fa fa-times' event='delete' title='delete action'></action-icon>
+            <action-icon icon='fa fa-edit' event='edit' title='edit action'></action-icon>
+            <action-icon icon='fa fa-tag' event='editTag' title='edit action tag'></action-icon>
+            <action-icon icon='fa fa-project-diagram' event='project' title='add to/create project'></action-icon>
           </icon-group>
         </div>
       </div>
@@ -1275,7 +1277,7 @@ Vue.component('next-actions', {
   <div>
     <div>
       <action-bar>
-        <action-bar-icon icon='fa fa-plus' id='addAction' tag='nextAction' @click='openUserForm'></action-bar-icon>
+        <action-bar-icon icon='fa fa-plus' id='addAction' tag='nextAction' @click='openUserForm' title='add action'></action-bar-icon>
         <action-bar-option :active='showOnlyFirstProjectAction' title='show only first action of project' icon='fa fa-list' @on='() => showOnlyFirstProjectAction = true' @off='() => showOnlyFirstProjectAction = false'></action-bar-option>
       </action-bar>
       <h2>Non project actions</h2>
@@ -1377,7 +1379,7 @@ Vue.component('projects', {
   <div>
     <div>
       <action-bar>
-        <action-bar-icon icon='fa fa-plus' id='addProject' tag='projects' @click='openUserForm'></action-bar-icon>
+        <action-bar-icon icon='fa fa-plus' id='addProject' tag='projects' @click='openUserForm' title='add action'></action-bar-icon>
       </action-bar>
       <template v-if='user'>
       <draggable v-model='user.projects' :options="{handle:'.draggable', animation: 300}">
@@ -1444,9 +1446,9 @@ Vue.component('project', {
         </div>
         <div>
           <icon-group :show='icongroup' @delete='deleteProject' @edit='editProject' @project='addActionToProject'>
-            <action-icon icon='fa fa-times' event='delete'></action-icon>
-            <action-icon icon='fa fa-edit' event='edit'></action-icon>
-            <action-icon icon='fa fa-plus' event='project'></action-icon>
+            <action-icon icon='fa fa-times' event='delete' title='delete project'></action-icon>
+            <action-icon icon='fa fa-edit' event='edit' title='edit project title'></action-icon>
+            <action-icon icon='fa fa-plus' event='project' title='add action to project'></action-icon>
           </icon-group>
         </div>
       </div>
@@ -1508,7 +1510,7 @@ Vue.component('maybe', {
   <div>
     <div>
       <action-bar>
-        <action-bar-icon icon='fa fa-plus' id='addAction' tag='maybe' @click='openUserForm'></action-bar-icon>
+        <action-bar-icon icon='fa fa-plus' id='addAction' tag='maybe' @click='openUserForm' title='add action'></action-bar-icon>
         <action-bar-option :active='showOnlyFirstProjectAction' title='show only first action of project' icon='fa fa-list' @on='() => showOnlyFirstProjectAction = true' @off='() => showOnlyFirstProjectAction = false'></action-bar-option>
       </action-bar>
       <h2>Non project actions</h2>
@@ -1612,7 +1614,7 @@ Vue.component('waiting', {
   <div>
     <div>
       <action-bar>
-        <action-bar-icon icon='fa fa-plus' id='addAction' tag='waiting' @click='openUserForm'></action-bar-icon>
+        <action-bar-icon icon='fa fa-plus' id='addAction' tag='waiting' @click='openUserForm' title='add action'></action-bar-icon>
         <action-bar-option :active='showOnlyFirstProjectAction' title='show only first action of project' icon='fa fa-list' @on='() => showOnlyFirstProjectAction = true' @off='() => showOnlyFirstProjectAction = false'></action-bar-option>
       </action-bar>
       <h2>Non project actions</h2>
@@ -2009,7 +2011,9 @@ Vue.component('changeusername', {
   data() {
     return {
       show: true,
-      username: ''
+      username: '',
+      valid: false,
+      sent: false
     }
   },
   template: `
@@ -2017,18 +2021,35 @@ Vue.component('changeusername', {
       <div>
         <div class='card'>
           <form-element class='centralizeContent'>
-            <h2>CHANGE USERNAME</h2>
+            <h2 style='color: #F8CC63'>CHANGE USERNAME</h2>
           </form-element>
           <form-element class='centralizeContent'>
-            <div v-model='' class='form-input centralizeContent' style='width: 80%'>
-              <input autocomplete='off' type='text' placeholder='New username: ' />
+            <div class='form-input centralizeContent' style='width: 80%'>
+              <input v-model='username' autocomplete='off' type='text' placeholder='New username: ' />
             </div>
           </form-element>
+          <form-element v-show='!valid && sent' class='centralizeContent'>
+            <alert>Username already taken.</alert>
+          </form-element>
+          <form-element v-show='valid && sent' class='centralizeContent'>
+            <success>Username changed.</success>
+          </form-element>
           <form-element class='centralizeContent'>
-            <form-button>Change username</form-button>
+            <form-button @click='sendRequest'>Change username</form-button>
           </form-element>
         </div>
       </div>
     </div>
-  `
+  `,
+  methods: {
+    sendRequest(){
+      let rt = this.$root
+      rt.POSTrequestData('/change-username', 'username='+this.username, (data)=>{
+        let dt = JSON.parse(data)
+        this.sent = true
+        this.valid = dt.isValid
+        rt.getUser()
+      })
+    }
+  }
 })

@@ -7,6 +7,7 @@ let vm = new Vue({
     guest: false,
     showPasswords: false,
     showSideBar: false,
+    username: undefined,
     tempUser: {
       action: {
         tag: undefined,
@@ -182,7 +183,9 @@ let vm = new Vue({
     // ACTION RELATED
       getUser(){
         this.GETrequest('/get-user', (data) =>{
-          this.user = JSON.parse(data)
+          let dt = JSON.parse(data)
+          this.user = dt.user
+          this.username = dt.username
           let length = this.user.actions.length
           this.openedActionContents = []
           for (let i = 0;i < length;i++)
@@ -372,20 +375,29 @@ let vm = new Vue({
       this.cleanTempData()
     },
     GETrequest(route, callback){
-      let xhttp = new XMLHttpRequest();
+      let xhttp = new XMLHttpRequest()
       xhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
+        if (this.readyState == 4 && this.status == 200)
           callback(this.responseText)
-        }
-      };
-      xhttp.open('GET', route, true);
-      xhttp.send();
+      }
+      xhttp.open('GET', route, true)
+      xhttp.send()
     },
     POSTrequest(route, params) {
-      let xhttp = new XMLHttpRequest();
-      xhttp.open('POST', route, true);
-      xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-      xhttp.send(params);
+      let xhttp = new XMLHttpRequest()
+      xhttp.open('POST', route, true)
+      xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded')
+      xhttp.send(params)
+    },
+    POSTrequestData(route, params, callback){
+      let xhttp = new XMLHttpRequest()
+      xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200)
+          callback(this.responseText)
+      }
+      xhttp.open('POST', route, true)
+      xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded')
+      xhttp.send(params)
     },
     getDataFromAction(action){
       let a = this.tempUser.action

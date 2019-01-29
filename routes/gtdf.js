@@ -26,7 +26,7 @@ router.get('/user', function(req, res){
 router.get('/get-user', function(req, res){
   User.getUserById(req.user.id, function(err, user){
     if (err) return handleError(err)
-    res.send(user.data)
+    res.send({ user: user.data, username: user.username})
   })
 })
 
@@ -344,6 +344,29 @@ router.post('/tag-to-calendar', (req, res) => {
       if (err) return handleError(err)
 
       res.send()
+    })
+  })
+})
+
+router.post('/change-username', (req, res) => {
+  User.getUserById(req.user.id, (err, user) => {
+    if (err) return handleError(err)
+    let dt = req.body
+    
+    let usernameTaken = false
+    User.countDocuments({username: dt.username}, function(err, count){
+      if (count > 0) usernameTaken = true
+    }).then(()=>{
+      if (usernameTaken)
+        res.send(JSON.stringify({isValid: false}))
+      else {
+        user.username = dt.username
+        user.save((err, updatedUser) => {
+          if (err) return handleError(err)
+
+          res.send(JSON.stringify({ isValid: true}))
+        })
+      }
     })
   })
 })
