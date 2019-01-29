@@ -30,8 +30,14 @@ body {
   color: #B9B9B9;
 }
 
+.blocked{
+  cursor: -webkit-grabbing;
+}
+
 .formButton,
 .formButton::before,
+.link-button,
+.link-button::before,
 .form-input input,
 .form-input span,
 .hamburger-icon, .bar,
@@ -40,6 +46,7 @@ body {
 }
 
 .formButton,
+.link-button,
 .titleBig {
   color: #F8CC63;
 }
@@ -106,7 +113,7 @@ body {
   pointer-events: none;
   height: 100vh;
   width: 100%;
-  z-index: 2;
+  z-index: 5;
 }
 
 .reset-button{
@@ -167,19 +174,19 @@ a{
 
 /* FORMS */
 
-.formButton{
+.formButton, .link-button{
   border: 3px solid #F8CC63;
   font-family: 'Work Sans Light';
   font-size: 1em;
   position: relative;
   overflow: hidden;
   border-radius: 6px;
-  cursor: pointer; 
+  cursor: pointer;
   background-color: #F8CC63;
   padding: 10px;
   z-index: 1;
 }
-.formButton::before{
+.formButton::before, .link-button::before{
   content: '';
   position: absolute;
   width: 100%;
@@ -190,13 +197,13 @@ a{
   border-radius: 6px;
   background-color: #32373f;
 }
-.formButton:hover::before{
+.formButton:hover::before, .link-button:hover::before{
   width: 0;
   height: 0;
   top: 50%;
   left: 50%;
 }
-.formButton:hover{
+.formButton:hover, .link-button:hover{
   color: black;
 }
 
@@ -270,7 +277,7 @@ a{
   padding: 0 5%;
   pointer-events: all;
   background-color: #32373f;
-  z-index: 3;
+  z-index: 20;
   box-shadow: 0 6px 6px rgba(50,50,50,0.3); 
 }
 
@@ -447,7 +454,7 @@ a{
   background-color: #32373f;
   pointer-events: all;
   overflow: hidden;
-  z-index: 2;
+  z-index: 15;
 }
 
 #side-nav > :first-child{
@@ -464,8 +471,13 @@ a{
   color: #F8CC63;
 }
 
-.side-link{
+.side-link, .side-link-blocked{
   font-size: 1.15em;  
+}
+
+.side-link-blocked{
+  cursor: no-drop;
+  margin-left: 40px;
 }
 
 .underline-link{
@@ -1008,6 +1020,82 @@ a{
 
 .twelve-actions{
   background-color: #00440a !important;
+}
+
+.menu{
+  width: 100%;
+  height: 600px;
+  position: relative;
+}
+
+.menu > :first-child > :first-child{
+  height: 100px;
+  padding-top: 40px; 
+}
+
+.menu > :first-child > :last-child{
+  position: absolute;
+  width: 100%;
+  display: flex;
+  padding-top: 50px;
+  flex-direction: column;
+}
+
+.menu > :last-child > i{
+  position: absolute;
+  left: 20px;
+  top: 20px;
+  z-index: 1;
+  height: 0 !important;
+  display: inline-block !important;
+  padding: 0 !important;
+}
+
+.link-settings{
+  font-size: 30px;
+  text-align: center;
+  color: #B9B9B9;
+  cursor: pointer;
+  transition-duration: .4s;
+}
+
+.link-settings:hover{
+  transform: scale(1.15,1.15);
+}
+
+.space{
+  height: 200px;
+}
+
+.settings-content{
+  display: flex;
+  height: 500px;
+}
+
+.act-bar-icon{
+  margin-left: 10px;
+  transition-duration: .2s;
+}
+
+.act-bar-icon:hover{
+  cursor: pointer;
+  color: #F8CC63;
+}
+
+.action-bar-active{
+  color: #F8CC63;
+}
+
+.settings-content > div{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.settings-content > div > div{
+  flex-basis: 450px;
+  margin: 0 12px;
 }
 
 @media screen and (max-width: 796px){

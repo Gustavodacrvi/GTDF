@@ -11,22 +11,40 @@ function checkAndChangeLocale(req, res){
       i18n.setLocale(res, req.session.chosen_locale)
 }
 
-router.get('/user', function(req, res){
+router.get('/user', (req, res)=>{
   checkAndChangeLocale(req, res)
 
   if (!req.isAuthenticated()) {
     res.redirect('/login')
-  } else {
+  } else if (req.user.username != 'guest'){
     res.render('user', {
-      user: req.user
+      guest: false
+    })
+  } else if (req.user.username == 'guest'){
+    res.render('user', {
+      guest: true
     })
   }
 })
 
-router.get('/get-user', function(req, res){
+router.get('/user-guest', (req, res)=>{
+  checkAndChangeLocale(req, res)
+
+  User.getUserByUsername('guest', (err, user) => {
+    if (err) return handleError(err)
+
+    req.logIn(user, function(err) {
+      if (err) { return next(err); }
+
+      return res.redirect('/user');
+    })
+  })
+})
+
+router.get('/get-user', (req, res)=>{
   User.getUserById(req.user.id, function(err, user){
     if (err) return handleError(err)
-    res.send(user.data)
+    res.send({ user: user.data, username: user.username})
   })
 })
 
@@ -344,6 +362,39 @@ router.post('/tag-to-calendar', (req, res) => {
       if (err) return handleError(err)
 
       res.send()
+    })
+  })
+})
+
+router.post('/change-username', (req, res) => {
+  User.getUserById(req.user.id, (err, user) => {
+    if (err) return handleError(err)
+    let dt = req.body
+    
+    let usernameTaken = false
+    User.countDocuments({username: dt.username}, function(err, count){
+      if (count > 0) usernameTaken = true
+    }).then(()=>{
+      if (usernameTaken)
+        res.send(JSON.stringify({isValid: false}))
+      else {
+        user.username = dt.username
+        user.save((err, updatedUser) => {
+          if (err) return handleError(err)
+
+          res.send(JSON.stringify({ isValid: true}))
+        })
+      }
+    })
+  })
+})
+
+router.post('/delete-account', (req, res) => {
+  User.getUserById(req.user.id, (err, user) => {
+    if (err) return handleError(err)
+
+    User.deleteOne({ username: req.body.username }, function (err) {
+      if (err) return handleError(err)
     })
   })
 })

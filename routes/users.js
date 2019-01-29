@@ -15,13 +15,24 @@ function checkAndChangeLocale(req, res){
 // LOGIN
 router.get('/login', function(req, res){
   checkAndChangeLocale(req, res)
-  res.render('login')
+  res.render('login', {
+    user: req.user
+  })
+})
+
+router.get('/get-user-data', function(req, res){
+  User.findById(req.user.id, (err, user)=>{
+    if (err) return handleError(err)
+    res.send(JSON.stringify({email: user.email, username: user.username}))
+  })
 })
 
 // SIGN UP
 router.get('/sign-up', function(req, res){
   checkAndChangeLocale(req, res)
-  res.render('signup')
+  res.render('signup', {
+    user: req.user
+  })
 })
 
 // LOGOUT
@@ -31,10 +42,16 @@ router.get('/logout', function(req, res){
   res.redirect('/login')
 })
 
+router.get('/logout-create', function(req, res){
+  req.logOut()
+  req.flash('success_msg', 'You logged out.')
+  res.redirect('/sign-up')
+})
+
 router.post('/login',
-    passport.authenticate('local', {successRedirect:'/user', failureRedirect:'/login', failureFlash: true}),
-    function(req, res){
-        res.redirect('/user')
+  passport.authenticate('local', {successRedirect:'/user', failureRedirect:'/login', failureFlash: true}),
+  function(req, res){
+      res.redirect('/user')
 })
 
 router.post('/sign-up', function(req, res){

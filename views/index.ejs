@@ -8,7 +8,47 @@
 
 <body>
 <div id='app'>
-  <a href='/login'><%= __('Begin') %></a>
+  <fixed>
+    <navigation-bar>
+      <template slot='desktop-left'>
+        <nav-element animation='pop1'><link-red href='/'>Home</link-red></nav-element>
+        <nav-element animation='pop2'><link-red href='/login'>Login</link-red></nav-element>
+        <% if (locals.user) {%>
+          <nav-element animation='pop2'><link-red href='/user'>User</link-red></nav-element>
+        <% } %>
+      </template>
+      <template slot='desktop-right'>
+        <nav-element animation='pop2'>
+          <dropdown type='link-red' placeholder="<%= __('default_language') %>">
+            <drop-link href='/pt-BR'>Português(Brasil)</drop-link>
+            <drop-link href='/en'>English</drop-link>
+          </dropdown>
+        </nav-element>
+      </template>
+      <template slot='mobile-left'>
+        <transition name='pop1'>
+          <toggle-icon icon='fa fa-user' elid='side-nav' @toggle='toggleSideNav' :show='showSideBar'></toggle-icon>
+        </template>
+      </template>
+      <template slot='mobile-right'>
+        <transition name='pop2'>
+          <nav-dropdown>
+            <drop-link href='/'>Home</drop-link>
+            <drop-link href='/login'>Login</drop-link>
+            <% if (user) {%>
+              <drop-link href='/user'>User</drop-link>
+            <% } %>
+            <sub-dropdown placeholder="<%= __('default_language') %>">
+              <drop-link href='/pt-BR'>Português(Brasil)</drop-link>
+              <drop-link href='/en'>English</drop-link>
+            </sub-dropdown>
+          </nav-dropdown>
+        </transition>
+      </template>
+    </navigation-bar>
+  </fixed>
+  <div style='height: 50px'></div>
+  <a href='/begin'><%= __('Begin') %></a>
 
 </div>
 
