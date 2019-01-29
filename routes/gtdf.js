@@ -11,19 +11,37 @@ function checkAndChangeLocale(req, res){
       i18n.setLocale(res, req.session.chosen_locale)
 }
 
-router.get('/user', function(req, res){
+router.get('/user', (req, res)=>{
   checkAndChangeLocale(req, res)
 
   if (!req.isAuthenticated()) {
     res.redirect('/login')
-  } else {
+  } else if (req.user.username != 'guest'){
     res.render('user', {
-      user: req.user
+      guest: false
+    })
+  } else if (req.user.username == 'guest'){
+    res.render('user', {
+      guest: true
     })
   }
 })
 
-router.get('/get-user', function(req, res){
+router.get('/user-guest', (req, res)=>{
+  checkAndChangeLocale(req, res)
+
+  User.getUserByUsername('guest', (err, user) => {
+    if (err) return handleError(err)
+
+    req.logIn(user, function(err) {
+      if (err) { return next(err); }
+
+      return res.redirect('/user');
+    })
+  })
+})
+
+router.get('/get-user', (req, res)=>{
   User.getUserById(req.user.id, function(err, user){
     if (err) return handleError(err)
     res.send({ user: user.data, username: user.username})

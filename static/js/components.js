@@ -258,6 +258,18 @@ Vue.component('side-link', {
     </transition>
   `
 })
+Vue.component('blocked-side-link', {
+  props: {
+    animation: String
+  },
+  template: `
+    <transition :name='animation'>
+      <div class='side-link-blocked faded' v-if='$parent.show'>
+        <a><slot></slot></a>
+      </div>
+    </transition>
+  ` 
+})
 Vue.component('toggle-icon', {
   props: {
     elid: String,

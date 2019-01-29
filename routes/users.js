@@ -42,6 +42,12 @@ router.get('/logout', function(req, res){
   res.redirect('/login')
 })
 
+router.get('/logout-create', function(req, res){
+  req.logOut()
+  req.flash('success_msg', 'You logged out.')
+  res.redirect('/sign-up')
+})
+
 router.post('/login',
   passport.authenticate('local', {successRedirect:'/user', failureRedirect:'/login', failureFlash: true}),
   function(req, res){

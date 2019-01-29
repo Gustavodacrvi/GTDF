@@ -440,6 +440,9 @@ let vm = new Vue({
           this.POSTrequest('/add-timed-action', 'tag="calendar"&title='+dt.title+'&description='+dt.description+'&time='+dt.calendar.time+'&date='+dt.calendar.date)
         this.closeActionForm()
       }
+    },
+    activateGuest(d){
+      this.guest = true
     }
   },
   mounted(){

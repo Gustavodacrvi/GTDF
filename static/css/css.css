@@ -30,6 +30,10 @@ body {
   color: #B9B9B9;
 }
 
+.blocked{
+  cursor: -webkit-grabbing;
+}
+
 .formButton,
 .formButton::before,
 .link-button,
@@ -467,8 +471,13 @@ a{
   color: #F8CC63;
 }
 
-.side-link{
+.side-link, .side-link-blocked{
   font-size: 1.15em;  
+}
+
+.side-link-blocked{
+  cursor: no-drop;
+  margin-left: 40px;
 }
 
 .underline-link{
