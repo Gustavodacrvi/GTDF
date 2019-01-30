@@ -3,7 +3,7 @@
 
 <head>
   <% include partials/header %>
-  <title>Login</title>
+  <title>404</title>
 </head>
 
 <body>
@@ -11,10 +11,10 @@
 <fixed>
   <navigation-bar>
       <template slot='desktop-left'>
-        <nav-element animation='pop1'><link-red href='/'>Home</link-red></nav-element>
-        <nav-element animation='pop2'><link-red href='/login'>Login</link-red></nav-element>
+        <nav-element animation='pop1'><link-red href='/'><%= __('Home') %></link-red></nav-element>
+        <nav-element animation='pop2'><link-red href='/login'><%= __('Login') %></link-red></nav-element>
         <% if (locals.user) {%>
-          <nav-element animation='pop2'><link-red href='/user'>User</link-red></nav-element>
+          <nav-element animation='pop2'><link-red href='/user'><%= __('User') %></link-red></nav-element>
         <% } %>
       </template>
       <template slot='desktop-right'>
@@ -26,17 +26,15 @@
         </nav-element>
       </template>
       <template slot='mobile-left'>
-        <transition name='pop1'>
-          <toggle-icon icon='fa fa-user' elid='side-nav' @toggle='toggleSideNav' :show='showSideBar'></toggle-icon>
-        </template>
+        
       </template>
       <template slot='mobile-right'>
         <transition name='pop2'>
           <nav-dropdown>
-            <drop-link href='/'>Home</drop-link>
-            <drop-link href='/login'>Login</drop-link>
+            <drop-link href='/'><%= __('Home') %></drop-link>
+            <drop-link href='/login'><%= __('Login') %></drop-link>
             <% if (user) {%>
-              <drop-link href='/user'>User</drop-link>
+              <drop-link href='/user'><%= __('User') %></drop-link>
             <% } %>
             <sub-dropdown placeholder="<%= __('default_language') %>">
               <drop-link href='/pt-BR'>Português(Brasil)</drop-link>

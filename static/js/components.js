@@ -459,7 +459,8 @@ Vue.component('basket', {
   props: {
     icongroups: Boolean,
     user: Object,
-    dropdowns: Object
+    dropdowns: Object,
+    l: Object
   },
   data(){
     return {
@@ -470,33 +471,33 @@ Vue.component('basket', {
   <div>
     <div>
       <action-bar>
-        <action-bar-icon icon='fa fa-plus' id='addAction' tag='basket' @click='openUserForm' title='add action'></action-bar-icon>
-        <action-bar-option :active='showOnlyFirstProjectAction' title='show only first action of project' icon='fa fa-list' @on='() => showOnlyFirstProjectAction = true' @off='() => showOnlyFirstProjectAction = false'></action-bar-option>
+        <action-bar-icon icon='fa fa-plus' id='addAction' tag='basket' @click='openUserForm' :title='l.addAction'></action-bar-icon>
+        <action-bar-option :active='showOnlyFirstProjectAction' :title='l.showFirstAction' icon='fa fa-list' @on='() => showOnlyFirstProjectAction = true' @off='() => showOnlyFirstProjectAction = false'></action-bar-option>
       </action-bar>
-      <h2>Non project actions</h2>
+      <h2 v-if='l' v-html='l.nonProjectActions'></h2>
       <template v-if='!hasTagAction("basket")'>
-        <span class='faded'>Your non project actions with the tag "basket" will be shown here.</br></br>Click on the plus icon to add an action.</span> 
+        <span class='faded' v-if='l' v-html='l.lackOfNonProjectActionsBasket'></span> 
       </template>
       <template v-if='user'>
         <draggable v-model='user.actions' :options="{handle:'.draggable', animation: 300}">
-            <action v-for='action in user.actions' v-if='!action.projectId && action.projectId != 0 && action.tag == "basket"' :title='action.title' :description='action.description' :key='action.id' :id='action.id' :dropdown='dropdowns[action.id]' :icongroup='icongroups' @changed-dropdown='changeDropdownState'>
+            <action v-for='action in user.actions' v-if='!action.projectId && action.projectId != 0 && action.tag == "basket"' :title='action.title' :description='action.description' :key='action.id' :id='action.id' :dropdown='dropdowns[action.id]' :icongroup='icongroups' @changed-dropdown='changeDropdownState' :l='l'>
             </action>
         </draggable>
-        <h2>Project actions</h2>
+        <h2 v-if='l' v-html='l.projectActions'></h2>
         <template v-if='!thereIsAtLeastOneProjectAction("basket")'>
-          <span class='faded'>Your project actions with the tag "basket" will be shown here.</br></br>Go to the project section to create projects.</span>
+          <span class='faded' v-html='l.lackOfProjectActionsBasket'></span>
         </template>
         <draggable v-model='user.actions' :options="{handle:'.draggable', animation: 300}">
           <template v-for='project in user.projects'>
             {{ activateFirstOneVar() }}
             <template v-for='action in user.actions' v-if='(action.projectId || action.projectId == 0) && containsAction(project.id, action.id)'>
             <template v-if='showOnlyFirstProjectAction && firstOne'>
-              <project-action v-if='action.tag == "basket"' :title='action.title' :description='action.description' :key='action.id' :id='action.id' :dropdown='dropdowns[action.id]' :icongroup='icongroups' :projectId='action.projectId' :showprojectname='true' @changed-dropdown='changeDropdownState'>
+              <project-action v-if='action.tag == "basket"' :title='action.title' :description='action.description' :key='action.id' :id='action.id' :dropdown='dropdowns[action.id]' :icongroup='icongroups' :projectId='action.projectId' :showprojectname='true' @changed-dropdown='changeDropdownState' :l='l'>
               </project-action>
               {{ disableFirstOneVar() }}
             </template>
             <template v-else-if='!showOnlyFirstProjectAction'>
-              <project-action v-if='action.tag == "basket"' :title='action.title' :description='action.description' :key='action.id' :id='action.id' :dropdown='dropdowns[action.id]' :icongroup='icongroups' :projectId='action.projectId' :showprojectname='true' @changed-dropdown='changeDropdownState'>
+              <project-action v-if='action.tag == "basket"' :title='action.title' :description='action.description' :key='action.id' :id='action.id' :dropdown='dropdowns[action.id]' :icongroup='icongroups' :projectId='action.projectId' :showprojectname='true' @changed-dropdown='changeDropdownState' :l='l'>
               </project-action>
             </template>
         </draggable>
@@ -563,7 +564,8 @@ Vue.component('calendar', {
   props: {
     user: Object,
     icongroups: Boolean,
-    dropdowns: Boolean
+    dropdowns: Boolean,
+    l: Object
   },
   data() {
     return {
@@ -576,56 +578,56 @@ Vue.component('calendar', {
   template: `
   <div>
     <div>
-      <graph @dateselected='selectDate'>
+      <graph @dateselected='selectDate' :l='l'>
       </graph>
       <calendar-action-bar>
         <div>
-          <action-bar-icon icon='fa fa-plus' id='addTimedAction' tag='calendar' @click='openUserForm' title='add action'></action-bar-icon>
-          <action-bar-option :active='showOnlyFirstProjectAction' title='show only first action of project' icon='fa fa-list' @on='() => showOnlyFirstProjectAction = true' @off='() => showOnlyFirstProjectAction = false'></action-bar-option>
+          <action-bar-icon icon='fa fa-plus' id='addTimedAction' tag='calendar' @click='openUserForm' :title='l.addAction'></action-bar-icon>
+          <action-bar-option :active='showOnlyFirstProjectAction' :title='l.showFirstAction' icon='fa fa-list' @on='() => showOnlyFirstProjectAction = true' @off='() => showOnlyFirstProjectAction = false'></action-bar-option>
         </div>
         <div>
           <div>
-            <link-yellow :active='beforeafter' argument='before' @click='selectButton'>Before {{year}}</link-yellow>
-            <link-yellow :active='beforeafter' argument='after' @click='selectButton'>After {{year}}</link-yellow>
+            <link-yellow :active='beforeafter' argument='before' @click='selectButton'>{{ l.before }} {{year}}</link-yellow>
+            <link-yellow :active='beforeafter' argument='after' @click='selectButton'>{{ l.after }} {{year}}</link-yellow>
           </div>
           <div style='width:20px;display: inline-block'></div>
           <input class='calendar-input' v-model='date'></input>
         </div>
       </calendar-action-bar>
-      <h2>Non project actions</h2>
+      <h2>{{ l.nonProjectActions }}</h2>
       <template v-if='!thereIsAtLeastOneNonProjectTimedActionWithTheSelectedDate() && beforeafter == undefined'>
-        <span class='faded'>Your non project actions with the "calendar" tag with the date {{date}} will be shown here.</br></br>Click on the plus icon to add an action with the date {{date}}.</span>
+        <span class='faded' v-html='l.lackOfNonProjectActionsCalendar'></span>
       </template>
       <template v-else-if='beforeafter == "after" && !thereIsAtLeastOneNonProjectTimedActionAfterThisYear()'>
-        <span class='faded'>Your non project actions with the "calendar" tag that comes after the year {{year}} will be shown here.</span>
+        <span class='faded' v-html='l.nonProjectActionAfter'></span>
       </template>
       <template v-else-if='beforeafter == "before" && !thereIsAtLeastOneNonProjectTimedActionBeforeThisYear()'>
-        <span class='faded'>Your non project actions with the "calendar" tag that comes before the year {{year}} will be shown here.</span>
+        <span class='faded' v-html='l.nonProjectActionBefore'></span>
       </template>
       <template v-if='beforeafter == undefined'>
         <draggable v-model='user.actions' :options="{handle:'.draggable', animation: 300}">
-          <timed-action v-for='action in user.actions' v-if='action.calendar && action.calendar.date == date && !action.projectId && action.projectId != 0' :title='action.title' :description='action.description' :key='action.id' :id='action.id' :icongroup='icongroups' :dropdown='dropdowns[action.id]' :time='action.calendar.time' :date='action.calendar.date' @changed-dropdown='changeDropdownState'></timed-action>
+          <timed-action v-for='action in user.actions' v-if='action.calendar && action.calendar.date == date && !action.projectId && action.projectId != 0' :title='action.title' :description='action.description' :key='action.id' :id='action.id' :icongroup='icongroups' :dropdown='dropdowns[action.id]' :time='action.calendar.time' :date='action.calendar.date' @changed-dropdown='changeDropdownState' :l='l'></timed-action>
         </draggable>
       </template>
       <template v-else-if='beforeafter == "before"'>
         <draggable v-model='user.actions' :options="{handle:'.draggable', animation: 300}">
-            <timed-action v-for='action in user.actions' v-if='action.calendar && action.calendar.date.split("/")[2] < year && !action.projectId && action.projectId != 0' :title='action.title' :description='action.description' :key='action.id' :id='action.id' :icongroup='icongroups' :dropdown='dropdowns[action.id]' :time='action.calendar.time' :date='action.calendar.date' @changed-dropdown='changeDropdownState'></timed-action>
+            <timed-action v-for='action in user.actions' v-if='action.calendar && action.calendar.date.split("/")[2] < year && !action.projectId && action.projectId != 0' :title='action.title' :description='action.description' :key='action.id' :id='action.id' :icongroup='icongroups' :dropdown='dropdowns[action.id]' :time='action.calendar.time' :date='action.calendar.date' @changed-dropdown='changeDropdownState' :l='l'></timed-action>
         </draggable>
       </template>
       <template v-else-if='beforeafter == "after"'>
         <draggable v-model='user.actions' :options="{handle:'.draggable', animation: 300}">
-            <timed-action v-for='action in user.actions' v-if='action.calendar && action.calendar.date.split("/")[2] > year && !action.projectId && action.projectId != 0' :title='action.title' :description='action.description' :key='action.id' :id='action.id' :icongroup='icongroups' :dropdown='dropdowns[action.id]' :time='action.calendar.time' :date='action.calendar.date' @changed-dropdown='changeDropdownState'></timed-action>
+            <timed-action v-for='action in user.actions' v-if='action.calendar && action.calendar.date.split("/")[2] > year && !action.projectId && action.projectId != 0' :title='action.title' :description='action.description' :key='action.id' :id='action.id' :icongroup='icongroups' :dropdown='dropdowns[action.id]' :time='action.calendar.time' :date='action.calendar.date' @changed-dropdown='changeDropdownState' :l='l'></timed-action>
         </draggable>
       </template>
-      <h2>Project actions</h2>
+      <h2>{{ l.projectActions }}</h2>
       <template v-if='!thereIsAtLeastOneProjectTimedActionWithTheSelectedDate() && beforeafter == undefined'>
-        <span class='faded'>Your project actions with the the tag "calendar" with the date {{date}} will be shown here.<br></br>Go to the project section to create a project.</span>
+        <span class='faded' v-html='l.projectActionsCalendar'></span>
       </template>
       <template v-else-if='beforeafter == "after" && !thereIsAtLeastOneProjectTimedActionAfterThisYear()'>
-        <span class='faded'>Your project actions with the "calendar" tag that comes after the year {{year}} will be shown here.</span>
+        <span class='faded' v-html='l.projectActionsCalendarAfter'></span>
       </template>
       <template v-else-if='beforeafter == "before" && !thereIsAtLeastOneProjectTimedActionBeforeThisYear()'>
-        <span class='faded'>Your project actions with the "calendar" tag that comes before the year {{year}} will be shown here.</span>
+        <span class='faded' v-html='l.projectActionsCalendarBefore'></span>
       </template>
       <template v-if='beforeafter == "before"'>
         <draggable v-model='user.actions' :options="{handle:'.draggable', animation: 300}">
@@ -633,11 +635,11 @@ Vue.component('calendar', {
           {{activateFirstOneVar()}}
             <template v-for='action in user.actions' v-if='action.calendar && action.calendar.date.split("/")[2] < date && containsAction(project.id, action.id)' :title='action.title'>
               <template v-if='showOnlyFirstProjectAction && firstOne'>
-                <project-timed-action :description='action.description' :key='action.id' :id='action.id' :icongroup='icongroups' :dropdown='dropdowns[action.id]' :time='action.calendar.time' :projectid='action.projectId' @changed-dropdown='changeDropdownState'></project-timed-action>
+                <project-timed-action :description='action.description' :key='action.id' :id='action.id' :icongroup='icongroups' :dropdown='dropdowns[action.id]' :time='action.calendar.time' :projectid='action.projectId' @changed-dropdown='changeDropdownState' :l='l'></project-timed-action>
                 {{disableFirstOneVar()}}
               </template>
               <template v-else-if='!showOnlyFirstProjectAction'>
-                <project-timed-action :description='action.description' :key='action.id' :id='action.id' :icongroup='icongroups' :dropdown='dropdowns[action.id]' :time='action.calendar.time' :projectid='action.projectId' @changed-dropdown='changeDropdownState'></project-timed-action>
+                <project-timed-action :description='action.description' :key='action.id' :id='action.id' :icongroup='icongroups' :dropdown='dropdowns[action.id]' :time='action.calendar.time' :projectid='action.projectId' @changed-dropdown='changeDropdownState' :l='l'></project-timed-action>
               </template>
             </template>
           </template>
@@ -649,11 +651,11 @@ Vue.component('calendar', {
           {{activateFirstOneVar()}}
             <template v-for='action in user.actions' v-if='action.calendar && action.calendar.date.split("/")[2] > date && containsAction(project.id, action.id)' :title='action.title'>
               <template v-if='showOnlyFirstProjectAction && firstOne'>
-                <project-timed-action :description='action.description' :key='action.id' :id='action.id' :icongroup='icongroups' :dropdown='dropdowns[action.id]' :time='action.calendar.time' :projectid='action.projectId' @changed-dropdown='changeDropdownState'></project-timed-action>
+                <project-timed-action :description='action.description' :key='action.id' :id='action.id' :icongroup='icongroups' :dropdown='dropdowns[action.id]' :time='action.calendar.time' :projectid='action.projectId' @changed-dropdown='changeDropdownState' :l='l'></project-timed-action>
                 {{disableFirstOneVar()}}
               </template>
               <template v-else-if='!showOnlyFirstProjectAction'>
-                <project-timed-action :description='action.description' :key='action.id' :id='action.id' :icongroup='icongroups' :dropdown='dropdowns[action.id]' :time='action.calendar.time' :projectid='action.projectId' @changed-dropdown='changeDropdownState'></project-timed-action>
+                <project-timed-action :description='action.description' :key='action.id' :id='action.id' :icongroup='icongroups' :dropdown='dropdowns[action.id]' :time='action.calendar.time' :projectid='action.projectId' @changed-dropdown='changeDropdownState' :l='l'></project-timed-action>
               </template>
             </template>
           </template>
@@ -665,11 +667,11 @@ Vue.component('calendar', {
           {{activateFirstOneVar()}}
             <template v-for='action in user.actions' v-if='action.calendar && action.calendar.date == date && containsAction(project.id, action.id)' :title='action.title'>
               <template v-if='showOnlyFirstProjectAction && firstOne'>
-                <project-timed-action :description='action.description' :key='action.id' :id='action.id' :icongroup='icongroups' :dropdown='dropdowns[action.id]' :time='action.calendar.time' :projectid='action.projectId' @changed-dropdown='changeDropdownState'></project-timed-action>
+                <project-timed-action :description='action.description' :key='action.id' :id='action.id' :icongroup='icongroups' :dropdown='dropdowns[action.id]' :time='action.calendar.time' :projectid='action.projectId' @changed-dropdown='changeDropdownState' :l='l'></project-timed-action>
                 {{disableFirstOneVar()}}
               </template>
               <template v-else-if='!showOnlyFirstProjectAction'>
-                <project-timed-action :description='action.description' :key='action.id' :id='action.id' :icongroup='icongroups' :dropdown='dropdowns[action.id]' :time='action.calendar.time' :projectid='action.projectId' @changed-dropdown='changeDropdownState'></project-timed-action>
+                <project-timed-action :description='action.description' :key='action.id' :id='action.id' :icongroup='icongroups' :dropdown='dropdowns[action.id]' :time='action.calendar.time' :projectid='action.projectId' @changed-dropdown='changeDropdownState' :l='l'></project-timed-action>
               </template>
             </template>
           </template>
@@ -810,7 +812,8 @@ Vue.component('project-timed-action', {
     dropdown: Boolean,
     time: String,
     date: String,
-    projectid: Number
+    projectid: Number,
+    l: Object
   },
   template: `
     <div class='action' :key='id'>
@@ -825,9 +828,9 @@ Vue.component('project-timed-action', {
         <div>
           <icon-group :show='icongroup' @delete='deleteTimedProjectAction' @removeFromProject='removeProjectTimedActionFromProject' @editTag='editTimedProjectActionTag' @edit='editProjectTimedAction'>
             <action-icon icon='fa fa-times' event='delete' title='delete action'></action-icon>
-            <action-icon icon='fa fa-edit' event='edit' title='edit action'></action-icon>
-            <action-icon icon='fa fa-tag' event='editTag' title='edit action tag'></action-icon>
-            <action-icon icon='fa fa-sign-out-alt' event='removeFromProject' title='remove action from project'></action-icon>
+            <action-icon icon='fa fa-edit' event='edit' :title='l.editAction'></action-icon>
+            <action-icon icon='fa fa-tag' event='editTag' :title='l.editActionTag'></action-icon>
+            <action-icon icon='fa fa-sign-out-alt' event='removeFromProject' :title='l.removeFromProject'></action-icon>
           </icon-group>
         </div>
       </div>
@@ -890,7 +893,8 @@ Vue.component('project-action', {
     showtagicon: false,
     showprojectname: true,
     tag: String,
-    calendar: Object
+    calendar: Object,
+    l: Object
   },
   template: `
     <div class='action' :key='id'>
@@ -902,10 +906,10 @@ Vue.component('project-action', {
         </div>
         <div>
           <icon-group :show='icongroup' @delete='deleteProjectAction' @edit='editAction' @editTag='editActionTag' @removeFromProject='removeActionFromProject'>
-            <action-icon icon='fa fa-times' event='delete' title='delete action'></action-icon>
-            <action-icon icon='fa fa-edit' event='edit' title='edit action'></action-icon>
-            <action-icon icon='fa fa-tag' event='editTag' title='edit action tag'></action-icon>
-            <action-icon icon='fa fa-sign-out-alt' event='removeFromProject' title='remove action from project'></action-icon>
+            <action-icon icon='fa fa-times' event='delete' :title='l.deleteAction'></action-icon>
+            <action-icon icon='fa fa-edit' event='edit' :title='l.editAction'></action-icon>
+            <action-icon icon='fa fa-tag' event='editTag' :title='l.editActionTag'></action-icon>
+            <action-icon icon='fa fa-sign-out-alt' event='removeFromProject' :title='l.removeFromProject'></action-icon>
             <faded-action-icon :icon='returnTheClassIcon'></faded-action-icon>
           </icon-group>
         </div>
@@ -986,7 +990,8 @@ Vue.component('timed-action', {
     icongroup: Boolean,
     dropdown: Boolean,
     time: String,
-    date: String
+    date: String,
+    l: Object
   },
   template: `
     <div class='action'>
@@ -1000,10 +1005,10 @@ Vue.component('timed-action', {
         </div>
         <div>
           <icon-group :show='icongroup' @delete='deleteAction' @edit='editAction' @tag='editTag' @project='manajeProject'>
-            <action-icon icon='fa fa-times' event='delete' title='delete action'></action-icon>
-            <action-icon icon='fa fa-edit' event='edit' title='edit action'></action-icon>
-            <action-icon icon='fa fa-tag' event='tag' title='edit action tag'></action-icon>
-            <action-icon icon='fa fa-project-diagram' event='project' title='add to/create project'></action-icon>
+            <action-icon icon='fa fa-times' event='delete' :title='l.deleteAction'></action-icon>
+            <action-icon icon='fa fa-edit' event='edit' :title='l.editAction'></action-icon>
+            <action-icon icon='fa fa-tag' event='tag' :title='l.editActionTag'></action-icon>
+            <action-icon icon='fa fa-project-diagram' event='project' :title='l.addCreateProject'></action-icon>
           </icon-group>
         </div>
       </div>
@@ -1054,7 +1059,8 @@ Vue.component('action',{
     description: String,
     icongroup: Boolean,
     dropdown: false,
-    id: Number
+    id: Number,
+    l: Object
   },
   template: `
     <div class='action' :key='id'>
@@ -1065,10 +1071,10 @@ Vue.component('action',{
         </div>
         <div>
           <icon-group :show='icongroup' @delete='deleteAction' @edit='editAction' @editTag='editActionTag' @project='manajeProject'>
-            <action-icon icon='fa fa-times' event='delete' title='delete action'></action-icon>
-            <action-icon icon='fa fa-edit' event='edit' title='edit action'></action-icon>
-            <action-icon icon='fa fa-tag' event='editTag' title='edit action tag'></action-icon>
-            <action-icon icon='fa fa-project-diagram' event='project' title='add to/create project'></action-icon>
+            <action-icon icon='fa fa-times' event='delete' :title='l.deleteAction'></action-icon>
+            <action-icon icon='fa fa-edit' event='edit' :title='l.editAction'></action-icon>
+            <action-icon icon='fa fa-tag' event='editTag' :title='l.editActionTag'></action-icon>
+            <action-icon icon='fa fa-project-diagram' event='project' :title='l.addCreateProject'></action-icon>
           </icon-group>
         </div>
       </div>
@@ -1119,6 +1125,9 @@ Vue.component('calendar-action-bar', {
   `
 })
 Vue.component('graph', {
+  props: {
+    l: Object
+  },
   data(){
     return {
       numberOfDaysInYear: 365,
@@ -1144,23 +1153,23 @@ Vue.component('graph', {
       <h2 v-if='created'>{{date.year}}</h2>
       <div>
         <div>
-          <span>Mon</span>
-          <span>Wed</span>
-          <span>Fri</span>
+          <span>{{ l.mon }}</span>
+          <span>{{ l.wed }}</span>
+          <span>{{ l.fri }}</span>
         </div>
         <div>
-          <span class='text'>Jan</span>
-          <span class='text'>Feb</span>
-          <span class='text'>Mar</span>
-          <span class='text'>Apr</span>
-          <span class='text'>May</span>
-          <span class='text'>Jun</span>
-          <span class='text'>Jul</span>
-          <span class='text'>Aug</span>
-          <span class='text'>Sep</span>
-          <span class='text'>Oct</span>
-          <span class='text'>Nov</span>
-          <span class='text'>Dec</span>
+          <span class='text'>{{ l.jan }}</span>
+          <span class='text'>{{ l.feb }}</span>
+          <span class='text'>{{ l.mar }}</span>
+          <span class='text'>{{ l.apr }}</span>
+          <span class='text'>{{ l.may }}</span>
+          <span class='text'>{{ l.jun }}</span>
+          <span class='text'>{{ l.jul }}</span>
+          <span class='text'>{{ l.aug }}</span>
+          <span class='text'>{{ l.sep }}</span>
+          <span class='text'>{{ l.oct }}</span>
+          <span class='text'>{{ l.nov }}</span>
+          <span class='text'>{{ l.dec }}</span>
         </div>
         <div>
           <template v-if='created'>
@@ -1168,12 +1177,12 @@ Vue.component('graph', {
               <dark-square></dark-square>
             </template>
             <template v-for='day in numberOfDaysInYear'>
-              <square :date='returnDate()' :numberofactions='getNumberOfActionsWithTheSpecifiedDate(returnAndAddDate())'></square>
+              <square :date='returnDate()' :numberofactions='getNumberOfActionsWithTheSpecifiedDate(returnAndAddDate())' :l='l'></square>
             </template>
           </template>
         </div>
         <div>
-          <span>Less actions</span>
+          <span>{{ l.lessActions }}</span>
           <div style='width: 8px;display: inline-block'></div>
           <div class='square'></div>
           <div class='square one-action'></div>
@@ -1182,7 +1191,7 @@ Vue.component('graph', {
           <div class='square nine-actions'></div>
           <div class='square twelve-actions'></div>
           <div style='width: 8px;display: inline-block'></div>
-          <span>More actions</span>
+          <span>{{ l.moreActions }}</span>
         </div>
       </div>
     </div>
@@ -1216,7 +1225,8 @@ Vue.component('graph', {
 Vue.component('square', {
   props: {
     date: String,
-    numberofactions: Number
+    numberofactions: Number,
+    l: Object
   },
   data(){
     return {
@@ -1224,7 +1234,7 @@ Vue.component('square', {
     }
   },
   template: `
-    <div :class='[isSelected() ? "selected-square" : "" , !d ? "square" : "", atLeastOneAction() ? "one-action": "", moreThanTwo() ? "four-actions": "", moreThanSix() ? "six-actions": "", moreThanNine() ? "nine-actions": "", moreThanTwelve() ? "twelve-actions": ""]' :data-title='date + " " + numberofactions + " actions"' @click='$parent.$emit("dateselected",date)'></div>
+    <div :class='[isSelected() ? "selected-square" : "" , !d ? "square" : "", atLeastOneAction() ? "one-action": "", moreThanTwo() ? "four-actions": "", moreThanSix() ? "six-actions": "", moreThanNine() ? "nine-actions": "", moreThanTwelve() ? "twelve-actions": ""]' :data-title='date + " " + numberofactions + " " + l.actions' @click='$parent.$emit("dateselected",date)'></div>
   `,
   methods: {
     isSelected(){
@@ -1287,7 +1297,8 @@ Vue.component('next-actions', {
   props: {
     icongroups: Boolean,
     user: Object,
-    dropdowns: Object
+    dropdowns: Object,
+    l: Object
   },
   data(){
     return {
@@ -1298,33 +1309,33 @@ Vue.component('next-actions', {
   <div>
     <div>
       <action-bar>
-        <action-bar-icon icon='fa fa-plus' id='addAction' tag='nextAction' @click='openUserForm' title='add action'></action-bar-icon>
-        <action-bar-option :active='showOnlyFirstProjectAction' title='show only first action of project' icon='fa fa-list' @on='() => showOnlyFirstProjectAction = true' @off='() => showOnlyFirstProjectAction = false'></action-bar-option>
+        <action-bar-icon icon='fa fa-plus' id='addAction' tag='nextAction' @click='openUserForm' :title='l.addAction'></action-bar-icon>
+        <action-bar-option :active='showOnlyFirstProjectAction' :title='l.showFirstAction' icon='fa fa-list' @on='() => showOnlyFirstProjectAction = true' @off='() => showOnlyFirstProjectAction = false' :l='l'></action-bar-option>
       </action-bar>
-      <h2>Non project actions</h2>
+      <h2>{{ l.nonProjectActions }}</h2>
       <template v-if='!hasTagAction("nextAction")'>
-        <span class='faded'>Your non project actions with the tag "next action" will be shown here.</br></br>Click on the plus icon to add an action.</span> 
+        <span class='faded' v-if='l' v-html='l.lackOfNonProjectActionsNextAction'></span> 
       </template>
       <template v-if='user'>
         <draggable v-model='user.actions' :options="{handle:'.draggable', animation: 300}">
-            <action v-for='action in user.actions' v-if='!action.projectId && action.projectId != 0 && action.tag == "nextAction"' :title='action.title' :description='action.description' :key='action.id' :id='action.id' :dropdown='dropdowns[action.id]' :icongroup='icongroups' @changed-dropdown='changeDropdownState'>
+            <action v-for='action in user.actions' v-if='!action.projectId && action.projectId != 0 && action.tag == "nextAction"' :title='action.title' :description='action.description' :key='action.id' :id='action.id' :dropdown='dropdowns[action.id]' :icongroup='icongroups' @changed-dropdown='changeDropdownState' :l='l'>
             </action>
         </draggable>
-        <h2>Project actions</h2>
+        <h2>{{ l.projectActions }}</h2>
         <template v-if='!thereIsAtLeastOneProjectAction("nextAction")'>
-          <span class='faded'>Your project actions with the tag "next action" will be shown here.</br></br>Go to the project section to create projects.</span>
+          <span class='faded' v-if='l' v-html='l.lackOfProjectActionsNextAction'></span>
         </template>
         <draggable v-model='user.actions' :options="{handle:'.draggable', animation: 300}">
           <template v-for='project in user.projects'>
             {{ activateFirstOneVar() }}
             <template v-for='action in user.actions' v-if='(action.projectId || action.projectId == 0) && containsAction(project.id, action.id)'>
             <template v-if='showOnlyFirstProjectAction && firstOne'>
-              <project-action v-if='action.tag == "nextAction"' :title='action.title' :description='action.description' :key='action.id' :id='action.id' :dropdown='dropdowns[action.id]' :icongroup='icongroups' :projectId='action.projectId' :showprojectname='true' @changed-dropdown='changeDropdownState'>
+              <project-action v-if='action.tag == "nextAction"' :title='action.title' :description='action.description' :key='action.id' :id='action.id' :dropdown='dropdowns[action.id]' :icongroup='icongroups' :projectId='action.projectId' :showprojectname='true' @changed-dropdown='changeDropdownState' :l='l'>
               </project-action>
               {{ disableFirstOneVar() }}
             </template>
             <template v-else-if='!showOnlyFirstProjectAction'>
-              <project-action v-if='action.tag == "nextAction"' :title='action.title' :description='action.description' :key='action.id' :id='action.id' :dropdown='dropdowns[action.id]' :icongroup='icongroups' :projectId='action.projectId' :showprojectname='true' @changed-dropdown='changeDropdownState'>
+              <project-action v-if='action.tag == "nextAction"' :title='action.title' :description='action.description' :key='action.id' :id='action.id' :dropdown='dropdowns[action.id]' :icongroup='icongroups' :projectId='action.projectId' :showprojectname='true' @changed-dropdown='changeDropdownState' :l='l'>
               </project-action>
             </template>
             </template>
@@ -1394,20 +1405,21 @@ Vue.component('projects', {
     dropdowns: Object,
     icongroups: Boolean,
     user: Object,
-    projectdropdowns: Object
+    projectdropdowns: Object,
+    l: Object
   },
   template: `
   <div>
     <div>
       <action-bar>
-        <action-bar-icon icon='fa fa-plus' id='addProject' tag='projects' @click='openUserForm' title='add action'></action-bar-icon>
+        <action-bar-icon icon='fa fa-plus' id='addProject' tag='projects' @click='openUserForm' :title='l.createProject'></action-bar-icon>
       </action-bar>
       <template v-if='user'>
       <draggable v-model='user.projects' :options="{handle:'.draggable', animation: 300}">
-          <project v-for='prj in user.projects' :title='prj.title' :icongroup='icongroups' :dropdowns='dropdowns' :dropdown='projectdropdowns[prj.id]' :id='prj.id' :key='prj.id' :user='user'></project>
+          <project v-for='prj in user.projects' :title='prj.title' :icongroup='icongroups' :dropdowns='dropdowns' :dropdown='projectdropdowns[prj.id]' :id='prj.id' :key='prj.id' :user='user' :l='l'></project>
       </draggable>
       <template v-if='!thereIsAtLeastOneProject'>
-        <span class='faded'>All of your projects and project actions will be shown here.</br></br>Click on the plus icon to create a project</span>
+        <span class='faded' v-html='l.lackOfProjects'></span>
       </template>
       </template>
       <div class='space'></div>
@@ -1456,7 +1468,8 @@ Vue.component('project', {
     dropdowns: Object,
     title: String,
     icongroup: Boolean,
-    user: Object
+    user: Object,
+    l: Object
   },
   template: `
     <div class='project' :key='id'>
@@ -1467,9 +1480,9 @@ Vue.component('project', {
         </div>
         <div>
           <icon-group :show='icongroup' @delete='deleteProject' @edit='editProject' @project='addActionToProject'>
-            <action-icon icon='fa fa-times' event='delete' title='delete project'></action-icon>
-            <action-icon icon='fa fa-edit' event='edit' title='edit project title'></action-icon>
-            <action-icon icon='fa fa-plus' event='project' title='add action to project'></action-icon>
+            <action-icon icon='fa fa-times' event='delete' :title='l.deleteProject'></action-icon>
+            <action-icon icon='fa fa-edit' event='edit' :title='l.editProjectTitle'></action-icon>
+            <action-icon icon='fa fa-plus' event='project' :title='l.addToProject'></action-icon>
           </icon-group>
         </div>
       </div>
@@ -1477,7 +1490,7 @@ Vue.component('project', {
         <div v-show='dropdown'>
           <div>
             <draggable v-model='user.actions' :options="{handle:'.draggable', animation: 300}">
-                <project-action v-for='action in user.actions' v-if='isOnProject(action.id)' :title='action.title' :description='action.description' :key='action.id' :id='action.id' :dropdown='dropdowns[action.id]' :icongroup='icongroup' :projectId='action.projectId' @changed-dropdown='changeDropdownState' :showtagicon='true' :showprojectname='false' :tag='action.tag' :calendar='action.calendar'>
+                <project-action v-for='action in user.actions' v-if='isOnProject(action.id)' :title='action.title' :description='action.description' :key='action.id' :id='action.id' :dropdown='dropdowns[action.id]' :icongroup='icongroup' :projectId='action.projectId' @changed-dropdown='changeDropdownState' :showtagicon='true' :showprojectname='false' :tag='action.tag' :calendar='action.calendar' :l='l'>
                 </project-action>
             </draggable>
           </div>
@@ -1520,7 +1533,8 @@ Vue.component('maybe', {
   props: {
     icongroups: Boolean,
     user: Object,
-    dropdowns: Object
+    dropdowns: Object,
+    l: Object
   },
   data(){
     return {
@@ -1531,33 +1545,33 @@ Vue.component('maybe', {
   <div>
     <div>
       <action-bar>
-        <action-bar-icon icon='fa fa-plus' id='addAction' tag='maybe' @click='openUserForm' title='add action'></action-bar-icon>
-        <action-bar-option :active='showOnlyFirstProjectAction' title='show only first action of project' icon='fa fa-list' @on='() => showOnlyFirstProjectAction = true' @off='() => showOnlyFirstProjectAction = false'></action-bar-option>
+        <action-bar-icon icon='fa fa-plus' id='addAction' tag='maybe' @click='openUserForm' :title='l.addAction'></action-bar-icon>
+        <action-bar-option :active='showOnlyFirstProjectAction' :title='l.showFirstAction' icon='fa fa-list' @on='() => showOnlyFirstProjectAction = true' @off='() => showOnlyFirstProjectAction = false'></action-bar-option>
       </action-bar>
-      <h2>Non project actions</h2>
+      <h2>{{ l.nonProjectActions }}</h2>
       <template v-if='!hasTagAction("maybe")'>
-        <span class='faded'>Your non project actions with the tag "someday/maybe" will be shown here.</br></br>Click on the plus icon to add an action.</span> 
+        <span class='faded' v-html='l.lackOfNonProjectActionsMaybe'></span> 
       </template>
       <template v-if='user'>
         <draggable v-model='user.actions' :options="{handle:'.draggable', animation: 300}">
-            <action v-for='action in user.actions' v-if='!action.projectId && action.projectId != 0 && action.tag == "maybe"' :title='action.title' :description='action.description' :key='action.id' :id='action.id' :dropdown='dropdowns[action.id]' :icongroup='icongroups' @changed-dropdown='changeDropdownState'>
+            <action v-for='action in user.actions' v-if='!action.projectId && action.projectId != 0 && action.tag == "maybe"' :title='action.title' :description='action.description' :key='action.id' :id='action.id' :dropdown='dropdowns[action.id]' :icongroup='icongroups' @changed-dropdown='changeDropdownState' :l='l'>
             </action>
         </draggable>
-        <h2>Project actions</h2>
+        <h2>{{ l.projectActions }}</h2>
         <template v-if='!thereIsAtLeastOneProjectAction("maybe")'>
-          <span class='faded'>Your project actions with the tag "someday/maybe" will be shown here.</br></br>Go to the project section to create projects.</span>
+          <span class='faded' v-html='l.lackOfProjectActionsMaybe'></span>
         </template>
         <draggable v-model='user.actions' :options="{handle:'.draggable', animation: 300}">
           <template v-for='project in user.projects'>
             {{ activateFirstOneVar() }}
             <template v-for='action in user.actions' v-if='(action.projectId || action.projectId == 0) && containsAction(project.id, action.id)'>
             <template v-if='showOnlyFirstProjectAction && firstOne'>
-              <project-action v-if='action.tag == "maybe"' :title='action.title' :description='action.description' :key='action.id' :id='action.id' :dropdown='dropdowns[action.id]' :icongroup='icongroups' :projectId='action.projectId' :showprojectname='true' @changed-dropdown='changeDropdownState'>
+              <project-action v-if='action.tag == "maybe"' :title='action.title' :description='action.description' :key='action.id' :id='action.id' :dropdown='dropdowns[action.id]' :icongroup='icongroups' :projectId='action.projectId' :showprojectname='true' @changed-dropdown='changeDropdownState' :l='l'>
               </project-action>
               {{ disableFirstOneVar() }}
             </template>
             <template v-else-if='!showOnlyFirstProjectAction'>
-              <project-action v-if='action.tag == "maybe"' :title='action.title' :description='action.description' :key='action.id' :id='action.id' :dropdown='dropdowns[action.id]' :icongroup='icongroups' :projectId='action.projectId' :showprojectname='true' @changed-dropdown='changeDropdownState'>
+              <project-action v-if='action.tag == "maybe"' :title='action.title' :description='action.description' :key='action.id' :id='action.id' :dropdown='dropdowns[action.id]' :icongroup='icongroups' :projectId='action.projectId' :showprojectname='true' @changed-dropdown='changeDropdownState' :l='l'>
               </project-action>
             </template>
         </draggable>
@@ -1624,7 +1638,8 @@ Vue.component('waiting', {
   props: {
     icongroups: Boolean,
     user: Object,
-    dropdowns: Object
+    dropdowns: Object,
+    l: Object
   },
   data(){
     return {
@@ -1635,33 +1650,33 @@ Vue.component('waiting', {
   <div>
     <div>
       <action-bar>
-        <action-bar-icon icon='fa fa-plus' id='addAction' tag='waiting' @click='openUserForm' title='add action'></action-bar-icon>
-        <action-bar-option :active='showOnlyFirstProjectAction' title='show only first action of project' icon='fa fa-list' @on='() => showOnlyFirstProjectAction = true' @off='() => showOnlyFirstProjectAction = false'></action-bar-option>
+        <action-bar-icon icon='fa fa-plus' id='addAction' tag='waiting' @click='openUserForm' :title='l.addAction'></action-bar-icon>
+        <action-bar-option :active='showOnlyFirstProjectAction' :title='l.showFirstAction' icon='fa fa-list' @on='() => showOnlyFirstProjectAction = true' @off='() => showOnlyFirstProjectAction = false'></action-bar-option>
       </action-bar>
-      <h2>Non project actions</h2>
+      <h2>{{ l.nonProjectActions }}</h2>
       <template v-if='!hasTagAction("waiting")'>
-        <span class='faded'>Your non project actions with the tag "waiting" will be shown here.</br></br>Click on the plus icon to add an action.</span> 
+        <span class='faded' v-html='l.lackOfNonProjectActionsWaiting'></span> 
       </template>
       <template v-if='user'>
         <draggable v-model='user.actions' :options="{handle:'.draggable', animation: 300}">
-            <action v-for='action in user.actions' v-if='!action.projectId && action.projectId != 0 && action.tag == "waiting"' :title='action.title' :description='action.description' :key='action.id' :id='action.id' :dropdown='dropdowns[action.id]' :icongroup='icongroups' @changed-dropdown='changeDropdownState'>
+            <action v-for='action in user.actions' v-if='!action.projectId && action.projectId != 0 && action.tag == "waiting"' :title='action.title' :description='action.description' :key='action.id' :id='action.id' :dropdown='dropdowns[action.id]' :icongroup='icongroups' @changed-dropdown='changeDropdownState' :l='l'>
             </action>
         </draggable>
-        <h2>Project actions</h2>
+        <h2>{{ l.projectActions }}</h2>
         <template v-if='!thereIsAtLeastOneProjectAction("waiting")'>
-          <span class='faded'>Your project actions with the tag "waiting" will be shown here.</br></br>Go to the project section to create projects.</span>
+          <span class='faded' v-html='l.lackOfProjectActionsWaiting'></span>
         </template>
         <draggable v-model='user.actions' :options="{handle:'.draggable', animation: 300}">
         <template v-for='project in user.projects'>
         {{ activateFirstOneVar() }}
         <template v-for='action in user.actions' v-if='(action.projectId || action.projectId == 0) && containsAction(project.id, action.id)'>
         <template v-if='showOnlyFirstProjectAction && firstOne'>
-          <project-action v-if='action.tag == "waiting"' :title='action.title' :description='action.description' :key='action.id' :id='action.id' :dropdown='dropdowns[action.id]' :icongroup='icongroups' :projectId='action.projectId' :showprojectname='true' @changed-dropdown='changeDropdownState'>
+          <project-action v-if='action.tag == "waiting"' :title='action.title' :description='action.description' :key='action.id' :id='action.id' :dropdown='dropdowns[action.id]' :icongroup='icongroups' :projectId='action.projectId' :showprojectname='true' @changed-dropdown='changeDropdownState' :l='l'>
           </project-action>
           {{ disableFirstOneVar() }}
         </template>
         <template v-else-if='!showOnlyFirstProjectAction'>
-          <project-action v-if='action.tag == "waiting"' :title='action.title' :description='action.description' :key='action.id' :id='action.id' :dropdown='dropdowns[action.id]' :icongroup='icongroups' :projectId='action.projectId' :showprojectname='true' @changed-dropdown='changeDropdownState'>
+          <project-action v-if='action.tag == "waiting"' :title='action.title' :description='action.description' :key='action.id' :id='action.id' :dropdown='dropdowns[action.id]' :icongroup='icongroups' :projectId='action.projectId' :showprojectname='true' @changed-dropdown='changeDropdownState' :l='l'>
           </project-action>
         </template>
         </draggable>
@@ -1761,10 +1776,11 @@ Vue.component('icon-selection', {
 Vue.component('icon-option',{
   props: {
     icon: String,
-    option: String
+    option: String,
+    title: String
   },
   template: `
-    <div :class='{selected: selected}' @click='$parent.selected = option'>
+    <div :class='{selected: selected}' @click='$parent.selected = option' :title='title'>
       <i :class='icon + " icon-extra-big"'></i>
     </div>
   `,
@@ -1886,13 +1902,13 @@ Vue.component('create-project', {
     <div class='create-project'>
       <div style='height:30px'></div>
       <form-element animation='pop2'>
-        <span>Create a project with the same title as this action.</span>
+        <span v-if='$root.l' v-html='$root.l.transformActionToProject'></span>
       </form-element>
       <form-element animation='pop3'>
-        <check-box :value='$root.tempUser.project.delete' @change='invertValue' placeholder='delete action'></check-box>
+        <check-box :value='$root.tempUser.project.delete' @change='invertValue' :placeholder='$root.l.deleteAction'></check-box>
       </form-element>
       <form-element class='centralizeContent' animation='pop4'>
-        <form-button @click='$root.transformActionToProject'>Create project</form-button>
+        <form-button @click='$root.transformActionToProject'>{{this.$root.l.createProject}}</form-button>
       </form-element>
     </div>
   `,
@@ -1912,7 +1928,7 @@ Vue.component('add-to-project', {
     <div class='create-project'>
       <div style='height:30px'></div>
       <form-element animation='pop2'>
-        <span>Add this action to a project.</span>
+        <span v-if='$root.l'>{{ this.$root.l.addActionToProject }}.</span>
       </form-element>
       <form-element animation='pop3'>
         <option-selection :selected='$parent.selected2' @change='(v) => {this.$parent.selected2 = v.name;this.$parent.id = v.id}'>
@@ -1920,7 +1936,7 @@ Vue.component('add-to-project', {
         </option-selection>
       </form-element>
       <form-element class='centralizeContent' animation='pop4'>
-        <form-button @click='addActionToProject'>Create project</form-button>
+        <form-button @click='addActionToProject' v-if='$root.l'>{{ this.$root.l.addToProject }}</form-button>
       </form-element>
     </div>
   `,

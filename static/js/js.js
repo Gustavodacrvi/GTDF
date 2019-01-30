@@ -43,9 +43,128 @@ let vm = new Vue({
     showIconGroups: false,
     openedActionContents: undefined,
     openedProjectDropdowns: undefined,
-    transformActionProject: 'create-project'
+    transformActionProject: 'create-project',
   },
   methods: {
+      setLanguage(lang){
+        if (lang == 'en'){
+          this.l = {
+            lackOfNonProjectActionsBasket: `Your non-project actions with the tag "basket" will show here.</br></br>Click on the <i class='fa fa-plus icon-bif'></i> icon to add an action.`,
+            lackOfProjectActionsBasket: `Your project actions with the tag "basket" will show here.</br></br>Go to the project section to create projects.`,
+            nonProjectActions: `Non-project actions`,
+            projectActions: `Project actions`,
+            addAction: `Add action`,
+            showFirstAction: `Show only first action of each project`,
+            deleteAction: `Delete action`,
+            editAction: `Edit action`,
+            editActionTag: `Edit action tag`,
+            addCreateProject: `Create/add to the project`,
+            transformActionToProject: `Create a project with the same title as this action.`,
+            createProject: `Create a project`,
+            addActionToProject: `Add action to the project`,
+            addToProject: `Add to the project`,
+            lackOfNonProjectActionsNextAction: `Your non-project actions with the tag "next action" will show here.</br></br>Click on the <i class='fa fa-plus icon-bif'></i> icon to add an action.`,
+            lackOfNonProjectActionsMaybe: `Your non-project actions with the tag "someday/maybe" will show here.</br></br>Click on the <i class='fa fa-plus icon-bif'></i> icon to add an action.`,
+            lackOfNonProjectActionsWaiting: `Your non-project actions with the tag "waiting" will show here.</br></br>Click on the <i class='fa fa-plus icon-bif'></i> icon to add an action.`,
+            lackOfProjectActionsNextAction: `Your project actions with the tag "next action" will show here.</br></br>Go to the project section to create projects.`,
+            lackOfProjectActionsWaiting: `Your project actions with the tag "waiting" will show here.</br></br>Go to the project section to create projects.`,
+            lackOfProjectActionsMaybe: `Your project actions with the tag "someday/maybe" will show here.</br></br>Go to the project section to create projects.`,
+            waiting: `Waiting`,
+            somedaymaybe: `Someday/maybe`,
+            nextAction: `Next action`,
+            calendar: `Calendar`,
+            lackOfProjects: `All of your projects will show here.</br></br>Click on the <i class='fa fa-plus'></i> icon to create a project.`,
+            deleteProject: `Delete the project`,
+            editProjectTitle: `Edit the project title`,
+            removeFromProject: `Remove action from the project`,
+            before: `Before`,
+            after: `After`,
+            mon: `Mon`,
+            wed: `Wed`,
+            fri: `fri`,
+            jan: `Jan`,
+            feb: `Feb`,
+            mar: `Mar`,
+            apr: `Apr`,
+            may: `May`,
+            jun: `Jun`,
+            jul: `Jul`,
+            aug: `Aug`,
+            sep: `Sep`,
+            oct: `Oct`,
+            nov: `Nov`,
+            dec: `Dec`,
+            lessActions: `Less actions`,
+            moreActions: `More actions`,
+            actions: `actions`,
+            lackOfNonProjectActionsCalendar: `Your non-project actions with the tag "calendar" will show here.</br></br>Click on the <i class='fa fa-plus icon-bif'></i> icon to add an action.`,
+            nonProjectActionAfter: `Your non project actions with the "calendar" tag that comes after the current year will be shown here.`,
+            nonProjectActionBefore: `Your non project actions with the "calendar" tag that comes before the current year will be shown here.`,
+            projectActionsCalendar: `Your project actions with the the tag "calendar" with the current year will be shown here.</br></br>Go to the project section to create a project.`,
+            projectActionsCalendarAfter: `Your project actions with the "calendar" tag that comes after the current year will be shown here.`,
+            projectActionsCalendarBefore: `Your project actions with the "calendar" tag that comes before the current year will be shown here.`
+          }
+          this.tempUser.project.selected = 'select an action'
+        } else if (lang == 'pt-BR'){
+          this.l = {
+            projectActionsCalendarBefore: `As ações que estiverem em algum projeto e que possuírem a tag "agenda" e que vierem antes do ano atual estarão aqui.`,
+            projectActionsCalendarAfter: `As ações que estiverem em algum projeto e que possuírem a tag "agenda" e que vierem após o ano atual estarão aqui.`,
+            projectActionsCalendar: `As ações que estiverem em algum projeto e que possuírem a tag "agenda" com o ano atual estarão aqui.</br></br>Vá para a seção projetos para criar um projeto.`,
+            nonProjectActionBefore: `As ações que não estiverem em um projeto e que possuírem a tag "agenda" e que vierem antes o ano atual estarão aqui.</br></br>Clique no ícone de <i class='fa fa-plus'></i> para adicionar uma ação.`,
+            nonProjectActionAfter: `As ações que não estiverem em um projeto e que possuírem a tag "agenda" e que vierem após o ano atual estarão aqui.</br></br>Clique no ícone de <i class='fa fa-plus'></i> para adicionar uma ação.`,
+            lackOfNonProjectActionsCalendar: `As ações que não estiverem em algum projeto e que possuírem a tag "agenda" estarão aqui.</br></br>Clique no ícone de <i class='fa fa-plus icon-bif'></i> para adicionar uma ação.`,
+            actions: `ações`,
+            moreActions: `Mais ações`,
+            lessActions: `Menos ações`,
+            jan: `Jan`,
+            feb: `Fev`,
+            mar: `Mar`,
+            apr: `Abr`,
+            may: `Mai`,
+            jun: `Jun`,
+            jul: `Jul`,
+            aug: `Ago`,
+            sep: `Set`,
+            oct: `Out`,
+            nov: `Nov`,
+            dec: `Dez`,
+            mon: `Seg`,
+            wed: `Qua`,
+            fri: `Sex`,
+            before: `Antes de`,
+            after: `Depois de`,
+            removeFromProject: `Retirar ação do projeto`,
+            editProjectTitle: `Editar título do projeto`,
+            deleteProject: `Deletar o projeto`,
+            lackOfProjects: `Os seus projetos estarão aqui.</br></br>Clique no ícone de <i class='fa fa-plus'></i> para criar um projeto.`,
+            lackOfProjectActionsWaiting: `As ações que estiverem em algum projeto e que possuírem a tag "esperando" estarão aqui.</br></br>Vá para a seção projeto para criar um projeto.`,
+            lackOfNonProjectActionsWaiting: `As ações que não estiverem em algum projeto e que possuírem a tag "esperando" estarão aqui.</br></br>Clique no ícone de <i class='fa fa-plus icon-bif'></i> para adicionar uma ação.`,
+            lackOfProjectActionsMaybe: `As ações que estiverem em algum projeto e que pussuírem a tag "algum dia/talvez" estarão aqui.</br></br>Vá para a seção projeto para criar um projeto.`,
+            lackOfNonProjectActionsMaybe: `As ações que não estiverem em algum projeto e que pussuírem a tag "algum dia/talvez" estarão aqui.</br></br>Clique no ícone de <i class='fa fa-plus icon-bif'></i> para adicionar uma ação.`,
+            addToProject: `Adicionar no projeto`,
+            waiting: `Esperando`,
+            somedaymaybe: `Algum dia/talvez`,
+            nextAction: `Próximas ações`,
+            calendar: `Agenda`,
+            lackOfProjectActionsNextAction: `As ações que estiverem em algum projeto e que pussuírem a tag "próxima ação" estarão aqui.</br></br>Vá para a seção projeto para criar um projeto.`,
+            lackOfNonProjectActionsNextAction: `As ações que não estiverem em algum projeto e que possuírem a tag "próxima ação" estarão aqui.</br></br>Clique no ícone de <i class='fa fa-plus icon-bif'></i> para adicionar uma ação.`,
+            addActionToProject: `Adicionar ação no projeto`,
+            createProject: `Criar um projeto`,
+            transformActionToProject: `Criar um projeto com o mesmo título que esta ação.`,
+            lackOfNonProjectActionsBasket: `As ações que não estiverem em algum projeto e que pussuírem a tag "entrada" estarão aqui.</br></br>Clique no ícone de <i class='fa fa-plus icon-bif'></i> para adicionar uma ação.`,
+            lackOfProjectActionsBasket: `As ações que estiverem em algum projeto e que pussuírem a tag "entrada" estarão aqui.</br></br>Vá para a seção projeto para criar um projeto.`,
+            nonProjectActions: `Ações sem projeto`,
+            projectActions: `Ações de projeto`,
+            addAction: `Adicionar uma ação`,
+            showFirstAction: `Mostrar apenas a primeira ação de cada projeto`,
+            deleteAction: `Deletar ação`,
+            editAction: `Editar ação`,
+            editActionTag: `Editar tag da ação`,
+            addCreateProject: `Criar/adicionar no projeto`            
+          }
+          this.tempUser.project.selected = 'selecione um ação'
+        }
+      },
     // PASSWORDS
       togglePasswordVisiblity(opened){
         (opened) ? this.displayPasswords() : this.hidePasswords()
@@ -94,7 +213,7 @@ let vm = new Vue({
           let links = document.querySelectorAll('.underline-link')
           let func = function(){
             this.classList.add('underline-link-animation')
-            this.removeEventListener('mouseover', func)   
+            this.removeEventListener('mouseover', func)
           }
           links.forEach((el) => {
             el.addEventListener('mouseover', func)
@@ -117,7 +236,7 @@ let vm = new Vue({
       removeActionsFromProject(projectId){
         let pro = this.user.projects[projectId]
         let act = this.user.actions
-        
+
         let length = pro.actions.length
         for (let i = 0;i < length;i++){
           delete act[pro.actions[i]].projectId
@@ -190,7 +309,7 @@ let vm = new Vue({
           this.openedActionContents = []
           for (let i = 0;i < length;i++)
             this.openedActionContents.push(false)
-          
+
           length = this.user.projects.length
           this.openedProjectDropdowns = []
           for (let i = 0;i < length;i++)
@@ -202,7 +321,7 @@ let vm = new Vue({
         this.user.actions.push({ tag: dt.tag, title: dt.title, description: dt.description, id: this.user.actions.length})
         if (!this.guest)
           this.POSTrequest('/add-action', 'title='+dt.title+'&description='+dt.description+'&id='+(this.user.actions.length-1)+'&tag='+dt.tag)
-        this.closeActionForm()      
+        this.closeActionForm()
       },
       editAction(){
         let dt = this.tempUser.action
@@ -299,7 +418,7 @@ let vm = new Vue({
           let pro = rt.user.projects
           let act = rt.user.actions
           let dt = rt.tempUser.project
-          
+
           pro[dt.id].actions.push(dt.id2)
           act[dt.id2].projectId = dt.id
           if (!rt.guest)
@@ -356,9 +475,9 @@ let vm = new Vue({
       u.action.tag = ''
       u.action.title = ''
       u.action.description = ''
-      u.action.calendar.time = '' 
-      u.action.calendar.validTime = undefined 
-      u.action.calendar.validDate = undefined 
+      u.action.calendar.time = ''
+      u.action.calendar.validTime = undefined
+      u.action.calendar.validDate = undefined
       u.project.title = ''
       u.project.id = ''
       u.project.id2 = ''

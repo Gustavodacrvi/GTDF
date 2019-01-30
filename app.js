@@ -113,6 +113,7 @@ app.get('/pt-BR', function(req, res){
 
 //  Handle 404
 app.use(function(req, res) {
+  checkAndChangeLocale(req, res)
   res.status(404)
   res.render('404', {
     user: req.user
@@ -120,6 +121,7 @@ app.use(function(req, res) {
 });
 //  Handle 500
 app.use(function(error, req, res, next){
+  checkAndChangeLocale(req, res)
   res.status(500)
   res.render('500')
 });
