@@ -234,13 +234,23 @@ Vue.component('side-nav', {
   `
 })
 Vue.component('side-title', {
+  props: {
+    username: String
+  },
   template: `
     <transition name='pop1'>
       <div class='side-title' v-if='$parent.show'>
-        Logged as <span class='red'><slot></slot></span>
+        {{ this.$root.l.loggedAs }} <span class='red'>{{ translate() }}</span>
       </div>
     </transition>
-  `
+  `,
+  methods: {
+    translate(){
+      if (this.username == 'guest')
+        return this.$root.l.username
+      return this.username
+    }
+  }
 })
 Vue.component('side-link', {
   props: {
@@ -1416,7 +1426,7 @@ Vue.component('projects', {
       </action-bar>
       <template v-if='user'>
       <draggable v-model='user.projects' :options="{handle:'.draggable', animation: 300}">
-          <project v-for='prj in user.projects' :title='prj.title' :icongroup='icongroups' :dropdowns='dropdowns' :dropdown='projectdropdowns[prj.id]' :id='prj.id' :key='prj.id' :user='user' :l='l'></project>
+          <project v-for='prj in user.projects' :title='prj.title' :icongroup='icongroups' :dropdowns='dropdowns' :dropdown='projectdropdowns[prj.id]' :id='prj.id' :key='prj.id' :user='user' :l='l' @projectopened='changeProjectDropdownState'></project>
       </draggable>
       <template v-if='!thereIsAtLeastOneProject'>
         <span class='faded' v-html='l.lackOfProjects'></span>
@@ -1427,6 +1437,9 @@ Vue.component('projects', {
   </div>
   `,
   methods: {
+    changeProjectDropdownState(obj){
+      this.projectdropdowns[obj.id] = obj.state
+    },
     openUserForm(id){
       this.$emit('openform', id)
     },
@@ -1526,6 +1539,11 @@ Vue.component('project', {
     },
     addActionToProject(){
       this.openActionForm('addActionToProject')
+    }
+  },
+  watch: {
+    dropdown(){
+      this.$emit('projectopened', {id: this.id, state: this.dropdown})
     }
   }
 })

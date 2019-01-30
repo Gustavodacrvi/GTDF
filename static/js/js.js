@@ -102,11 +102,15 @@ let vm = new Vue({
             nonProjectActionBefore: `Your non project actions with the "calendar" tag that comes before the current year will be shown here.`,
             projectActionsCalendar: `Your project actions with the the tag "calendar" with the current year will be shown here.</br></br>Go to the project section to create a project.`,
             projectActionsCalendarAfter: `Your project actions with the "calendar" tag that comes after the current year will be shown here.`,
-            projectActionsCalendarBefore: `Your project actions with the "calendar" tag that comes before the current year will be shown here.`
+            projectActionsCalendarBefore: `Your project actions with the "calendar" tag that comes before the current year will be shown here.`,
+            loggedAs: `Logged as`,
+            username: `guest`
           }
           this.tempUser.project.selected = 'select an action'
         } else if (lang == 'pt-BR'){
           this.l = {
+            username: `convidado`,
+            loggedAs: `Conectado como`,
             projectActionsCalendarBefore: `As ações que estiverem em algum projeto e que possuírem a tag "agenda" e que vierem antes do ano atual estarão aqui.`,
             projectActionsCalendarAfter: `As ações que estiverem em algum projeto e que possuírem a tag "agenda" e que vierem após o ano atual estarão aqui.`,
             projectActionsCalendar: `As ações que estiverem em algum projeto e que possuírem a tag "agenda" com o ano atual estarão aqui.</br></br>Vá para a seção projetos para criar um projeto.`,
@@ -313,7 +317,7 @@ let vm = new Vue({
           length = this.user.projects.length
           this.openedProjectDropdowns = []
           for (let i = 0;i < length;i++)
-            this.openedActionContents.push(false)
+            this.openedProjectDropdowns.push(false)
         })
       },
       addAction(){

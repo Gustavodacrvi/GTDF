@@ -48,8 +48,7 @@
       </template>
     </navigation-bar>
     <side-nav :show='showSideBar'>
-      <side-title>
-        {{ username }}
+      <side-title :username='username'>
       </side-title>
       <side-link animation='pop2' :i='0' compo='basket' @click='changeSectionComponent' :active='openedComponents[0]'>
         <%= __('in-basket') %>
