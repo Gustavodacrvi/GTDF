@@ -1098,6 +1098,37 @@ a{
   margin: 0 12px;
 }
 
+#calendar-back{
+  position: relative;
+  width: 100%;
+  height: 500px;
+}
+
+#calendar-back > div{
+  background-image: url('/images/calendar3.png');
+  background-repeat: no-repeat;
+  position: absolute;
+  right: 0;
+  width: 95%;
+  height: 100%;
+}
+
+#calendar-back > svg{
+  height: 18vw;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+}
+
+#calendar-back > div > div{
+  width: 400px;
+  height: 300px;
+  background-color: red;
+  position: absolute;
+  left: 45px;
+  top: 45px;
+}
+
 @media screen and (max-width: 796px){
   .action > :first-child > :last-child, .project > :first-child > :last-child{
     position: relative;
@@ -1109,6 +1140,7 @@ a{
     padding: 6px;
     right: -15px;
   }
+
 }
 
 @media screen and (max-width: 1355px){

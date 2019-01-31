@@ -730,6 +730,7 @@ Vue.component('calendar', {
     },
     openUserForm(id){
       this.$emit('openform', id)
+      this.$root.tempUser.action.calendar.date = this.date
     },
     thereIsAtLeastOneNonProjectTimedActionWithTheSelectedDate(){
       let act = this.user.actions

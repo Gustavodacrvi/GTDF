@@ -98,11 +98,11 @@ let vm = new Vue({
             moreActions: `More actions`,
             actions: `actions`,
             lackOfNonProjectActionsCalendar: `Your non-project actions with the tag "calendar" will show here.</br></br>Click on the <i class='fa fa-plus icon-bif'></i> icon to add an action.`,
-            nonProjectActionAfter: `Your non project actions with the "calendar" tag that comes after the current year will be shown here.`,
-            nonProjectActionBefore: `Your non project actions with the "calendar" tag that comes before the current year will be shown here.`,
-            projectActionsCalendar: `Your project actions with the the tag "calendar" with the current year will be shown here.</br></br>Go to the project section to create a project.`,
-            projectActionsCalendarAfter: `Your project actions with the "calendar" tag that comes after the current year will be shown here.`,
-            projectActionsCalendarBefore: `Your project actions with the "calendar" tag that comes before the current year will be shown here.`,
+            nonProjectActionAfter: `Your non project actions with the "calendar" tag that comes after the current year will show here.`,
+            nonProjectActionBefore: `Your non project actions with the "calendar" tag that comes before the current year will show here.`,
+            projectActionsCalendar: `Your project actions with the the tag "calendar" will show here.</br></br>Go to the project section to create a project.`,
+            projectActionsCalendarAfter: `Your project actions with the "calendar" tag that comes after the current year will show here.`,
+            projectActionsCalendarBefore: `Your project actions with the "calendar" tag that comes before the current year will show here.`,
             loggedAs: `Logged as`,
             username: `guest`
           }
