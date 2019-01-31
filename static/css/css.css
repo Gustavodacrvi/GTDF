@@ -20,11 +20,11 @@
 }
 
 ::-webkit-scrollbar-corner{
-  background-color: #32373f;
+  background: url('/images/cardcolor.png');
 }
 
 body {
-  background-color: #242930;
+  background: url('/images/backcolor.png');
   margin: 0;
   font-family: 'Work Sans Light';
   color: #B9B9B9;
@@ -48,7 +48,7 @@ body {
 .formButton,
 .link-button,
 .titleBig {
-  color: #F8CC63;
+  color: #fe4a49;
 }
 
 .alignContent,
@@ -80,7 +80,8 @@ body {
 }
 
 .card, .card-shadow{
-  background-color: #32373f;
+  /* background: url('/images/cardcolor.png'); */
+  background: url('/images/cardcolor.png');
   border-radius: 8px;
 }
 
@@ -169,20 +170,20 @@ a{
 
 .link-red:hover{
   transform: scale(1.2, 1.2);
-  color: #F8CC63;
+  color: #fe4a49;
 }
 
 /* FORMS */
 
 .formButton, .link-button{
-  border: 3px solid #F8CC63;
+  border: 3px solid #fe4a49;
   font-family: 'Work Sans Light';
   font-size: 1em;
   position: relative;
   overflow: hidden;
   border-radius: 6px;
   cursor: pointer;
-  background-color: #F8CC63;
+  background-color: #fe4a49;
   padding: 10px;
   z-index: 1;
 }
@@ -195,7 +196,7 @@ a{
   left: 0;
   top: 0;
   border-radius: 6px;
-  background-color: #32373f;
+  background: url('/images/cardcolor.png');
 }
 .formButton:hover::before, .link-button:hover::before{
   width: 0;
@@ -204,7 +205,7 @@ a{
   left: 50%;
 }
 .formButton:hover, .link-button:hover{
-  color: black;
+  color: white;
 }
 
 .form{
@@ -229,7 +230,7 @@ a{
 }
 
 .form-input input{
-  background-color: #242930;
+  background: url('/images/backcolor.png');
   position: absolute;
   color: #B9B9B9;
   width: 80%;
@@ -276,7 +277,8 @@ a{
   width: 90%;
   padding: 0 5%;
   pointer-events: all;
-  background-color: #32373f;
+  /* background: url('/images/cardcolor.png'); */
+  background: url('/images/cardcolor.png');
   z-index: 20;
   box-shadow: 0 6px 6px rgba(50,50,50,0.3); 
 }
@@ -362,8 +364,8 @@ a{
 }
 
 .dropdown-link:hover{
-  background-color: #F8CC63;
-  color: black;
+  background-color: #fe4a49;
+  color: white;
   transform: scale(1.03,1.03);
 }
 
@@ -379,7 +381,7 @@ a{
 }
 
 .angle-up-nav::after, .angle-up::after{
-  border-bottom: 16px solid #F8CC63;
+  border-bottom: 16px solid #fe4a49;
   transform: translateX(-50%);
   top: -32px;
 }
@@ -395,7 +397,7 @@ a{
 .angle-right-nav::after{
   right: -30px;
   top: 5px;
-  border-left: 16px solid #F8CC63; 
+  border-left: 16px solid #fe4a49; 
 }
 
 .position-left{
@@ -423,7 +425,7 @@ a{
 }
 
 .hamburger-icon:hover .bar {
-  background-color: #F8CC63;
+  background-color: #fe4a49;
 }
 
 .hamburger-icon:hover{
@@ -451,7 +453,7 @@ a{
   width: 225px;
   height: 100vh;
   left: 0;
-  background-color: #32373f;
+  background: url('/images/cardcolor.png');
   pointer-events: all;
   overflow: hidden;
   z-index: 15;
@@ -470,11 +472,11 @@ a{
 
 .fa-sort:hover{
   transform: scale(1.3,1.3);
-  color: #F8CC63;
+  color: #fe4a49;
 }
 
 .red{
-  color: #F8CC63;
+  color: #fe4a49;
 }
 
 .side-link, .side-link-blocked{
@@ -495,11 +497,11 @@ a{
 }
 
 .underline-link:hover{
-  color: #F8CC63;
+  color: #fe4a49;
 }
 
 .active-underline-link{
-  color: #F8CC63;
+  color: #fe4a49;
   cursor: pointer;
   margin-left: 20px;
   position: relative;
@@ -512,7 +514,7 @@ a{
   height: 3px;
   left: 0;
   bottom: 0;
-  background-color: #F8CC63;
+  background-color: #fe4a49;
 }
 
 .underline-link-animation::after{
@@ -522,7 +524,7 @@ a{
   height: 3px;
   left: -60px;
   bottom: 0;
-  background-color: #F8CC63;
+  background-color: #fe4a49;
   transition-delay: 0;
   animation: linkUnderlineOut;
   animation-duration: .4s;
@@ -537,7 +539,7 @@ a{
 }
 
 #mobile-side-bar-icon:hover{
-  color: #F8CC63;
+  color: #fe4a49;
   transform: scale(1.1, 1.1) rotate(15deg);
   transition-duration: .3s;
   cursor: pointer;
@@ -599,7 +601,7 @@ a{
 
 .user-icon:hover{
   transform: rotate(15deg) scale(1.2, 1.2);
-  color: #F8CC63;
+  color: #fe4a49;
   cursor: pointer;
 }
 
@@ -619,7 +621,7 @@ a{
 }
 
 .text-box > textarea{
-  background-color: #32373f;
+  background: url('/images/cardcolor.png');
   resize: none;
   outline: none;
   border-radius: 4px;
@@ -636,8 +638,8 @@ a{
   left: 8px;
   padding: 0 3px; 
   font-size: 1.2em;
-  background-color: #32373f;
-  color: #F8CC63;
+  background: url('/images/cardcolor.png');
+  color: #fe4a49;
 }
 
 .action-icon{
@@ -714,8 +716,8 @@ a{
 }
 
 .icon-selection > .selected, .icon-selection > div:hover{
-  background-color: #F8CC63;
-  color: black;
+  background-color: #fe4a49;
+  color: white;
   transform: scale(1.03,1.03);
 }
 
@@ -750,8 +752,8 @@ a{
 
 
 .comp-selector > :first-child > span:hover, .comp-selector .selected{
-  color: black;
-  background-color: #F8CC63;
+  color: white;
+  background-color: #fe4a49;
   transform: scale(1.03,1.03);
   cursor: pointer;
 }
@@ -824,8 +826,8 @@ a{
 }
 
 .option-selection > div div:hover, .option-selection .option-selected:hover{
-  background-color: #F8CC63;
-  color: black;
+  background-color: #fe4a49;
+  color: white;
   transform: scale(1.02, 1.02);
   cursor: pointer;
 }
@@ -843,7 +845,7 @@ a{
   position: absolute;
   left: 4px;
   margin: 0;
-  color: #F8CC63;
+  color: #fe4a49;
   top: 4px;
 }
 
@@ -908,7 +910,7 @@ a{
 }
 
 .calendar-graph .dark-square{
-  background-color: #32373f;
+  background: url('/images/cardcolor.png');
 }
 
 .square + .square, .dark-square + .dark-square{
@@ -931,12 +933,12 @@ a{
 }
 
 .calendar-graph .square:hover, .selected-square{
-  background-color: #F8CC63;
+  background-color: #fe4a49;
   transform: scale(1.2,1.2);
 }
 
 .calendar-action-bar{
-  background-color: #32373f;
+  background: url('/images/cardcolor.png');
   border-radius: 6px;
   min-height: 32px;
   margin: 2px 0 40px 0;
@@ -958,7 +960,7 @@ a{
 }
 
 .calendar-input{
-  background-color: #242930;
+  background: url('/images/backcolor.png');
   border-radius: 6px;
   color: #949494;
   border: none;
@@ -1010,8 +1012,8 @@ a{
 }
 
 .link-yellow:hover, .link-yellow-active{
-  background-color: #F8CC63;
-  color: black;
+  background-color: #fe4a49;
+  color: white;
   border: none;
 }
 
@@ -1092,11 +1094,11 @@ a{
 
 .act-bar-icon:hover{
   cursor: pointer;
-  color: #F8CC63;
+  color: #fe4a49;
 }
 
 .action-bar-active{
-  color: #F8CC63;
+  color: #fe4a49;
 }
 
 .settings-content > div{
@@ -1152,7 +1154,7 @@ a{
 }
 
 .title{
-  color: #F8CC63;
+  color: #fe4a49;
 }
 
 h1.title{
@@ -1198,7 +1200,7 @@ p.text{
 }
 
 h2{
-  color: #F8CC63;
+  color: #fe4a49;
 }
 
 @media screen and (max-width: 796px){
