@@ -287,6 +287,29 @@
   }
 }
 
+@keyframes goBack{
+  0%{
+    left: 0;
+  }
+  60%{
+    left: 30px;
+  }
+  100%{
+    left: -100%;
+  }
+}
+
+.flip-list-enter-active{
+  animation: popLong;
+  animation-duration: .4s;
+}
+
+.flip-list-leave-active{
+  animation: goBack;
+  animation-duration: .4s;
+}
+
+
 .fade-enter-active{
   transition: opacity .2s;
 }
