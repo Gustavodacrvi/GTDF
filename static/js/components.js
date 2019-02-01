@@ -384,7 +384,7 @@ Vue.component('action-bar-icon',{
     title: String
   },
   template: `
-    <i :class='icon + " icon-big user-icon"' @click="$emit('click', {id, tag})" :title='title'></i>
+    <i :class='icon + " icon-big user-icon"' @click="$emit('click', {id, tag})" :data-title='title'></i>
   `
 })
 Vue.component('icon-group', {
@@ -421,7 +421,7 @@ Vue.component('action-icon', {
     title: String
   },
   template: `
-    <i :class='icon + " icon-big user-icon action-icon"' @click='$parent.$emit(event)' :title='title'></i>
+    <i :class='icon + " icon-big user-icon action-icon"' @click='$parent.$emit(event)' :data-title='title'></i>
   `
 })
 Vue.component('action-form', {
@@ -1678,7 +1678,7 @@ Vue.component('action-bar-option', {
     title: String
   },
   template: `
-    <i :class='[this.active ? "action-bar-active" : "", "" + icon + " icon-big act-bar-icon"]' @click='toggleOption' :title='title'></i>
+    <i :class='[this.active ? "action-bar-active" : "", "" + icon + " icon-big act-bar-icon user-icon"]' @click='toggleOption' :data-title='title'></i>
   `,
   methods:{
     toggleOption(){

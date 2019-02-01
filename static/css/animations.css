@@ -311,7 +311,7 @@
 
 .double-slide-bounce-unpop-leave-active{
   animation: unpop;
-  animation-duration: .4s;
+  animation-duration: .2s;
 }
 
 .component-animation-enter-active{

@@ -1010,7 +1010,7 @@ a{
   position: absolute;
   bottom: 20px;
   left: -73px;
-  background-color: #464b53;
+  background: url('/images/cardcolor.png');
   white-space: nowrap;
   padding: 6px;
   border-radius: 8px;
@@ -1018,6 +1018,31 @@ a{
 
 [data-title]:hover::after {
   visibility: visible;  
+}
+
+.icon-big[data-title]{
+  position: relative;
+}
+
+.icon-big[data-title]::after{
+  content: attr(data-title);
+  visibility: hidden;
+  position: absolute;
+  bottom: 130%;
+  left: 50%;
+  background: url('/images/cardcolor.png');
+  white-space: nowrap;
+  padding: 6px;
+  border-radius: 8px;
+  box-shadow: 0 10px 6px 3px rgba(40,40,40,0.4);  
+  z-index: 10;
+}
+
+.icon-big[data-title]:hover::after{
+  visibility: visible;
+  font-size: .5em !important;
+  color: #B9B9B9 !important;
+  transform: scale(0.9,0.9) rotate(-15deg) !important;
 }
 
 .datetime-form{
