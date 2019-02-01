@@ -299,6 +299,16 @@
   }
 }
 
+.curved-movement-enter-active{
+  animation: popLong;
+  animation-duration: .3s;
+}
+
+.curved-movement-leave-active{
+  animation: unpop;
+  animation-duration: .3s;
+}
+
 .flip-list-enter-active{
   animation: popLong;
   animation-duration: .4s;

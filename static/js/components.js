@@ -263,8 +263,8 @@ Vue.component('drop-link',{
     id: String
   },
   template: `
-    <a v-if='!$parent.nonlive' :href='href' class='dropdown-link' @click='send' @mouseover='$parent.temp = value'>{{value}}</a>
-    <a :href='href' class='dropdown-link' @click='send' v-else>{{value}}</a>
+    <a v-if='!$parent.nonlive' :href='href' class='dropdown-link' @click='send' @mouseover='$parent.temp = value'>{{value}}<slot></slot></a>
+    <a :href='href' class='dropdown-link' @click='send' v-else>{{value}}<slot></slot></a>
   `,
   methods: {
     send(){
@@ -1798,30 +1798,6 @@ Vue.component('check-box', {
     </div>
   `
 })
-Vue.component('option-selection', {
-  props: {
-    selected: String
-  },
-  data(){
-    return {
-      openedDropdown: false,
-      id: Number
-    }
-  },
-  template: `
-    <div class='option-selection' @mouseleave='openedDropdown = false' @mouseover='openedDropdown = true'>
-      <span>{{selected}}</span>
-        <div v-show='openedDropdown' class='card-shadow'>
-          <slot></slot>
-        </div>
-    </div>
-  `,
-  watch: {
-    selected(){
-      this.$emit('change', {name: this.selected, id: this.id})
-    }
-  }
-})
 Vue.component('comp-selector', {
   props: {
     selected: undefined,
@@ -1892,7 +1868,7 @@ Vue.component('add-to-project', {
       </form-element>
       <form-element animation='pop3'>
         <div class='form-content'>
-          <select-option :placeholder='$root.l.selectAProject' class='centralizeContentMargin' :selected='$parent.selected2' @update='(v)=>{this.$parent.selected2 = v.value;this.$parent.id = v.id}' :nonlive='true'>
+          <select-option :placeholder='$root.l.selectAnAction' class='centralizeContentMargin' :selected='$parent.selected2' @update='(v)=>{this.$parent.selected2 = v.value;this.$parent.id = v.id}' :nonlive='true'>
             <drop-link v-for='project in $parent.user.projects' :value='project.title' :id='project.id'></drop-link>
           </select-option>
         </div>

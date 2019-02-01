@@ -110,10 +110,12 @@ let vm = new Vue({
             selectAProject: `select a project:`,
             addChangePlace: `add/change place`,
             placeSpan: `current place:`,
-            selectAPlace: `select a place:`
+            selectAPlace: `select a place:`,
+            selectAnAction: `select an action:`,
           }
         } else if (lang == 'pt-BR'){
           this.l = {
+            selectAnAction: `selecione uma ação:`,
             selectAPlace: `selecione um local:`,
             placeSpan: `local atual:`,
             addChangePlace: `adicionar/mudar local`,

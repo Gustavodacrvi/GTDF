@@ -21,8 +21,8 @@
       <template slot='desktop-right'>
         <nav-element animation='pop2'>
           <dropdown type='link-red' placeholder="<%= __('default_language') %>">
-            <drop-link href='/pt-BR'>Português(Brasil)</drop-link>
-            <drop-link href='/en'>English</drop-link>
+            <drop-link href='/pt-BR' value='Português(Brasil)'></drop-link>
+            <drop-link href='/en' value='English'></drop-link>
           </dropdown>
         </nav-element>
       </template>
@@ -34,14 +34,14 @@
       <template slot='mobile-right'>
         <transition name='pop2'>
           <nav-dropdown>
-            <drop-link href='/'><%= __("Home") %></drop-link>
-            <drop-link href='/login'><%= __("Login") %></drop-link>
+            <drop-link href='/' value='<%= __("Home") %>'></drop-link>
+            <drop-link href='/login' value='<%= __("Login") %>'></drop-link>
             <% if (user) {%>
-              <drop-link href='/user'><%= __("User") %></drop-link>
+              <drop-link href='/user' value='<%= __("User") %>'></drop-link>
             <% } %>
             <sub-dropdown placeholder="<%= __('default_language') %>">
-              <drop-link href='/pt-BR'>Português(Brasil)</drop-link>
-              <drop-link href='/en'>English</drop-link>
+              <drop-link href='/pt-BR' value='Português(Brasil)'>Português(Brasil)</drop-link>
+              <drop-link href='/en' value='English'>English</drop-link>
             </sub-dropdown>
           </nav-dropdown>
         </transition>
@@ -178,7 +178,7 @@
       </form-element>
       <form-element class='centralizeContent' animation='pop2'>
         <div class='form-content'>
-          <select-option v-if='user' placeholder='l.selectAProject' class='centralizeContentMargin' :selected='tempUser.project.selected' @update='(v) => {tempUser.project.selected = v.value;tempUser.project.id2 = v.id}' :nonlive='true'>
+          <select-option v-if='user' :placeholder='l.selectAProject' class='centralizeContentMargin' :selected='tempUser.project.selected' @update='(v) => {tempUser.project.selected = v.value;tempUser.project.id2 = v.id}' :nonlive='true'>
             <drop-link v-for='action in user.actions' v-if='!action.projectId &&action.projectId != 0' :value='action.title' :id='action.id'></drop-link>
           </select-option>
         </div>
@@ -269,7 +269,7 @@
       </form-element>
       <form-element class='centralizeContent'>
         <div class='form-content'>
-          <select-option placeholder='l.selectAPlace' class='centralizeContentMargin' :selected='tempUser.action.place' @update='(newPlace)=>this.tempUser.action.place = newPlace'>
+          <select-option :placeholder='l.selectAPlace' class='centralizeContentMargin' :selected='tempUser.action.place' @update='(newPlace)=>this.tempUser.action.place = newPlace'>
             <drop-link value='show all'></drop-link>
             <drop-link value='home'></drop-link>
             <drop-link value='work'></drop-link>
