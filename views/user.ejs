@@ -85,11 +85,11 @@
         </side-link>
       <% } %>
       </br>
-      <side-dropdown :selected='place' @update='(newPlace)=>this.place = newPlace'>
+      <select-option :selected='place' @update='(newPlace)=>this.place = newPlace'>
         <drop-link value='show all'></drop-link>
         <drop-link value='home'></drop-link>
         <drop-link value='work'></drop-link>
-      </side-dropdown>
+      </select-option>
     </side-nav>
     <action-form :currentform='currentOpenedUserForm' id='addAction' @close='closeActionForm' :l='l'>
       <form-element animation='pop1'>
@@ -260,6 +260,23 @@
       <form-element class='centralizeContent' animation='pop3'>
         <form-button @click='editTimedTag'><%= __('Edit tag') %></form-button>
       </form-element>
+    </action-form>
+    <action-form :currentform='currentOpenedUserForm' id='changePlace' @close='closeActionForm' :l='l'>
+      <form-element animation='pop1'>
+        <title-big class='centralizeContent'><%= __('CHANGE PLACE') %></title-big>
+      </form-element>
+      <form-element class='centralizeContent'>
+        <div class='form-content'>
+          <select-option class='centralizeContentMargin' :selected='place' @update='(newPlace)=>this.place = newPlace'>
+            <drop-link value='show all'></drop-link>
+            <drop-link value='home'></drop-link>
+            <drop-link value='work'></drop-link>
+          </select-option>
+        </div>
+      </form-element>
+      <form-element class='centralizeContent' animation='pop3'>
+        <form-button><%= __('Change place') %></form-button>
+      </form-element>      
     </action-form>
   </fixed>
   <user-content>

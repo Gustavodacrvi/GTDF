@@ -269,7 +269,7 @@ Vue.component('side-link', {
     </transition>
   `
 })
-Vue.component('side-dropdown', {
+Vue.component('select-option', {
   props: {
     selected: String,
     placeholder: String
@@ -281,7 +281,7 @@ Vue.component('side-dropdown', {
     }
   },
   template: `
-    <div class='side-dropdown' @mouseover='isDropdownOpened = true' @mouseleave='isDropdownOpened = false'>
+    <div class='select-option' @mouseover='isDropdownOpened = true' @mouseleave='isDropdownOpened = false'>
       <div>
         <span class='faded'>{{ this.$root.l.placeSpan }}</span>
         <a v-if='!isDropdownOpened || temp == undefined'>{{ selected }}</a>
@@ -1336,7 +1336,7 @@ Vue.component('action',{
           <span> {{ title }}</span>
         </div>
         <div>
-          <icon-group :show='icongroup' @delete='deleteAction' @edit='editAction' @editTag='editActionTag' @project='manajeProject'>
+          <icon-group :show='icongroup' @delete='deleteAction' @edit='editAction' @editTag='editActionTag' @project='manajeProject' @place='changePlace'>
             <action-icon icon='fa fa-times' event='delete' :title='l.deleteAction'></action-icon>
             <action-icon icon='fa fa-edit' event='edit' :title='l.editAction'></action-icon>
             <action-icon icon='fa fa-tag' event='editTag' :title='l.editActionTag'></action-icon>
@@ -1353,6 +1353,9 @@ Vue.component('action',{
     </div>
   `,
   methods: {
+    changePlace(){
+      this.openActionForm('changePlace')
+    },
     deleteAction(){
       let data = this.$root
       let act = data.user.actions

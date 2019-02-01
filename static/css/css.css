@@ -312,7 +312,7 @@ a{
 
 /* DROPDOWN */
 
-.dropdown, .side-dropdown{
+.dropdown, .select-option{
   position: relative;
 }
 
@@ -323,42 +323,42 @@ a{
   z-index: 2;
 }
 
-.side-dropdown{
+.select-option{
   margin-left: 25px;
   max-width: 170px; 
 }
 
-.side-dropdown > :first-child{
+.select-option > :first-child{
   min-height: 40px;
   display: flex;
   flex-direction: column;
   cursor: pointer;
 }
 
-.side-dropdown > :first-child > span, .side-dropdown > :first-child > a{
+.select-option > :first-child > span, .select-option > :first-child > a{
   transition-duration: .3s;
 }
 
-.side-dropdown > :first-child > span{
+.select-option > :first-child > span{
   font-size: 14px; 
 }
 
-.side-dropdown > :first-child > a{
+.select-option > :first-child > a{
   margin-left: 15px;
   font-size: 1.2em;
   color: #fe4a49;
 }
-.side-dropdown:hover > :first-child > a{
+.select-option:hover > :first-child > a{
   font-size: 1.4em;
   margin-left: -5px;
   margin-top: -5px;
 }
 
-.side-dropdown:hover > :first-child > span{
+.select-option:hover > :first-child > span{
   font-size: 12px;
 }
 
-.side-dropdown > :last-child{
+.select-option > :last-child{
   width: 100%;
   position: absolute;
   text-align: center;
@@ -366,18 +366,27 @@ a{
   max-height: 150px;
   overflow-y: auto;
   overflow-x: hidden; 
+  z-index: 2;
 }
 
-.side-dropdown > :last-child a{
+.select-option > :last-child a{
   cursor: pointer;
 }
 
-.side-dropdown > :last-child a:first-child{
+.form-content{
+  flex-basis: 300px;
+}
+
+.centralizeContentMargin{
+  margin: auto;
+}
+
+.select-option > :last-child a:first-child{
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
 }
 
-.side-dropdown > :last-child a:last-child{
+.select-option > :last-child a:last-child{
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
 }
