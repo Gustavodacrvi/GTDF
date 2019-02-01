@@ -511,7 +511,7 @@ Vue.component('basket', {
         </template>
         <template v-else>
           <template v-for='project in user.projects'>
-            <div style='height:10px'></div>
+            <div style='height:4px'></div>
             <draggable v-model='user.actions' :options="{handle:'.draggable', animation: 300}">
             <transition-group name='flip-list' tag='div'> 
               <template v-for='action in user.actions' v-if='(action.projectId || action.projectId == 0) && $root.containsAction(project.id, action.id) && action.tag == "basket"'>           
@@ -588,7 +588,7 @@ Vue.component('maybe', {
         </template>
         <template v-else>
           <template v-for='project in user.projects'>
-            <div style='height:10px'></div>
+            <div style='height:4px'></div>
             <draggable v-model='user.actions' :options="{handle:'.draggable', animation: 300}">
             <transition-group name='flip-list' tag='div'> 
               <template v-for='action in user.actions' v-if='(action.projectId || action.projectId == 0) && $root.containsAction(project.id, action.id) && action.tag == "maybe"'>           
@@ -665,7 +665,7 @@ Vue.component('waiting', {
         </template>
         <template v-else>
           <template v-for='project in user.projects'>
-            <div style='height:10px'></div>
+            <div style='height:4px'></div>
             <draggable v-model='user.actions' :options="{handle:'.draggable', animation: 300}">
             <transition-group name='flip-list' tag='div'> 
               <template v-for='action in user.actions' v-if='(action.projectId || action.projectId == 0) && $root.containsAction(project.id, action.id) && action.tag == "waiting"'>           
@@ -742,7 +742,7 @@ Vue.component('next-actions', {
         </template>
         <template v-else>
           <template v-for='project in user.projects'>
-            <div style='height:10px'></div>
+            <div style='height:4px'></div>
             <draggable v-model='user.actions' :options="{handle:'.draggable', animation: 300}">
             <transition-group name='flip-list' tag='div'> 
               <template v-for='action in user.actions' v-if='(action.projectId || action.projectId == 0) && $root.containsAction(project.id, action.id) && action.tag == "nextAction"'>           
@@ -795,8 +795,10 @@ Vue.component('calendar', {
       </graph>
       <calendar-action-bar>
         <div>
-          <action-bar-icon icon='fa fa-plus' id='addTimedAction' tag='calendar' @click='openUserForm' :title='l.addAction'></action-bar-icon>
-          <action-bar-option :active='showOnlyFirstProjectAction' :title='l.showFirstAction' icon='fa fa-list' @on='() => showOnlyFirstProjectAction = true' @off='() => showOnlyFirstProjectAction = false'></action-bar-option>
+          <div id='left-buttons-calendar-action-bar'>
+            <action-bar-icon icon='fa fa-plus' id='addTimedAction' tag='calendar' @click='openUserForm' :title='l.addAction'></action-bar-icon>
+            <action-bar-option :active='showOnlyFirstProjectAction' :title='l.showFirstAction' icon='fa fa-list' @on='() => showOnlyFirstProjectAction = true' @off='() => showOnlyFirstProjectAction = false'></action-bar-option>
+          </div>
         </div>
         <div>
           <div>
@@ -860,7 +862,7 @@ Vue.component('calendar', {
         </template>
         <template v-else>
           <template v-for='project in user.projects'>
-            <div style='height:10px'></div>
+            <div style='height:4px'></div>
             <draggable v-model='user.actions' :options="{handle:'.draggable', animation: 300}">
             <transition-group name='flip-list' tag='div'> 
               <template v-for='action in user.actions' v-if='(action.projectId || action.projectId == 0) && $root.containsAction(project.id, action.id) && action.tag == "calendar" && action.calendar.date.split("/")[2] < year'>           
@@ -883,7 +885,7 @@ Vue.component('calendar', {
         </template>
         <template v-else>
           <template v-for='project in user.projects'>
-            <div style='height:10px'></div>
+            <div style='height:4px'></div>
             <draggable v-model='user.actions' :options="{handle:'.draggable', animation: 300}">
             <transition-group name='flip-list' tag='div'> 
               <template v-for='action in user.actions' v-if='(action.projectId || action.projectId == 0) && $root.containsAction(project.id, action.id) && action.tag == "calendar" && action.calendar.date.split("/")[2] > year'>           
@@ -906,7 +908,7 @@ Vue.component('calendar', {
         </template>
         <template v-else>
           <template v-for='project in user.projects'>
-            <div style='height:10px'></div>
+            <div style='height:4px'></div>
             <draggable v-model='user.actions' :options="{handle:'.draggable', animation: 300}">
             <transition-group name='flip-list' tag='div'> 
               <template v-for='action in user.actions' v-if='(action.projectId || action.projectId == 0) && $root.containsAction(project.id, action.id) && action.tag == "calendar" && action.calendar.date == date'>           
@@ -1790,8 +1792,11 @@ Vue.component('comp-selector', {
   },
   data(){
     return {
-      selected2: 'select a project'      
+      selected2: undefined      
     }
+  },
+  mounted(){
+    this.selected2 = this.$root.l.selectAProject
   },
   template: `
     <div class='comp-selector'>

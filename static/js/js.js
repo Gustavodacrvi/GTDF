@@ -104,11 +104,13 @@ let vm = new Vue({
             projectActionsCalendarAfter: `Your project actions with the "calendar" tag that comes after the current year will show here.`,
             projectActionsCalendarBefore: `Your project actions with the "calendar" tag that comes before the current year will show here.`,
             loggedAs: `Logged as`,
-            username: `guest`
+            username: `guest`,
+            selectAProject: `select a project`
           }
           this.tempUser.project.selected = 'select an action'
         } else if (lang == 'pt-BR'){
           this.l = {
+            selectAProject: `selecione um projeto`,
             username: `convidado`,
             loggedAs: `Conectado como`,
             projectActionsCalendarBefore: `As ações que estiverem em algum projeto e que possuírem a tag "agenda" e que vierem antes do ano atual estarão aqui.`,

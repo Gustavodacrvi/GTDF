@@ -1203,6 +1203,10 @@ h2{
   color: #fe4a49;
 }
 
+#left-buttons-calendar-action-bar{
+  display: flex;
+}
+
 @media screen and (max-width: 796px){
   .action > :first-child > :last-child, .project > :first-child > :last-child{
     position: relative;
@@ -1213,6 +1217,15 @@ h2{
     top: -100%;
     padding: 6px;
     right: -15px;
+  }
+
+  #left-buttons-calendar-action-bar{
+    flex-direction: column;
+    margin-right: 15px;
+  }
+
+  #left-buttons-calendar-action-bar .fa-list{
+    margin-left: 0;
   }
 }
 
