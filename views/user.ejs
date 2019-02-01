@@ -84,6 +84,12 @@
           <%= __('create account') %>
         </side-link>
       <% } %>
+      </br>
+      <side-dropdown :selected='place' @update='(newPlace)=>this.place = newPlace'>
+        <drop-link value='show all'></drop-link>
+        <drop-link value='home'></drop-link>
+        <drop-link value='work'></drop-link>
+      </side-dropdown>
     </side-nav>
     <action-form :currentform='currentOpenedUserForm' id='addAction' @close='closeActionForm' :l='l'>
       <form-element animation='pop1'>

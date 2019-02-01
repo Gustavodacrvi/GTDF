@@ -79,14 +79,17 @@ body {
   justify-content: center;
 }
 
-.card, .card-shadow{
-  /* background: url('/images/cardcolor.png'); */
+.card, .card-shadow, .card-border{
   background: url('/images/cardcolor.png');
   border-radius: 8px;
 }
 
 .card-shadow{
-  box-shadow: 0 10px 6px 3px rgba(50,50,50,0.5); 
+  box-shadow: 0 10px 6px 3px rgba(40,40,40,0.4);
+}
+
+.card-border{
+  border: 0.5px solid #fe4a49;
 }
 
 .icon-tiny{
@@ -309,7 +312,7 @@ a{
 
 /* DROPDOWN */
 
-.dropdown{
+.dropdown, .side-dropdown{
   position: relative;
 }
 
@@ -318,6 +321,65 @@ a{
   margin-top: 10px;
   margin-bottom: 10px;
   z-index: 2;
+}
+
+.side-dropdown{
+  margin-left: 25px;
+  max-width: 170px; 
+}
+
+.side-dropdown > :first-child{
+  min-height: 40px;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.side-dropdown > :first-child > span, .side-dropdown > :first-child > a{
+  transition-duration: .3s;
+}
+
+.side-dropdown > :first-child > span{
+  font-size: 14px; 
+}
+
+.side-dropdown > :first-child > a{
+  margin-left: 15px;
+  font-size: 1.2em;
+  color: #fe4a49;
+}
+.side-dropdown:hover > :first-child > a{
+  font-size: 1.4em;
+  margin-left: -5px;
+  margin-top: -5px;
+}
+
+.side-dropdown:hover > :first-child > span{
+  font-size: 12px;
+}
+
+.side-dropdown > :last-child{
+  width: 100%;
+  position: absolute;
+  text-align: center;
+  top: 100%;
+  max-height: 150px;
+  overflow-y: auto;
+  overflow-x: hidden; 
+}
+
+.side-dropdown > :last-child a{
+  cursor: pointer;
+}
+
+.side-dropdown > :last-child a:first-child{
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+.side-dropdown > :last-child a:last-child{
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
 }
 
 .dropdown > div{
@@ -799,7 +861,8 @@ a{
   z-index: 5;
   width: 100%;
   max-height: 200px;
-  overflow: auto;
+  overflow-y: scroll;
+  overflow-x: hidden; 
 }
 
 .faded{

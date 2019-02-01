@@ -214,10 +214,11 @@ Vue.component('sub-dropdown',{
 })
 Vue.component('drop-link',{
   props: {
-    href: String
+    href: String,
+    value: String
   },
   template: `
-    <a :href='href' class='dropdown-link'><slot></slot></a>
+    <a :href='href' class='dropdown-link' @click='$parent.selected = value' @mouseover='$parent.temp = value'>{{value}}</a>
   `
 })
 Vue.component('side-nav', {
@@ -267,6 +268,40 @@ Vue.component('side-link', {
       </div>
     </transition>
   `
+})
+Vue.component('side-dropdown', {
+  props: {
+    selected: String,
+    placeholder: String
+  },
+  data(){
+    return {
+      isDropdownOpened: false,
+      temp: undefined
+    }
+  },
+  template: `
+    <div class='side-dropdown' @mouseover='isDropdownOpened = true' @mouseleave='isDropdownOpened = false'>
+      <div>
+        <span class='faded'>{{ this.$root.l.placeSpan }}</span>
+        <a v-if='!isDropdownOpened || temp == undefined'>{{ selected }}</a>
+        <a v-else>{{ temp }}</a>
+      </div>
+      <transition name='pop-long'>
+        <div v-show='isDropdownOpened' class='card-shadow'>
+          <slot></slot>
+        </div>
+      </transition>
+    </div>
+  `,
+  watch: {
+    selected(){
+      this.$emit('update', this.selected)
+    },
+    isDropdownOpened(){
+      if (!this.isDropdownOpened) this.temp = undefined
+    }
+  }
 })
 Vue.component('blocked-side-link', {
   props: {
@@ -1306,6 +1341,7 @@ Vue.component('action',{
             <action-icon icon='fa fa-edit' event='edit' :title='l.editAction'></action-icon>
             <action-icon icon='fa fa-tag' event='editTag' :title='l.editActionTag'></action-icon>
             <action-icon icon='fa fa-project-diagram' event='project' :title='l.addCreateProject'></action-icon>
+            <action-icon icon='fas fa-map-marked-alt' event='place' :title='l.addChangePlace'></action-icon>
           </icon-group>
         </div>
       </div>
