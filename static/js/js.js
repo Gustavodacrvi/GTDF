@@ -13,6 +13,7 @@ let vm = new Vue({
         tag: undefined,
         title: undefined,
         description: undefined,
+        place: '',
         calendar: {
           time: '',
           date: '',
@@ -109,9 +110,11 @@ let vm = new Vue({
             selectAProject: `select a project:`,
             addChangePlace: `add/change place`,
             placeSpan: `current place:`,
+            selectAPlace: `select a place:`
           }
         } else if (lang == 'pt-BR'){
           this.l = {
+            selectAPlace: `selecione um local:`,
             placeSpan: `local atual:`,
             addChangePlace: `adicionar/mudar local`,
             selectAProject: `selecione um projeto:`,

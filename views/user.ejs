@@ -85,7 +85,7 @@
         </side-link>
       <% } %>
       </br>
-      <select-option :selected='place' @update='(newPlace)=>console.log(newPlace)'>
+      <select-option :placeholder='l.placeSpan' :selected='place' @update='(newPlace)=>this.place = newPlace'>
         <drop-link value='show all'></drop-link>
         <drop-link value='home'></drop-link>
         <drop-link value='work'></drop-link>
@@ -182,7 +182,6 @@
             <drop-link v-for='action in user.actions' v-if='!action.projectId &&action.projectId != 0' :value='action.title' :id='action.id'></drop-link>
           </select-option>
         </div>
-        <!-- option-selection  -->
       </form-element>
       <form-element class='centralizeContent' animation='pop3'>
       <form-button @click='addAlreadyExistingAction'><%= __('Add action') %></form-button>
@@ -270,12 +269,13 @@
       </form-element>
       <form-element class='centralizeContent'>
         <div class='form-content'>
-          <select-option class='centralizeContentMargin' :selected='place' @update='(newPlace)=>this.place = newPlace'>
+          <select-option placeholder='l.selectAPlace' class='centralizeContentMargin' :selected='tempUser.action.place' @update='(newPlace)=>this.tempUser.action.place = newPlace'>
             <drop-link value='show all'></drop-link>
             <drop-link value='home'></drop-link>
             <drop-link value='work'></drop-link>
           </select-option>
         </div>
+        </select-option>
       </form-element>
       <form-element class='centralizeContent' animation='pop3'>
         <form-button><%= __('Change place') %></form-button>

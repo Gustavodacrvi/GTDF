@@ -228,7 +228,7 @@ Vue.component('select-option', {
   template: `
     <div class='select-option' @mouseover='isDropdownOpened = true' @mouseleave='isDropdownOpened = false'>
       <div>
-        <span class='faded'>{{ this.$root.l.placeSpan }}</span>
+        <span class='faded'>{{ placeholder }}</span>
         <a v-if='!isDropdownOpened || temp == undefined'>{{ selected }}</a>
         <a v-else>{{ temp }}</a>
       </div>
@@ -1834,7 +1834,7 @@ Vue.component('comp-selector', {
     }
   },
   mounted(){
-    this.selected2 = this.$root.l.selectAProject
+    this.selected2 = ''
   },
   template: `
     <div class='comp-selector'>
@@ -1891,9 +1891,11 @@ Vue.component('add-to-project', {
         <span v-if='$root.l'>{{ this.$root.l.addActionToProject }}.</span>
       </form-element>
       <form-element animation='pop3'>
-        <option-selection :selected='$parent.selected2' @change='(v) => {this.$parent.selected2 = v.name;this.$parent.id = v.id}'>
-          <select-option v-for='project in $parent.user.projects' :name='project.title' :id='project.id'></select-option>
-        </option-selection>
+        <div class='form-content'>
+          <select-option :placeholder='$root.l.selectAProject' class='centralizeContentMargin' :selected='$parent.selected2' @update='(v)=>{this.$parent.selected2 = v.value;this.$parent.id = v.id}' :nonlive='true'>
+            <drop-link v-for='project in $parent.user.projects' :value='project.title' :id='project.id'></drop-link>
+          </select-option>
+        </div>
       </form-element>
       <form-element class='centralizeContent' animation='pop4'>
         <form-button @click='addActionToProject' v-if='$root.l'>{{ this.$root.l.addToProject }}</form-button>
