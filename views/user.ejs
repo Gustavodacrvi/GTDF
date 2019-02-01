@@ -264,6 +264,12 @@
     </template>
     <template slot='adds'>
       <adds>
+        <template v-if='user'>
+          <h5>ACTIONS</h5>
+          <p v-for='project in user.actions'>{{project}}</p>
+          <h5>PROJECTS</h5>
+          <p v-for='project in user.projects'>{{project}}</p>
+        </template>
       </adds>
     </template>
   </user-content>

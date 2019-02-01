@@ -499,33 +499,43 @@ Vue.component('basket', {
         <template v-if='!thereIsAtLeastOneProjectAction("basket")'>
           <span class='faded' v-html='l.lackOfProjectActionsBasket'></span>
         </template>
-        <draggable v-model='user.actions' :options="{handle:'.draggable', animation: 300}">
-        <transition-group name='flip-list' tag='div'>
+        <template v-if='showOnlyFirstProjectAction'>
+        <transition-group name='flip-list' tag='div'> 
           <template v-for='project in user.projects'>
-            {{ activateFirstOneVar() }}
-            <template v-for='action in user.actions' v-if='(action.projectId || action.projectId == 0) && containsAction(project.id, action.id)'>
-            <template v-if='showOnlyFirstProjectAction && firstOne && action.tag == "basket"'>
-              <project-action :title='action.title' :description='action.description' :key='action' :id='action.id' :dropdown='dropdowns[action.id]' :icongroup='icongroups' :projectId='action.projectId' :showprojectname='true' @changed-dropdown='changeDropdownState' :l='l'>
-              </project-action>
-              {{ disableFirstOneVar() }}
-            </template>
-            <template v-else-if='!showOnlyFirstProjectAction && action.tag == "basket"'>
+            <template v-for='action in getFirstActionOfProjectInArray(project.id, "basket")'>
               <project-action :title='action.title' :description='action.description' :key='action' :id='action.id' :dropdown='dropdowns[action.id]' :icongroup='icongroups' :projectId='action.projectId' :showprojectname='true' @changed-dropdown='changeDropdownState' :l='l'>
               </project-action>
             </template>
-          </transition-group>                      
-        </draggable>
+          </template>
+        </transition-group>
+        </template>
+        <template v-else>
+          <template v-for='project in user.projects'>
+            <div style='height:10px'></div>
+            <draggable v-model='user.actions' :options="{handle:'.draggable', animation: 300}">
+            <transition-group name='flip-list' tag='div'> 
+              <template v-for='action in user.actions' v-if='(action.projectId || action.projectId == 0) && containsAction(project.id, action.id) && action.tag == "basket"'>           
+                <project-action :title='action.title' :description='action.description' :key='action' :id='action.id' :dropdown='dropdowns[action.id]' :icongroup='icongroups' :projectId='action.projectId' :showprojectname='true' @changed-dropdown='changeDropdownState' :l='l'>
+                </project-action>
+              </template>
+            </transition-group>                      
+            </draggable>
+          </template>
+        </template>
       </template>
       <div class='space'></div>
     </div>
   </div>
   `,
   methods: {
-    activateFirstOneVar(){
-      this.firstOne = true
-    },
-    disableFirstOneVar(){
-      this.firstOne = false
+    getFirstActionOfProjectInArray(id, tag){
+      let acts = this.user.actions
+      let pros = this.user.projects
+      let project = pros[id]
+      let length = project.actions.length
+      for (let i = 0;i < length;i++)
+        if (acts[project.actions[i]].tag == tag)
+          return [acts[project.actions[i]]]
     },
     containsAction(projectId, actionId){
       let rt = this.$root
@@ -650,58 +660,73 @@ Vue.component('calendar', {
         <span class='faded' v-html='l.projectActionsCalendarBefore'></span>
       </template>
       <template v-if='beforeafter == "before"'>
-        <draggable v-model='user.actions' :options="{handle:'.draggable', animation: 300}">
-        <transition-group name='flip-list' tag='div'>              
+        <template v-if='showOnlyFirstProjectAction'>
+        <transition-group name='flip-list' tag='div'> 
           <template v-for='project in user.projects'>
-          {{activateFirstOneVar()}}
-            <template v-for='action in user.actions' v-if='action.calendar && action.calendar.date.split("/")[2] < date && containsAction(project.id, action.id)' :title='action.title'>
-              <template v-if='showOnlyFirstProjectAction && firstOne'>
-                <project-timed-action :description='action.description' :key='action' :id='action.id' :icongroup='icongroups' :dropdown='dropdowns[action.id]' :time='action.calendar.time' :projectid='action.projectId' @changed-dropdown='changeDropdownState' :l='l'></project-timed-action>
-                {{disableFirstOneVar()}}
-              </template>
-              <template v-else-if='!showOnlyFirstProjectAction'>
-                <project-timed-action :description='action.description' :key='action' :id='action.id' :icongroup='icongroups' :dropdown='dropdowns[action.id]' :time='action.calendar.time' :projectid='action.projectId' @changed-dropdown='changeDropdownState' :l='l'></project-timed-action>
-              </template>
+            <template v-for='action in getFirstActionOfProjectInArray(project.id, "calendar")' v-if='action.calendar.date.split("/")[2] < year'>
+              <project-timed-action :description='action.description' :key='action' :id='action.id' :icongroup='icongroups' :dropdown='dropdowns[action.id]' :time='action.calendar.time' :projectid='action.projectId' @changed-dropdown='changeDropdownState' :l='l'></project-timed-action>
             </template>
           </template>
-          </transition-group>  
-        </draggable>
+        </transition-group>
+        </template>
+        <template v-else>
+          <template v-for='project in user.projects'>
+            <div style='height:10px'></div>
+            <draggable v-model='user.actions' :options="{handle:'.draggable', animation: 300}">
+            <transition-group name='flip-list' tag='div'> 
+              <template v-for='action in user.actions' v-if='(action.projectId || action.projectId == 0) && containsAction(project.id, action.id) && action.tag == "calendar" && action.calendar.date.split("/")[2] < year'>           
+                <project-timed-action :title='action.title' :description='action.description' :key='action' :id='action.id' :icongroup='icongroups' :dropdown='dropdowns[action.id]' :time='action.calendar.time' :projectid='action.projectId' @changed-dropdown='changeDropdownState' :l='l'></project-timed-action>
+              </template>
+            </transition-group>                      
+            </draggable>
+          </template>
+        </template>
       </template>
       <template v-if='beforeafter == "after"'>
-        <draggable v-model='user.actions' :options="{handle:'.draggable', animation: 300}">
-        <transition-group name='flip-list' tag='div'>              
+        <template v-if='showOnlyFirstProjectAction'>
+        <transition-group name='flip-list' tag='div'> 
           <template v-for='project in user.projects'>
-          {{activateFirstOneVar()}}
-            <template v-for='action in user.actions' v-if='action.calendar && action.calendar.date.split("/")[2] > date && containsAction(project.id, action.id)' :title='action.title'>
-              <template v-if='showOnlyFirstProjectAction && firstOne'>
-                <project-timed-action :description='action.description' :key='action' :id='action.id' :icongroup='icongroups' :dropdown='dropdowns[action.id]' :time='action.calendar.time' :projectid='action.projectId' @changed-dropdown='changeDropdownState' :l='l'></project-timed-action>
-                {{disableFirstOneVar()}}
-              </template>
-              <template v-else-if='!showOnlyFirstProjectAction'>
-                <project-timed-action :description='action.description' :key='action' :id='action.id' :icongroup='icongroups' :dropdown='dropdowns[action.id]' :time='action.calendar.time' :projectid='action.projectId' @changed-dropdown='changeDropdownState' :l='l'></project-timed-action>
-              </template>
+            <template v-for='action in getFirstActionOfProjectInArray(project.id, "calendar")' v-if='action.calendar.date.split("/")[2] > year'>
+              <project-timed-action :description='action.description' :key='action' :id='action.id' :icongroup='icongroups' :dropdown='dropdowns[action.id]' :time='action.calendar.time' :projectid='action.projectId' @changed-dropdown='changeDropdownState' :l='l'></project-timed-action>
             </template>
           </template>
-          </transition-group>
-        </draggable>
+        </transition-group>
+        </template>
+        <template v-else>
+          <template v-for='project in user.projects'>
+            <div style='height:10px'></div>
+            <draggable v-model='user.actions' :options="{handle:'.draggable', animation: 300}">
+            <transition-group name='flip-list' tag='div'> 
+              <template v-for='action in user.actions' v-if='(action.projectId || action.projectId == 0) && containsAction(project.id, action.id) && action.tag == "calendar" && action.calendar.date.split("/")[2] > year'>           
+                <project-timed-action :title='action.title' :description='action.description' :key='action' :id='action.id' :icongroup='icongroups' :dropdown='dropdowns[action.id]' :time='action.calendar.time' :projectid='action.projectId' @changed-dropdown='changeDropdownState' :l='l'></project-timed-action>
+              </template>
+            </transition-group>                      
+            </draggable>
+          </template>
+        </template>
       </template>
       <template v-if='beforeafter == undefined'>
-        <draggable v-model='user.actions' :options="{handle:'.draggable', animation: 300}">
-        <transition-group name='flip-list' tag='div'>              
+        <template v-if='showOnlyFirstProjectAction'>
+        <transition-group name='flip-list' tag='div'> 
           <template v-for='project in user.projects'>
-          {{activateFirstOneVar()}}
-            <template v-for='action in user.actions' v-if='action.calendar && action.calendar.date == date && containsAction(project.id, action.id)' :title='action.title'>
-              <template v-if='showOnlyFirstProjectAction && firstOne'>
-                <project-timed-action :description='action.description' :key='action' :id='action.id' :icongroup='icongroups' :dropdown='dropdowns[action.id]' :time='action.calendar.time' :projectid='action.projectId' @changed-dropdown='changeDropdownState' :l='l'></project-timed-action>
-                {{disableFirstOneVar()}}
-              </template>
-              <template v-else-if='!showOnlyFirstProjectAction'>
-                <project-timed-action :description='action.description' :key='action' :id='action.id' :icongroup='icongroups' :dropdown='dropdowns[action.id]' :time='action.calendar.time' :projectid='action.projectId' @changed-dropdown='changeDropdownState' :l='l'></project-timed-action>
-              </template>
+            <template v-for='action in getFirstActionOfProjectInArray(project.id, "calendar")' v-if='action.calendar.date == date'>
+              <project-timed-action :description='action.description' :key='action' :id='action.id' :icongroup='icongroups' :dropdown='dropdowns[action.id]' :time='action.calendar.time' :projectid='action.projectId' @changed-dropdown='changeDropdownState' :l='l'></project-timed-action>
             </template>
           </template>
-          </transition-group>
-        </draggable>
+        </transition-group>
+        </template>
+        <template v-else>
+          <template v-for='project in user.projects'>
+            <div style='height:10px'></div>
+            <draggable v-model='user.actions' :options="{handle:'.draggable', animation: 300}">
+            <transition-group name='flip-list' tag='div'> 
+              <template v-for='action in user.actions' v-if='(action.projectId || action.projectId == 0) && containsAction(project.id, action.id) && action.tag == "calendar" && action.calendar.date == date'>           
+                <project-timed-action :title='action.title' :description='action.description' :key='action' :id='action.id' :icongroup='icongroups' :dropdown='dropdowns[action.id]' :time='action.calendar.time' :projectid='action.projectId' @changed-dropdown='changeDropdownState' :l='l'></project-timed-action>
+              </template>
+            </transition-group>                      
+            </draggable>
+          </template>
+        </template>
       </template>
       <div class='space'></div>
     </div>
@@ -716,8 +741,14 @@ Vue.component('calendar', {
     this.year = splited[2]
   },
   methods: {
-    debug(d){
-      console.log(d)
+    getFirstActionOfProjectInArray(id, tag){
+      let acts = this.user.actions
+      let pros = this.user.projects
+      let project = pros[id]
+      let length = project.actions.length
+      for (let i = 0;i < length;i++)
+        if (acts[project.actions[i]].tag == tag)
+          return [acts[project.actions[i]]]
     },
     containsAction(projectId, actionId){
       let rt = this.$root
@@ -809,7 +840,7 @@ Vue.component('calendar', {
       let year = parseInt(this.year)
       let length = act.length
       for (let i = 0;i < length;i++)
-        if ((act[i].projectId && act[i].projectId == 0) && act[i].calendar){
+        if ((act[i].projectId || act[i].projectId == 0) && act[i].calendar){
           let splited = act[i].calendar.date.split('/')
           if (parseInt(splited[2]) < year)
             return true
@@ -1354,24 +1385,29 @@ Vue.component('next-actions', {
         <template v-if='!thereIsAtLeastOneProjectAction("nextAction")'>
           <span class='faded' v-if='l' v-html='l.lackOfProjectActionsNextAction'></span>
         </template>
-        <draggable v-model='user.actions' :options="{handle:'.draggable', animation: 300}">
-        <transition-group name='flip-list' tag='div'>
+        <template v-if='showOnlyFirstProjectAction'>
+        <transition-group name='flip-list' tag='div'> 
           <template v-for='project in user.projects'>
-            {{ activateFirstOneVar() }}
-            <template v-for='action in user.actions' v-if='(action.projectId || action.projectId == 0) && containsAction(project.id, action.id)'>
-            <template v-if='showOnlyFirstProjectAction && firstOne && action.tag == "nextAction"'>
+            <template v-for='action in getFirstActionOfProjectInArray(project.id, "nextAction")'>
               <project-action :title='action.title' :description='action.description' :key='action' :id='action.id' :dropdown='dropdowns[action.id]' :icongroup='icongroups' :projectId='action.projectId' :showprojectname='true' @changed-dropdown='changeDropdownState' :l='l'>
               </project-action>
-              {{ disableFirstOneVar() }}
-            </template>
-            <template v-else-if='!showOnlyFirstProjectAction && action.tag == "nextAction"'>
-              <project-action :title='action.title' :description='action.description' :key='action' :id='action.id' :dropdown='dropdowns[action.id]' :icongroup='icongroups' :projectId='action.projectId' :showprojectname='true' @changed-dropdown='changeDropdownState' :l='l'>
-              </project-action>
-            </template>
             </template>
           </template>
-          </transition-group>
-        </draggable>
+        </transition-group>
+        </template>
+        <template v-else>
+          <template v-for='project in user.projects'>
+            <div style='height:10px'></div>
+            <draggable v-model='user.actions' :options="{handle:'.draggable', animation: 300}">
+            <transition-group name='flip-list' tag='div'> 
+              <template v-for='action in user.actions' v-if='(action.projectId || action.projectId == 0) && containsAction(project.id, action.id) && action.tag == "nextAction"'>           
+                <project-action :title='action.title' :description='action.description' :key='action' :id='action.id' :dropdown='dropdowns[action.id]' :icongroup='icongroups' :projectId='action.projectId' :showprojectname='true' @changed-dropdown='changeDropdownState' :l='l'>
+                </project-action>
+              </template>
+            </transition-group>                      
+            </draggable>
+          </template>
+        </template>
       </template>
       <div class='space'></div>
     </div>
@@ -1606,22 +1642,29 @@ Vue.component('maybe', {
         <template v-if='!thereIsAtLeastOneProjectAction("maybe")'>
           <span class='faded' v-html='l.lackOfProjectActionsMaybe'></span>
         </template>
-        <draggable v-model='user.actions' :options="{handle:'.draggable', animation: 300}">
-        <transition-group name='flip-list' tag='div'>
+        <template v-if='showOnlyFirstProjectAction'>
+        <transition-group name='flip-list' tag='div'> 
           <template v-for='project in user.projects'>
-            {{ activateFirstOneVar() }}
-            <template v-for='action in user.actions' v-if='(action.projectId || action.projectId == 0) && containsAction(project.id, action.id)'>
-            <template v-if='showOnlyFirstProjectAction && firstOne && action.tag == "maybe"'>
-              <project-action :title='action.title' :description='action.description' :key='action' :id='action.id' :dropdown='dropdowns[action.id]' :icongroup='icongroups' :projectId='action.projectId' :showprojectname='true' @changed-dropdown='changeDropdownState' :l='l'>
-              </project-action>
-              {{ disableFirstOneVar() }}
-            </template>
-            <template v-else-if='!showOnlyFirstProjectAction && action.tag == "maybe"'>
+            <template v-for='action in getFirstActionOfProjectInArray(project.id, "maybe")'>
               <project-action :title='action.title' :description='action.description' :key='action' :id='action.id' :dropdown='dropdowns[action.id]' :icongroup='icongroups' :projectId='action.projectId' :showprojectname='true' @changed-dropdown='changeDropdownState' :l='l'>
               </project-action>
             </template>
-          </transition-group>
-        </draggable>
+          </template>
+        </transition-group>
+        </template>
+        <template v-else>
+          <template v-for='project in user.projects'>
+            <div style='height:10px'></div>
+            <draggable v-model='user.actions' :options="{handle:'.draggable', animation: 300}">
+            <transition-group name='flip-list' tag='div'> 
+              <template v-for='action in user.actions' v-if='(action.projectId || action.projectId == 0) && containsAction(project.id, action.id) && action.tag == "maybe"'>           
+                <project-action :title='action.title' :description='action.description' :key='action' :id='action.id' :dropdown='dropdowns[action.id]' :icongroup='icongroups' :projectId='action.projectId' :showprojectname='true' @changed-dropdown='changeDropdownState' :l='l'>
+                </project-action>
+              </template>
+            </transition-group>                      
+            </draggable>
+          </template>
+        </template>
       </template>
       <div class='space'></div>
     </div>
@@ -1715,22 +1758,29 @@ Vue.component('waiting', {
         <template v-if='!thereIsAtLeastOneProjectAction("waiting")'>
           <span class='faded' v-html='l.lackOfProjectActionsWaiting'></span>
         </template>
-        <draggable v-model='user.actions' :options="{handle:'.draggable', animation: 300}">
-        <transition-group name='flip-list' tag='div'>
-        <template v-for='project in user.projects'>
-        {{ activateFirstOneVar() }}
-        <template v-for='action in user.actions' v-if='(action.projectId || action.projectId == 0) && containsAction(project.id, action.id)'>
-        <template v-if='showOnlyFirstProjectAction && firstOne && action.tag == "waiting"'>
-          <project-action :title='action.title' :description='action.description' :key='action' :id='action.id' :dropdown='dropdowns[action.id]' :icongroup='icongroups' :projectId='action.projectId' :showprojectname='true' @changed-dropdown='changeDropdownState' :l='l'>
-          </project-action>
-          {{ disableFirstOneVar() }}
-        </template>
-        <template v-else-if='!showOnlyFirstProjectAction && action.tag == "waiting"'>
-          <project-actio :title='action.title' :description='action.description' :key='action' :id='action.id' :dropdown='dropdowns[action.id]' :icongroup='icongroups' :projectId='action.projectId' :showprojectname='true' @changed-dropdown='changeDropdownState' :l='l'>
-          </project-action>
-        </template>
+        <template v-if='showOnlyFirstProjectAction'>
+        <transition-group name='flip-list' tag='div'> 
+          <template v-for='project in user.projects'>
+            <template v-for='action in getFirstActionOfProjectInArray(project.id, "waiting")'>
+              <project-action :title='action.title' :description='action.description' :key='action' :id='action.id' :dropdown='dropdowns[action.id]' :icongroup='icongroups' :projectId='action.projectId' :showprojectname='true' @changed-dropdown='changeDropdownState' :l='l'>
+              </project-action>
+            </template>
+          </template>
         </transition-group>
-        </draggable>
+        </template>
+        <template v-else>
+          <template v-for='project in user.projects'>
+            <div style='height:10px'></div>
+            <draggable v-model='user.actions' :options="{handle:'.draggable', animation: 300}">
+            <transition-group name='flip-list' tag='div'> 
+              <template v-for='action in user.actions' v-if='(action.projectId || action.projectId == 0) && containsAction(project.id, action.id) && action.tag == "waiting"'>           
+                <project-action :title='action.title' :description='action.description' :key='action' :id='action.id' :dropdown='dropdowns[action.id]' :icongroup='icongroups' :projectId='action.projectId' :showprojectname='true' @changed-dropdown='changeDropdownState' :l='l'>
+                </project-action>
+              </template>
+            </transition-group>                      
+            </draggable>
+          </template>
+        </template>
       </template>
       <div class='space'></div>
     </div>
