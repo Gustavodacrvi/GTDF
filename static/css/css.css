@@ -464,7 +464,7 @@ a{
 }
 
 .side-title{
-  margin-left: 20px;
+  margin-left: 25px;
   padding-right: 10px;
   font-size: 1.4em;
   margin-bottom: 40px;
@@ -485,12 +485,12 @@ a{
 
 .side-link-blocked{
   cursor: no-drop;
-  margin-left: 20px;
+  margin-left: 25px;
 }
 
 .underline-link{
   display: inline-block;
-  margin-left: 20px; 
+  margin-left: 25px; 
   cursor: pointer;
   transition-duration: .3s;
   position: relative;
@@ -503,7 +503,7 @@ a{
 .active-underline-link{
   color: #fe4a49;
   cursor: pointer;
-  margin-left: 20px;
+  margin-left: 25px;
   position: relative;
 }
 

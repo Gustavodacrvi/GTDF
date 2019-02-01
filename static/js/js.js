@@ -303,6 +303,46 @@ let vm = new Vue({
         let date = DateM.getCurrentDay()
         this.tempUser.action.calendar.date = date.stringify()
       },
+      getFirstActionOfProjectInArray(id, tag){
+        let acts = this.user.actions
+        let pros = this.user.projects
+        let length = acts.length
+        for (let i = 0;i < length;i++)
+          if (acts[i].projectId == id && acts[i].tag == tag)
+            return [acts[i]]
+      },
+      containsAction(projectId, actionId){
+        let acts = this.user.projects[projectId].actions
+        let length = acts.length
+        for (let i = 0;i < length;i++)
+          if (acts[i] == actionId)
+            return true
+        return false
+      },
+      hasTagAction(tag){
+        let act = this.user.actions
+        let length = act.length
+        for (let i = 0;i < length;i++)
+          if (act[i].tag == tag && !act[i].projectId && act[i].projectId != 0)
+            return true
+        return false
+      },
+      thereIsAtLeastOneProjectAction(tag){
+        let act = this.user.actions
+        let length = act.length
+        for (let i = 0;i < length;i++)
+          if (act[i].projectId || act[i].projectId == 0)
+            if (act[i].tag == tag)
+              return true
+        return false
+      },
+      calculateIds(){
+        let ids = []
+        let length = this.user.actions.length
+        for (let i = 0;i < length;i++)
+          ids.push(this.user.actions[i].id)
+        return ids
+      },
     // ACTION RELATED
       getUser(){
         this.GETrequest('/get-user', (data) =>{
