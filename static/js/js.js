@@ -39,6 +39,7 @@ let vm = new Vue({
       false,
       false,
       false,
+      false,
       false
     ],
     showIconGroups: false,
@@ -267,6 +268,9 @@ let vm = new Vue({
         let length = arr.length
         for (let i = 0;i < length;i++)
           arr[i].id = i
+      },
+      displayForm(id){
+        return (this.currentOpenedUserForm == id)
       },
       updateProjectActionIds(oldActionIds){
         let pro = this.user.projects
@@ -546,6 +550,17 @@ let vm = new Vue({
     closeActionForm(){
       this.currentOpenedUserForm = undefined
       this.cleanTempData()
+    },
+    openActionForm(id, actionId){
+      let seconds = 0
+      if (id == this.currentOpenedUserForm){
+        this.closeActionForm()
+        seconds = 400
+      }
+      setTimeout(()=> {
+        this.openUserForm({id: '' + id})
+        this.getDataFromAction(this.user.actions[actionId])
+      }, seconds)
     },
     GETrequest(route, callback){
       let xhttp = new XMLHttpRequest()

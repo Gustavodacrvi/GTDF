@@ -253,39 +253,6 @@
   }
 }
 
-@keyframes doubleSlideBounceActionForm{
-  0%{
-    flex-basis: 0;
-    opacity: 0;
-  }
-  50%{
-    flex-basis: 0;
-    opacity: 0;
-  }
-  57%{
-    flex-basis: 470px;
-    opacity: .6;
-  }
-  64%{
-    flex-basis: 410px;
-  }
-  71%{
-    flex-basis: 460px;
-  }
-  77%{
-    flex-basis: 420px;
-  }
-  84%{
-    flex-basis: 450px;
-  }
-  91%{
-    flex-basis: 430px;
-  }
-  100%{
-    opacity: 1;
-    flex-basis: 440px;
-  }
-}
 
 @keyframes goBack{
   0%{
@@ -338,13 +305,13 @@
 }
 
 .double-slide-bounce-unpop-enter-active{
-  animation: doubleSlideBounceActionForm;
-  animation-duration: .8s;
+  animation: doubleSlideBounce;
+  animation-duration: .6s;
 }
 
 .double-slide-bounce-unpop-leave-active{
   animation: unpop;
-  animation-duration: .2s;
+  animation-duration: .4s;
 }
 
 .component-animation-enter-active{
