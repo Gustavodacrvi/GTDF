@@ -212,14 +212,70 @@ Vue.component('sub-dropdown',{
     </article>
   `
 })
+Vue.component('select-option', {
+  props: {
+    selected: String,
+    placeholder: String,
+    id: String,
+    nonlive: Boolean
+  },
+  data(){
+    return {
+      isDropdownOpened: false,
+      temp: undefined
+    }
+  },
+  template: `
+    <div class='select-option' @mouseover='isDropdownOpened = true' @mouseleave='isDropdownOpened = false'>
+      <div>
+        <span class='faded'>{{ this.$root.l.placeSpan }}</span>
+        <a v-if='!isDropdownOpened || temp == undefined'>{{ selected }}</a>
+        <a v-else>{{ temp }}</a>
+      </div>
+      <transition name='pop-long'>
+        <div v-show='isDropdownOpened' class='card-shadow'>
+          <slot></slot>
+        </div>
+      </transition>
+    </div>
+  `,
+  watch: {
+    selected(){
+      if (this.selected != undefined){
+        if (this.id == undefined){
+          this.$emit('update', this.selected)
+        }
+        else {
+          this.$emit('update', {value: this.selected, id: this.id})
+          this.id = undefined
+        }
+      }
+    },
+    isDropdownOpened(){
+      if (!this.isDropdownOpened) this.temp = undefined
+    }
+  }
+})
 Vue.component('drop-link',{
   props: {
     href: String,
-    value: String
+    value: String,
+    id: String
   },
   template: `
-    <a :href='href' class='dropdown-link' @click='$parent.selected = value' @mouseover='$parent.temp = value'>{{value}}</a>
-  `
+    <a v-if='!$parent.nonlive' :href='href' class='dropdown-link' @click='send' @mouseover='$parent.temp = value'>{{value}}</a>
+    <a :href='href' class='dropdown-link' @click='send' v-else>{{value}}</a>
+  `,
+  methods: {
+    send(){
+      if (this.id != undefined){
+        this.$parent.id = this.id
+        this.$parent.selected = this.value
+      }else {
+        this.$parent.selected = this.value
+      }
+    }
+  }
 })
 Vue.component('side-nav', {
   props: {
@@ -268,40 +324,6 @@ Vue.component('side-link', {
       </div>
     </transition>
   `
-})
-Vue.component('select-option', {
-  props: {
-    selected: String,
-    placeholder: String
-  },
-  data(){
-    return {
-      isDropdownOpened: false,
-      temp: undefined
-    }
-  },
-  template: `
-    <div class='select-option' @mouseover='isDropdownOpened = true' @mouseleave='isDropdownOpened = false'>
-      <div>
-        <span class='faded'>{{ this.$root.l.placeSpan }}</span>
-        <a v-if='!isDropdownOpened || temp == undefined'>{{ selected }}</a>
-        <a v-else>{{ temp }}</a>
-      </div>
-      <transition name='pop-long'>
-        <div v-show='isDropdownOpened' class='card-shadow'>
-          <slot></slot>
-        </div>
-      </transition>
-    </div>
-  `,
-  watch: {
-    selected(){
-      this.$emit('update', this.selected)
-    },
-    isDropdownOpened(){
-      if (!this.isDropdownOpened) this.temp = undefined
-    }
-  }
 })
 Vue.component('blocked-side-link', {
   props: {
@@ -1775,29 +1797,6 @@ Vue.component('check-box', {
       <span>{{placeholder}}</span>
     </div>
   `
-})
-Vue.component('select-option', {
-  props: {
-    name: String,
-    id: Number
-  },
-  template: `
-    <div :class='{"option-selected": selected}' @click='select'>
-      <span>{{name}}</span>
-    </div>
-  `,
-  methods: {
-    select(){
-      this.$parent.selected = this.name
-      this.$parent.id = this.id
-      this.$parent.openedDropdown = false
-    }
-  },
-  computed: {
-    selected(){
-      return this.$parent.selected == this.name
-    }
-  }
 })
 Vue.component('option-selection', {
   props: {

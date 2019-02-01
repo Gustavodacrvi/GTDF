@@ -106,16 +106,15 @@ let vm = new Vue({
             projectActionsCalendarBefore: `Your project actions with the "calendar" tag that comes before the current year will show here.`,
             loggedAs: `Logged as`,
             username: `guest`,
-            selectAProject: `select a project`,
+            selectAProject: `select a project:`,
             addChangePlace: `add/change place`,
             placeSpan: `current place:`,
           }
-          this.tempUser.project.selected = 'select an action'
         } else if (lang == 'pt-BR'){
           this.l = {
             placeSpan: `local atual:`,
             addChangePlace: `adicionar/mudar local`,
-            selectAProject: `selecione um projeto`,
+            selectAProject: `selecione um projeto:`,
             username: `convidado`,
             loggedAs: `Conectado como`,
             projectActionsCalendarBefore: `As ações que estiverem em algum projeto e que possuírem a tag "agenda" e que vierem antes do ano atual estarão aqui.`,
@@ -173,7 +172,6 @@ let vm = new Vue({
             editActionTag: `Editar tag da ação`,
             addCreateProject: `Criar/adicionar no projeto`            
           }
-          this.tempUser.project.selected = 'selecione um ação'
         }
       },
     // PASSWORDS
