@@ -180,7 +180,9 @@ module.exports.deleteProject = function(data, id){
 
   module.exports.removeActionsFromProject(data, id)
   pro.splice(id, 1)
+  let oldProjectIds = module.exports.getIds(pro)
   module.exports.resetIds(pro)
+  module.exports.updateActionsIds(data, oldProjectIds)
 }
 
 module.exports.createAndAddActionToProject = function(user, id, projectId, title, description){
