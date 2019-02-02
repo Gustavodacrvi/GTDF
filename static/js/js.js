@@ -292,10 +292,14 @@ let vm = new Vue({
           pro[projectId].actions[actionId] = act[i].id
         }
       },
-      getIndexOfactionThatHasTheGivenProjectId(projectId){
-        return this.user.actions.findIndex((el) => {
-          return el.projectId == projectId
-        })
+      getIndexOfactionThatHasTheGivenProjectIdAll(projectId){
+        let acts = this.user.actions
+        let length = acts.length
+        let actionIds = []
+        for (let i = 0;i < length;i++)
+          if (acts[i].projectId == projectId)
+            actionIds.push(i)
+        return actionIds
       },
       updateActionsIds(oldProjectIds){
         let pro = this.user.projects
@@ -303,11 +307,13 @@ let vm = new Vue({
         let old = oldProjectIds
 
         let length = pro.length
-        let actionId
         for (let i = 0;i < length;i++){
-          actionId = this.getIndexOfactionThatHasTheGivenProjectId(old[i])
-          if (actionId == -1) continue
-          act[actionId].projectId = pro[i].id
+          actionIds = this.getIndexOfactionThatHasTheGivenProjectIdAll(old[i])
+          let actionsLength = actionIds.length
+          for (let j = 0;j < actionsLength;j++){
+            if (actionIds[j] == -1) continue
+            act[actionIds[j]].projectId = pro[i].id
+          }
         }
       },
       editProjectTitle(){

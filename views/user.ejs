@@ -292,12 +292,6 @@
     </template>
     <template slot='adds'>
       <adds>
-        <template v-if='user'>
-          <h5>ACTIONS</h5>
-          <p v-for='action in user.actions'>{{action}}</p>
-          <h5>PROJECTS</h5>
-          <p v-for='action in user.projects'>{{action}}</p>
-        </template>
       </adds>
     </template>
   </user-content>
@@ -313,3 +307,12 @@
 </body>
 
 </html>
+
+<!--
+  <template v-if='user'>
+    <h5>ACTIONS</h5>
+    <p v-for='action in user.actions'>{{action}}</p>
+    <h5>PROJECTS</h5>
+    <p v-for='action in user.projects'>{{action}}</p>
+  </template>
+-->

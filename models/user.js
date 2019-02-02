@@ -202,10 +202,14 @@ module.exports.removeActionFromProject = function(data, actionId){
   delete act[actionId].projectId
 }
 
-module.exports.getIndexOfactionThatHasTheGivenProjectId = function(data, projectId){
-  return data.actions.findIndex((el) => {
-    return el.projectId == projectId
-  })
+module.exports.getIndexOfactionThatHasTheGivenProjectIdAll = function(data, projectId){
+  let acts = data.actions
+  let length = acts.length
+  let actionIds = []
+  for (let i = 0;i < length;i++)
+    if (acts[i].projectId == projectId)
+      actionIds.push(i)
+  return actionIds
 }
 
 module.exports.updateActionsIds = function(data, oldProjectIds){
@@ -214,11 +218,13 @@ module.exports.updateActionsIds = function(data, oldProjectIds){
   let old = oldProjectIds
 
   let length = pro.length
-  let actionId
   for (let i = 0;i < length;i++){
-    actionId = module.exports.getIndexOfactionThatHasTheGivenProjectId(data, old[i])
-    if (actionId == -1) continue
-    act[actionId].projectId = pro[i].id
+    actionIds = module.exports.getIndexOfactionThatHasTheGivenProjectIdAll(old[i])
+    let actionsLength = actionIds.length
+    for (let j = 0;j < actionsLength;j++){
+      if (actionIds[j] == -1) continue
+      act[actionIds[j]].projectId = pro[i].id
+    }
   }
 }
 
