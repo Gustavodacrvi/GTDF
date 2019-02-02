@@ -27,7 +27,7 @@ Vue.component('form-element', {
   },
   template: `
     <transition :name='animation' appear>
-      <div class='formElement' v-show='$parent.show' :tabindex='tabindex'>
+      <div class='formElement' :tabindex='tabindex'>
         <slot></slot>
       </div>
     </transition>
@@ -428,13 +428,10 @@ Vue.component('action-form', {
   props: {
     show: false
   },
-  mounted(){
-    this.show = true
-  },
   template: `
     <div class='card-shadow form action-form'>
       <transition name='pop1'>
-      <i class='fa fa-times icon-big user-icon close-icon' v-show='show' @click='$emit("close")'></i>
+      <i class='fa fa-times icon-big user-icon close-icon' @click='$emit("close")'></i>
       </transition>
       <slot></slot>
     </div>
