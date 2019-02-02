@@ -219,7 +219,7 @@ module.exports.updateActionsIds = function(data, oldProjectIds){
 
   let length = pro.length
   for (let i = 0;i < length;i++){
-    actionIds = module.exports.getIndexOfactionThatHasTheGivenProjectIdAll(old[i])
+    actionIds = module.exports.getIndexOfactionThatHasTheGivenProjectIdAll(data ,old[i])
     let actionsLength = actionIds.length
     for (let j = 0;j < actionsLength;j++){
       if (actionIds[j] == -1) continue

@@ -85,7 +85,7 @@ body {
 }
 
 .card-shadow{
-  box-shadow: 0 10px 6px 3px rgba(40,40,40,0.4);
+  box-shadow: 0 10px 6px 1px rgba(40,40,40,0.4);
 }
 
 .card-border{
@@ -283,7 +283,7 @@ a{
   /* background: url('/images/cardcolor.png'); */
   background: url('/images/cardcolor.png');
   z-index: 20;
-  box-shadow: 0 6px 6px rgba(50,50,50,0.3); 
+  box-shadow: 0 6px 6px 1px rgba(40,40,40,0.4); 
 }
 
 #navBar > div{
@@ -520,11 +520,12 @@ a{
 /* SIDE NAV */
 
 #side-nav{
-  position: absolute;
+  position: fixed;
   width: 225px;
   height: 100vh;
   left: 0;
   background: url('/images/cardcolor.png');
+  box-shadow: 10px 0 6px 1px rgba(40,40,40,0.4);
   pointer-events: all;
   overflow: hidden;
   z-index: 15;
@@ -537,7 +538,7 @@ a{
 .side-title{
   margin-left: 25px;
   padding-right: 10px;
-  font-size: 1.4em;
+  font-size: 1em;
   margin-bottom: 40px;
 }
 
@@ -548,10 +549,14 @@ a{
 
 .red{
   color: #fe4a49;
+  display: block;
+  text-align: center;
+  width: 175px;
+  font-size: 1.45em;
 }
 
 .side-link, .side-link-blocked{
-  font-size: 1.3em;  
+  font-size: 1.35em;  
 }
 
 .side-link-blocked{
@@ -621,6 +626,7 @@ a{
   margin-top: 50px;
   display: flex;
   position: relative;
+  overflow: hidden;
 }
 
 #content > :first-child{
@@ -1034,7 +1040,7 @@ a{
   white-space: nowrap;
   padding: 6px;
   border-radius: 8px;
-  box-shadow: 0 10px 6px 3px rgba(40,40,40,0.4);  
+  box-shadow: 0 10px 6px 1px rgba(40,40,40,0.4);  
   z-index: 10;
 }
 

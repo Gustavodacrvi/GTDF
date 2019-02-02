@@ -668,6 +668,12 @@ let vm = new Vue({
     },
     activateGuest(){
       this.guest = true
+    },
+    hideSideBarScroll(){
+      if (!this.desktop){
+        this.showSideBar = false
+        console.log(this.showSideBar)
+      }
     }
   },
   mounted(){
@@ -690,3 +696,4 @@ vm.applyDragAndDrop()
 
 window.addEventListener('resize', vm.checkScreenVersion)
 window.addEventListener('resize', vm.iconGroupEventHandlers)
+window.addEventListener('scroll', function() {vm.hideSideBarScroll()})

@@ -297,7 +297,7 @@ Vue.component('side-title', {
   template: `
     <transition name='pop1'>
       <div class='side-title' v-if='$parent.show'>
-        {{ this.$root.l.loggedAs }} <span class='red'>{{ translate() }}</span>
+        <span class='faded' style='margin-left: -4px;top:margin-top: -4px'>{{ this.$root.l.loggedAs }}</span><span class='red'>{{ translate() }}</span>
       </div>
     </transition>
   `,
