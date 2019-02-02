@@ -4,6 +4,10 @@ let vm = new Vue({
   el: '#app',
   data: {
     desktop: undefined,
+    asent: false,
+    afunc: false,
+    pfunc: false,
+    psent: false,
     guest: false,
     showPasswords: false,
     showSideBar: false,
@@ -457,8 +461,21 @@ let vm = new Vue({
         this.resetIds(this.user.projects)
         this.updateActionsIds(oldProjectIds)
 
+        let setTime = ()=>{
+          this.pfunc = setTimeout(() => {
+            this.POSTrequest('/save-new-project-order', this.parseArrayToHTTPparams(ids, 'a'))
+            this.psent = false
+          }, 1500)
+          this.psent = true
+        }
+
         if (!this.guest){
-          this.POSTrequest('/save-new-project-order', this.parseArrayToHTTPparams(ids, 'a'))
+          if (this.psent == false){
+            setTime()
+          } else {
+            clearTimeout(this.pfunc)
+            setTime()
+          }
         }
       },
       saveNewActionOrder(ids){
@@ -466,8 +483,21 @@ let vm = new Vue({
         this.resetIds(this.user.actions)
         this.updateProjectActionIds(oldActionIds)
 
+        let setTime = ()=>{
+          this.afunc = setTimeout(() => {
+            this.POSTrequest('/save-new-action-order', this.parseArrayToHTTPparams(ids, 'a'))
+            this.asent = false
+          }, 1500)
+          this.asent = true
+        }
+
         if (!this.guest){
-          this.POSTrequest('/save-new-action-order', this.parseArrayToHTTPparams(ids, 'a'))
+          if (this.asent == false){
+            setTime()
+          } else {
+            clearTimeout(this.afunc)
+            setTime()
+          }
         }
       },
       addAlreadyExistingAction(){
@@ -610,7 +640,8 @@ let vm = new Vue({
       let sortables = document.querySelectorAll('.sortable')
       sortables.forEach((el) => {
         new Sortable(el, {
-          handle: '.draggable'
+          handle: '.draggable',
+          ghostClass: 'ghost'
         })
       })
     },

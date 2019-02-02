@@ -21,9 +21,6 @@ var userSchema = mongoose.Schema({
       ],
       projects: [
 
-      ],
-      places: [
-        
       ]
     }
 })
