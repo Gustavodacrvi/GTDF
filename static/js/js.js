@@ -44,6 +44,7 @@ let vm = new Vue({
       false,
       false,
       false,
+      false,
       false
     ],
     showIconGroups: false,
@@ -117,9 +118,11 @@ let vm = new Vue({
             placeSpan: `Current place:`,
             selectAPlace: `select a place:`,
             selectAnAction: `select an action:`,
+            createAPlace: `Create a place`
           }
         } else if (lang == 'pt-BR'){
           this.l = {
+            createAPlace: `Criar um local`,
             selectAnAction: `selecione uma ação:`,
             selectAPlace: `selecione um local:`,
             placeSpan: `Local atual:`,

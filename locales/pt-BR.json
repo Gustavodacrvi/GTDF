@@ -10,7 +10,7 @@
 	"Begin": "Começar",
 	"SIGN UP": "INSCREVER-SE",
 	"Email": "Email",
-	"Confirm password": "Confirmar a senha",
+	"Confirm password": "Confirme sua senha.",
 	"Create account": "Criar conta",
 	"Username required": "Nome de usuário requerido",
 	"Email required": "Email requerido",
@@ -20,9 +20,9 @@
 	"You created an account and can now login.": "Você criou uma conta e agora pode entrar.",
 	"Someone already used that username.": "Alguém já usou esse nome de usuário.",
 	"Someone already used that email.": "Alguém já usou esse email.",
-	"Wrong password": "Senha errada",
-	"Missing credentials": "Preencha os campos",
-	"Unknown username": "Nome de usuário desconhecido",
+	"Wrong password": "Senha errada.",
+	"Missing credentials": "Preencha os campos.",
+	"Unknown username": "Nome de usuário desconhecido.",
 	"You logged out.": "Voce saiu.",
 	"default_language": "Português(Brasil)",
 	"": "",
@@ -65,7 +65,8 @@
 	"TITLE": "TÍTULO",
 	"DESCRIPTION": "DESCRIÇÃO",
 	"ADD PROJECT": "ADICIONAR PROJETO",
-	"User": "User",
-	"CHANGE PLACE": "CHANGE PLACE",
-	"Change place": "Change place"
+	"User": "Usuário",
+	"CHANGE PLACE": "MUDAR LOCAL",
+	"Change place": "Mudar local",
+	"places": "lugares"
 }

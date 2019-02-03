@@ -427,3 +427,8 @@
   animation: pop;
   animation-duration: 1.1s;
 }
+
+.pop8-enter-active{
+  animation: pop;
+  animation-duration: 1.2s;
+}
