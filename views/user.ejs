@@ -85,14 +85,13 @@
         </side-link>
       <% } %>
       </br>
-      <select-option :placeholder='l.placeSpan' :selected='place' @update='(newPlace)=>this.place = newPlace' animation='pop9'>
+      <select-option v-if='places' :placeholder='l.placeSpan' :selected='place' @update='(newPlace)=>this.place = newPlace' animation='pop9'>
         <drop-link value='show all'></drop-link>
-        <drop-link value='home'></drop-link>
-        <drop-link value='work'></drop-link>
+        <drop-link v-for='place in places' :value='place'></drop-link>
       </select-option>
       <double-icon animation='pop9'>
-        <action-bar-icon icon='fa fa-plus' id='addPlace' @click='openUserForm' :title='l.createAPlace'></action-bar-icon>
         <action-bar-icon icon='fa fa-times' id='deletePlace' @click='openUserForm' :title='l.deleteCurrentPlace'></action-bar-icon>
+        <action-bar-icon icon='fa fa-plus' id='addPlace' @click='openUserForm' :title='l.createAPlace'></action-bar-icon>
       </double-icon>
     </side-nav>
     <transition name='double-slide-bounce-unpop' mode='out-in'>    
@@ -280,10 +279,20 @@
               <drop-link value='work'></drop-link>
             </select-option>
           </div>
-          </select-option>
         </form-element>
         <form-element class='centralizeContent' animation='pop3'>
           <form-button><%= __('Change place') %></form-button>
+        </form-element>      
+      </action-form>
+      <action-form key='addPlace' v-else-if='displayForm("addPlace")' @close='closeActionForm' :l='l'>
+        <form-element animation='pop1'>
+          <title-big class='centralizeContent'><%= __('CREATE A PLACE') %></title-big>
+        </form-element>
+        <form-element>
+          <text-box placeholder='<%= __("PLACE NAME") %>' :rows='2' :value='tempPlace' @change='(v) => tempPlace = v'></text-box>
+        </form-element>
+        <form-element class='centralizeContent' animation='pop3'>
+          <form-button><%= __('Create a place') %></form-button>
         </form-element>      
       </action-form>
     </transition>
@@ -297,11 +306,13 @@
     <template slot='adds'>
       <adds>
       <template v-if='user'>
+    <h5>PLACES</h5>
+    <p v-for='action in places'>{{action}}</p>    
     <h5>ACTIONS</h5>
     <p v-for='action in user.actions'>{{action}}</p>
     <h5>PROJECTS</h5>
     <p v-for='action in user.projects'>{{action}}</p>
-  </template> 
+  </template>
       </adds>
     </template>
   </user-content>

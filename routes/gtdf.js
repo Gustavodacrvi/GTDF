@@ -78,8 +78,7 @@ router.post('/save-new-action-order', (req, res) => {
 
     User.rearrange(u.actions, req.body.a)
     User.resetIds(u.actions)
-    if (req.body.hasproject)
-      User.fixChangedActionOrderInProject(user.data, req.body.old, req.body.new)
+    User.fixChangedActionOrderInProject(user.data, req.body.old, req.body.new)
     
     User.fixStringIdsAndNulls(user.data)
     user.markModified('data')

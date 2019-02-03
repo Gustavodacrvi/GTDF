@@ -4,14 +4,12 @@ let vm = new Vue({
   el: '#app',
   data: {
     desktop: undefined,
-    asent: false,
-    afunc: false,
-    pfunc: false,
-    psent: false,
     guest: false,
+    tempPlace: undefined,
     showPasswords: false,
     showSideBar: false,
     username: undefined,
+    places: undefined,
     tempUser: {
       action: {
         tag: undefined,
@@ -444,6 +442,11 @@ let vm = new Vue({
           for (let i = 0;i < length;i++)
             this.openedActionContents.push(false)
 
+          this.places = []
+          for (let i = 0;i < length;i++){
+            if (!this.places.includes(this.user.actions[i].place) && this.user.actions[i].place == 'show all' && this.user.actions[i].place == null)
+              this.places.push(this.user.actions[i].place)
+          }
           length = this.user.projects.length
           this.openedProjectDropdowns = []
           for (let i = 0;i < length;i++)
@@ -544,14 +547,12 @@ let vm = new Vue({
           let act = this.user.actions[obj.new]
           let hasProject = (act.projectId || act.projectId == 0)
           this.resetIds(this.user.actions)
-          if (hasProject)
-            this.fixChangedActionOrderInProject(obj.old, obj.new)
+          this.fixChangedActionOrderInProject(obj.old, obj.new)
 
           if (!this.guest)
-            this.POSTrequest('/save-new-action-order', this.parseArrayToHTTPparams(ids, 'a')+'&old='+obj.old+'&new='+obj.new+'&hasproject='+hasProject)
+            this.POSTrequest('/save-new-action-order', this.parseArrayToHTTPparams(ids, 'a')+'&old='+obj.old+'&new='+obj.new)
 
           }
-        }
       },
       addAlreadyExistingAction(){
         if (this.id2 != ''){
@@ -623,6 +624,7 @@ let vm = new Vue({
       u.project.id = ''
       u.project.id2 = ''
       u.project.selected = 'select an action'
+      u.tempPlace = undefined
     },
     openUserForm(dt, cleanData = true){
       if (cleanData) this.cleanTempData()
