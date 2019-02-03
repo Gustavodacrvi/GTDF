@@ -1107,7 +1107,7 @@ Vue.component('projects', {
       <template v-if='user'>
       <draggable v-model='user.projects' :options="{handle:'.draggable', animation: 300}">
         <transition-group name='flip-list' tag='div'>
-          <project v-for='prj in user.projects' v-if='thereIsAtLeastOneActionOnThisPlace(prj.id)' :title='prj.title' :icongroup='icongroups' :dropdowns='dropdowns' :dropdown='projectdropdowns[prj.id]' :id='prj.id' :key='prj' :user='user' :l='l' @projectopened='changeProjectDropdownState' :place='place'></project>
+          <project v-for='prj in user.projects' :title='prj.title' :icongroup='icongroups' :dropdowns='dropdowns' :dropdown='projectdropdowns[prj.id]' :id='prj.id' :key='prj' :user='user' :l='l' @projectopened='changeProjectDropdownState' :place='place'></project>
         </transition-group>
       </draggable>
       <template v-if='!thereIsAtLeastOneProject()'>
@@ -1119,17 +1119,6 @@ Vue.component('projects', {
   </div>
   `,
   methods: {
-    thereIsAtLeastOneActionOnThisPlace(projectId){
-      let pro = this.$root.user.projects[projectId]
-      let acts = this.user.actions
-      let length = pro.actions.length
-      for (let i = 0;i < length;i++){
-        let act = acts[pro.actions[i]].place
-        if ((act == undefined && this.place == 'show all') || act == this.place)
-        return true
-      }
-      return false
-    },
     changeProjectDropdownState(obj){
       this.projectdropdowns[obj.id] = obj.state
     },
@@ -1144,18 +1133,7 @@ Vue.component('projects', {
       return ids
     },
     thereIsAtLeastOneProject(){
-      let pro = this.user.projects
-      let acts = this.user.actions
-      let proLength = pro.length
-      for (let i = 0;i < proLength;i++){
-        let actLength = pro[i].actions.length
-        for (let j = 0;j < actLength;j++){
-          let act = acts[pro[i].actions[j]].place
-          if ((act == undefined && this.place == 'show all') || act == this.place)
-            return true
-        }
-      }
-      return false
+      return (this.user.projects.length > 0)
     }
   },
   watch: {
@@ -1227,9 +1205,12 @@ Vue.component('project', {
         this.$root.POSTrequest('/delete-project', 'id='+this.id)
     },
     isOnProject(actionId){
-      return this.user.projects[this.id].actions.some((el) => {
-        return el == actionId
-      })
+      let pro = this.user.projects[this.id]
+      let length = pro.actions.length
+      for (let i = 0;i < length;i++)
+        if (pro.actions[i] == actionId)
+          return true
+      return false
     },
     openActionForm(id){
       this.$root.openUserForm({id: '' + id})

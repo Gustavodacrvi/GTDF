@@ -79,17 +79,25 @@ module.exports.rearrange = function(arr, newArr){
 }
 
 module.exports.getIndexOfProjectThatHasTheGivenActionId = function(data, actionId){
-  return data.projects.findIndex((el) => {
-    return el.actions.some((ele) => {
-      return ele == actionId
-    })
-  })
+  let pros = data.projects
+  let length = pros.length
+  for (let i = 0;i < length;i++){
+    let actionsLength = pros[i].actions.length
+    for (let j = 0;j < actionsLength;j++){
+      if (pros[i].actions[j] == actionId)
+        return i
+    }
+  }
 }
 
 module.exports.getIndexOfProjectActionThatHasTheGivenActionId = function(data, projectId, actionId){
-  return data.projects[projectId].actions.findIndex((el) => {
-    return el == actionId
-  })
+  let pros = data.projects
+  if (pros[projectId] == undefined)
+    return -1
+  let actionsLength = pros[projectId].actions.length
+  for (let i = 0;i < actionsLength;i++)
+    if (pros[projectId].actions[i] == actionId)
+      return i
 }
 
 module.exports.getIds = function(arr){
@@ -119,6 +127,10 @@ module.exports.updateProjectActionIds = function(data, oldActionIds){
       continue
     projectId = module.exports.getIndexOfProjectThatHasTheGivenActionId(data, old[i])
     actionId = module.exports.getIndexOfProjectActionThatHasTheGivenActionId(data, projectId, old[i])
+    console.log('actions', data.actions)
+    console.log('projects', data.projects)
+    console.log('projectId', projectId)
+    console.log('oldId', old[i])
     pro[projectId].actions[actionId] = act[i].id
   }
 }
@@ -137,7 +149,11 @@ module.exports.deleteProjectAction = function(id, data){
   let act = data.actions
   let pro = data.projects
   let i = module.exports.getIndexOfProjectThatHasTheGivenActionId(data, id)
+  console.log('i', i)
+  console.log('id', id)
   let j = module.exports.getIndexOfProjectActionThatHasTheGivenActionId(data, i, id)
+  console.log('j', j)
+  console.log('id', id)
   pro[i].actions.splice(j, 1)
   act.splice(id, 1)
 
@@ -237,4 +253,26 @@ module.exports.editTimedAction = function(act, title, description, date, time, i
   act[id].description = description
   act[id].calendar.date = date
   act[id].calendar.time = time
+}
+
+module.exports.fixStringIdsAndNulls = function(data){
+  let pros = data.projects
+  let acts = data.actions
+
+  let length = acts.length
+  for (let i = 0;i < length;i++){
+    acts[i].id = parseInt(acts[i].id)
+    acts[i].projectId = parseInt(acts[i].projectId)
+    if (acts[i].place == "null")
+      acts[i].place = null
+  }
+
+  length = pros.length
+  for (let i = 0;i < length;i++){
+    pros[i].id = parseInt(pros[i].id)
+    let actionsLength = pros[i].actions.length
+    for (let j = 0;j < actionsLength;j++){
+      pros[i].actions[j] = parseInt(pros[i].actions[j])
+    }
+  }
 }

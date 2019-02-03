@@ -44,7 +44,13 @@ router.get('/user-guest', (req, res)=>{
 router.get('/get-user', (req, res)=>{
   User.getUserById(req.user.id, function(err, user){
     if (err) return handleError(err)
-    res.send({ user: user.data, username: user.username})
+
+    User.fixStringIdsAndNulls(user.data)
+    user.markModified('data')
+    user.save((err, updatedUser) => {
+
+      res.send({ user: updatedUser.data, username: updatedUser.username})
+    })
   })
 })
 
@@ -53,8 +59,11 @@ router.post('/add-action', (req, res) => {
     if (err) return handleError(err)
     let b = req.body
 
+    if (b.place == 'undefined')
+      b.place = undefined
     user.data.actions.push({ title: b.title, id: b.id, description: b.description, tag: b.tag, place: b.place})
     
+    User.fixStringIdsAndNulls(user.data)
     user.save((err) => {
       if (err) return handleError(err)
       res.send()
@@ -72,6 +81,7 @@ router.post('/save-new-action-order', (req, res) => {
     User.resetIds(u.actions)
     User.updateProjectActionIds(user.data, oldIds)
     
+    User.fixStringIdsAndNulls(user.data)
     user.markModified('data')
     user.save((err) => {
       if (err) return handleError(err)
@@ -91,6 +101,7 @@ router.post('/save-new-project-order', (req, res) => {
     User.resetIds(u.projects)
     User.updateActionsIds(user.data, oldIds)
     
+    User.fixStringIdsAndNulls(user.data)
     user.markModified('data')
     user.save((err) => {
       if (err) return handleError(err)
@@ -106,6 +117,7 @@ router.post('/delete-action', (req, res) => {
 
     User.deleteAction(user.data, req.body.id)
 
+    User.fixStringIdsAndNulls(user.data)
     user.markModified('data')
     user.save((err) => {
       if (err) return handleError(err)
@@ -121,6 +133,7 @@ router.post('/delete-project-action', (req, res) => {
 
     User.deleteProjectAction(req.body.id, user.data)
 
+    User.fixStringIdsAndNulls(user.data)
     user.markModified('data')
     user.save((err) => {
       if (err) return handleError(err)
@@ -137,7 +150,8 @@ router.post('/edit-action', (req, res) => {
 
     User.editAction(b.title, b.description, b.id, user.data.actions)
 
-    user.markModified('data.actions')
+    User.fixStringIdsAndNulls(user.data)
+    user.markModified('data')
     user.save((err) => {
       if (err) return handleError(err)
 
@@ -153,7 +167,8 @@ router.post('/edit-tag', (req, res) => {
 
     User.editTag(b.id, b.tag, user.data.actions)
 
-    user.markModified('data.actions')
+    User.fixStringIdsAndNulls(user.data)
+    user.markModified('data')
     user.save((err) => {
       if (err) return handleError(err)
 
@@ -169,6 +184,8 @@ router.post('/add-project', (req, res) => {
 
     User.addProject(user.data.projects, b.title)
 
+    User.fixStringIdsAndNulls(user.data)
+    user.markModified('data')
     user.save((err) => {
       if (err) return handleError(err)
 
@@ -184,6 +201,7 @@ router.post('/delete-project', (req, res) => {
 
     User.deleteProject(user.data, b.id)
 
+    User.fixStringIdsAndNulls(user.data)
     user.markModified('data')
     user.save((err) => {
       if (err) return handleError(err)
@@ -200,7 +218,8 @@ router.post('/create-add-action-project', (req, res) => {
 
     User.createAndAddActionToProject(user.data, dt.id, dt.projectId, dt.title, dt.description, dt.place)
 
-    user.markModified('data.projects')
+    User.fixStringIdsAndNulls(user.data)
+    user.markModified('data')
     user.save((err) => {
       if (err) return handleError(err)
 
@@ -216,6 +235,7 @@ router.post('/edit-project', (req, res) => {
 
     user.data.projects[dt.id].title = dt.title
 
+    User.fixStringIdsAndNulls(user.data)
     user.markModified('data.projects')
     user.save((err) => {
       if (err) return handleError(err)
@@ -251,6 +271,7 @@ router.post('/remove-action-from-project', (req, res) => {
     
     User.removeActionFromProject(user.data, dt.actionId)
 
+    User.fixStringIdsAndNulls(user.data)
     user.markModified('data')
     user.save((err) => {
       if (err) return handleError(err)
@@ -270,6 +291,7 @@ router.post('/transform-action-to-project', (req, res) => {
       User.deleteAction(user.data, dt.actionId)
     }
 
+    User.fixStringIdsAndNulls(user.data)
     user.markModified('data')
     user.save((err) => {
       if (err) return handleError(err)
@@ -287,6 +309,7 @@ router.post('/add-existing-action-project-from-action', (req, res) => {
     user.data.actions[dt.actionId].projectId = dt.projectId
     user.data.projects[dt.projectId].actions.push(dt.actionId)
 
+    User.fixStringIdsAndNulls(user.data)
     user.markModified('data')
     user.save((err) => {
       if (err) return handleError(err)
@@ -303,6 +326,7 @@ router.post('/add-timed-action', (req, res) => {
     
     User.addTimedAction(user.data.actions, dt.title, dt.description, dt.date, dt.time, dt.place)
 
+    User.fixStringIdsAndNulls(user.data)
     user.markModified('data.actions')
     user.save((err) => {
       if (err) return handleError(err)
@@ -319,6 +343,7 @@ router.post('/edit-timed-action', (req, res) => {
     
     User.editTimedAction(user.data.actions, dt.title, dt.description, dt.date, dt.time, dt.id)
 
+    User.fixStringIdsAndNulls(user.data)
     user.markModified('data.actions')
     user.save((err) => {
       if (err) return handleError(err)
@@ -336,6 +361,7 @@ router.post('/edit-timed-tag', (req, res) => {
     delete user.data.actions[dt.id].calendar
     user.data.actions[dt.id].tag = dt.tag
 
+    User.fixStringIdsAndNulls(user.data)
     user.markModified('data.actions')
     user.save((err) => {
       if (err) return handleError(err)
@@ -357,6 +383,7 @@ router.post('/tag-to-calendar', (req, res) => {
       time: dt.time
     }
 
+    User.fixStringIdsAndNulls(user.data)
     user.markModified('data.actions')
     user.save((err) => {
       if (err) return handleError(err)

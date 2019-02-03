@@ -60,7 +60,7 @@
         <%= __('next actions') %>
       </side-link>
       </br>
-      <side-link animation='pop4' :i='3' compo='places' @click='changeSectionComponent' :active='openedComponents[3]'>
+      <side-link animation='pop4' :i='3' compo='projects' @click='changeSectionComponent' :active='openedComponents[3]'>
         <%= __('projects') %>
       </side-link>
       <side-link animation='pop5' :i='4' compo='maybe' @click='changeSectionComponent' :active='openedComponents[4]'>
@@ -292,6 +292,12 @@
     </template>
     <template slot='adds'>
       <adds>
+      <template v-if='user'>
+    <h5>ACTIONS</h5>
+    <p v-for='action in user.actions'>{{action}}</p>
+    <h5>PROJECTS</h5>
+    <p v-for='action in user.projects'>{{action}}</p>
+  </template>
       </adds>
     </template>
   </user-content>

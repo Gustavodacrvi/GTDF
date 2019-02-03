@@ -389,7 +389,7 @@ let vm = new Vue({
       addAction(){
         let dt = this.tempUser.action
         let place = this.place
-        if (place == 'show all') place == undefined
+        if (place == 'show all') place == null
         this.user.actions.push({ tag: dt.tag, title: dt.title, description: dt.description, id: this.user.actions.length, place: place})
         if (!this.guest)
           this.POSTrequest('/add-action', 'title='+dt.title+'&description='+dt.description+'&id='+(this.user.actions.length-1)+'&tag='+dt.tag+'&place='+place)
@@ -452,7 +452,7 @@ let vm = new Vue({
         let length = this.user.actions.length
         let projectId = this.tempUser.project.id
         let place = this.place
-        if (place == 'show all') place = undefined
+        if (place == 'show all') place = null
         this.user.actions.push({tag:'basket',id: length, title: dt.title, description: dt.description, projectId: projectId, place: place})
         this.user.projects[projectId].actions.push(length)
         if (!this.guest)
@@ -477,7 +477,7 @@ let vm = new Vue({
           this.pfunc = setTimeout(() => {
             this.POSTrequest('/save-new-project-order', this.parseArrayToHTTPparams(ids, 'a'))
             this.psent = false
-          }, 1500)
+          }, 2500)
           this.psent = true
         }
 
@@ -499,7 +499,7 @@ let vm = new Vue({
           this.afunc = setTimeout(() => {
             this.POSTrequest('/save-new-action-order', this.parseArrayToHTTPparams(ids, 'a'))
             this.asent = false
-          }, 1500)
+          }, 2500)
           this.asent = true
         }
 
@@ -666,7 +666,7 @@ let vm = new Vue({
       if (validDate && validTime){
         let length = act.length
         let place = this.place
-        if (place == 'show all') place = undefined
+        if (place == 'show all') place = null
         act.push({id: length, place: place, tag: 'calendar', title: dt.title, description: dt.description, calendar: {time: dt.calendar.time, date: dt.calendar.date}})
 
         if (!this.guest)
