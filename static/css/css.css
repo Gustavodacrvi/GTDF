@@ -381,6 +381,15 @@ a{
   margin: auto;
 }
 
+.double-icon{
+  display: flex;
+  justify-content: space-around;
+  width: 175px;
+  left: 25px;
+  position: relative;
+  top: 15px;
+}
+
 .select-option > :last-child a:first-child{
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
@@ -527,7 +536,6 @@ a{
   background: url('/images/cardcolor.png');
   box-shadow: 10px 0 6px 1px rgba(40,40,40,0.3);
   pointer-events: all;
-  overflow: hidden;
   z-index: 15;
 }
 

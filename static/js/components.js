@@ -223,12 +223,16 @@ Vue.component('select-option', {
   data(){
     return {
       isDropdownOpened: false,
-      temp: undefined
+      temp: undefined,
+      show: false,
     }
+  },
+  mounted(){
+    this.show = true
   },
   template: `
     <transition :name='animation'>
-    <div class='select-option' @mouseover='isDropdownOpened = true' @mouseleave='isDropdownOpened = false'>
+    <div class='select-option' @mouseover='isDropdownOpened = true' @mouseleave='isDropdownOpened = false' v-if='show'>
       <div>
         <span class='faded'>{{ placeholder }}</span>
         <a v-if='!isDropdownOpened || temp == undefined'>{{ selected }}</a>
@@ -1277,9 +1281,8 @@ Vue.component('project-timed-action', {
       pros[this.projectid].actions.splice(j, 1)
       acts.splice(this.id, 1)
 
-      let oldActionIds = rt.getIds(acts)
+      rt.decreaseProjectsActionsIdsByOneThatAreBiggerThan(this.id)
       rt.resetIds(acts)
-      rt.updateProjectActionIds(oldActionIds)
       if (!this.$root.guest)
         this.$root.POSTrequest('/delete-project-action', 'id=' + this.id)
     },
@@ -1353,9 +1356,8 @@ Vue.component('project-action', {
       pro[this.projectId].actions.splice(j, 1)
       act.splice(this.id, 1)
 
-      let oldActionIds = rt.getIds(act)
+      rt.decreaseProjectsActionsIdsByOneThatAreBiggerThan(this.id)
       rt.resetIds(act)
-      rt.updateProjectActionIds(oldActionIds)
       if (!this.$root.guest)
         this.$root.POSTrequest('/delete-project-action', 'id=' + this.id)
     },
@@ -1444,12 +1446,12 @@ Vue.component('timed-action', {
     deleteAction(){
       let data = this.$root
       let act = data.user.actions
+      let rt = this.$root
 
       act.splice(this.id, 1)
     
-      let oldActionIds = data.getIds(act)
-      data.resetIds(act)
-      data.updateProjectActionIds(oldActionIds)
+      rt.decreaseProjectsActionsIdsByOneThatAreBiggerThan(this.id)
+      rt.resetIds(act)
 
       if (!this.$root.guest)
         this.$root.POSTrequest('/delete-action', 'id=' + this.id)
@@ -1507,12 +1509,12 @@ Vue.component('action',{
     deleteAction(){
       let data = this.$root
       let act = data.user.actions
+      let rt = this.$root
 
       act.splice(this.id, 1)
     
-      let oldActionIds = data.getIds(act)
-      data.resetIds(act)
-      data.updateProjectActionIds(oldActionIds)
+      rt.decreaseProjectsActionsIdsByOneThatAreBiggerThan(this.id)
+      rt.resetIds(act)
 
       if (!this.$root.guest)
         this.$root.POSTrequest('/delete-action', 'id=' + this.id)
@@ -2055,4 +2057,24 @@ Vue.component('deleteaccount', {
       window.location.href = '/login'
     }
   }
+})
+Vue.component('double-icon', {
+  props: {
+    animation: String
+  },
+  data(){
+    return {
+      show: false
+    }
+  },
+  mounted(){
+    this.show = true
+  },
+  template: `
+    <transition :name='animation'>
+      <div class='double-icon' v-if='show'>
+        <slot></slot>
+      </div>
+    </transition>
+  `
 })

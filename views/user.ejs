@@ -90,6 +90,10 @@
         <drop-link value='home'></drop-link>
         <drop-link value='work'></drop-link>
       </select-option>
+      <double-icon animation='pop9'>
+        <action-bar-icon icon='fa fa-plus' id='addPlace' @click='openUserForm' :title='l.createAPlace'></action-bar-icon>
+        <action-bar-icon icon='fa fa-times' id='deletePlace' @click='openUserForm' :title='l.deleteCurrentPlace'></action-bar-icon>
+      </double-icon>
     </side-nav>
     <transition name='double-slide-bounce-unpop' mode='out-in'>    
       <action-form v-if='displayForm("addAction")' key='addAction' @close='closeActionForm' :l='l'>
@@ -297,7 +301,7 @@
     <p v-for='action in user.actions'>{{action}}</p>
     <h5>PROJECTS</h5>
     <p v-for='action in user.projects'>{{action}}</p>
-  </template>
+  </template> 
       </adds>
     </template>
   </user-content>

@@ -117,10 +117,12 @@ let vm = new Vue({
             placeSpan: `Current place:`,
             selectAPlace: `select a place:`,
             selectAnAction: `select an action:`,
-            createAPlace: `Create a place`
+            createAPlace: `Create a place`,
+            deleteCurrentPlace: `Delete current place`,
           }
         } else if (lang == 'pt-BR'){
           this.l = {
+            deleteCurrentPlace: `Deletar local atual`,
             createAPlace: `Criar um local`,
             selectAnAction: `selecione uma ação:`,
             selectAPlace: `selecione um local:`,
@@ -278,21 +280,86 @@ let vm = new Vue({
       displayForm(id){
         return (this.currentOpenedUserForm == id)
       },
-      updateProjectActionIds(oldActionIds){
-        let pro = this.user.projects
-        let act = this.user.actions
-        let old = oldActionIds
+      decreaseProjectsActionsIdsByOneThatAreBiggerThan(id){
+        let pros = this.user.projects
 
-        let length = act.length
-        let projectId
-        let actionId
+        let length = pros.length
         for (let i = 0;i < length;i++){
-          if (!act[i].projectId && act[i].projectId != 0)
-            continue
-          projectId = this.getIndexOfProjectThatHasTheGivenActionId(old[i])
-          actionId = this.getIndexOfProjectActionThatHasTheGivenActionId(projectId, old[i])
-          pro[projectId].actions[actionId] = act[i].id
+          let actionsLength = pros[i].actions.length
+          for (let j = 0;j < actionsLength;j++){
+            if (pros[i].actions[j] > id)
+              pros[i].actions[j] -= 1
+          }
         }
+      },
+      fixChangedActionOrderInProject(oldId, newId){
+        let pros = this.user.projects
+        let acts = this.user.actions
+        let projectId = acts[newId].projectId
+        let pro = pros[projectId]
+
+        let length = pro.actions.length
+        let changedActionId
+        for (let i = 0;i < length;i++)
+          if (pro.actions[i] == oldId){
+            pro.actions[i] = newId
+            changedActionId = i
+            break
+          } 
+
+        for (let i = 0;i < length;i++){
+          let id = pro.actions[i]
+          if (id == newId && id < oldId && changedActionId != i){
+            pro.actions[i] += 1
+          } else if (id == newId && id > oldId && changedActionId != i){
+            pro.actions[i] -= 1
+          } else if (id > newId && id < oldId  && changedActionId != i){
+            pro.actions[i] += 1
+          } else if (id > oldId && id < newId  && changedActionId != i){
+            pro.actions[i] -= 1
+          }
+        }
+        
+        length = pros.length
+        for (let i = 0;i < length;i++){
+          if (i == projectId) continue
+          let actionsLength = pros[i].actions.length
+          for (let j = 0;j < actionsLength;j++){
+            if (pros[i].actions[j] > newId && pros[i].actions[j] < oldId){
+              pros[i].actions[j] += 1
+            } else if (pros[i].actions[j] > oldId && pros[i].actions[j] < newId){
+              pros[i].actions[j] -= 1
+            }
+          }
+        }
+      },
+      getOldAndNewPositionOfChangedAction(){
+        let acts = this.user.actions
+        let pros = this.user.projects
+        let length = acts.length
+
+        let oldId
+        let newId
+        for (let i = 0;i < length;i++){
+          if (acts[i].id != i){
+            if (acts[i].id - 1 == i){
+              oldId = i
+              break
+            } else {
+              newId = i
+              oldId = acts[i].id
+              return {old: oldId, new: newId}
+            }
+          }
+        }
+
+        for (let i = 0;i < length;i++){
+          if (acts[i].id == oldId){
+            newId = i
+            return {old: oldId, new: newId}
+          }
+        }
+        return false
       },
       getIndexOfactionThatHasTheGivenProjectIdAll(projectId){
         let acts = this.user.actions
@@ -303,18 +370,15 @@ let vm = new Vue({
             actionIds.push(i)
         return actionIds
       },
-      updateActionsIds(oldProjectIds){
+      updateActionsIds(){
         let pro = this.user.projects
         let act = this.user.actions
-        let old = oldProjectIds
 
         let length = pro.length
         for (let i = 0;i < length;i++){
-          actionIds = this.getIndexOfactionThatHasTheGivenProjectIdAll(old[i])
-          let actionsLength = actionIds.length
+          let actionsLength = pro[i].actions.length
           for (let j = 0;j < actionsLength;j++){
-            if (actionIds[j] == -1) continue
-            act[actionIds[j]].projectId = pro[i].id
+            act[pro[i].actions[j]].projectId = pro[i].id
           }
         }
       },
@@ -432,9 +496,8 @@ let vm = new Vue({
         if (dt.project.delete){
           act.splice(dt.action.id, 1)
 
-          let oldActionIds = this.getIds(act)
-          this.resetIds(act)
-          this.updateProjectActionIds(oldActionIds)
+          rt.resetIds(act)
+          rt.increaseProjectsActionsIdsByOneThatAreBiggerThan(this.id)
         }
         if (!this.guest)
           this.POSTrequest('/transform-action-to-project', 'title='+title+'&actionId='+dt.action.id+'&delete='+dt.project.delete)
@@ -469,46 +532,24 @@ let vm = new Vue({
         return str
       },
       saveNewProjectOrder(ids){
-        let oldProjectIds = this.getIds(this.user.projects)
         this.resetIds(this.user.projects)
-        this.updateActionsIds(oldProjectIds)
+        this.updateActionsIds()
 
-        let setTime = ()=>{
-          this.pfunc = setTimeout(() => {
-            this.POSTrequest('/save-new-project-order', this.parseArrayToHTTPparams(ids, 'a'))
-            this.psent = false
-          }, 2500)
-          this.psent = true
-        }
-
-        if (!this.guest){
-          if (this.psent == false){
-            setTime()
-          } else {
-            clearTimeout(this.pfunc)
-            setTime()
-          }
-        }
+        if (!this.guest)
+          this.POSTrequest('/save-new-project-order', this.parseArrayToHTTPparams(ids, 'a'))
       },
       saveNewActionOrder(ids){
-        let oldActionIds = this.getIds(this.user.actions)
-        this.resetIds(this.user.actions)
-        this.updateProjectActionIds(oldActionIds)
+        let obj = this.getOldAndNewPositionOfChangedAction()
+        if (obj != false){
+          let act = this.user.actions[obj.new]
+          let hasProject = (act.projectId || act.projectId == 0)
+          this.resetIds(this.user.actions)
+          if (hasProject)
+            this.fixChangedActionOrderInProject(obj.old, obj.new)
 
-        let setTime = ()=>{
-          this.afunc = setTimeout(() => {
-            this.POSTrequest('/save-new-action-order', this.parseArrayToHTTPparams(ids, 'a'))
-            this.asent = false
-          }, 2500)
-          this.asent = true
-        }
+          if (!this.guest)
+            this.POSTrequest('/save-new-action-order', this.parseArrayToHTTPparams(ids, 'a')+'&old='+obj.old+'&new='+obj.new+'&hasproject='+hasProject)
 
-        if (!this.guest){
-          if (this.asent == false){
-            setTime()
-          } else {
-            clearTimeout(this.afunc)
-            setTime()
           }
         }
       },
