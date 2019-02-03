@@ -114,7 +114,7 @@ let vm = new Vue({
             username: `guest`,
             selectAProject: `select a project:`,
             addChangePlace: `add/change place`,
-            placeSpan: `current place:`,
+            placeSpan: `Current place:`,
             selectAPlace: `select a place:`,
             selectAnAction: `select an action:`,
           }
@@ -122,7 +122,7 @@ let vm = new Vue({
           this.l = {
             selectAnAction: `selecione uma ação:`,
             selectAPlace: `selecione um local:`,
-            placeSpan: `local atual:`,
+            placeSpan: `Local atual:`,
             addChangePlace: `adicionar/mudar local`,
             selectAProject: `selecione um projeto:`,
             username: `convidado`,
@@ -347,7 +347,7 @@ let vm = new Vue({
         let act = this.user.actions
         let length = act.length
         for (let i = 0;i < length;i++)
-          if (act[i].tag == tag && !act[i].projectId && act[i].projectId != 0)
+          if (act[i].tag == tag && !act[i].projectId && act[i].projectId != 0 && ((act[i].place == undefined && this.place == 'show all') || act[i].place == this.place))
             return true
         return false
       },
@@ -356,7 +356,7 @@ let vm = new Vue({
         let length = act.length
         for (let i = 0;i < length;i++)
           if (act[i].projectId || act[i].projectId == 0)
-            if (act[i].tag == tag)
+            if (act[i].tag == tag && ((act[i].place == undefined && this.place == 'show all') || act[i].place == this.place))
               return true
         return false
       },

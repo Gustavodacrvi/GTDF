@@ -85,7 +85,7 @@
         </side-link>
       <% } %>
       </br>
-      <select-option :placeholder='l.placeSpan' :selected='place' @update='(newPlace)=>this.place = newPlace'>
+      <select-option :placeholder='l.placeSpan' :selected='place' @update='(newPlace)=>this.place = newPlace' animation='pop8'>
         <drop-link value='show all'></drop-link>
         <drop-link value='home'></drop-link>
         <drop-link value='work'></drop-link>
@@ -287,7 +287,7 @@
   <user-content>
     <template slot='content'>
       <transition name='component-animation' appear>
-        <component v-if='user' :is="currentSectionComponent" @openform='openUserForm' :icongroups='showIconGroups' :user='user' @rearrange='saveNewActionOrder' :dropdowns='openedActionContents' @dropdown-state='changeDropdownSate' :projectdropdowns='openedProjectDropdowns' @rearrangeproject='saveNewProjectOrder' :l='l'></component>
+        <component v-if='user' :is="currentSectionComponent" @openform='openUserForm' :icongroups='showIconGroups' :user='user' @rearrange='saveNewActionOrder' :dropdowns='openedActionContents' @dropdown-state='changeDropdownSate' :projectdropdowns='openedProjectDropdowns' @rearrangeproject='saveNewProjectOrder' :l='l' :place='place'></component>
       </transition>
     </template>
     <template slot='adds'>

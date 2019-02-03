@@ -217,7 +217,8 @@ Vue.component('select-option', {
     selected: String,
     placeholder: String,
     id: String,
-    nonlive: Boolean
+    nonlive: Boolean,
+    animation: String
   },
   data(){
     return {
@@ -226,6 +227,7 @@ Vue.component('select-option', {
     }
   },
   template: `
+    <transition :name='animation'>
     <div class='select-option' @mouseover='isDropdownOpened = true' @mouseleave='isDropdownOpened = false'>
       <div>
         <span class='faded'>{{ placeholder }}</span>
@@ -238,6 +240,7 @@ Vue.component('select-option', {
         </div>
       </transition>
     </div>
+    </transition>
   `,
   watch: {
     selected(){
@@ -517,7 +520,8 @@ Vue.component('basket', {
     icongroups: Boolean,
     user: Object,
     dropdowns: Object,
-    l: Object
+    l: Object,
+    place: String
   },
   data(){
     return {
@@ -538,7 +542,7 @@ Vue.component('basket', {
       <template v-if='user'>
         <draggable v-model='user.actions' :options="{handle:'.draggable', animation: 300}">
           <transition-group name='flip-list' tag='div'>
-            <action v-for='action in user.actions' v-if='!action.projectId && action.projectId != 0 && action.tag == "basket"' :title='action.title' :description='action.description' :key='action' :id='action.id' :dropdown='dropdowns[action.id]' :icongroup='icongroups' @changed-dropdown='changeDropdownState' :l='l'>
+            <action v-for='action in user.actions' v-if='!action.projectId && action.projectId != 0 && action.tag == "basket" && ((action.place == undefined && place == "show all") || action.place == place)' :title='action.title' :description='action.description' :key='action' :id='action.id' :dropdown='dropdowns[action.id]' :icongroup='icongroups' @changed-dropdown='changeDropdownState' :l='l'>
             </action>
           </transition-group>
         </draggable>
@@ -549,7 +553,7 @@ Vue.component('basket', {
         <template v-if='showOnlyFirstProjectAction'>
         <transition-group name='flip-list' tag='div'> 
           <template v-for='project in user.projects'>
-            <template v-for='action in $root.getFirstActionOfProjectInArray(project.id, "basket")'>
+            <template v-for='action in $root.getFirstActionOfProjectInArray(project.id, "basket")' v-if='((action.place == undefined && place == "show all") || action.place == place)'>
               <project-action :title='action.title' :description='action.description' :key='action' :id='action.id' :dropdown='dropdowns[action.id]' :icongroup='icongroups' :projectId='action.projectId' :showprojectname='true' @changed-dropdown='changeDropdownState' :l='l'>
               </project-action>
             </template>
@@ -561,7 +565,7 @@ Vue.component('basket', {
             <div style='height:4px'></div>
             <draggable v-model='user.actions' :options="{handle:'.draggable', animation: 300}">
             <transition-group name='flip-list' tag='div'> 
-              <template v-for='action in user.actions' v-if='(action.projectId || action.projectId == 0) && $root.containsAction(project.id, action.id) && action.tag == "basket"'>           
+              <template v-for='action in user.actions' v-if='(action.projectId || action.projectId == 0) && $root.containsAction(project.id, action.id) && action.tag == "basket" && ((action.place == undefined && place == "show all") || action.place == place)'>           
                 <project-action :title='action.title' :description='action.description' :key='action' :id='action.id' :dropdown='dropdowns[action.id]' :icongroup='icongroups' :projectId='action.projectId' :showprojectname='true' @changed-dropdown='changeDropdownState' :l='l'>
                 </project-action>
               </template>
@@ -615,7 +619,7 @@ Vue.component('maybe', {
       <template v-if='user'>
         <draggable v-model='user.actions' :options="{handle:'.draggable', animation: 300}">
           <transition-group name='flip-list' tag='div'>
-            <action v-for='action in user.actions' v-if='!action.projectId && action.projectId != 0 && action.tag == "maybe"' :title='action.title' :description='action.description' :key='action' :id='action.id' :dropdown='dropdowns[action.id]' :icongroup='icongroups' @changed-dropdown='changeDropdownState' :l='l'>
+            <action v-for='action in user.actions' v-if='!action.projectId && action.projectId != 0 && action.tag == "maybe" && ((action.place == undefined && place == "show all") || action.place == place)' :title='action.title' :description='action.description' :key='action' :id='action.id' :dropdown='dropdowns[action.id]' :icongroup='icongroups' @changed-dropdown='changeDropdownState' :l='l'>
             </action>
           </transition-group>
         </draggable>
@@ -626,7 +630,7 @@ Vue.component('maybe', {
         <template v-if='showOnlyFirstProjectAction'>
         <transition-group name='flip-list' tag='div'> 
           <template v-for='project in user.projects'>
-            <template v-for='action in $root.getFirstActionOfProjectInArray(project.id, "maybe")'>
+            <template v-for='action in $root.getFirstActionOfProjectInArray(project.id, "maybe")' v-if='((action.place == undefined && place == "show all") || action.place == place)'>
               <project-action :title='action.title' :description='action.description' :key='action' :id='action.id' :dropdown='dropdowns[action.id]' :icongroup='icongroups' :projectId='action.projectId' :showprojectname='true' @changed-dropdown='changeDropdownState' :l='l'>
               </project-action>
             </template>
@@ -638,7 +642,7 @@ Vue.component('maybe', {
             <div style='height:4px'></div>
             <draggable v-model='user.actions' :options="{handle:'.draggable', animation: 300}">
             <transition-group name='flip-list' tag='div'> 
-              <template v-for='action in user.actions' v-if='(action.projectId || action.projectId == 0) && $root.containsAction(project.id, action.id) && action.tag == "maybe"'>           
+              <template v-for='action in user.actions' v-if='(action.projectId || action.projectId == 0) && $root.containsAction(project.id, action.id) && action.tag == "maybe" && ((action.place == undefined && place == "show all") || action.place == place)'>
                 <project-action :title='action.title' :description='action.description' :key='action' :id='action.id' :dropdown='dropdowns[action.id]' :icongroup='icongroups' :projectId='action.projectId' :showprojectname='true' @changed-dropdown='changeDropdownState' :l='l'>
                 </project-action>
               </template>
@@ -671,7 +675,8 @@ Vue.component('waiting', {
     icongroups: Boolean,
     user: Object,
     dropdowns: Object,
-    l: Object
+    l: Object,
+    place: String
   },
   data(){
     return {
@@ -692,7 +697,7 @@ Vue.component('waiting', {
       <template v-if='user'>
         <draggable v-model='user.actions' :options="{handle:'.draggable', animation: 300}">
           <transition-group name='flip-list' tag='div'>
-            <action v-for='action in user.actions' v-if='!action.projectId && action.projectId != 0 && action.tag == "waiting"' :title='action.title' :description='action.description' :key='action' :id='action.id' :dropdown='dropdowns[action.id]' :icongroup='icongroups' @changed-dropdown='changeDropdownState' :l='l'>
+            <action v-for='action in user.actions' v-if='!action.projectId && action.projectId != 0 && action.tag == "waiting" && ((action.place == undefined && place == "show all") || action.place == place)' :title='action.title' :description='action.description' :key='action' :id='action.id' :dropdown='dropdowns[action.id]' :icongroup='icongroups' @changed-dropdown='changeDropdownState' :l='l'>
             </action>
           </transition-group>
         </draggable>
@@ -703,7 +708,7 @@ Vue.component('waiting', {
         <template v-if='showOnlyFirstProjectAction'>
         <transition-group name='flip-list' tag='div'> 
           <template v-for='project in user.projects'>
-            <template v-for='action in $root.getFirstActionOfProjectInArray(project.id, "waiting")'>
+            <template v-for='action in $root.getFirstActionOfProjectInArray(project.id, "waiting")' v-if='((action.place == undefined && place == "show all") || action.place == place)'>
               <project-action :title='action.title' :description='action.description' :key='action' :id='action.id' :dropdown='dropdowns[action.id]' :icongroup='icongroups' :projectId='action.projectId' :showprojectname='true' @changed-dropdown='changeDropdownState' :l='l'>
               </project-action>
             </template>
@@ -715,7 +720,7 @@ Vue.component('waiting', {
             <div style='height:4px'></div>
             <draggable v-model='user.actions' :options="{handle:'.draggable', animation: 300}">
             <transition-group name='flip-list' tag='div'> 
-              <template v-for='action in user.actions' v-if='(action.projectId || action.projectId == 0) && $root.containsAction(project.id, action.id) && action.tag == "waiting"'>           
+              <template v-for='action in user.actions' v-if='(action.projectId || action.projectId == 0) && $root.containsAction(project.id, action.id) && action.tag == "waiting" && ((action.place == undefined && place == "show all") || action.place == place)'>           
                 <project-action :title='action.title' :description='action.description' :key='action' :id='action.id' :dropdown='dropdowns[action.id]' :icongroup='icongroups' :projectId='action.projectId' :showprojectname='true' @changed-dropdown='changeDropdownState' :l='l'>
                 </project-action>
               </template>
@@ -748,7 +753,8 @@ Vue.component('next-actions', {
     icongroups: Boolean,
     user: Object,
     dropdowns: Object,
-    l: Object
+    l: Object,
+    place: String
   },
   data(){
     return {
@@ -769,7 +775,7 @@ Vue.component('next-actions', {
       <template v-if='user'>
         <draggable v-model='user.actions' :options="{handle:'.draggable', animation: 300}">
           <transition-group name='flip-list' tag='div'>
-            <action v-for='action in user.actions' v-if='!action.projectId && action.projectId != 0 && action.tag == "nextAction"' :title='action.title' :description='action.description' :key='action' :id='action.id' :dropdown='dropdowns[action.id]' :icongroup='icongroups' @changed-dropdown='changeDropdownState' :l='l'>
+            <action v-for='action in user.actions' v-if='!action.projectId && action.projectId != 0 && action.tag == "nextAction" && ((action.place == undefined && place == "show all") || action.place == place)' :title='action.title' :description='action.description' :key='action' :id='action.id' :dropdown='dropdowns[action.id]' :icongroup='icongroups' @changed-dropdown='changeDropdownState' :l='l'>
             </action>
           </transition-group>
         </draggable>
@@ -780,7 +786,7 @@ Vue.component('next-actions', {
         <template v-if='showOnlyFirstProjectAction'>
         <transition-group name='flip-list' tag='div'> 
           <template v-for='project in user.projects'>
-            <template v-for='action in $root.getFirstActionOfProjectInArray(project.id, "nextAction")'>
+            <template v-for='action in $root.getFirstActionOfProjectInArray(project.id, "nextAction")' v-if='((action.place == undefined && place == "show all") || action.place == place)'>
               <project-action :title='action.title' :description='action.description' :key='action' :id='action.id' :dropdown='dropdowns[action.id]' :icongroup='icongroups' :projectId='action.projectId' :showprojectname='true' @changed-dropdown='changeDropdownState' :l='l'>
               </project-action>
             </template>
@@ -792,7 +798,7 @@ Vue.component('next-actions', {
             <div style='height:4px'></div>
             <draggable v-model='user.actions' :options="{handle:'.draggable', animation: 300}">
             <transition-group name='flip-list' tag='div'> 
-              <template v-for='action in user.actions' v-if='(action.projectId || action.projectId == 0) && $root.containsAction(project.id, action.id) && action.tag == "nextAction"'>           
+              <template v-for='action in user.actions' v-if='(action.projectId || action.projectId == 0) && $root.containsAction(project.id, action.id) && action.tag == "nextAction" && ((action.place == undefined && place == "show all") || action.place == place)'>           
                 <project-action :title='action.title' :description='action.description' :key='action' :id='action.id' :dropdown='dropdowns[action.id]' :icongroup='icongroups' :projectId='action.projectId' :showprojectname='true' @changed-dropdown='changeDropdownState' :l='l'>
                 </project-action>
               </template>
@@ -825,7 +831,8 @@ Vue.component('calendar', {
     user: Object,
     icongroups: Boolean,
     dropdowns: Boolean,
-    l: Object
+    l: Object,
+    place: String
   },
   data() {
     return {
@@ -869,21 +876,21 @@ Vue.component('calendar', {
       <template v-if='beforeafter == undefined'>
         <draggable v-model='user.actions' :options="{handle:'.draggable', animation: 300}">
         <transition-group name='flip-list' tag='div'>       
-          <timed-action v-for='action in user.actions' v-if='action.calendar && action.calendar.date == date && !action.projectId && action.projectId != 0' :title='action.title' :description='action.description' :key='action' :id='action.id' :icongroup='icongroups' :dropdown='dropdowns[action.id]' :time='action.calendar.time' :date='action.calendar.date' @changed-dropdown='changeDropdownState' :l='l'></timed-action>
+          <timed-action v-for='action in user.actions' v-if='action.calendar && action.calendar.date == date && !action.projectId && action.projectId != 0 && ((action.place == undefined && place == "show all") || action.place == place)' :title='action.title' :description='action.description' :key='action' :id='action.id' :icongroup='icongroups' :dropdown='dropdowns[action.id]' :time='action.calendar.time' :date='action.calendar.date' @changed-dropdown='changeDropdownState' :l='l'></timed-action>
         </transition-group>
         </draggable>
       </template>
       <template v-else-if='beforeafter == "before"'>
         <draggable v-model='user.actions' :options="{handle:'.draggable', animation: 300}">
           <transition-group name='flip-list' tag='div'>          
-            <timed-action v-for='action in user.actions' v-if='action.calendar && action.calendar.date.split("/")[2] < year && !action.projectId && action.projectId != 0' :title='action.title' :description='action.description' :key='action' :id='action.id' :icongroup='icongroups' :dropdown='dropdowns[action.id]' :time='action.calendar.time' :date='action.calendar.date' @changed-dropdown='changeDropdownState' :l='l'></timed-action>
+            <timed-action v-for='action in user.actions' v-if='action.calendar && action.calendar.date.split("/")[2] < year && !action.projectId && action.projectId != 0 && ((action.place == undefined && place == "show all") || action.place == place)' :title='action.title' :description='action.description' :key='action' :id='action.id' :icongroup='icongroups' :dropdown='dropdowns[action.id]' :time='action.calendar.time' :date='action.calendar.date' @changed-dropdown='changeDropdownState' :l='l'></timed-action>
           </transition-group>          
         </draggable>
       </template>
       <template v-else-if='beforeafter == "after"'>
         <draggable v-model='user.actions' :options="{handle:'.draggable', animation: 300}">
           <transition-group name='flip-list' tag='div'>      
-            <timed-action v-for='action in user.actions' v-if='action.calendar && action.calendar.date.split("/")[2] > year && !action.projectId && action.projectId != 0' :title='action.title' :description='action.description' :key='action' :id='action.id' :icongroup='icongroups' :dropdown='dropdowns[action.id]' :time='action.calendar.time' :date='action.calendar.date' @changed-dropdown='changeDropdownState' :l='l'></timed-action>
+            <timed-action v-for='action in user.actions' v-if='action.calendar && action.calendar.date.split("/")[2] > year && !action.projectId && action.projectId != 0 && ((action.place == undefined && place == "show all") || action.place == place)' :title='action.title' :description='action.description' :key='action' :id='action.id' :icongroup='icongroups' :dropdown='dropdowns[action.id]' :time='action.calendar.time' :date='action.calendar.date' @changed-dropdown='changeDropdownState' :l='l'></timed-action>
           </transition-group>     
         </draggable>
       </template>
@@ -901,7 +908,7 @@ Vue.component('calendar', {
         <template v-if='showOnlyFirstProjectAction'>
         <transition-group name='flip-list' tag='div'> 
           <template v-for='project in user.projects'>
-            <template v-for='action in $root.getFirstActionOfProjectInArray(project.id, "calendar")' v-if='action.calendar.date.split("/")[2] < year'>
+            <template v-for='action in $root.getFirstActionOfProjectInArray(project.id, "calendar")' v-if='action.calendar.date.split("/")[2] < year && ((action.place == undefined && place == "show all") || action.place == place)'>
               <project-timed-action :description='action.description' :key='action' :id='action.id' :icongroup='icongroups' :dropdown='dropdowns[action.id]' :time='action.calendar.time' :projectid='action.projectId' @changed-dropdown='changeDropdownState' :l='l'></project-timed-action>
             </template>
           </template>
@@ -912,7 +919,7 @@ Vue.component('calendar', {
             <div style='height:4px'></div>
             <draggable v-model='user.actions' :options="{handle:'.draggable', animation: 300}">
             <transition-group name='flip-list' tag='div'> 
-              <template v-for='action in user.actions' v-if='(action.projectId || action.projectId == 0) && $root.containsAction(project.id, action.id) && action.tag == "calendar" && action.calendar.date.split("/")[2] < year'>           
+              <template v-for='action in user.actions' v-if='(action.projectId || action.projectId == 0) && $root.containsAction(project.id, action.id) && action.tag == "calendar" && action.calendar.date.split("/")[2] < year && ((action.place == undefined && place == "show all") || action.place == place)'>
                 <project-timed-action :title='action.title' :description='action.description' :key='action' :id='action.id' :icongroup='icongroups' :dropdown='dropdowns[action.id]' :time='action.calendar.time' :projectid='action.projectId' @changed-dropdown='changeDropdownState' :l='l'></project-timed-action>
               </template>
             </transition-group>                      
@@ -924,7 +931,7 @@ Vue.component('calendar', {
         <template v-if='showOnlyFirstProjectAction'>
         <transition-group name='flip-list' tag='div'> 
           <template v-for='project in user.projects'>
-            <template v-for='action in $root.getFirstActionOfProjectInArray(project.id, "calendar")' v-if='action.calendar.date.split("/")[2] > year'>
+            <template v-for='action in $root.getFirstActionOfProjectInArray(project.id, "calendar")' v-if='action.calendar.date.split("/")[2] > year && ((action.place == undefined && place == "show all") || action.place == place)'>
               <project-timed-action :description='action.description' :key='action' :id='action.id' :icongroup='icongroups' :dropdown='dropdowns[action.id]' :time='action.calendar.time' :projectid='action.projectId' @changed-dropdown='changeDropdownState' :l='l'></project-timed-action>
             </template>
           </template>
@@ -935,7 +942,7 @@ Vue.component('calendar', {
             <div style='height:4px'></div>
             <draggable v-model='user.actions' :options="{handle:'.draggable', animation: 300}">
             <transition-group name='flip-list' tag='div'> 
-              <template v-for='action in user.actions' v-if='(action.projectId || action.projectId == 0) && $root.containsAction(project.id, action.id) && action.tag == "calendar" && action.calendar.date.split("/")[2] > year'>           
+              <template v-for='action in user.actions' v-if='(action.projectId || action.projectId == 0) && $root.containsAction(project.id, action.id) && action.tag == "calendar" && action.calendar.date.split("/")[2] > year && ((action.place == undefined && place == "show all") || action.place == place)'>
                 <project-timed-action :title='action.title' :description='action.description' :key='action' :id='action.id' :icongroup='icongroups' :dropdown='dropdowns[action.id]' :time='action.calendar.time' :projectid='action.projectId' @changed-dropdown='changeDropdownState' :l='l'></project-timed-action>
               </template>
             </transition-group>                      
@@ -947,7 +954,7 @@ Vue.component('calendar', {
         <template v-if='showOnlyFirstProjectAction'>
         <transition-group name='flip-list' tag='div'> 
           <template v-for='project in user.projects'>
-            <template v-for='action in $root.getFirstActionOfProjectInArray(project.id, "calendar")' v-if='action.calendar.date == date'>
+            <template v-for='action in $root.getFirstActionOfProjectInArray(project.id, "calendar")' v-if='action.calendar.date == date && ((action.place == undefined && place == "show all") || action.place == place)'>
               <project-timed-action :description='action.description' :key='action' :id='action.id' :icongroup='icongroups' :dropdown='dropdowns[action.id]' :time='action.calendar.time' :projectid='action.projectId' @changed-dropdown='changeDropdownState' :l='l'></project-timed-action>
             </template>
           </template>
@@ -958,7 +965,7 @@ Vue.component('calendar', {
             <div style='height:4px'></div>
             <draggable v-model='user.actions' :options="{handle:'.draggable', animation: 300}">
             <transition-group name='flip-list' tag='div'> 
-              <template v-for='action in user.actions' v-if='(action.projectId || action.projectId == 0) && $root.containsAction(project.id, action.id) && action.tag == "calendar" && action.calendar.date == date'>           
+              <template v-for='action in user.actions' v-if='(action.projectId || action.projectId == 0) && $root.containsAction(project.id, action.id) && action.tag == "calendar" && action.calendar.date == date && ((action.place == undefined && place == "show all") || action.place == place)'>           
                 <project-timed-action :title='action.title' :description='action.description' :key='action' :id='action.id' :icongroup='icongroups' :dropdown='dropdowns[action.id]' :time='action.calendar.time' :projectid='action.projectId' @changed-dropdown='changeDropdownState' :l='l'></project-timed-action>
               </template>
             </transition-group>                      
@@ -1005,7 +1012,7 @@ Vue.component('calendar', {
       let length = act.length
       for (let i = 0;i < length;i++)
         if (!act[i].projectId && act[i].projectId != 0)
-          if (act[i].calendar && act[i].calendar.date == selectedDate)
+          if (act[i].calendar && act[i].calendar.date == selectedDate && ((act[i].place == undefined && this.place == 'show all') || act[i].place == this.place))
             return true
       return false
     },
@@ -1015,7 +1022,7 @@ Vue.component('calendar', {
       let length = act.length
       for (let i = 0;i < length;i++)
         if (act[i].projectId || act[i].projectId == 0)
-          if (act[i].calendar && act[i].calendar.date == selectedDate)
+          if (act[i].calendar && act[i].calendar.date == selectedDate && ((act[i].place == undefined && this.place == 'show all') || act[i].place == this.place))
             return true
       return false
     },
@@ -1024,7 +1031,7 @@ Vue.component('calendar', {
       let year = parseInt(this.year)
       let length = act.length
       for (let i = 0;i < length;i++)
-        if (!act[i].projectId && act[i].projectId != 0 && act[i].calendar){
+        if (!act[i].projectId && act[i].projectId != 0 && act[i].calendar && ((act[i].place == undefined && this.place == 'show all') || act[i].place == this.place)){
           let splited = act[i].calendar.date.split('/')
           if (parseInt(splited[2]) > year)
             return true
@@ -1036,7 +1043,7 @@ Vue.component('calendar', {
       let year = parseInt(this.year)
       let length = act.length
       for (let i = 0;i < length;i++)
-        if ((act[i].projectId || act[i].projectId == 0) && act[i].calendar){
+        if ((act[i].projectId || act[i].projectId == 0) && act[i].calendar && ((act[i].place == undefined && this.place == 'show all') || act[i].place == this.place)){
           let splited = act[i].calendar.date.split('/')
           if (parseInt(splited[2]) > year)
             return true
@@ -1048,7 +1055,7 @@ Vue.component('calendar', {
       let year = parseInt(this.year)
       let length = act.length
       for (let i = 0;i < length;i++)
-        if (!act[i].projectId && act[i].projectId != 0 && act[i].calendar){
+        if (!act[i].projectId && act[i].projectId != 0 && act[i].calendar && ((act[i].place == undefined && this.place == 'show all') || act[i].place == this.place)){
           let splited = act[i].calendar.date.split('/')
           if (parseInt(splited[2]) < year)
             return true
@@ -1060,7 +1067,7 @@ Vue.component('calendar', {
       let year = parseInt(this.year)
       let length = act.length
       for (let i = 0;i < length;i++)
-        if ((act[i].projectId || act[i].projectId == 0) && act[i].calendar){
+        if ((act[i].projectId || act[i].projectId == 0) && act[i].calendar && ((act[i].place == undefined && this.place == 'show all') || act[i].place == this.place)){
           let splited = act[i].calendar.date.split('/')
           if (parseInt(splited[2]) < year)
             return true
@@ -1087,7 +1094,8 @@ Vue.component('projects', {
     icongroups: Boolean,
     user: Object,
     projectdropdowns: Object,
-    l: Object
+    l: Object,
+    place: String
   },
   template: `
   <div>
@@ -1098,10 +1106,10 @@ Vue.component('projects', {
       <template v-if='user'>
       <draggable v-model='user.projects' :options="{handle:'.draggable', animation: 300}">
         <transition-group name='flip-list' tag='div'>
-          <project v-for='prj in user.projects' :title='prj.title' :icongroup='icongroups' :dropdowns='dropdowns' :dropdown='projectdropdowns[prj.id]' :id='prj.id' :key='prj' :user='user' :l='l' @projectopened='changeProjectDropdownState'></project>
+          <project v-for='prj in user.projects' v-if='thereIsAtLeastOneActionOnThisPlace(prj.id)' :title='prj.title' :icongroup='icongroups' :dropdowns='dropdowns' :dropdown='projectdropdowns[prj.id]' :id='prj.id' :key='prj' :user='user' :l='l' @projectopened='changeProjectDropdownState' :place='place'></project>
         </transition-group>
       </draggable>
-      <template v-if='!thereIsAtLeastOneProject'>
+      <template v-if='!thereIsAtLeastOneProject()'>
         <span class='faded' v-html='l.lackOfProjects'></span>
       </template>
       </template>
@@ -1110,6 +1118,17 @@ Vue.component('projects', {
   </div>
   `,
   methods: {
+    thereIsAtLeastOneActionOnThisPlace(projectId){
+      let pro = this.$root.user.projects[projectId]
+      let acts = this.user.actions
+      let length = pro.actions.length
+      for (let i = 0;i < length;i++){
+        let act = acts[pro.actions[i]].place
+        if ((act == undefined && this.place == 'show all') || act == this.place)
+        return true
+      }
+      return false
+    },
     changeProjectDropdownState(obj){
       this.projectdropdowns[obj.id] = obj.state
     },
@@ -1123,6 +1142,20 @@ Vue.component('projects', {
         ids.push(this.user.projects[i].id)
       return ids
     },
+    thereIsAtLeastOneProject(){
+      let pro = this.user.projects
+      let acts = this.user.actions
+      let proLength = pro.length
+      for (let i = 0;i < proLength;i++){
+        let actLength = pro[i].actions.length
+        for (let j = 0;j < actLength;j++){
+          let act = acts[pro[i].actions[j]].place
+          if ((act == undefined && this.place == 'show all') || act == this.place)
+            return true
+        }
+      }
+      return false
+    }
   },
   watch: {
     'user.projects'(){
@@ -1132,11 +1165,6 @@ Vue.component('projects', {
     'user.actions'(){
       let ids = this.$root.calculateIds()
       this.$emit('rearrange', ids)
-    }
-  },
-  computed: {
-    thereIsAtLeastOneProject(){
-      return (this.$root.user.projects.length > 0)
     }
   }
 })
@@ -1148,7 +1176,8 @@ Vue.component('project', {
     title: String,
     icongroup: Boolean,
     user: Object,
-    l: Object
+    l: Object,
+    place: String
   },
   template: `
     <div class='project'>
@@ -1170,7 +1199,7 @@ Vue.component('project', {
           <div>
             <draggable v-model='user.actions' :options="{handle:'.draggable', animation: 300}">
               <transition-group name='flip-list' tag='div'>              
-                <project-action v-for='action in user.actions' v-if='isOnProject(action.id)' :title='action.title' :description='action.description' :key='action' :id='action.id' :dropdown='dropdowns[action.id]' :icongroup='icongroup' :projectId='action.projectId' @changed-dropdown='changeDropdownState' :showtagicon='true' :showprojectname='false' :tag='action.tag' :calendar='action.calendar' :l='l'>
+                <project-action v-for='action in user.actions' v-if='isOnProject(action.id) && ((action.place == undefined && place == "show all") || action.place == place)' :title='action.title' :description='action.description' :key='action' :id='action.id' :dropdown='dropdowns[action.id]' :icongroup='icongroup' :projectId='action.projectId' @changed-dropdown='changeDropdownState' :showtagicon='true' :showprojectname='false' :tag='action.tag' :calendar='action.calendar' :l='l'>
                 </project-action>
               </transition-group>
             </draggable>
