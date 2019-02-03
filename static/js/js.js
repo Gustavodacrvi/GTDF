@@ -45,7 +45,6 @@ let vm = new Vue({
       false,
       false,
       false,
-      false
     ],
     showIconGroups: false,
     openedActionContents: undefined,
@@ -389,9 +388,11 @@ let vm = new Vue({
       },
       addAction(){
         let dt = this.tempUser.action
-        this.user.actions.push({ tag: dt.tag, title: dt.title, description: dt.description, id: this.user.actions.length})
+        let place = this.place
+        if (place == 'show all') place == undefined
+        this.user.actions.push({ tag: dt.tag, title: dt.title, description: dt.description, id: this.user.actions.length, place: place})
         if (!this.guest)
-          this.POSTrequest('/add-action', 'title='+dt.title+'&description='+dt.description+'&id='+(this.user.actions.length-1)+'&tag='+dt.tag)
+          this.POSTrequest('/add-action', 'title='+dt.title+'&description='+dt.description+'&id='+(this.user.actions.length-1)+'&tag='+dt.tag+'&place='+place)
         this.closeActionForm()
       },
       editAction(){
@@ -450,10 +451,12 @@ let vm = new Vue({
         let dt = this.tempUser.action
         let length = this.user.actions.length
         let projectId = this.tempUser.project.id
-        this.user.actions.push({tag:'basket',id: length, title: dt.title, description: dt.description, projectId: projectId})
+        let place = this.place
+        if (place == 'show all') place = undefined
+        this.user.actions.push({tag:'basket',id: length, title: dt.title, description: dt.description, projectId: projectId, place: place})
         this.user.projects[projectId].actions.push(length)
         if (!this.guest)
-          this.POSTrequest('/create-add-action-project', 'id='+length+'&title='+dt.title+'&description='+dt.description+'&projectId='+projectId)
+          this.POSTrequest('/create-add-action-project', 'id='+length+'&title='+dt.title+'&description='+dt.description+'&projectId='+projectId+'&place='+place)
         this.closeActionForm()
       },
       parseArrayToHTTPparams(arr, arrName){
@@ -662,10 +665,12 @@ let vm = new Vue({
 
       if (validDate && validTime){
         let length = act.length
-        act.push({id: length, tag: 'calendar', title: dt.title, description: dt.description, calendar: {time: dt.calendar.time, date: dt.calendar.date}})
+        let place = this.place
+        if (place == 'show all') place = undefined
+        act.push({id: length, place: place, tag: 'calendar', title: dt.title, description: dt.description, calendar: {time: dt.calendar.time, date: dt.calendar.date}})
 
         if (!this.guest)
-          this.POSTrequest('/add-timed-action', 'tag="calendar"&title='+dt.title+'&description='+dt.description+'&time='+dt.calendar.time+'&date='+dt.calendar.date)
+          this.POSTrequest('/add-timed-action', 'tag="calendar"&title='+dt.title+'&description='+dt.description+'&time='+dt.calendar.time+'&date='+dt.calendar.date+'&place='+place)
         this.closeActionForm()
       }
     },

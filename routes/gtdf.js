@@ -53,7 +53,7 @@ router.post('/add-action', (req, res) => {
     if (err) return handleError(err)
     let b = req.body
 
-    user.data.actions.push({ title: b.title, id: b.id, description: b.description, tag: b.tag})
+    user.data.actions.push({ title: b.title, id: b.id, description: b.description, tag: b.tag, place: b.place})
     
     user.save((err) => {
       if (err) return handleError(err)
@@ -198,7 +198,7 @@ router.post('/create-add-action-project', (req, res) => {
     if (err) return handleError(err)
     let dt = req.body
 
-    User.createAndAddActionToProject(user.data, dt.id, dt.projectId, dt.title, dt.description)
+    User.createAndAddActionToProject(user.data, dt.id, dt.projectId, dt.title, dt.description, dt.place)
 
     user.markModified('data.projects')
     user.save((err) => {
@@ -301,7 +301,7 @@ router.post('/add-timed-action', (req, res) => {
     if (err) return handleError(err)
     let dt = req.body
     
-    User.addTimedAction(user.data.actions, dt.title, dt.description, dt.date, dt.time)
+    User.addTimedAction(user.data.actions, dt.title, dt.description, dt.date, dt.time, dt.place)
 
     user.markModified('data.actions')
     user.save((err) => {

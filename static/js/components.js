@@ -1089,29 +1089,6 @@ Vue.component('calendar', {
     }
   }
 })
-Vue.component('places', {
-  props: {
-    user: Object,
-    place: String,
-    placesdropdowns: Object,
-    icongroups: Boolean,
-    l: Object
-  },
-  template: `
-    <div>
-      <div>
-      <action-bar>
-        <action-bar-icon icon='fa fa-plus' id='addPlace' @click='openUserForm' :title='l.createAPlace'></action-bar-icon>
-      </action-bar>
-      </div>
-    </div>
-  `,
-  methods: {
-    openUserForm(id){
-      this.$emit('openform', id)
-    },
-  }
-})
 Vue.component('projects', {
   props: {
     dropdowns: Object,

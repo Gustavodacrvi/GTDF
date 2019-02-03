@@ -185,8 +185,8 @@ module.exports.deleteProject = function(data, id){
   module.exports.updateActionsIds(data, oldProjectIds)
 }
 
-module.exports.createAndAddActionToProject = function(user, id, projectId, title, description){
-  user.actions.push({tag: 'basket',title: title, description: description, id: id, projectId: projectId})
+module.exports.createAndAddActionToProject = function(user, id, projectId, title, description, place){
+  user.actions.push({tag: 'basket',title: title, description: description, id: id, projectId: projectId, place: place})
   user.projects[projectId].actions.push(id)
 }
 
@@ -229,7 +229,7 @@ module.exports.updateActionsIds = function(data, oldProjectIds){
 }
 
 module.exports.addTimedAction = function(act, title, description, date, time){
-  act.push({id: act.length, tag: 'calendar', title: title, description: description, calendar: {time: time, date: date}})
+  act.push({id: act.length, place: place, tag: 'calendar', title: title, description: description, calendar: {time: time, date: date}})
 }
 
 module.exports.editTimedAction = function(act, title, description, date, time, id){
