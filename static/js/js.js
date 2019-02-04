@@ -396,6 +396,15 @@ let vm = new Vue({
         this.POSTrequest("/delete-account", "username="+this.username)
         window.location.href = "/login"
       },
+      deleteAccountData(){
+        this.POSTrequest('/delete-data')
+        let u = this.user
+
+        u.actions = []
+        u.projects = []
+        u.places = []
+        this.closeActionForm()
+      },
       getCurrentDate(){
         let date = DateM.getCurrentDay()
         this.tempUser.action.calendar.date = date.stringify()
@@ -684,7 +693,7 @@ let vm = new Vue({
       u.project.id = ''
       u.project.id2 = ''
       u.project.selected = 'select an action'
-      u.tempPlace = undefined
+      this.tempPlace = undefined
     },
     openUserForm(dt, cleanData = true){
       if (cleanData) this.cleanTempData()

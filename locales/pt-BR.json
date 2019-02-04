@@ -86,5 +86,7 @@
 	"Delete account": "Delete account",
 	"DELETE ACCOUNT": "DELETE ACCOUNT",
 	"By clicking this button all of your data, actions, projects, places, password... will be lost": "By clicking this button all of your data, actions, projects, places, password... will be lost",
-	"By clicking this button all of your data, actions, projects, places, password, etc..., will be gone.": "By clicking this button all of your data, actions, projects, places, password, etc..., will be gone."
+	"By clicking this button all of your data, actions, projects, places, password, etc..., will be gone.": "By clicking this button all of your data, actions, projects, places, password, etc..., will be gone.",
+	"DELETE DATA": "DELETE DATA",
+	"By clicking this button all of your actions, projects and places will be gone. Your account will not be deleted though.": "By clicking this button all of your actions, projects and places will be gone. Your account will not be deleted though."
 }

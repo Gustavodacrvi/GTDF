@@ -459,6 +459,26 @@ router.post('/delete-place', (req, res) => {
   })
 })
 
+router.post('/delete-data', (req, res) => {
+  User.getUserById(req.user.id, (err, user) => {
+    if (err) return handleError(err)
+    let dt = req.body
+    let u = user.data
+
+    u.actions = []
+    u.projects = []
+    u.places = []
+
+    User.fixStringIdsAndNulls(user.data)
+    user.markModified('data')
+    user.save((err) => {
+      if (err) return handleError(err)
+
+      res.send()
+    })
+  })
+})
+
 router.post('/change-action-place', (req, res) => {
   User.getUserById(req.user.id, (err, user) => {
     if (err) return handleError(err)

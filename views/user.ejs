@@ -112,8 +112,19 @@
         <form-element class='centralizeContent column' animation='pop3'>
           <link-red><%= __('I forgot my password') %></link-red>
           <link-red><%= __('Change password') %></link-red>
-          <link-red><%= __('Delete data') %></link-red>
+          <link-red @click='openUserForm({ id: "deleteData" })'><%= __('Delete data') %></link-red>
           <link-red @click='openUserForm({ id: "deleteAccount" })'><%= __('Delete account') %></link-red>
+        </form-element>
+      </action-form>
+      <action-form v-if='displayForm("deleteData")' key='deleteData' @close='closeActionForm' :l='l'>
+        <form-element class='centralizeContent' animation='pop1'>
+          <title-big><%= __('DELETE DATA') %></title-big>
+        </form-element>
+        <form-element class='centralizeContent'>
+          <alert><%= __("By clicking this button all of your actions, projects and places will be gone. Your account will not be deleted though.") %></alert>
+        </form-element>
+        <form-element class='centralizeContent'>
+          <form-button @click='deleteAccountData'><%= __('Delete data') %></form-button>
         </form-element>
       </action-form>
       <action-form v-if='displayForm("deleteAccount")' key='deleteAccount' @close='closeActionForm' :l='l'>
