@@ -16,6 +16,7 @@ let vm = new Vue({
         title: undefined,
         description: undefined,
         place: '',
+        selected: 'select a project',
         calendar: {
           time: '',
           date: '',
@@ -435,6 +436,19 @@ let vm = new Vue({
         return ids
       },
     // ACTION RELATED
+      invertValue(){
+        this.tempUser.project.delete = !this.tempUser.project.delete
+      },
+      addActionToProject() {
+        let rt = this
+        let dt = rt.tempUser.action
+
+        rt.user.actions[dt.id].projectId = rt.tempUser.project.id
+        rt.user.projects[rt.tempUser.project.id].actions.push(dt.id)
+        if (!rt.guest)
+          rt.POSTrequest('/add-existing-action-project-from-action', 'actionId='+dt.id+'&projectId='+rt.tempUser.project.id)
+        rt.closeActionForm()
+      },
       createPlace(){
         if (this.tempPlace != 'show all'){
           this.user.places.push(this.tempPlace)
@@ -528,22 +542,20 @@ let vm = new Vue({
         dt.project.title = act[dt.action.id].title
         let title = dt.project.title
         this.addProject()
-        if (dt.project.delete){
+        let delet = dt.project.delete
+        if (delet){
           act.splice(dt.action.id, 1)
 
-          rt.resetIds(act)
-          rt.increaseProjectsActionsIdsByOneThatAreBiggerThan(this.id)
+          this.resetIds(act)
+          this.decreaseProjectsActionsIdsByOneThatAreBiggerThan(this.id)
         }
         if (!this.guest)
-          this.POSTrequest('/transform-action-to-project', 'title='+title+'&actionId='+dt.action.id+'&delete='+dt.project.delete)
+          this.POSTrequest('/transform-action-to-project', 'title='+title+'&actionId='+dt.action.id+'&delete='+delet)
         this.closeActionForm()
       },
       addProject(){
         let dt = this.tempUser.project
         this.user.projects.push({id: this.user.projects.length, title: dt.title, actions: []})
-        if (!this.guest)
-          this.POSTrequest('/add-project', 'title='+dt.title)
-        this.closeActionForm()
       },
       projectCreateAndAddAction(){
         let dt = this.tempUser.action

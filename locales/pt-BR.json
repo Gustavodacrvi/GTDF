@@ -72,5 +72,10 @@
 	"CREATE A PLACE": "CREATE A PLACE",
 	"PLACE NAME": "PLACE NAME",
 	"Create a place": "Create a place",
-	"The place name can not be \"show all\".": "The place name can not be \"show all\"."
+	"The place name can not be \"show all\".": "The place name can not be \"show all\".",
+	"ADD ACTION TO EXISTING PROJECT": "ADD ACTION TO EXISTING PROJECT",
+	"Add to existing project": "Add to existing project",
+	"Create new project": "Create new project",
+	"ADD TO EXISTING PROJECT": "ADD TO EXISTING PROJECT",
+	"CREATE PROJECT": "CREATE PROJECT"
 }

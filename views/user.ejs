@@ -154,15 +154,30 @@
           <form-button @click='editTag'><%= __('Edit tag') %></form-button>
         </form-element>
       </action-form>
-      <action-form key='actionToProject' v-else-if='displayForm("actionToProject")' @close='closeActionForm' :l='l'>
-        <form-element animation='pop1' class='centralizeContent'>
-          <title-big><%= __('CREATE/ADD TO PROJECT') %></title-big>
+      <action-form key='projectAddAction' v-else-if='displayForm("projectAddAction")' @close='closeActionForm' :l='l'>
+        <form-element class='centralizeContent' animation='pop1'>
+          <title-big><%= __('ADD TO EXISTING PROJECT') %></title-big>
         </form-element>
-        <form-element animation='pop2' class='centralizeContent'>
-          <comp-selector :selected='transformActionProject' @change='(v) => transformActionProject = v' :user='user' :l='l'>
-            <comp-option compname='create-project' :l='l'><%= __('Create project') %></comp-option>
-            <comp-option compname='add-to-project' :l='l'><%= __('Add to project') %></comp-option>
-          </comp-selector>
+        <form-element animation='pop3'>
+        <div class='form-content'>
+          <select-option :placeholder='l.selectAnAction' class='centralizeContentMargin' :selected='tempUser.action.selected' @update='(v)=>{tempUser.action.selected = v.value;tempUser.project.id = v.id}' :nonlive='true'>
+            <drop-link v-for='project in user.projects' :value='project.title' :id='project.id'></drop-link>
+          </select-option>
+        </div>
+      </form-element>
+      <form-element class='centralizeContent' animation='pop4'>
+        <form-button @click='addActionToProject' v-if='$root.l'>{{ l.addToProject }}</form-button>
+      </form-element>
+      </action-form>
+      <action-form key='actionToProject' v-else-if='displayForm("actionToProject")' @close='closeActionForm' :l='l'>
+        <form-element class='centralizeContent' animation='pop1'>
+          <title-big><%= __('ADD ACTION TO PROJECT') %></title-big>
+        </form-element>
+        <form-element class='centralizeContent' animation='pop2'>
+          <form-button @click='openUserForm({id: "projectAddAction"}, false)'><%= __('Add to existing project') %></form-button>
+        </form-element>
+        <form-element class='centralizeContent' animation='pop3'>
+          <form-button @click='openUserForm({id: "projectCreateAction"}, false)'><%= __('Create new project') %></form-button>
         </form-element>
       </action-form>
       <action-form key='addActionToProject' v-else-if='displayForm("addActionToProject")' @close='closeActionForm' :l='l'>
@@ -189,6 +204,17 @@
         </form-element>
         <form-element class='centralizeContent' animation='pop3'>
         <form-button @click='addAlreadyExistingAction'><%= __('Add action') %></form-button>
+        </form-element>
+      </action-form>
+      <action-form key='projectCreateAction' v-else-if='displayForm("projectCreateAction")' @close='closeActionForm' :l='l'>
+        <form-element class='centralizeContent' animation='pop1'>
+          <title-big><%= __('CREATE PROJECT') %></title-big>
+        </form-element>
+        <form-element animation='pop3' class='centralizeContent'>
+          <check-box :value='tempUser.project.delete' @change='invertValue' :placeholder='l.deleteAction'></check-box>
+        </form-element>
+        <form-element class='centralizeContent' animation='pop4'>
+          <form-button @click='transformActionToProject'>{{l.createProject}}</form-button>
         </form-element>
       </action-form>
       <action-form key='projectCreateAction' v-else-if='displayForm("projectCreateAction")' @close='closeActionForm' :l='l'>

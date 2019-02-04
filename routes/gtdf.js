@@ -286,7 +286,7 @@ router.post('/transform-action-to-project', (req, res) => {
     let dt = req.body
     
     User.addProject(user.data.projects, dt.title)
-    if (dt.delete){
+    if (dt.delete == 'true'){
       User.deleteAction(user.data, dt.actionId)
     }
 
