@@ -206,7 +206,7 @@
     left: -10px;
   }
   100%{
-    left: 130px;
+    left: 220px;
     width: 100%;
   }
 }
@@ -253,39 +253,6 @@
   }
 }
 
-@keyframes doubleSlideBounceActionForm{
-  0%{
-    flex-basis: 0;
-    opacity: 0;
-  }
-  50%{
-    flex-basis: 0;
-    opacity: 0;
-  }
-  57%{
-    flex-basis: 470px;
-    opacity: .6;
-  }
-  64%{
-    flex-basis: 410px;
-  }
-  71%{
-    flex-basis: 460px;
-  }
-  77%{
-    flex-basis: 420px;
-  }
-  84%{
-    flex-basis: 450px;
-  }
-  91%{
-    flex-basis: 430px;
-  }
-  100%{
-    opacity: 1;
-    flex-basis: 440px;
-  }
-}
 
 @keyframes goBack{
   0%{
@@ -299,6 +266,16 @@
   }
 }
 
+.curved-movement-enter-active{
+  animation: popLong;
+  animation-duration: .3s;
+}
+
+.curved-movement-leave-active{
+  animation: unpop;
+  animation-duration: .3s;
+}
+
 .flip-list-enter-active{
   animation: popLong;
   animation-duration: .4s;
@@ -307,6 +284,10 @@
 .flip-list-leave-active{
   animation: goBack;
   animation-duration: .4s;
+}
+
+.flip-list-move{
+  transition: transform 0;
 }
 
 
@@ -328,8 +309,8 @@
 }
 
 .double-slide-bounce-unpop-enter-active{
-  animation: doubleSlideBounceActionForm;
-  animation-duration: .8s;
+  animation: doubleSlideBounce;
+  animation-duration: .6s;
 }
 
 .double-slide-bounce-unpop-leave-active{
@@ -449,4 +430,14 @@
 .pop8-enter-active{
   animation: pop;
   animation-duration: 1.1s;
+}
+
+.pop8-enter-active{
+  animation: pop;
+  animation-duration: 1.2s;
+}
+
+.pop9-enter-active{
+  animation: pop;
+  animation-duration: 1.3s;
 }

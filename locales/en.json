@@ -18,7 +18,7 @@
 	"Forgot password/username?": "Forgot password/username?",
 	"SIGN UP": "SIGN UP",
 	"Email": "Email",
-	"Confirm password": "Confirm password",
+	"Confirm password": "Confirm your password.",
 	"User": "User",
 	"in-basket": "in-basket",
 	"calendar": "calendar",
@@ -49,5 +49,7 @@
 	"Edit title": "Edit title",
 	"ADD TIMED ACTION": "ADD TIMED ACTION",
 	"EDIT TIMED ACTION": "EDIT TIMED ACTION",
-	"logout": "logout"
+	"logout": "logout",
+	"CHANGE PLACE": "CHANGE PLACE",
+	"Change place": "Change place"
 }

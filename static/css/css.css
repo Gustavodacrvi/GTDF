@@ -79,14 +79,17 @@ body {
   justify-content: center;
 }
 
-.card, .card-shadow{
-  /* background: url('/images/cardcolor.png'); */
+.card, .card-shadow, .card-border{
   background: url('/images/cardcolor.png');
   border-radius: 8px;
 }
 
 .card-shadow{
-  box-shadow: 0 10px 6px 3px rgba(50,50,50,0.5); 
+  box-shadow: 0 10px 6px 1px rgba(40,40,40,0.3);
+}
+
+.card-border{
+  border: 0.5px solid #fe4a49;
 }
 
 .icon-tiny{
@@ -280,7 +283,7 @@ a{
   /* background: url('/images/cardcolor.png'); */
   background: url('/images/cardcolor.png');
   z-index: 20;
-  box-shadow: 0 6px 6px rgba(50,50,50,0.3); 
+  box-shadow: 0 6px 6px 1px rgba(40,40,40,0.3); 
 }
 
 #navBar > div{
@@ -309,7 +312,7 @@ a{
 
 /* DROPDOWN */
 
-.dropdown{
+.dropdown, .select-option{
   position: relative;
 }
 
@@ -318,6 +321,83 @@ a{
   margin-top: 10px;
   margin-bottom: 10px;
   z-index: 2;
+}
+
+.select-option{
+  margin-left: 25px;
+  max-width: 170px; 
+}
+
+.select-option > :first-child{
+  min-height: 40px;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.select-option > :first-child > span, .select-option > :first-child > a{
+  transition-duration: .3s;
+}
+
+.select-option > :first-child > span{
+  font-size: 14px; 
+}
+
+.select-option > :first-child > a{
+  margin-left: 15px;
+  font-size: 1.2em;
+  color: #fe4a49;
+}
+.select-option:hover > :first-child > a{
+  font-size: 1.4em;
+  margin-left: -5px;
+  margin-top: -5px;
+}
+
+.select-option:hover > :first-child > span{
+  font-size: 12px;
+}
+
+.select-option > :last-child{
+  width: 100%;
+  position: absolute;
+  text-align: center;
+  top: 100%;
+  max-height: 150px;
+  overflow-y: auto;
+  overflow-x: hidden; 
+  z-index: 2;
+}
+
+.select-option > :last-child a{
+  cursor: pointer;
+}
+
+.form-content{
+  flex-basis: 300px;
+}
+
+.centralizeContentMargin{
+  margin: auto;
+}
+
+.double-icon{
+  display: flex;
+  justify-content: space-around;
+  width: 90px;
+  left: 25px;
+  position: relative;
+  top: 5px;
+}
+
+.select-option > :last-child a:first-child{
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+.select-option > :last-child a:last-child{
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
 }
 
 .dropdown > div{
@@ -449,11 +529,12 @@ a{
 /* SIDE NAV */
 
 #side-nav{
-  position: absolute;
+  position: fixed;
   width: 225px;
   height: 100vh;
   left: 0;
   background: url('/images/cardcolor.png');
+  box-shadow: 10px 0 6px 1px rgba(40,40,40,0.3);
   pointer-events: all;
   overflow: hidden;
   z-index: 15;
@@ -466,7 +547,7 @@ a{
 .side-title{
   margin-left: 25px;
   padding-right: 10px;
-  font-size: 1.4em;
+  font-size: 1em;
   margin-bottom: 40px;
 }
 
@@ -477,10 +558,14 @@ a{
 
 .red{
   color: #fe4a49;
+  display: block;
+  text-align: center;
+  width: 175px;
+  font-size: 1.45em;
 }
 
 .side-link, .side-link-blocked{
-  font-size: 1.3em;  
+  font-size: 1.35em;  
 }
 
 .side-link-blocked{
@@ -550,6 +635,7 @@ a{
   margin-top: 50px;
   display: flex;
   position: relative;
+  overflow: hidden;
 }
 
 #content > :first-child{
@@ -651,12 +737,13 @@ a{
   display: flex;
   flex-direction: column;
   width: 100%;
+  transition-duration: .1s;
   top: 0;
 }
 
 .action:hover, .project:hover{
-  transition-duration: .1s;
-  top: -3px;
+  top: -2.5px;
+  box-shadow: 0 0 10px 3px rgba(40,40,40,0.3);  
 }
 
 .action > :first-child, .project > :first-child{
@@ -785,51 +872,12 @@ a{
   width: 95%;
 }
 
-.option-selection{
-  position: relative;
-  flex-basis: 450px;
-}
-
-.option-selection span{
-  font-size: 1.1em; 
-}
-
-.option-selection > div{
-  position: absolute;
-  z-index: 5;
-  width: 100%;
-  max-height: 200px;
-  overflow: auto;
-}
-
 .faded{
   opacity: .4;
 }
 
 .super-faded{
   opacity: .03;
-}
-
-.option-selection > div span{
-  display: inline-block;
-  padding: 4px 0 4px 10px;
-}
-
-.option-selection > div > :first-child{
-  border-top-left-radius: 6px;
-  border-top-right-radius: 6px;
-}
-
-.option-selection > div > :last-child{
-  border-bottom-left-radius: 6px;
-  border-bottom-right-radius: 6px;
-}
-
-.option-selection > div div:hover, .option-selection .option-selected:hover{
-  background-color: #fe4a49;
-  color: white;
-  transform: scale(1.02, 1.02);
-  cursor: pointer;
 }
 
 .calendar-graph{
@@ -978,7 +1026,7 @@ a{
   position: absolute;
   bottom: 20px;
   left: -73px;
-  background-color: #464b53;
+  background: url('/images/cardcolor.png');
   white-space: nowrap;
   padding: 6px;
   border-radius: 8px;
@@ -986,6 +1034,35 @@ a{
 
 [data-title]:hover::after {
   visibility: visible;  
+}
+
+.icon-big[data-title]{
+  position: relative;
+}
+
+.icon-big[data-title]::after{
+  content: attr(data-title);
+  visibility: hidden;
+  position: absolute;
+  bottom: 130%;
+  left: 50%;
+  background: url('/images/cardcolor.png');
+  white-space: nowrap;
+  padding: 6px;
+  border-radius: 8px;
+  box-shadow: 0 10px 6px 1px rgba(40,40,40,0.3);  
+  z-index: 10;
+}
+
+.icon-big[data-title]:hover::after{
+  visibility: visible;
+  font-size: .5em !important;
+  color: #B9B9B9 !important;
+  transform: scale(0.9,0.9) rotate(-15deg) !important;
+}
+
+.ghost {
+  opacity: 0 !important;
 }
 
 .datetime-form{

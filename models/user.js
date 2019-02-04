@@ -21,6 +21,9 @@ var userSchema = mongoose.Schema({
       ],
       projects: [
 
+      ],
+      places: [
+
       ]
     }
 })
@@ -79,17 +82,25 @@ module.exports.rearrange = function(arr, newArr){
 }
 
 module.exports.getIndexOfProjectThatHasTheGivenActionId = function(data, actionId){
-  return data.projects.findIndex((el) => {
-    return el.actions.some((ele) => {
-      return ele == actionId
-    })
-  })
+  let pros = data.projects
+  let length = pros.length
+  for (let i = 0;i < length;i++){
+    let actionsLength = pros[i].actions.length
+    for (let j = 0;j < actionsLength;j++){
+      if (pros[i].actions[j] == actionId)
+        return i
+    }
+  }
 }
 
 module.exports.getIndexOfProjectActionThatHasTheGivenActionId = function(data, projectId, actionId){
-  return data.projects[projectId].actions.findIndex((el) => {
-    return el == actionId
-  })
+  let pros = data.projects
+  if (pros[projectId] == undefined)
+    return -1
+  let actionsLength = pros[projectId].actions.length
+  for (let i = 0;i < actionsLength;i++)
+    if (pros[projectId].actions[i] == actionId)
+      return i
 }
 
 module.exports.getIds = function(arr){
@@ -106,20 +117,48 @@ module.exports.resetIds = function(arr){
     arr[i].id = i
 }
 
-module.exports.updateProjectActionIds = function(data, oldActionIds){
-  let pro = data.projects
-  let act = data.actions
-  let old = oldActionIds
+module.exports.fixChangedActionOrderInProject = function(data, oldId, newId){
+  let pros = data.projects
+  let acts = data.actions
+  let projectId = acts[newId].projectId
+  let pro = pros[projectId]
+  let hasProject = (acts[newId].projectId || acts[newId].projectId == 0)
 
-  let length = act.length
-  let projectId
-  let actionId
+  if (hasProject){
+    let length = pro.actions.length
+    let changedActionId
+    for (let i = 0;i < length;i++)
+      if (pro.actions[i] == oldId){
+        pro.actions[i] = newId
+        changedActionId = i
+        break
+      } 
+
+    for (let i = 0;i < length;i++){
+      let id = pro.actions[i]
+      if (id == newId && id < oldId && changedActionId != i){
+        pro.actions[i] += 1
+      } else if (id == newId && id > oldId && changedActionId != i){
+        pro.actions[i] -= 1
+      } else if (id > newId && id < oldId  && changedActionId != i){
+        pro.actions[i] += 1
+      } else if (id > oldId && id < newId  && changedActionId != i){
+        pro.actions[i] -= 1
+      }
+    }
+  }
+  
+  length = pros.length
   for (let i = 0;i < length;i++){
-    if (!act[i].projectId && act[i].projectId != 0)
-      continue
-    projectId = module.exports.getIndexOfProjectThatHasTheGivenActionId(data, old[i])
-    actionId = module.exports.getIndexOfProjectActionThatHasTheGivenActionId(data, projectId, old[i])
-    pro[projectId].actions[actionId] = act[i].id
+    if (hasProject && i == projectId) continue
+    let actionsLength = pros[i].actions.length
+    for (let j = 0;j < actionsLength;j++){
+      if (pros[i].actions[j] > newId && pros[i].actions[j] < oldId){
+        pros[i].actions[j] += 1
+      } else if (pros[i].actions[j] > oldId && pros[i].actions[j] < newId){
+        pros[i].actions[j] -= 1
+      }
+    }
   }
 }
 
@@ -128,9 +167,21 @@ module.exports.deleteAction = function(data, id){
 
   act.splice(id, 1)
 
-  let oldActionIds = module.exports.getIds(act)
+  module.exports.decreaseProjectsActionsIdsByOneThatAreBiggerThan(data, id)
   module.exports.resetIds(act)
-  module.exports.updateProjectActionIds(data, oldActionIds)
+},
+
+module.exports.decreaseProjectsActionsIdsByOneThatAreBiggerThan = function(data,id){
+  let pros = data.projects
+
+  let length = pros.length
+  for (let i = 0;i < length;i++){
+    let actionsLength = pros[i].actions.length
+    for (let j = 0;j < actionsLength;j++){
+      if (pros[i].actions[j] > id)
+        pros[i].actions[j] -= 1
+    }
+  }
 }
 
 module.exports.deleteProjectAction = function(id, data){
@@ -141,9 +192,8 @@ module.exports.deleteProjectAction = function(id, data){
   pro[i].actions.splice(j, 1)
   act.splice(id, 1)
 
-  let oldActionIds = module.exports.getIds(act)
+  module.exports.decreaseProjectsActionsIdsByOneThatAreBiggerThan(data, id)
   module.exports.resetIds(act)
-  module.exports.updateProjectActionIds(data, oldActionIds)
 }
 
 module.exports.editAction = function(title, desc, id, arr){
@@ -180,11 +230,13 @@ module.exports.deleteProject = function(data, id){
 
   module.exports.removeActionsFromProject(data, id)
   pro.splice(id, 1)
+
   module.exports.resetIds(pro)
+  module.exports.updateActionsIds(data)
 }
 
-module.exports.createAndAddActionToProject = function(user, id, projectId, title, description){
-  user.actions.push({tag: 'basket',title: title, description: description, id: id, projectId: projectId})
+module.exports.createAndAddActionToProject = function(user, id, projectId, title, description, place){
+  user.actions.push({tag: 'basket',title: title, description: description, id: id, projectId: projectId, place: place})
   user.projects[projectId].actions.push(id)
 }
 
@@ -200,28 +252,31 @@ module.exports.removeActionFromProject = function(data, actionId){
   delete act[actionId].projectId
 }
 
-module.exports.getIndexOfactionThatHasTheGivenProjectId = function(data, projectId){
-  return data.actions.findIndex((el) => {
-    return el.projectId == projectId
-  })
+module.exports.getIndexOfactionThatHasTheGivenProjectIdAll = function(data, projectId){
+  let acts = data.actions
+  let length = acts.length
+  let actionIds = []
+  for (let i = 0;i < length;i++)
+    if (acts[i].projectId == projectId)
+      actionIds.push(i)
+  return actionIds
 }
 
-module.exports.updateActionsIds = function(data, oldProjectIds){
+module.exports.updateActionsIds = function(data){
   let pro = data.projects
   let act = data.actions
-  let old = oldProjectIds
 
   let length = pro.length
-  let actionId
   for (let i = 0;i < length;i++){
-    actionId = module.exports.getIndexOfactionThatHasTheGivenProjectId(data, old[i])
-    if (actionId == -1) continue
-    act[actionId].projectId = pro[i].id
+    let actionsLength = pro[i].actions.length
+    for (let j = 0;j < actionsLength;j++){
+      act[pro[i].actions[j]].projectId = pro[i].id
+    }
   }
 }
 
-module.exports.addTimedAction = function(act, title, description, date, time){
-  act.push({id: act.length, tag: 'calendar', title: title, description: description, calendar: {time: time, date: date}})
+module.exports.addTimedAction = function(act, title, description, date, time, place){
+  act.push({id: act.length, place: place, tag: 'calendar', title: title, description: description, calendar: {time: time, date: date}})
 }
 
 module.exports.editTimedAction = function(act, title, description, date, time, id){
@@ -229,4 +284,45 @@ module.exports.editTimedAction = function(act, title, description, date, time, i
   act[id].description = description
   act[id].calendar.date = date
   act[id].calendar.time = time
+}
+
+module.exports.fixStringIdsAndNulls = function(data){
+  let pros = data.projects
+  let acts = data.actions
+
+  let length = acts.length
+  for (let i = 0;i < length;i++){
+    acts[i].id = parseInt(acts[i].id)
+    acts[i].projectId = parseInt(acts[i].projectId)
+    if (acts[i].place == "null" || acts[i].place == 'show all')
+      acts[i].place = null
+  }
+
+  length = pros.length
+  for (let i = 0;i < length;i++){
+    pros[i].id = parseInt(pros[i].id)
+    let actionsLength = pros[i].actions.length
+    for (let j = 0;j < actionsLength;j++){
+      pros[i].actions[j] = parseInt(pros[i].actions[j])
+    }
+  }
+}
+
+module.exports.removePlaceFromAllActionsThatHasThePlace = function(data, place){
+  let length = data.actions.length
+  let acts = data.actions
+  let places = data.places
+
+  for (let i = 0;i < length;i++)
+    if (acts[i].place == place)
+      acts[i].place = null
+
+  length = places.length
+  for (let i = 0;i < length;i++)
+    if (places[i] == place){
+      places.splice(i, 1)
+      data.places
+      break
+    }
+
 }

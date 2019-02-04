@@ -5,14 +5,17 @@ let vm = new Vue({
   data: {
     desktop: undefined,
     guest: false,
+    tempPlace: undefined,
     showPasswords: false,
     showSideBar: false,
     username: undefined,
+    wrongPlace: false,
     tempUser: {
       action: {
         tag: undefined,
         title: undefined,
         description: undefined,
+        place: '',
         calendar: {
           time: '',
           date: '',
@@ -38,12 +41,14 @@ let vm = new Vue({
       false,
       false,
       false,
-      false
+      false,
+      false,
     ],
     showIconGroups: false,
     openedActionContents: undefined,
     openedProjectDropdowns: undefined,
     transformActionProject: 'create-project',
+    place: undefined
   },
   methods: {
       setLanguage(lang){
@@ -105,12 +110,23 @@ let vm = new Vue({
             projectActionsCalendarBefore: `Your project actions with the "calendar" tag that comes before the current year will show here.`,
             loggedAs: `Logged as`,
             username: `guest`,
-            selectAProject: `select a project`
+            selectAProject: `select a project:`,
+            addChangePlace: `add/change place`,
+            placeSpan: `Current place:`,
+            selectAPlace: `select a place:`,
+            selectAnAction: `select an action:`,
+            createAPlace: `Create a place`,
+            deleteCurrentPlace: `Delete current place`,
           }
-          this.tempUser.project.selected = 'select an action'
         } else if (lang == 'pt-BR'){
           this.l = {
-            selectAProject: `selecione um projeto`,
+            deleteCurrentPlace: `Deletar local atual`,
+            createAPlace: `Criar um local`,
+            selectAnAction: `selecione uma ação:`,
+            selectAPlace: `selecione um local:`,
+            placeSpan: `Local atual:`,
+            addChangePlace: `adicionar/mudar local`,
+            selectAProject: `selecione um projeto:`,
             username: `convidado`,
             loggedAs: `Conectado como`,
             projectActionsCalendarBefore: `As ações que estiverem em algum projeto e que possuírem a tag "agenda" e que vierem antes do ano atual estarão aqui.`,
@@ -168,7 +184,6 @@ let vm = new Vue({
             editActionTag: `Editar tag da ação`,
             addCreateProject: `Criar/adicionar no projeto`            
           }
-          this.tempUser.project.selected = 'selecione um ação'
         }
       },
     // PASSWORDS
@@ -260,38 +275,112 @@ let vm = new Vue({
         for (let i = 0;i < length;i++)
           arr[i].id = i
       },
-      updateProjectActionIds(oldActionIds){
-        let pro = this.user.projects
-        let act = this.user.actions
-        let old = oldActionIds
+      displayForm(id){
+        return (this.currentOpenedUserForm == id)
+      },
+      decreaseProjectsActionsIdsByOneThatAreBiggerThan(id){
+        let pros = this.user.projects
 
-        let length = act.length
-        let projectId
-        let actionId
+        let length = pros.length
         for (let i = 0;i < length;i++){
-          if (!act[i].projectId && act[i].projectId != 0)
-            continue
-          projectId = this.getIndexOfProjectThatHasTheGivenActionId(old[i])
-          actionId = this.getIndexOfProjectActionThatHasTheGivenActionId(projectId, old[i])
-          pro[projectId].actions[actionId] = act[i].id
+          let actionsLength = pros[i].actions.length
+          for (let j = 0;j < actionsLength;j++){
+            if (pros[i].actions[j] > id)
+              pros[i].actions[j] -= 1
+          }
         }
       },
-      getIndexOfactionThatHasTheGivenProjectId(projectId){
-        return this.user.actions.findIndex((el) => {
-          return el.projectId == projectId
-        })
+      fixChangedActionOrderInProject(oldId, newId){
+        let pros = this.user.projects
+        let acts = this.user.actions
+        let projectId = acts[newId].projectId
+        let pro = pros[projectId]
+        let hasProject = (acts[newId].projectId || acts[newId].projectId == 0)
+
+        if (hasProject){
+          let length = pro.actions.length
+          let changedActionId
+          for (let i = 0;i < length;i++)
+            if (pro.actions[i] == oldId){
+              pro.actions[i] = newId
+              changedActionId = i
+              break
+            } 
+
+          for (let i = 0;i < length;i++){
+            let id = pro.actions[i]
+            if (id == newId && id < oldId && changedActionId != i){
+              pro.actions[i] += 1
+            } else if (id == newId && id > oldId && changedActionId != i){
+              pro.actions[i] -= 1
+            } else if (id > newId && id < oldId  && changedActionId != i){
+              pro.actions[i] += 1
+            } else if (id > oldId && id < newId  && changedActionId != i){
+              pro.actions[i] -= 1
+            }
+          }
+        }
+        
+        length = pros.length
+        for (let i = 0;i < length;i++){
+          if (hasProject && i == projectId) continue
+          let actionsLength = pros[i].actions.length
+          for (let j = 0;j < actionsLength;j++){
+            if (pros[i].actions[j] > newId && pros[i].actions[j] < oldId){
+              pros[i].actions[j] += 1
+            } else if (pros[i].actions[j] > oldId && pros[i].actions[j] < newId){
+              pros[i].actions[j] -= 1
+            }
+          }
+        }
       },
-      updateActionsIds(oldProjectIds){
+      getOldAndNewPositionOfChangedAction(){
+        let acts = this.user.actions
+        let pros = this.user.projects
+        let length = acts.length
+
+        let oldId
+        let newId
+        for (let i = 0;i < length;i++){
+          if (acts[i].id != i){
+            if (acts[i].id - 1 == i){
+              oldId = i
+              break
+            } else {
+              newId = i
+              oldId = acts[i].id
+              return {old: oldId, new: newId}
+            }
+          }
+        }
+
+        for (let i = 0;i < length;i++){
+          if (acts[i].id == oldId){
+            newId = i
+            return {old: oldId, new: newId}
+          }
+        }
+        return false
+      },
+      getIndexOfactionThatHasTheGivenProjectIdAll(projectId){
+        let acts = this.user.actions
+        let length = acts.length
+        let actionIds = []
+        for (let i = 0;i < length;i++)
+          if (acts[i].projectId == projectId)
+            actionIds.push(i)
+        return actionIds
+      },
+      updateActionsIds(){
         let pro = this.user.projects
         let act = this.user.actions
-        let old = oldProjectIds
 
         let length = pro.length
-        let actionId
         for (let i = 0;i < length;i++){
-          actionId = this.getIndexOfactionThatHasTheGivenProjectId(old[i])
-          if (actionId == -1) continue
-          act[actionId].projectId = pro[i].id
+          let actionsLength = pro[i].actions.length
+          for (let j = 0;j < actionsLength;j++){
+            act[pro[i].actions[j]].projectId = pro[i].id
+          }
         }
       },
       editProjectTitle(){
@@ -325,7 +414,7 @@ let vm = new Vue({
         let act = this.user.actions
         let length = act.length
         for (let i = 0;i < length;i++)
-          if (act[i].tag == tag && !act[i].projectId && act[i].projectId != 0)
+          if (act[i].tag == tag && !act[i].projectId && act[i].projectId != 0 && ((act[i].place == undefined && this.place == 'show all') || act[i].place == this.place))
             return true
         return false
       },
@@ -334,7 +423,7 @@ let vm = new Vue({
         let length = act.length
         for (let i = 0;i < length;i++)
           if (act[i].projectId || act[i].projectId == 0)
-            if (act[i].tag == tag)
+            if (act[i].tag == tag && ((act[i].place == undefined && this.place == 'show all') || act[i].place == this.place))
               return true
         return false
       },
@@ -346,6 +435,40 @@ let vm = new Vue({
         return ids
       },
     // ACTION RELATED
+      createPlace(){
+        if (this.tempPlace != 'show all'){
+          this.user.places.push(this.tempPlace)
+
+          if (!this.guest)
+            this.POSTrequest('/create-place', 'place='+this.tempPlace)
+          this.closeActionForm()
+        }
+      },
+      deletePlace(){
+        if (this.place != 'show all'){
+          let place = this.place
+          this.removePlaceFromAllActionsThatHasThePlace(place)
+
+          this.place = 'show all'
+
+          let length = this.user.places.length
+          for (let i = 0;i < length;i++)
+            if (this.user.places[i] == place)
+              this.user.places.splice(i, 1)
+
+          if (!this.guest)
+            this.POSTrequest('/delete-place', 'place='+place)
+        }
+      },
+      removePlaceFromAllActionsThatHasThePlace(place){
+        let acts = this.user.actions
+
+        let length = acts.length
+        for (let i = 0;i < length;i++){
+          if (acts[i].place == place)
+            acts[i].place = null
+        }
+      },
       getUser(){
         this.GETrequest('/get-user', (data) =>{
           let dt = JSON.parse(data)
@@ -364,9 +487,11 @@ let vm = new Vue({
       },
       addAction(){
         let dt = this.tempUser.action
-        this.user.actions.push({ tag: dt.tag, title: dt.title, description: dt.description, id: this.user.actions.length})
+        let place = this.place
+        if (place == 'show all') place = null
+        this.user.actions.push({ tag: dt.tag, title: dt.title, description: dt.description, id: this.user.actions.length, place: place})
         if (!this.guest)
-          this.POSTrequest('/add-action', 'title='+dt.title+'&description='+dt.description+'&id='+(this.user.actions.length-1)+'&tag='+dt.tag)
+          this.POSTrequest('/add-action', 'title='+dt.title+'&description='+dt.description+'&id='+(this.user.actions.length-1)+'&tag='+dt.tag+'&place='+place)
         this.closeActionForm()
       },
       editAction(){
@@ -406,9 +531,8 @@ let vm = new Vue({
         if (dt.project.delete){
           act.splice(dt.action.id, 1)
 
-          let oldActionIds = this.getIds(act)
-          this.resetIds(act)
-          this.updateProjectActionIds(oldActionIds)
+          rt.resetIds(act)
+          rt.increaseProjectsActionsIdsByOneThatAreBiggerThan(this.id)
         }
         if (!this.guest)
           this.POSTrequest('/transform-action-to-project', 'title='+title+'&actionId='+dt.action.id+'&delete='+dt.project.delete)
@@ -425,10 +549,12 @@ let vm = new Vue({
         let dt = this.tempUser.action
         let length = this.user.actions.length
         let projectId = this.tempUser.project.id
-        this.user.actions.push({tag:'basket',id: length, title: dt.title, description: dt.description, projectId: projectId})
+        let place = this.place
+        if (place == 'show all') place = null
+        this.user.actions.push({tag:'basket',id: length, title: dt.title, description: dt.description, projectId: projectId, place: place})
         this.user.projects[projectId].actions.push(length)
         if (!this.guest)
-          this.POSTrequest('/create-add-action-project', 'id='+length+'&title='+dt.title+'&description='+dt.description+'&projectId='+projectId)
+          this.POSTrequest('/create-add-action-project', 'id='+length+'&title='+dt.title+'&description='+dt.description+'&projectId='+projectId+'&place='+place)
         this.closeActionForm()
       },
       parseArrayToHTTPparams(arr, arrName){
@@ -441,22 +567,22 @@ let vm = new Vue({
         return str
       },
       saveNewProjectOrder(ids){
-        let oldProjectIds = this.getIds(this.user.projects)
         this.resetIds(this.user.projects)
-        this.updateActionsIds(oldProjectIds)
+        this.updateActionsIds()
 
-        if (!this.guest){
+        if (!this.guest)
           this.POSTrequest('/save-new-project-order', this.parseArrayToHTTPparams(ids, 'a'))
-        }
       },
       saveNewActionOrder(ids){
-        let oldActionIds = this.getIds(this.user.actions)
-        this.resetIds(this.user.actions)
-        this.updateProjectActionIds(oldActionIds)
+        let obj = this.getOldAndNewPositionOfChangedAction()
+        if (obj != false){
+          this.resetIds(this.user.actions)
+          this.fixChangedActionOrderInProject(obj.old, obj.new)
 
-        if (!this.guest){
-          this.POSTrequest('/save-new-action-order', this.parseArrayToHTTPparams(ids, 'a'))
-        }
+          if (!this.guest)
+            this.POSTrequest('/save-new-action-order', this.parseArrayToHTTPparams(ids, 'a')+'&old='+obj.old+'&new='+obj.new)
+
+          }
       },
       addAlreadyExistingAction(){
         if (this.id2 != ''){
@@ -516,6 +642,18 @@ let vm = new Vue({
         this.showIconGroups = false
       }
     },
+    changeActionPlace(){
+      let dt = this.tempUser.action
+
+      if (this.tempPlace == 'show all') this.tempPlace = null
+
+      this.user.actions[dt.id].place = this.tempPlace
+
+      if (!this.guest)
+        this.POSTrequest('/change-action-place', 'id='+dt.id+'&place='+this.tempPlace)
+
+      this.closeActionForm()
+    },
     cleanTempData() {
       let u = this.tempUser
       u.action.tag = ''
@@ -528,6 +666,7 @@ let vm = new Vue({
       u.project.id = ''
       u.project.id2 = ''
       u.project.selected = 'select an action'
+      u.tempPlace = undefined
     },
     openUserForm(dt, cleanData = true){
       if (cleanData) this.cleanTempData()
@@ -538,6 +677,17 @@ let vm = new Vue({
     closeActionForm(){
       this.currentOpenedUserForm = undefined
       this.cleanTempData()
+    },
+    openActionForm(id, actionId){
+      let seconds = 0
+      if (id == this.currentOpenedUserForm){
+        this.closeActionForm()
+        seconds = 400
+      }
+      setTimeout(()=> {
+        this.openUserForm({id: '' + id})
+        this.getDataFromAction(this.user.actions[actionId])
+      }, seconds)
     },
     GETrequest(route, callback){
       let xhttp = new XMLHttpRequest()
@@ -574,6 +724,7 @@ let vm = new Vue({
         a.calendar.date = action.calendar.date
         a.calendar.time = action.calendar.time
       }
+      this.tempPlace = action.place
     },
     getDataFromProject(project){
       let t = this.tempUser.project
@@ -587,7 +738,8 @@ let vm = new Vue({
       let sortables = document.querySelectorAll('.sortable')
       sortables.forEach((el) => {
         new Sortable(el, {
-          handle: '.draggable'
+          handle: '.draggable',
+          ghostClass: 'ghost'
         })
       })
     },
@@ -599,19 +751,28 @@ let vm = new Vue({
 
       if (validDate && validTime){
         let length = act.length
-        act.push({id: length, tag: 'calendar', title: dt.title, description: dt.description, calendar: {time: dt.calendar.time, date: dt.calendar.date}})
+        let place = this.place
+        if (place == 'show all') place = null
+        act.push({id: length, place: place, tag: 'calendar', title: dt.title, description: dt.description, calendar: {time: dt.calendar.time, date: dt.calendar.date}})
 
         if (!this.guest)
-          this.POSTrequest('/add-timed-action', 'tag="calendar"&title='+dt.title+'&description='+dt.description+'&time='+dt.calendar.time+'&date='+dt.calendar.date)
+          this.POSTrequest('/add-timed-action', 'tag="calendar"&title='+dt.title+'&description='+dt.description+'&time='+dt.calendar.time+'&date='+dt.calendar.date+'&place='+place)
         this.closeActionForm()
       }
     },
     activateGuest(){
       this.guest = true
+    },
+    hideSideBarScroll(){
+      if (!this.desktop){
+        this.showSideBar = false
+        console.log(this.showSideBar)
+      }
     }
   },
   mounted(){
     this.getCurrentDate()
+    this.place = 'show all'
   },
   watch: {
     currentSectionComponent(){
@@ -629,3 +790,4 @@ vm.applyDragAndDrop()
 
 window.addEventListener('resize', vm.checkScreenVersion)
 window.addEventListener('resize', vm.iconGroupEventHandlers)
+window.addEventListener('scroll', function() {vm.hideSideBarScroll()})
