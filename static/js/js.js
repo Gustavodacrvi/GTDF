@@ -9,7 +9,7 @@ let vm = new Vue({
     showPasswords: false,
     showSideBar: false,
     username: undefined,
-    places: undefined,
+    wrongPlace: false,
     tempUser: {
       action: {
         tag: undefined,
@@ -435,6 +435,15 @@ let vm = new Vue({
         return ids
       },
     // ACTION RELATED
+      createPlace(){
+        if (this.tempPlace != 'show all'){
+          this.user.places.push(this.tempPlace)
+
+          if (!this.guest)
+            this.POSTrequest('/create-place', 'place='+this.tempPlace)
+          this.closeActionForm()
+        }
+      },
       getUser(){
         this.GETrequest('/get-user', (data) =>{
           let dt = JSON.parse(data)
@@ -445,11 +454,6 @@ let vm = new Vue({
           for (let i = 0;i < length;i++)
             this.openedActionContents.push(false)
 
-          this.places = []
-          for (let i = 0;i < length;i++){
-            if (!this.places.includes(this.user.actions[i].place) && this.user.actions[i].place == 'show all' && this.user.actions[i].place == null)
-              this.places.push(this.user.actions[i].place)
-          }
           length = this.user.projects.length
           this.openedProjectDropdowns = []
           for (let i = 0;i < length;i++)
@@ -459,7 +463,7 @@ let vm = new Vue({
       addAction(){
         let dt = this.tempUser.action
         let place = this.place
-        if (place == 'show all') place == null
+        if (place == 'show all') place = null
         this.user.actions.push({ tag: dt.tag, title: dt.title, description: dt.description, id: this.user.actions.length, place: place})
         if (!this.guest)
           this.POSTrequest('/add-action', 'title='+dt.title+'&description='+dt.description+'&id='+(this.user.actions.length-1)+'&tag='+dt.tag+'&place='+place)
@@ -546,9 +550,7 @@ let vm = new Vue({
       },
       saveNewActionOrder(ids){
         let obj = this.getOldAndNewPositionOfChangedAction()
-        console.log(obj)
         if (obj != false){
-          let act = this.user.actions[obj.new]
           this.resetIds(this.user.actions)
           this.fixChangedActionOrderInProject(obj.old, obj.new)
 

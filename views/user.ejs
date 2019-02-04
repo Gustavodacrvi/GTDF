@@ -85,9 +85,9 @@
         </side-link>
       <% } %>
       </br>
-      <select-option v-if='places' :placeholder='l.placeSpan' :selected='place' @update='(newPlace)=>this.place = newPlace' animation='pop9'>
+      <select-option v-if='user' :placeholder='l.placeSpan' :selected='place' @update='(newPlace)=>this.place = newPlace' animation='pop9'>
         <drop-link value='show all'></drop-link>
-        <drop-link v-for='place in places' :value='place'></drop-link>
+        <drop-link v-for='place in user.places' :value='place'></drop-link>
       </select-option>
       <double-icon animation='pop9'>
         <action-bar-icon icon='fa fa-times' id='deletePlace' @click='openUserForm' :title='l.deleteCurrentPlace'></action-bar-icon>
@@ -290,10 +290,13 @@
         </form-element>
         <form-element>
           <text-box placeholder='<%= __("PLACE NAME") %>' :rows='2' :value='tempPlace' @change='(v) => tempPlace = v'></text-box>
+        </form-element class='centralizeContent'>
+          <alert v-if='tempPlace == "show all"'><%= __('The place name can not be "show all".') %></alert>
+        <form-element>
         </form-element>
         <form-element class='centralizeContent' animation='pop3'>
-          <form-button><%= __('Create a place') %></form-button>
-        </form-element>      
+          <form-button @click='createPlace'><%= __('Create a place') %></form-button>
+        </form-element>
       </action-form>
     </transition>
   </fixed>
@@ -307,7 +310,7 @@
       <adds>
       <template v-if='user'>
     <h5>PLACES</h5>
-    <p v-for='action in places'>{{action}}</p>    
+    <p v-for='action in user.places'>{{action}}</p>    
     <h5>ACTIONS</h5>
     <p v-for='action in user.actions'>{{action}}</p>
     <h5>PROJECTS</h5>

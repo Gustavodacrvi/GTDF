@@ -49,7 +49,7 @@ router.get('/get-user', (req, res)=>{
     user.markModified('data')
     user.save((err, updatedUser) => {
 
-      res.send({ user: updatedUser.data, username: updatedUser.username})
+      res.send({ user: updatedUser.data, username: updatedUser.username })
     })
   })
 })
@@ -421,6 +421,23 @@ router.post('/delete-account', (req, res) => {
 
     User.deleteOne({ username: req.body.username }, function (err) {
       if (err) return handleError(err)
+    })
+  })
+})
+
+router.post('/create-place', (req, res) => {
+  User.getUserById(req.user.id, (err, user) => {
+    if (err) return handleError(err)
+    let dt = req.body
+
+    user.data.places.push(dt.place)
+
+    User.fixStringIdsAndNulls(user.data)
+    user.markModified('data.actions')
+    user.save((err) => {
+      if (err) return handleError(err)
+
+      res.send()
     })
   })
 })

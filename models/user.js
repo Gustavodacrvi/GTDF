@@ -21,6 +21,9 @@ var userSchema = mongoose.Schema({
       ],
       projects: [
 
+      ],
+      places: [
+
       ]
     }
 })
@@ -291,7 +294,7 @@ module.exports.fixStringIdsAndNulls = function(data){
   for (let i = 0;i < length;i++){
     acts[i].id = parseInt(acts[i].id)
     acts[i].projectId = parseInt(acts[i].projectId)
-    if (acts[i].place == "null")
+    if (acts[i].place == "null" || acts[i].place == 'show all')
       acts[i].place = null
   }
 
