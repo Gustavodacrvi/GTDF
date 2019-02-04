@@ -273,15 +273,14 @@
         </form-element>
         <form-element class='centralizeContent'>
           <div class='form-content'>
-            <select-option :placeholder='l.selectAPlace' class='centralizeContentMargin' :selected='tempUser.action.place' @update='(newPlace)=>this.tempUser.action.place = newPlace'>
+            <select-option :placeholder='l.selectAPlace' class='centralizeContentMargin' :selected='tempPlace' @update='(newPlace)=>this.tempPlace = newPlace'>
               <drop-link value='show all'></drop-link>
-              <drop-link value='home'></drop-link>
-              <drop-link value='work'></drop-link>
+              <drop-link v-for='place in user.places' :value='place'></drop-link>
             </select-option>
           </div>
         </form-element>
         <form-element class='centralizeContent' animation='pop3'>
-          <form-button><%= __('Change place') %></form-button>
+          <form-button @click='changeActionPlace'><%= __('Change place') %></form-button>
         </form-element>      
       </action-form>
       <action-form key='addPlace' v-else-if='displayForm("addPlace")' @close='closeActionForm' :l='l'>

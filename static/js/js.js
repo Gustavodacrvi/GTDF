@@ -451,6 +451,11 @@ let vm = new Vue({
 
           this.place = 'show all'
 
+          let length = this.user.places.length
+          for (let i = 0;i < length;i++)
+            if (this.user.places[i] == place)
+              this.user.places.splice(i, 1)
+
           if (!this.guest)
             this.POSTrequest('/delete-place', 'place='+place)
         }
@@ -637,6 +642,18 @@ let vm = new Vue({
         this.showIconGroups = false
       }
     },
+    changeActionPlace(){
+      let dt = this.tempUser.action
+
+      if (this.tempPlace == 'show all') this.tempPlace = null
+
+      this.user.actions[dt.id].place = this.tempPlace
+
+      if (!this.guest)
+        this.POSTrequest('/change-action-place', 'id='+dt.id+'&place='+this.tempPlace)
+
+      this.closeActionForm()
+    },
     cleanTempData() {
       let u = this.tempUser
       u.action.tag = ''
@@ -707,6 +724,7 @@ let vm = new Vue({
         a.calendar.date = action.calendar.date
         a.calendar.time = action.calendar.time
       }
+      this.tempPlace = action.place
     },
     getDataFromProject(project){
       let t = this.tempUser.project

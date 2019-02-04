@@ -1256,10 +1256,11 @@ Vue.component('project-timed-action', {
           <span v-show='time == "" && date != undefined'><span class='faded'>{{getprojectname}}</span> | {{title}}<span class='faded'>| {{date}}</span></span>
         </div>
         <div>
-          <icon-group :show='icongroup' @delete='deleteTimedProjectAction' @removeFromProject='removeProjectTimedActionFromProject' @editTag='editTimedProjectActionTag' @edit='editProjectTimedAction'>
+          <icon-group :show='icongroup' @delete='deleteTimedProjectAction' @removeFromProject='removeProjectTimedActionFromProject' @editTag='editTimedProjectActionTag' @edit='editProjectTimedAction' @place='changePlace'>
             <action-icon icon='fa fa-times' event='delete' title='delete action'></action-icon>
             <action-icon icon='fa fa-edit' event='edit' :title='l.editAction'></action-icon>
             <action-icon icon='fa fa-tag' event='editTag' :title='l.editActionTag'></action-icon>
+            <action-icon icon='fas fa-map-marked-alt' event='place' :title='l.addChangePlace'></action-icon>
             <action-icon icon='fa fa-sign-out-alt' event='removeFromProject' :title='l.removeFromProject'></action-icon>
           </icon-group>
         </div>
@@ -1272,6 +1273,9 @@ Vue.component('project-timed-action', {
     </div>
   `,
   methods: {
+    changePlace(){
+      this.$root.openActionForm('changePlace', this.id)
+    },
     deleteTimedProjectAction(){
       let rt = this.$root
       let acts = rt.user.actions
@@ -1330,10 +1334,11 @@ Vue.component('project-action', {
           <span v-show='!showprojectname'> {{ title }} <span class='faded' v-if='tag == "calendar"'>| {{calendar.date}}<span v-show='calendar.time'>{{calendar.time}}</span></span></span>
         </div>
         <div>
-          <icon-group :show='icongroup' @delete='deleteProjectAction' @edit='editAction' @editTag='editActionTag' @removeFromProject='removeActionFromProject'>
+          <icon-group :show='icongroup' @delete='deleteProjectAction' @edit='editAction' @editTag='editActionTag' @removeFromProject='removeActionFromProject' @place='changePlace'>
             <action-icon icon='fa fa-times' event='delete' :title='l.deleteAction'></action-icon>
             <action-icon icon='fa fa-edit' event='edit' :title='l.editAction'></action-icon>
             <action-icon icon='fa fa-tag' event='editTag' :title='l.editActionTag'></action-icon>
+            <action-icon icon='fas fa-map-marked-alt' event='place' :title='l.addChangePlace'></action-icon>
             <action-icon icon='fa fa-sign-out-alt' event='removeFromProject' :title='l.removeFromProject'></action-icon>
             <faded-action-icon :icon='returnTheClassIcon'></faded-action-icon>
           </icon-group>
@@ -1347,6 +1352,9 @@ Vue.component('project-action', {
     </div>
   `,
   methods: {
+    changePlace(){
+      this.$root.openActionForm('changePlace', this.id)
+    },
     deleteProjectAction(){
       let rt = this.$root
       let act = rt.user.actions
@@ -1424,11 +1432,12 @@ Vue.component('timed-action', {
           <span v-show='time != "" && date != undefined'> {{ title }}<span class='faded'>| {{date}}</span><span class='faded'>| {{ time }}</span></span>
         </div>
         <div>
-          <icon-group :show='icongroup' @delete='deleteAction' @edit='editAction' @tag='editTag' @project='manajeProject'>
+          <icon-group :show='icongroup' @delete='deleteAction' @edit='editAction' @tag='editTag' @project='manajeProject' @place='changePlace'>
             <action-icon icon='fa fa-times' event='delete' :title='l.deleteAction'></action-icon>
             <action-icon icon='fa fa-edit' event='edit' :title='l.editAction'></action-icon>
             <action-icon icon='fa fa-tag' event='tag' :title='l.editActionTag'></action-icon>
             <action-icon icon='fa fa-project-diagram' event='project' :title='l.addCreateProject'></action-icon>
+            <action-icon icon='fas fa-map-marked-alt' event='place' :title='l.addChangePlace'></action-icon>
           </icon-group>
         </div>
       </div>
@@ -1440,6 +1449,9 @@ Vue.component('timed-action', {
     </div>
   `,
   methods: {
+    changePlace(){
+      this.$root.openActionForm('changePlace', this.id)
+    },
     editTag(){
       this.$root.openActionForm('editTimedTag', this.id)
     },

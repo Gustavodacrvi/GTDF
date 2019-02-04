@@ -459,4 +459,21 @@ router.post('/delete-place', (req, res) => {
   })
 })
 
+router.post('/change-action-place', (req, res) => {
+  User.getUserById(req.user.id, (err, user) => {
+    if (err) return handleError(err)
+    let dt = req.body
+
+    user.data.actions[dt.id].place = dt.place
+
+    User.fixStringIdsAndNulls(user.data)
+    user.markModified('data')
+    user.save((err) => {
+      if (err) return handleError(err)
+
+      res.send()
+    })
+  })
+})
+
 module.exports = router

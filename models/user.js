@@ -275,7 +275,7 @@ module.exports.updateActionsIds = function(data){
   }
 }
 
-module.exports.addTimedAction = function(act, title, description, date, time){
+module.exports.addTimedAction = function(act, title, description, date, time, place){
   act.push({id: act.length, place: place, tag: 'calendar', title: title, description: description, calendar: {time: time, date: date}})
 }
 
