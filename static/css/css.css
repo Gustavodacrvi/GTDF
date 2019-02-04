@@ -381,6 +381,15 @@ a{
   margin: auto;
 }
 
+.around{
+  display: flex;
+  justify-content: space-between;
+}
+
+.setting-data span{
+  font-size: 1.1em;
+}
+
 .double-icon{
   display: flex;
   justify-content: space-around;

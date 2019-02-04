@@ -49,7 +49,7 @@ router.get('/get-user', (req, res)=>{
     user.markModified('data')
     user.save((err, updatedUser) => {
 
-      res.send({ user: updatedUser.data, username: updatedUser.username })
+      res.send({ user: updatedUser.data, username: updatedUser.username, email: updatedUser.email })
     })
   })
 })

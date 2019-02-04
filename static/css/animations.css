@@ -92,7 +92,7 @@
     transform: scale(1,1);
     opacity: 1;
   }
-  65%{
+  50%{
     transform: scale(1.2,1.2);
     opacity: .8;
   }
@@ -310,12 +310,12 @@
 
 .double-slide-bounce-unpop-enter-active{
   animation: doubleSlideBounce;
-  animation-duration: .6s;
+  animation-duration: .7s;
 }
 
 .double-slide-bounce-unpop-leave-active{
   animation: unpop;
-  animation-duration: .2s;
+  animation-duration: .3s;
 }
 
 .component-animation-enter-active{

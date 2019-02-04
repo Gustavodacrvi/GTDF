@@ -8,6 +8,7 @@ let vm = new Vue({
     tempPlace: undefined,
     showPasswords: false,
     showSideBar: false,
+    email: undefined,
     username: undefined,
     wrongPlace: false,
     tempUser: {
@@ -488,6 +489,7 @@ let vm = new Vue({
           let dt = JSON.parse(data)
           this.user = dt.user
           this.username = dt.username
+          this.email = dt.email
           let length = this.user.actions.length
           this.openedActionContents = []
           for (let i = 0;i < length;i++)
@@ -780,6 +782,10 @@ let vm = new Vue({
         this.showSideBar = false
         console.log(this.showSideBar)
       }
+    },
+    mayHideSideBar(){
+      if (!this.desktop)
+        this.showSideBar = false
     }
   },
   mounted(){

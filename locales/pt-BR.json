@@ -77,5 +77,11 @@
 	"Add to existing project": "Add to existing project",
 	"Create new project": "Create new project",
 	"ADD TO EXISTING PROJECT": "ADD TO EXISTING PROJECT",
-	"CREATE PROJECT": "CREATE PROJECT"
+	"CREATE PROJECT": "CREATE PROJECT",
+	"SETTINGS": "SETTINGS",
+	"change username": "change username",
+	"I forgot my password": "I forgot my password",
+	"Change password": "Change password",
+	"Delete data": "Delete data",
+	"Delete account": "Delete account"
 }
