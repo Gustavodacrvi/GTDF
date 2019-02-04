@@ -101,12 +101,12 @@
         </form-element>
         <form-element v-if='username && email' animation='pop2'>
           <div class='around setting-data'>
-            <span>email: {{email}}</span>
+            <span class='faded'>email: {{email}}</span>
             <span></span>
           </div>
           <div class='around setting-data'>
-            <span>username: {{username}}</span>
-            <link-red><%= __('change username') %></link-red>
+            <span class='faded'>username: {{username}}</span>
+            <link-red @click='openUserForm({ id: "changeUsername" })'><%= __('change username') %></link-red>
           </div>
         </form-element>
         <form-element class='centralizeContent column' animation='pop3'>
@@ -114,6 +114,31 @@
           <link-red><%= __('Change password') %></link-red>
           <link-red @click='openUserForm({ id: "deleteData" })'><%= __('Delete data') %></link-red>
           <link-red @click='openUserForm({ id: "deleteAccount" })'><%= __('Delete account') %></link-red>
+        </form-element>
+      </action-form>
+      <action-form v-if='displayForm("changeUsername")' key='changeUsername' @close='closeActionForm' :l='l'>
+        <form-element class='centralizeContent' animation='pop1'>
+          <title-big><%= __('CHANGE USERNAME') %></title-big>
+        </form-element>
+        <form-element class='centralizeContent'>
+          <div class='form-input centralizeContent'>
+            <input autocomplete='off' type='text' placeholder='<%= __("Username") %>:' tabindex='1' v-model='tempUsername'/>
+          </div>
+        </form-element>
+        <form-element v-if='tempUsername == username'>
+          <alert><%= __('Choose another username.') %></alert>
+        </form-element>
+        <form-element class='centralizeContent' v-if='tempUsername != username && tempUsername != ""'>
+          <link-red @click='checkAvailability'><%= __('Check availability') %></link-red>
+        </form-element>
+        <form-element v-if='validUsername == false'>
+          <alert><%= __('Someone else already used that username.') %></alert>
+        </form-element>
+        <form-element v-if='validUsername == true'>
+          <success><%= __('Valid username.') %></success>
+        </form-element>
+        <form-element class='centralizeContent'>
+          <form-button :class='{blocked: !checked}' @click='changeAccountUsername'><%= __('Change username') %></form-button>
         </form-element>
       </action-form>
       <action-form v-if='displayForm("deleteData")' key='deleteData' @close='closeActionForm' :l='l'>
@@ -359,8 +384,8 @@
         <form-element>
           <text-box placeholder='<%= __("PLACE NAME") %>' :rows='2' :value='tempPlace' @change='(v) => tempPlace = v'></text-box>
         </form-element class='centralizeContent'>
-          <alert v-if='tempPlace == "show all"'><%= __('The place name can not be "show all".') %></alert>
         <form-element>
+          <alert v-if='tempPlace == "show all"'><%= __('The place name can not be "show all".') %></alert>
         </form-element>
         <form-element class='centralizeContent' animation='pop3'>
           <form-button @click='createPlace'><%= __('Create a place') %></form-button>

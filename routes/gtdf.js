@@ -397,20 +397,13 @@ router.post('/change-username', (req, res) => {
     if (err) return handleError(err)
     let dt = req.body
     
-    let usernameTaken = false
-    User.countDocuments({username: dt.username}, function(err, count){
-      if (count > 0) usernameTaken = true
-    }).then(()=>{
-      if (usernameTaken)
-        res.send(JSON.stringify({isValid: false}))
-      else {
-        user.username = dt.username
-        user.save((err, updatedUser) => {
-          if (err) return handleError(err)
+    user.username = dt.username
 
-          res.send(JSON.stringify({ isValid: true}))
-        })
-      }
+    user.markModified('username')
+    user.save((err) => {
+      if (err) return handleError(err)
+
+      res.send()
     })
   })
 })
@@ -475,6 +468,24 @@ router.post('/delete-data', (req, res) => {
       if (err) return handleError(err)
 
       res.send()
+    })
+  })
+})
+
+router.post('/check-availability', (req, res) => {
+  User.getUserById(req.user.id, (err, user) => {
+    if (err) return handleError(err)
+    let dt = req.body
+
+    let taken = false
+    User.countDocuments({ username: dt.username }, (count) => {
+      if (count > 0) taken = true 
+    })
+
+    user.save((err) => {
+      if (err) return handleError(err)
+
+      res.send(JSON.stringify({ valid: !taken }))
     })
   })
 })

@@ -11,6 +11,9 @@ let vm = new Vue({
     email: undefined,
     username: undefined,
     wrongPlace: false,
+    tempUsername: '',
+    checked: false,
+    validUsername: undefined,
     tempUser: {
       action: {
         tag: undefined,
@@ -453,6 +456,27 @@ let vm = new Vue({
       invertValue(){
         this.tempUser.project.delete = !this.tempUser.project.delete
       },
+      checkAvailability(){
+        if (this.tempUsername != this.username && this.tempUsername != "")
+          this.POSTrequestData('/check-availability', 'username='+this.tempUsername, (data) => {
+            let dt = JSON.parse(data)
+            if (dt.valid){
+              this.checked = true
+              this.validUsername = true
+            } else {
+              this.validUsername = false
+            }
+          })
+      },
+      changeAccountUsername(){
+        if (this.checked){
+          this.POSTrequestData('/change-username', 'username='+this.tempUsername, (data) => {
+            location.reload()
+          })
+
+          this.checked = false
+        }
+      },
       addActionToProject() {
         let rt = this
         let dt = rt.tempUser.action
@@ -810,6 +834,10 @@ let vm = new Vue({
       if (!this.desktop){
         this.toggleSideNav()
       }
+    },
+    tempUsername(){
+      this.checked = false
+      this.validUsername = undefined
     }
   }
 })
