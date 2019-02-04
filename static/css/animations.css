@@ -286,6 +286,10 @@
   animation-duration: .4s;
 }
 
+.flip-list-move{
+  transition: transform 0;
+}
+
 
 .fade-enter-active{
   transition: opacity .2s;

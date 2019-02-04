@@ -444,6 +444,26 @@ let vm = new Vue({
           this.closeActionForm()
         }
       },
+      deletePlace(){
+        if (this.place != 'show all'){
+          let place = this.place
+          this.removePlaceFromAllActionsThatHasThePlace(place)
+
+          this.place = 'show all'
+
+          if (!this.guest)
+            this.POSTrequest('/delete-place', 'place='+place)
+        }
+      },
+      removePlaceFromAllActionsThatHasThePlace(place){
+        let acts = this.user.actions
+
+        let length = acts.length
+        for (let i = 0;i < length;i++){
+          if (acts[i].place == place)
+            acts[i].place = null
+        }
+      },
       getUser(){
         this.GETrequest('/get-user', (data) =>{
           let dt = JSON.parse(data)

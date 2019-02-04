@@ -90,7 +90,7 @@
         <drop-link v-for='place in user.places' :value='place'></drop-link>
       </select-option>
       <double-icon animation='pop9'>
-        <action-bar-icon icon='fa fa-times' id='deletePlace' @click='openUserForm' :title='l.deleteCurrentPlace'></action-bar-icon>
+        <action-bar-icon icon='fa fa-times' id='deletePlace' @click='deletePlace' :title='l.deleteCurrentPlace'></action-bar-icon>
         <action-bar-icon icon='fa fa-plus' id='addPlace' @click='openUserForm' :title='l.createAPlace'></action-bar-icon>
       </double-icon>
     </side-nav>

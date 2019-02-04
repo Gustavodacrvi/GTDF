@@ -307,3 +307,22 @@ module.exports.fixStringIdsAndNulls = function(data){
     }
   }
 }
+
+module.exports.removePlaceFromAllActionsThatHasThePlace = function(data, place){
+  let length = data.actions.length
+  let acts = data.actions
+  let places = data.places
+
+  for (let i = 0;i < length;i++)
+    if (acts[i].place == place)
+      acts[i].place = null
+
+  length = places.length
+  for (let i = 0;i < length;i++)
+    if (places[i] == place){
+      places.splice(i, 1)
+      data.places
+      break
+    }
+
+}
