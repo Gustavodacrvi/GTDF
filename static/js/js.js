@@ -295,32 +295,35 @@ let vm = new Vue({
         let acts = this.user.actions
         let projectId = acts[newId].projectId
         let pro = pros[projectId]
+        let hasProject = (acts[newId].projectId || acts[newId].projectId == 0)
 
-        let length = pro.actions.length
-        let changedActionId
-        for (let i = 0;i < length;i++)
-          if (pro.actions[i] == oldId){
-            pro.actions[i] = newId
-            changedActionId = i
-            break
-          } 
+        if (hasProject){
+          let length = pro.actions.length
+          let changedActionId
+          for (let i = 0;i < length;i++)
+            if (pro.actions[i] == oldId){
+              pro.actions[i] = newId
+              changedActionId = i
+              break
+            } 
 
-        for (let i = 0;i < length;i++){
-          let id = pro.actions[i]
-          if (id == newId && id < oldId && changedActionId != i){
-            pro.actions[i] += 1
-          } else if (id == newId && id > oldId && changedActionId != i){
-            pro.actions[i] -= 1
-          } else if (id > newId && id < oldId  && changedActionId != i){
-            pro.actions[i] += 1
-          } else if (id > oldId && id < newId  && changedActionId != i){
-            pro.actions[i] -= 1
+          for (let i = 0;i < length;i++){
+            let id = pro.actions[i]
+            if (id == newId && id < oldId && changedActionId != i){
+              pro.actions[i] += 1
+            } else if (id == newId && id > oldId && changedActionId != i){
+              pro.actions[i] -= 1
+            } else if (id > newId && id < oldId  && changedActionId != i){
+              pro.actions[i] += 1
+            } else if (id > oldId && id < newId  && changedActionId != i){
+              pro.actions[i] -= 1
+            }
           }
         }
         
         length = pros.length
         for (let i = 0;i < length;i++){
-          if (i == projectId) continue
+          if (hasProject && i == projectId) continue
           let actionsLength = pros[i].actions.length
           for (let j = 0;j < actionsLength;j++){
             if (pros[i].actions[j] > newId && pros[i].actions[j] < oldId){
@@ -543,9 +546,9 @@ let vm = new Vue({
       },
       saveNewActionOrder(ids){
         let obj = this.getOldAndNewPositionOfChangedAction()
+        console.log(obj)
         if (obj != false){
           let act = this.user.actions[obj.new]
-          let hasProject = (act.projectId || act.projectId == 0)
           this.resetIds(this.user.actions)
           this.fixChangedActionOrderInProject(obj.old, obj.new)
 
