@@ -83,5 +83,8 @@
 	"I forgot my password": "I forgot my password",
 	"Change password": "Change password",
 	"Delete data": "Delete data",
-	"Delete account": "Delete account"
+	"Delete account": "Delete account",
+	"DELETE ACCOUNT": "DELETE ACCOUNT",
+	"By clicking this button all of your data, actions, projects, places, password... will be lost": "By clicking this button all of your data, actions, projects, places, password... will be lost",
+	"By clicking this button all of your data, actions, projects, places, password, etc..., will be gone.": "By clicking this button all of your data, actions, projects, places, password, etc..., will be gone."
 }

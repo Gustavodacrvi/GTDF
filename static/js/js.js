@@ -392,6 +392,10 @@ let vm = new Vue({
           this.POSTrequest('/edit-project', 'title='+t.title+'&id='+t.id)
         this.closeActionForm()
       },
+      deleteAccount(){
+        this.POSTrequest("/delete-account", "username="+this.username)
+        window.location.href = "/login"
+      },
       getCurrentDate(){
         let date = DateM.getCurrentDay()
         this.tempUser.action.calendar.date = date.stringify()
