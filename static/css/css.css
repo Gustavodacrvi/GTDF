@@ -257,12 +257,6 @@ a{
 }
 
 
-@media screen and (max-width: 789px){
-  .form-input span{
-    right: 17%;
-  }
-}
-
 .form-input input:focus ~ span{
   right: 16px;
 }
@@ -298,17 +292,6 @@ a{
   margin: 12px;
 }
 
-
-@media screen and (min-width: 796px){
-  #mobile{
-    display: none;
-  }
-}
-@media screen and (max-width: 795px){
-  #desktop{
-    display: none;
-  }
-}
 
 /* DROPDOWN */
 
@@ -670,19 +653,6 @@ a{
 }
 
 
-@media screen and (max-width: 795px){
-  #content{
-    margin-left: 0;
-    flex-direction: column-reverse; 
-  }
-  #content > :first-child, #content > :last-child{
-    width: 100%;
-  }
-  #content > :first-child > div > div{
-    margin: 0 10px;
-  }
-}
-
 /* ACTION CARDS */
 
 .action-bar{
@@ -723,6 +693,7 @@ a{
   background: url('/images/cardcolor.png');
   resize: none;
   outline: none;
+  font-size: 1em;
   border-radius: 4px;
   border: 0.5px solid #464b53;
   color: #B9B9B9;
@@ -1297,6 +1268,42 @@ h2{
   display: flex;
 }
 
+@media screen and (min-width: 796px){
+  #mobile{
+    display: none;
+  }
+}
+@media screen and (max-width: 795px){
+  #desktop{
+    display: none;
+  }
+
+  .form{
+    margin: 6px;
+    padding: 28px 15px 0 15px;
+    pointer-events: all;
+  }
+}
+
+@media screen and (max-width: 795px){
+  #content{
+    margin-left: 0;
+    flex-direction: column-reverse; 
+  }
+  #content > :first-child, #content > :last-child{
+    width: 100%;
+  }
+  #content > :first-child > div > div{
+    margin: 0 10px;
+  }
+}
+
+@media screen and (max-width: 789px){
+  .form-input span{
+    right: 17%;
+  }
+}
+
 @media screen and (max-width: 796px){
   .action > :first-child > :last-child, .project > :first-child > :last-child{
     position: relative;
@@ -1353,3 +1360,4 @@ h2{
     margin-top: 40px; 
   }
 }
+

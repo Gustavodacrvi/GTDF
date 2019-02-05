@@ -624,7 +624,6 @@ let vm = new Vue({
 
         dt.project.title = act[dt.action.id].title
         let title = dt.project.title
-        this.addProject()
         let delet = dt.project.delete
         if (delet){
           act.splice(dt.action.id, 1)
@@ -639,6 +638,9 @@ let vm = new Vue({
       addProject(){
         let dt = this.tempUser.project
         this.user.projects.push({id: this.user.projects.length, title: dt.title, actions: []})
+        if (!this.guest)
+          this.POSTrequest('/add-project', 'title='+dt.title)
+        this.closeActionForm()
       },
       projectCreateAndAddAction(){
         let dt = this.tempUser.action
