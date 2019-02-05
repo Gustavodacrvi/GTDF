@@ -3,7 +3,7 @@
 
 <head>
   <% include partials/header %>
-  <title>User</title>
+  <title><%= __('User') %></title>
 </head>
 
 <body>
@@ -71,7 +71,7 @@
       </side-link>
       </br>
       <% if (!locals.guest) { %>
-        <side-link animation='pop7' :i='6' compo='settings' @click='changeSectionComponent' :active='openedComponents[6]'><%= __('settings') %></side-link>
+        <side-link animation='pop7' @click='mayHideSideBar();openUserForm({ id: "settings" })'><%= __('settings') %></side-link>
         <side-link href='/logout' animation='pop8'>
           <%= __('logout') %>
         </side-link>
@@ -95,6 +95,109 @@
       </double-icon>
     </side-nav>
     <transition name='double-slide-bounce-unpop' mode='out-in'>    
+      <action-form v-if='displayForm("settings")' key='settings' @close='closeActionForm' :l='l'>
+        <form-element class='centralizeContent' animation='pop1'>
+          <title-big><%= __('SETTINGS') %></title-big>
+        </form-element>
+        <form-element v-if='username && email' animation='pop2'>
+          <div class='around setting-data'>
+            <span class='faded'>email: {{email}}</span>
+            <span></span>
+          </div>
+          <div class='around setting-data'>
+            <span class='faded'>username: {{username}}</span>
+            <link-red @click='openUserForm({ id: "changeUsername" })'><%= __('change username') %></link-red>
+          </div>
+        </form-element>
+        <form-element class='centralizeContent column' animation='pop3'>
+          <link-red><%= __('I forgot my password') %></link-red>
+          <link-red @click='openUserForm({ id: "changePassword" })'><%= __('Change password') %></link-red>
+          <link-red @click='openUserForm({ id: "deleteData" })'><%= __('Delete data') %></link-red>
+          <link-red @click='openUserForm({ id: "deleteAccount" })'><%= __('Delete account') %></link-red>
+        </form-element>
+      </action-form>
+      <action-form v-if='displayForm("changePassword")' key='changePassword' @close='closeActionForm' :l='l'>
+        <form-element class='centralizeContent' animation='pop1'>
+          <title-big><%= __('CHANGE PASSWORD') %></title-big>
+        </form-element>
+        <form-element class='centralizeContent' animation='pop2'>
+          <input-pass tabindex="1" :opened='showPasswords' name='password' placeholder='<%= __("Old password") %>:' @click='togglePasswordVisiblity' :value='tempOldPassword' @change='(v) => tempOldPassword = v'></input-pass>
+        </form-element>
+        <form-element class='centralizeContent' animation='pop2'>
+          <input-pass tabindex="2" :opened='showPasswords' name='password' placeholder='<%= __("New password") %>:' @click='togglePasswordVisiblity' :value='newPassword' @change='(v) => newPassword = v'></input-pass>
+        </form-element>
+        <form-element class='centralizeContent' animation='pop2'>
+          <input-pass tabindex="2" :opened='showPasswords' name='password' placeholder='<%= __("Confirm password") %>:' @click='togglePasswordVisiblity' :value='newConfirmPassword' @change='(v) => newConfirmPassword = v'></input-pass>
+        </form-element>
+        <form-element v-if='hasPasswordError && passwordError == "sameOldPassword"'>
+          <alert><%= __('Choose another password.') %></alert>
+        </form-element>
+        <form-element v-if='hasPasswordError && passwordError == "PasswordsDoesntMatch"'>
+          <alert><%= __('Password not matching.') %></alert>
+        </form-element>
+        <form-element v-if='hasPasswordError && passwordError == "emptyFields"'>
+          <alert><%= __('Missing credentials') %>.</alert>
+        </form-element>
+        <form-element v-if='hasPasswordError && passwordError == "wrongOldPassword"'>
+          <alert><%= __('Wrong old password') %>.</alert>
+        </form-element>
+        <form-element v-if='validPasswords && passwordError == "alright"'>
+          <success><%= __('You can proceed to change the password') %>.</success>
+        </form-element>
+        <form-element class='centralizeContent'>
+          <link-red @click='checkPasswords'><%= __('Check passwords') %></link-red>
+        </form-element>
+        <form-element class='centralizeContent'>
+          <form-button @click='changePassword' :class='{ blocked: !validPasswords}'><%= __('Change password') %></form-button>
+        </form-element>
+      </action-form>
+      <action-form v-if='displayForm("changeUsername")' key='changeUsername' @close='closeActionForm' :l='l'>
+        <form-element class='centralizeContent' animation='pop1'>
+          <title-big><%= __('CHANGE USERNAME') %></title-big>
+        </form-element>
+        <form-element class='centralizeContent'>
+          <div class='form-input centralizeContent'>
+            <input autocomplete='off' type='text' placeholder='<%= __("Username") %>:' tabindex='1' v-model='tempUsername'/>
+          </div>
+        </form-element>
+        <form-element v-if='tempUsername == username'>
+          <alert><%= __('Choose another username.') %></alert>
+        </form-element>
+        <form-element class='centralizeContent' v-if='tempUsername != username && tempUsername != ""'>
+          <link-red @click='checkAvailability'><%= __('Check availability') %></link-red>
+        </form-element>
+        <form-element v-if='validUsername == false'>
+          <alert><%= __('Someone else already used that username.') %></alert>
+        </form-element>
+        <form-element v-if='validUsername == true'>
+          <success><%= __('Valid username.') %></success>
+        </form-element>
+        <form-element class='centralizeContent'>
+          <form-button :class='{blocked: !checked}' @click='changeAccountUsername'><%= __('Change username') %></form-button>
+        </form-element>
+      </action-form>
+      <action-form v-if='displayForm("deleteData")' key='deleteData' @close='closeActionForm' :l='l'>
+        <form-element class='centralizeContent' animation='pop1'>
+          <title-big><%= __('DELETE DATA') %></title-big>
+        </form-element>
+        <form-element class='centralizeContent'>
+          <alert><%= __("By clicking this button all of your actions, projects and places will be gone. Your account will not be deleted though.") %></alert>
+        </form-element>
+        <form-element class='centralizeContent'>
+          <form-button @click='deleteAccountData'><%= __('Delete data') %></form-button>
+        </form-element>
+      </action-form>
+      <action-form v-if='displayForm("deleteAccount")' key='deleteAccount' @close='closeActionForm' :l='l'>
+        <form-element class='centralizeContent' animation='pop1'>
+          <title-big><%= __('DELETE ACCOUNT') %></title-big>
+        </form-element>
+        <form-element class='centralizeContent'>
+          <alert><%= __('By clicking this button all of your data, actions, projects, places, password, etc..., will be gone.') %></alert>
+        </form-element>
+        <form-element class='centralizeContent'>
+          <form-button @click='deleteAccount()'><%= __('Delete account') %></form-button>
+        </form-element>
+      </action-form>
       <action-form v-if='displayForm("addAction")' key='addAction' @close='closeActionForm' :l='l'>
         <form-element animation='pop1'>
           <title-big class='centralizeContent'><%= __('ADD ACTION') %></title-big>
@@ -316,8 +419,8 @@
         <form-element>
           <text-box placeholder='<%= __("PLACE NAME") %>' :rows='2' :value='tempPlace' @change='(v) => tempPlace = v'></text-box>
         </form-element class='centralizeContent'>
-          <alert v-if='tempPlace == "show all"'><%= __('The place name can not be "show all".') %></alert>
         <form-element>
+          <alert v-if='tempPlace == "show all"'><%= __('The place name can not be "show all".') %></alert>
         </form-element>
         <form-element class='centralizeContent' animation='pop3'>
           <form-button @click='createPlace'><%= __('Create a place') %></form-button>
@@ -333,14 +436,6 @@
     </template>
     <template slot='adds'>
       <adds>
-      <template v-if='user'>
-    <h5>PLACES</h5>
-    <p v-for='action in user.places'>{{action}}</p>    
-    <h5>ACTIONS</h5>
-    <p v-for='action in user.actions'>{{action}}</p>
-    <h5>PROJECTS</h5>
-    <p v-for='action in user.projects'>{{action}}</p>
-  </template>
       </adds>
     </template>
   </user-content>

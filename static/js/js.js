@@ -8,8 +8,18 @@ let vm = new Vue({
     tempPlace: undefined,
     showPasswords: false,
     showSideBar: false,
+    email: undefined,
     username: undefined,
     wrongPlace: false,
+    tempUsername: '',
+    checked: false,
+    tempOldPassword: '',
+    newPassword: '',
+    newConfirmPassword: '',
+    hasPasswordError: false,
+    passwordError: '',
+    validUsername: undefined,
+    validPasswords: false,
     tempUser: {
       action: {
         tag: undefined,
@@ -391,6 +401,19 @@ let vm = new Vue({
           this.POSTrequest('/edit-project', 'title='+t.title+'&id='+t.id)
         this.closeActionForm()
       },
+      deleteAccount(){
+        this.POSTrequest("/delete-account", "username="+this.username)
+        window.location.href = "/login"
+      },
+      deleteAccountData(){
+        this.POSTrequest('/delete-data')
+        let u = this.user
+
+        u.actions = []
+        u.projects = []
+        u.places = []
+        this.closeActionForm()
+      },
       getCurrentDate(){
         let date = DateM.getCurrentDay()
         this.tempUser.action.calendar.date = date.stringify()
@@ -438,6 +461,65 @@ let vm = new Vue({
     // ACTION RELATED
       invertValue(){
         this.tempUser.project.delete = !this.tempUser.project.delete
+      },
+      checkAvailability(){
+        if (this.tempUsername != this.username && this.tempUsername != "")
+          this.POSTrequestData('/check-availability', 'username='+this.tempUsername, (data) => {
+            let dt = JSON.parse(data)
+            if (dt.valid){
+              this.checked = true
+              this.validUsername = true
+            } else {
+              this.validUsername = false
+            }
+          })
+      },
+      changeAccountUsername(){
+        if (this.checked){
+          this.POSTrequestData('/change-username', 'username='+this.tempUsername, (data) => {
+            location.reload()
+          })
+
+          this.checked = false
+        }
+      },
+      checkPasswords(){
+        let old = this.tempOldPassword
+        let newp = this.newPassword
+        let newc = this.newConfirmPassword
+
+        this.hasPasswordError = false
+        if (old == "" || newp == '' || newc == '') {
+          this.hasPasswordError = true
+          this.passwordError = 'emptyFields'
+        } else if (old == newp){
+          this.hasPasswordError = true
+          this.passwordError = 'sameOldPassword'
+        } else if (newp != newc){
+          this.hasPasswordError = true
+          this.passwordError = 'PasswordsDoesntMatch'
+        } else {
+          this.POSTrequestData('/check-password', 'password='+old, (data) => {
+            let dt = JSON.parse(data)
+            if (!dt.valid){
+              this.hasPasswordError = true
+              this.passwordError = 'wrongOldPassword'
+            } else {
+              this.passwordError = 'alright'
+              this.validPasswords = true
+            }
+          })
+        }
+        if (!this.hasPasswordError){
+          this.validPasswords = true
+        }
+      },
+      changePassword(){
+        if (this.validPasswords)
+          this.POSTrequestData('/change-password', 'password='+this.newPassword, () => {
+            window.location.replace("/login")
+          })
+          this.validPasswords = false
       },
       addActionToProject() {
         let rt = this
@@ -488,6 +570,7 @@ let vm = new Vue({
           let dt = JSON.parse(data)
           this.user = dt.user
           this.username = dt.username
+          this.email = dt.email
           let length = this.user.actions.length
           this.openedActionContents = []
           for (let i = 0;i < length;i++)
@@ -678,7 +761,7 @@ let vm = new Vue({
       u.project.id = ''
       u.project.id2 = ''
       u.project.selected = 'select an action'
-      u.tempPlace = undefined
+      this.tempPlace = undefined
     },
     openUserForm(dt, cleanData = true){
       if (cleanData) this.cleanTempData()
@@ -780,6 +863,10 @@ let vm = new Vue({
         this.showSideBar = false
         console.log(this.showSideBar)
       }
+    },
+    mayHideSideBar(){
+      if (!this.desktop)
+        this.showSideBar = false
     }
   },
   mounted(){
@@ -791,6 +878,22 @@ let vm = new Vue({
       if (!this.desktop){
         this.toggleSideNav()
       }
+    },
+    tempUsername(){
+      this.checked = false
+      this.validUsername = undefined
+    },
+    tempOldPassword(){
+      this.validPasswords = false
+      this.passwordError = ''
+    },
+    newPassword(){
+      this.validPasswords = false
+      this.passwordError = ''
+    },
+    newConfirmPassword(){
+      this.validPasswords = false
+      this.passwordError = ''
     }
   }
 })

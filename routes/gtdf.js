@@ -49,7 +49,7 @@ router.get('/get-user', (req, res)=>{
     user.markModified('data')
     user.save((err, updatedUser) => {
 
-      res.send({ user: updatedUser.data, username: updatedUser.username })
+      res.send({ user: updatedUser.data, username: updatedUser.username, email: updatedUser.email })
     })
   })
 })
@@ -397,20 +397,13 @@ router.post('/change-username', (req, res) => {
     if (err) return handleError(err)
     let dt = req.body
     
-    let usernameTaken = false
-    User.countDocuments({username: dt.username}, function(err, count){
-      if (count > 0) usernameTaken = true
-    }).then(()=>{
-      if (usernameTaken)
-        res.send(JSON.stringify({isValid: false}))
-      else {
-        user.username = dt.username
-        user.save((err, updatedUser) => {
-          if (err) return handleError(err)
+    user.username = dt.username
 
-          res.send(JSON.stringify({ isValid: true}))
-        })
-      }
+    user.markModified('username')
+    user.save((err) => {
+      if (err) return handleError(err)
+
+      res.send()
     })
   })
 })
@@ -459,6 +452,44 @@ router.post('/delete-place', (req, res) => {
   })
 })
 
+router.post('/delete-data', (req, res) => {
+  User.getUserById(req.user.id, (err, user) => {
+    if (err) return handleError(err)
+    let dt = req.body
+    let u = user.data
+
+    u.actions = []
+    u.projects = []
+    u.places = []
+
+    User.fixStringIdsAndNulls(user.data)
+    user.markModified('data')
+    user.save((err) => {
+      if (err) return handleError(err)
+
+      res.send()
+    })
+  })
+})
+
+router.post('/check-availability', (req, res) => {
+  User.getUserById(req.user.id, (err, user) => {
+    if (err) return handleError(err)
+    let dt = req.body
+
+    let taken = false
+    User.countDocuments({ username: dt.username }, (count) => {
+      if (count > 0) taken = true 
+    })
+
+    user.save((err) => {
+      if (err) return handleError(err)
+
+      res.send(JSON.stringify({ valid: !taken }))
+    })
+  })
+})
+
 router.post('/change-action-place', (req, res) => {
   User.getUserById(req.user.id, (err, user) => {
     if (err) return handleError(err)
@@ -473,6 +504,35 @@ router.post('/change-action-place', (req, res) => {
 
       res.send()
     })
+  })
+})
+
+router.post('/check-password', (req, res) => {
+  User.getUserById(req.user.id, (err, user) => {
+    if (err) return handleError(err)
+    let dt = req.body
+
+    let valid
+    User.comparePassword(dt.password, user.password, function(err, isMatch){
+      valid = isMatch
+
+      res.send(JSON.stringify({ valid: valid }))
+    })
+  })
+})
+
+router.post('/change-password', (req, res) => {
+  User.getUserById(req.user.id, (err, user) => {
+    if (err) return handleError(err)
+    let dt = req.body
+
+    User.changePassword(user, dt.password, (err) => {
+      if (err) return handleError(err)
+    })
+
+    req.logOut()
+    req.flash('success_msg', 'Changed password with success')
+    res.send()
   })
 })
 
