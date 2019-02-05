@@ -39,7 +39,7 @@ let vm = new Vue({
         id: '',
         id2: '',
         title: '',
-        selected: 'select an action'
+        selected: ''
       }
     },
     user: undefined,
@@ -760,7 +760,7 @@ let vm = new Vue({
       u.project.title = ''
       u.project.id = ''
       u.project.id2 = ''
-      u.project.selected = 'select an action'
+      u.project.selected = ''
       this.tempPlace = undefined
     },
     openUserForm(dt, cleanData = true){

@@ -517,7 +517,6 @@ Vue.component('datetime-form', {
   }
 })
 Vue.component('date', {
-
 })
 Vue.component('link-yellow', {
   props: {
