@@ -507,4 +507,33 @@ router.post('/change-action-place', (req, res) => {
   })
 })
 
+router.post('/check-password', (req, res) => {
+  User.getUserById(req.user.id, (err, user) => {
+    if (err) return handleError(err)
+    let dt = req.body
+
+    let valid
+    User.comparePassword(dt.password, user.password, function(err, isMatch){
+      valid = isMatch
+
+      res.send(JSON.stringify({ valid: valid }))
+    })
+  })
+})
+
+router.post('/change-password', (req, res) => {
+  User.getUserById(req.user.id, (err, user) => {
+    if (err) return handleError(err)
+    let dt = req.body
+
+    User.changePassword(user, dt.password, (err) => {
+      if (err) return handleError(err)
+    })
+
+    req.logOut()
+    req.flash('success_msg', 'Changed password with success')
+    res.send()
+  })
+})
+
 module.exports = router

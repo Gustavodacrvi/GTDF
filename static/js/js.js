@@ -13,7 +13,13 @@ let vm = new Vue({
     wrongPlace: false,
     tempUsername: '',
     checked: false,
+    tempOldPassword: '',
+    newPassword: '',
+    newConfirmPassword: '',
+    hasPasswordError: false,
+    passwordError: '',
     validUsername: undefined,
+    validPasswords: false,
     tempUser: {
       action: {
         tag: undefined,
@@ -477,6 +483,44 @@ let vm = new Vue({
           this.checked = false
         }
       },
+      checkPasswords(){
+        let old = this.tempOldPassword
+        let newp = this.newPassword
+        let newc = this.newConfirmPassword
+
+        this.hasPasswordError = false
+        if (old == "" || newp == '' || newc == '') {
+          this.hasPasswordError = true
+          this.passwordError = 'emptyFields'
+        } else if (old == newp){
+          this.hasPasswordError = true
+          this.passwordError = 'sameOldPassword'
+        } else if (newp != newc){
+          this.hasPasswordError = true
+          this.passwordError = 'PasswordsDoesntMatch'
+        } else {
+          this.POSTrequestData('/check-password', 'password='+old, (data) => {
+            let dt = JSON.parse(data)
+            if (!dt.valid){
+              this.hasPasswordError = true
+              this.passwordError = 'wrongOldPassword'
+            } else {
+              this.passwordError = 'alright'
+              this.validPasswords = true
+            }
+          })
+        }
+        if (!this.hasPasswordError){
+          this.validPasswords = true
+        }
+      },
+      changePassword(){
+        if (this.validPasswords)
+          this.POSTrequestData('/change-password', 'password='+this.newPassword, () => {
+            window.location.replace("/login")
+          })
+          this.validPasswords = false
+      },
       addActionToProject() {
         let rt = this
         let dt = rt.tempUser.action
@@ -838,6 +882,18 @@ let vm = new Vue({
     tempUsername(){
       this.checked = false
       this.validUsername = undefined
+    },
+    tempOldPassword(){
+      this.validPasswords = false
+      this.passwordError = ''
+    },
+    newPassword(){
+      this.validPasswords = false
+      this.passwordError = ''
+    },
+    newConfirmPassword(){
+      this.validPasswords = false
+      this.passwordError = ''
     }
   }
 })

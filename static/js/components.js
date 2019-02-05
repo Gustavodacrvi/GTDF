@@ -48,17 +48,31 @@ Vue.component('input-pass', {
     placeholder: String,
     name: String,
     opened: Boolean,
-    tabindex: String
+    tabindex: String,
+    value: String
+  },
+  data(){
+    return {
+      model: undefined
+    }
+  },
+  mounted(){
+    this.model = this.value
   },
   template: `
     <div class='form-input centralizeContent'>
-      <input :name='name' autocomplete='off' class='passwordField' type='password' autocomplete='off' :placeholder='placeholder' :tabindex='tabindex' />
+      <input :name='name' autocomplete='off' class='passwordField' type='password' autocomplete='off' :placeholder='placeholder' :tabindex='tabindex' v-model='model' />
       <span @click='$emit("click", !opened)'>
         <i class="fas fa-eye icon-tiny" v-show='opened'></i>
         <i class="fas fa-eye-slash icon-tiny" v-show='!opened'></i>
       <span>
     </div>
-  `
+  `,
+  watch: {
+    model(){
+      this.$emit('change', this.model)
+    }
+  }
 })
 Vue.component('input-form', {
   props: {

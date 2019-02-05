@@ -3,7 +3,7 @@
 
 <head>
   <% include partials/header %>
-  <title>User</title>
+  <title><%= __('User') %></title>
 </head>
 
 <body>
@@ -111,9 +111,44 @@
         </form-element>
         <form-element class='centralizeContent column' animation='pop3'>
           <link-red><%= __('I forgot my password') %></link-red>
-          <link-red><%= __('Change password') %></link-red>
+          <link-red @click='openUserForm({ id: "changePassword" })'><%= __('Change password') %></link-red>
           <link-red @click='openUserForm({ id: "deleteData" })'><%= __('Delete data') %></link-red>
           <link-red @click='openUserForm({ id: "deleteAccount" })'><%= __('Delete account') %></link-red>
+        </form-element>
+      </action-form>
+      <action-form v-if='displayForm("changePassword")' key='changePassword' @close='closeActionForm' :l='l'>
+        <form-element class='centralizeContent' animation='pop1'>
+          <title-big><%= __('CHANGE PASSWORD') %></title-big>
+        </form-element>
+        <form-element class='centralizeContent' animation='pop2'>
+          <input-pass tabindex="1" :opened='showPasswords' name='password' placeholder='<%= __("Old password") %>:' @click='togglePasswordVisiblity' :value='tempOldPassword' @change='(v) => tempOldPassword = v'></input-pass>
+        </form-element>
+        <form-element class='centralizeContent' animation='pop2'>
+          <input-pass tabindex="2" :opened='showPasswords' name='password' placeholder='<%= __("New password") %>:' @click='togglePasswordVisiblity' :value='newPassword' @change='(v) => newPassword = v'></input-pass>
+        </form-element>
+        <form-element class='centralizeContent' animation='pop2'>
+          <input-pass tabindex="2" :opened='showPasswords' name='password' placeholder='<%= __("Confirm password") %>:' @click='togglePasswordVisiblity' :value='newConfirmPassword' @change='(v) => newConfirmPassword = v'></input-pass>
+        </form-element>
+        <form-element v-if='hasPasswordError && passwordError == "sameOldPassword"'>
+          <alert><%= __('Choose another password.') %></alert>
+        </form-element>
+        <form-element v-if='hasPasswordError && passwordError == "PasswordsDoesntMatch"'>
+          <alert><%= __('Password not matching.') %></alert>
+        </form-element>
+        <form-element v-if='hasPasswordError && passwordError == "emptyFields"'>
+          <alert><%= __('Missing credentials') %>.</alert>
+        </form-element>
+        <form-element v-if='hasPasswordError && passwordError == "wrongOldPassword"'>
+          <alert><%= __('Wrong old password') %>.</alert>
+        </form-element>
+        <form-element v-if='validPasswords && passwordError == "alright"'>
+          <success><%= __('You can proceed to change the password') %>.</success>
+        </form-element>
+        <form-element class='centralizeContent'>
+          <link-red @click='checkPasswords'><%= __('Check passwords') %></link-red>
+        </form-element>
+        <form-element class='centralizeContent'>
+          <form-button @click='changePassword' :class='{ blocked: !validPasswords}'><%= __('Change password') %></form-button>
         </form-element>
       </action-form>
       <action-form v-if='displayForm("changeUsername")' key='changeUsername' @close='closeActionForm' :l='l'>
