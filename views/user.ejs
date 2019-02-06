@@ -262,15 +262,15 @@
           <title-big><%= __('ADD TO EXISTING PROJECT') %></title-big>
         </form-element>
         <form-element animation='pop3'>
-        <div class='form-content'>
-          <select-option :placeholder='l.selectAnAction' class='centralizeContentMargin' :selected='tempUser.action.selected' @update='(v)=>{tempUser.action.selected = v.value;tempUser.project.id = v.id}' :nonlive='true'>
-            <drop-link v-for='project in user.projects' :value='project.title' :id='project.id'></drop-link>
-          </select-option>
-        </div>
-      </form-element>
-      <form-element class='centralizeContent' animation='pop4'>
-        <form-button @click='addActionToProject' v-if='$root.l'>{{ l.addToProject }}</form-button>
-      </form-element>
+          <div class='form-content'>
+            <select-option :placeholder='l.selectAnAction' class='centralizeContentMargin' :selected='tempUser.action.selected' @update='(v)=>{tempUser.action.selected = v.value;tempUser.project.id = v.id}' :nonlive='true'>
+              <drop-link v-for='project in user.projects' :value='project.title' :id='project.id'></drop-link>
+            </select-option>
+          </div>
+        </form-element>
+        <form-element class='centralizeContent' animation='pop4'>
+          <form-button @click='addActionToProject' v-if='$root.l'>{{ l.addToProject }}</form-button>
+        </form-element>
       </action-form>
       <action-form key='actionToProject' v-else-if='displayForm("actionToProject")' @close='closeActionForm' :l='l'>
         <form-element class='centralizeContent' animation='pop1'>
@@ -400,7 +400,7 @@
         <form-element animation='pop1'>
           <title-big class='centralizeContent'><%= __('CHANGE PLACE') %></title-big>
         </form-element>
-        <form-element class='centralizeContent'>
+        <form-element class='centralizeContent' animation='pop2'>
           <div class='form-content'>
             <select-option :placeholder='l.selectAPlace' class='centralizeContentMargin' :selected='tempPlace' @update='(newPlace)=>this.tempPlace = newPlace'>
               <drop-link value='show all'></drop-link>

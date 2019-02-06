@@ -128,9 +128,11 @@ let vm = new Vue({
             selectAnAction: `select an action:`,
             createAPlace: `Create a place`,
             deleteCurrentPlace: `Delete current place`,
+            showAllProjectsDespiteOfLocation: 'Show all projects despite of location.',
           }
         } else if (lang == 'pt-BR'){
           this.l = {
+            showAllProjectsDespiteOfLocation: 'Mostrar todos os projetos independentemente de local.',
             deleteCurrentPlace: `Deletar local atual`,
             createAPlace: `Criar um local`,
             selectAnAction: `selecione uma ação:`,
@@ -259,6 +261,14 @@ let vm = new Vue({
             return ele == actionId
           })
         })
+      },
+      thereIsAtLeastOneActionInThisLocation(projectId){
+        let acts = this.user.actions
+        let length = acts.length
+        for (let i =0;i<length;i++)
+          if (acts[i].projectId == projectId && acts[i].place == this.place)
+            return true
+        return false
       },
       getIndexOfProjectActionThatHasTheGivenActionId(projectId, actionId){
         return this.user.projects[projectId].actions.findIndex((el) => {
@@ -438,7 +448,7 @@ let vm = new Vue({
         let act = this.user.actions
         let length = act.length
         for (let i = 0;i < length;i++)
-          if (act[i].tag == tag && !act[i].projectId && act[i].projectId != 0 && ((act[i].place == undefined && this.place == 'show all') || act[i].place == this.place))
+          if (act[i].tag == tag && !act[i].projectId && act[i].projectId != 0 && ((this.place == 'show all') || act[i].place == this.place))
             return true
         return false
       },
@@ -447,7 +457,7 @@ let vm = new Vue({
         let length = act.length
         for (let i = 0;i < length;i++)
           if (act[i].projectId || act[i].projectId == 0)
-            if (act[i].tag == tag && ((act[i].place == undefined && this.place == 'show all') || act[i].place == this.place))
+            if (act[i].tag == tag && ((this.place == 'show all') || act[i].place == this.place))
               return true
         return false
       },
