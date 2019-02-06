@@ -4,7 +4,7 @@
 }
 
 ::-webkit-scrollbar {
-  width: 12px;
+  width: 8px;
 }
 
 ::-webkit-scrollbar-track {
@@ -85,7 +85,7 @@ body {
 }
 
 .card-shadow{
-  box-shadow: 0 10px 10px 2px rgba(45,45,45,0.4);
+  box-shadow: 0 10px 10px 3px rgba(40,40,40,0.4);
 }
 
 .card-border{
@@ -277,7 +277,7 @@ a{
   /* background: url('/images/cardcolor.png'); */
   background: url('/images/cardcolor.png');
   z-index: 20;
-  box-shadow: 0 6px 6px 1px rgba(45,45,45,0.4); 
+  box-shadow: 0 6px 6px 1px rgba(40,40,40,0.4); 
 }
 
 #navBar > div{
@@ -530,9 +530,10 @@ a{
   height: 100vh;
   left: 0;
   background: url('/images/cardcolor.png');
-  box-shadow: 10px 0 6px 1px rgba(45,45,45,0.4);
+  box-shadow: 10px 0 6px 1px rgba(40,40,40,0.4);
   pointer-events: all;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
   z-index: 15;
 }
 
@@ -722,12 +723,10 @@ a{
   flex-direction: column;
   width: 100%;
   transition-duration: .1s;
-  top: 0;
 }
 
 .action:hover, .project:hover{
   top: -2.5px;
-  box-shadow: 0 0 10px 3px rgba(45,45,45,0.4);  
 }
 
 .action > :first-child, .project > :first-child{
@@ -752,6 +751,12 @@ a{
   align-items: center;
   flex-basis: 10%;
   justify-content: flex-end;
+}
+
+.action > :first-child > :last-child > span{
+  position: relative;
+  width: 100px;
+  text-align: right; 
 }
 
 .action > :first-child > :last-child > div > div, .project > :first-child > :last-child > div > div{
@@ -1034,7 +1039,7 @@ a{
   white-space: nowrap;
   padding: 6px;
   border-radius: 8px;
-  box-shadow: 0 10px 6px 1px rgba(45,45,45,0.4);
+  box-shadow: 0 10px 6px 1px rgba(40,40,40,0.4);
   z-index: 10;
 }
 
