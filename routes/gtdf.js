@@ -536,4 +536,20 @@ router.post('/change-password', (req, res) => {
   })
 })
 
+router.post('/change-project-actions-place', (req, res) => {
+  User.getUserById(req.user.id, (err, user) => {
+    if (err) return handleError(err)
+    let dt = req.body
+
+    User.changeProjectActionsPlace(user.data, dt.id, dt.place)
+
+    user.markModified('data.actions')
+    user.save((err) => {
+      if (err) return handleError(err)
+
+      res.send()
+    })
+  })
+})
+
 module.exports = router

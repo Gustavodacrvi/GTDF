@@ -1197,9 +1197,10 @@ Vue.component('project', {
           <span v-else>{{ title }}<span class='faded'>| {{user.actions[user.projects[id].actions[0]].place}}</span></span>
         </div>
         <div>
-          <icon-group :show='icongroup' @delete='deleteProject' @edit='editProject' @project='addActionToProject'>
+          <icon-group :show='icongroup' @delete='deleteProject' @edit='editProject' @project='addActionToProject' @place='changePlaces'>
             <action-icon icon='fa fa-times' event='delete' :title='l.deleteProject'></action-icon>
             <action-icon icon='fa fa-edit' event='edit' :title='l.editProjectTitle'></action-icon>
+            <action-icon icon='fa fa-map-marked-alt' event='place' :title='l.changePlaceOfAllActions'></action-icon>
             <action-icon icon='fa fa-plus' event='project' :title='l.addToProject'></action-icon>
           </icon-group>
         </div>
@@ -1221,6 +1222,9 @@ Vue.component('project', {
   methods: {
     changeDropdownState(obj){
       this.dropdowns[obj.id] = obj.state
+    },
+    changePlaces(){
+      this.openActionForm('changeAcitionsPlaceFromProject')
     },
     deleteProject(){
       let rt = this.$root

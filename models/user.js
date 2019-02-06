@@ -335,3 +335,11 @@ module.exports.removePlaceFromAllActionsThatHasThePlace = function(data, place){
     }
 
 }
+
+module.exports.changeProjectActionsPlace = function(data, id, place){
+  let acts = data.actions
+  let ids = data.projects[id].actions
+  let length = ids.length
+  for (let i = 0;i < length;i++)
+    acts[ids[i]].place = place
+}

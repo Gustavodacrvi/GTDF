@@ -129,9 +129,11 @@ let vm = new Vue({
             createAPlace: `Create a place`,
             deleteCurrentPlace: `Delete current place`,
             showAllProjectsDespiteOfLocation: 'Show all projects despite of location.',
+            changePlaceOfAllActions: `Change place of all actions in this project`,
           }
         } else if (lang == 'pt-BR'){
           this.l = {
+            changePlaceOfAllActions: `Mudar o local de todas ações neste projeto`,
             showAllProjectsDespiteOfLocation: 'Mostrar todos os projetos independentemente de local.',
             deleteCurrentPlace: `Deletar local atual`,
             createAPlace: `Criar um local`,
@@ -422,6 +424,16 @@ let vm = new Vue({
         u.actions = []
         u.projects = []
         u.places = []
+        this.closeActionForm()
+      },
+      changePlaceOfAllActions(){
+        let acts = this.user.actions
+        let ids = this.user.projects[this.tempUser.project.id].actions
+        let length = ids.length
+        for (let i = 0;i < length;i++)
+          acts[ids[i]].place = this.tempPlace
+        if (!this.guest)
+          this.POSTrequest('/change-project-actions-place', 'id='+this.tempUser.project.id+'&place='+this.tempPlace)
         this.closeActionForm()
       },
       allOfTheActionsInThisProjectHasOnlyOnePlace(projectId){

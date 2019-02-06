@@ -426,6 +426,22 @@
           <form-button @click='createPlace'><%= __('Create a place') %></form-button>
         </form-element>
       </action-form>
+      <action-form key='changeAcitionsPlaceFromProject' v-else-if='displayForm("changeAcitionsPlaceFromProject")' @close='closeActionForm' :l='l'>
+        <form-element animation='pop1'>
+          <title-big class='centralizeContent'><%= __('CHANGE PLACE OF ACTIONS') %></title-big>
+        </form-element>
+        <form-element class='centralizeContent' animation='pop2'>
+          <div class='form-content'>
+            <select-option :placeholder='l.selectAPlace' class='centralizeContentMargin' :selected='tempPlace' @update='(newPlace)=>this.tempPlace = newPlace'>
+              <drop-link value='show all'></drop-link>
+              <drop-link v-for='place in user.places' :value='place'></drop-link>
+            </select-option>
+          </div>
+        </form-element>
+        <form-element class='centralizeContent' animation='pop3'>
+          <form-button @click='changePlaceOfAllActions'><%= __('Change places') %></form-button>
+        </form-element>
+      </action-form>
     </transition>
   </fixed>
   <user-content>
