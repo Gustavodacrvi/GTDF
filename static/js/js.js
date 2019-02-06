@@ -424,6 +424,16 @@ let vm = new Vue({
         u.places = []
         this.closeActionForm()
       },
+      allOfTheActionsInThisProjectHasOnlyOnePlace(projectId){
+        let pro = this.user.projects[projectId]
+        let acts = this.user.actions
+        let length = pro.actions.length
+        let place = acts[pro.actions[0]].place
+        for (let i = 1;i < length;i++)
+          if (acts[pro.actions[i]].place != place || acts[pro.actions[i]].place == null)
+            return false
+        return true
+      },
       getCurrentDate(){
         let date = DateM.getCurrentDay()
         this.tempUser.action.calendar.date = date.stringify()

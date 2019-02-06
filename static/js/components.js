@@ -1193,7 +1193,8 @@ Vue.component('project', {
       <div class='card'>
         <div @click='dropdown = !dropdown'>
           <i class='fa fa-sort icon-tiny draggable'></i>
-          <span>{{ title }}</span>
+          <span v-if='!$root.allOfTheActionsInThisProjectHasOnlyOnePlace(id)'>{{ title }}</span>
+          <span v-else>{{ title }}<span class='faded'>| {{user.actions[user.projects[id].actions[0]].place}}</span></span>
         </div>
         <div>
           <icon-group :show='icongroup' @delete='deleteProject' @edit='editProject' @project='addActionToProject'>
