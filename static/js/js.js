@@ -440,10 +440,12 @@ let vm = new Vue({
         let pro = this.user.projects[projectId]
         let acts = this.user.actions
         let length = pro.actions.length
+        if (pro.actions[0] == undefined) return false
         let place = acts[pro.actions[0]].place
-        for (let i = 1;i < length;i++)
-          if (acts[pro.actions[i]].place != place || acts[pro.actions[i]].place == null)
+        for (let i = 0;i < length;i++)
+          if ((acts[pro.actions[i]].place != place || acts[pro.actions[i]].place == null))
             return false
+        console.log(34)
         return true
       },
       getCurrentDate(){
