@@ -445,7 +445,6 @@ let vm = new Vue({
         for (let i = 0;i < length;i++)
           if ((acts[pro.actions[i]].place != place || acts[pro.actions[i]].place == null))
             return false
-        console.log(34)
         return true
       },
       getCurrentDate(){
