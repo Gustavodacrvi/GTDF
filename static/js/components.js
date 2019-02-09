@@ -121,6 +121,7 @@ Vue.component('navigation-bar', {
           <div id='left' class='flex'>
             <slot name='desktop-left'></slot>
           </div>
+          <div id='nav-logo'></div>
           <div id='right' class='rowReversed'>
             <slot name='desktop-right'></slot>
           </div>
@@ -129,6 +130,7 @@ Vue.component('navigation-bar', {
           <div id='left' class='flex'>
             <slot name='mobile-left'></slot>
           </div>
+          <div id='nav-logo'></div>
           <div id='right' class='rowReversed'>
             <slot name='mobile-right'></slot>
           </div>

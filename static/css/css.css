@@ -285,7 +285,7 @@ a{
 }
 
 #navBar > div > div{
-  flex-basis: 50%;
+  flex-basis: 25%;
 }
 
 .nav-element{
@@ -711,6 +711,14 @@ a{
   font-size: 1.2em;
   background: url('/images/cardcolor.png');
   color: #fe4a49;
+}
+
+#nav-logo{
+  background: url('/images/logomedium.png') center center;
+  background-repeat: no-repeat;
+  height: 50px;
+  flex-basis: 50% !important;
+  overflow: visible;
 }
 
 .action-icon{
