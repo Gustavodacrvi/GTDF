@@ -796,7 +796,6 @@ let vm = new Vue({
       u.action.calendar.validDate = undefined
       u.project.title = ''
       u.project.id = ''
-      console.log(u.project.id)
       u.project.id2 = ''
       u.project.selected = ''
       this.tempPlace = undefined
