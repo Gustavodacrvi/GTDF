@@ -26,7 +26,7 @@ let vm = new Vue({
         title: undefined,
         description: undefined,
         place: '',
-        selected: 'select a project',
+        selected: '',
         calendar: {
           time: '',
           date: '',
@@ -558,6 +558,7 @@ let vm = new Vue({
         let rt = this
         let dt = rt.tempUser.action
 
+        console.log(rt.tempUser.project.id)
         rt.user.actions[dt.id].projectId = rt.tempUser.project.id
         rt.user.projects[rt.tempUser.project.id].actions.push(dt.id)
         if (!rt.guest)
@@ -789,11 +790,13 @@ let vm = new Vue({
       u.action.tag = ''
       u.action.title = ''
       u.action.description = ''
+      u.action.selected = undefined
       u.action.calendar.time = ''
       u.action.calendar.validTime = undefined
       u.action.calendar.validDate = undefined
       u.project.title = ''
       u.project.id = ''
+      console.log(u.project.id)
       u.project.id2 = ''
       u.project.selected = ''
       this.tempPlace = undefined

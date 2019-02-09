@@ -263,7 +263,7 @@
         </form-element>
         <form-element animation='pop3'>
           <div class='form-content'>
-            <select-option :placeholder='l.selectAnAction' class='centralizeContentMargin' :selected='tempUser.action.selected' @update='(v)=>{tempUser.action.selected = v.value;tempUser.project.id = v.id}' :nonlive='true'>
+            <select-option :placeholder='l.selectAProject' class='centralizeContentMargin' :selected='tempUser.action.selected' @update='(v)=>{tempUser.action.selected = v.value;tempUser.project.id = v.id}' :nonlive='true'>
               <drop-link v-for='project in user.projects' :value='project.title' :id='project.id'></drop-link>
             </select-option>
           </div>
