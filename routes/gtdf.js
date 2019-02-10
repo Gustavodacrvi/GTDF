@@ -59,9 +59,9 @@ router.post('/add-action', (req, res) => {
     if (err) return handleError(err)
     let b = req.body
 
-    if (b.place == 'undefined')
-      b.place = undefined
-    user.data.actions.push({ title: b.title, id: b.id, description: b.description, tag: b.tag, place: b.place})
+    if (b.place == 'show all')
+      user.data.actions.push({ title: b.title, id: b.id, description: b.description, tag: b.tag, place: null})
+    else user.data.actions.push({ title: b.title, id: b.id, description: b.description, tag: b.tag, place: [b.place]})
     
     User.fixStringIdsAndNulls(user.data)
     user.save((err) => {

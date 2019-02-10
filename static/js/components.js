@@ -581,7 +581,6 @@ Vue.component('basket', {
         </template>
         <template v-else>
           <template v-for='project in user.projects'>
-            <div style='height:4px'></div>
             <draggable v-model='user.actions' :options="{handle:'.draggable', animation: 300}">
             <transition-group name='flip-list' tag='div'> 
               <template v-for='action in user.actions' v-if='(action.projectId || action.projectId == 0) && $root.containsAction(project.id, action.id) && action.tag == "basket" && ((place == "show all") || action.place == place)'>           
@@ -659,7 +658,6 @@ Vue.component('maybe', {
         </template>
         <template v-else>
           <template v-for='project in user.projects'>
-            <div style='height:4px'></div>
             <draggable v-model='user.actions' :options="{handle:'.draggable', animation: 300}">
             <transition-group name='flip-list' tag='div'> 
               <template v-for='action in user.actions' v-if='(action.projectId || action.projectId == 0) && $root.containsAction(project.id, action.id) && action.tag == "maybe" && ((place == "show all") || action.place == place)'>
@@ -737,7 +735,6 @@ Vue.component('waiting', {
         </template>
         <template v-else>
           <template v-for='project in user.projects'>
-            <div style='height:4px'></div>
             <draggable v-model='user.actions' :options="{handle:'.draggable', animation: 300}">
             <transition-group name='flip-list' tag='div'> 
               <template v-for='action in user.actions' v-if='(action.projectId || action.projectId == 0) && $root.containsAction(project.id, action.id) && action.tag == "waiting" && ((place == "show all") || action.place == place)'>           
@@ -815,7 +812,6 @@ Vue.component('next-actions', {
         </template>
         <template v-else>
           <template v-for='project in user.projects'>
-            <div style='height:4px'></div>
             <draggable v-model='user.actions' :options="{handle:'.draggable', animation: 300}">
             <transition-group name='flip-list' tag='div'> 
               <template v-for='action in user.actions' v-if='(action.projectId || action.projectId == 0) && $root.containsAction(project.id, action.id) && action.tag == "nextAction" && ((place == "show all") || action.place == place)'>           
@@ -936,7 +932,6 @@ Vue.component('calendar', {
         </template>
         <template v-else>
           <template v-for='project in user.projects'>
-            <div style='height:4px'></div>
             <draggable v-model='user.actions' :options="{handle:'.draggable', animation: 300}">
             <transition-group name='flip-list' tag='div'> 
               <template v-for='action in user.actions' v-if='(action.projectId || action.projectId == 0) && $root.containsAction(project.id, action.id) && action.tag == "calendar" && action.calendar.date.split("/")[2] < year && ((place == "show all") || action.place == place)'>
@@ -959,7 +954,6 @@ Vue.component('calendar', {
         </template>
         <template v-else>
           <template v-for='project in user.projects'>
-            <div style='height:4px'></div>
             <draggable v-model='user.actions' :options="{handle:'.draggable', animation: 300}">
             <transition-group name='flip-list' tag='div'> 
               <template v-for='action in user.actions' v-if='(action.projectId || action.projectId == 0) && $root.containsAction(project.id, action.id) && action.tag == "calendar" && action.calendar.date.split("/")[2] > year && ((place == "show all") || action.place == place)'>
@@ -982,7 +976,6 @@ Vue.component('calendar', {
         </template>
         <template v-else>
           <template v-for='project in user.projects'>
-            <div style='height:4px'></div>
             <draggable v-model='user.actions' :options="{handle:'.draggable', animation: 300}">
             <transition-group name='flip-list' tag='div'> 
               <template v-for='action in user.actions' v-if='(action.projectId || action.projectId == 0) && $root.containsAction(project.id, action.id) && action.tag == "calendar" && action.calendar.date == date && ((place == "show all") || action.place == place)'>           
@@ -1142,7 +1135,7 @@ Vue.component('projects', {
           </transition>
         </template>
       </draggable>
-      <template v-if='!thereIsAtLeastOneProject()'>
+      <template v-if='!thereIsAtLeastOneProjectOnThisLocation()'>
         <span class='faded' v-html='l.lackOfProjects'></span>
       </template>
       </template>
@@ -1164,8 +1157,24 @@ Vue.component('projects', {
         ids.push(this.user.projects[i].id)
       return ids
     },
-    thereIsAtLeastOneProject(){
-      return (this.user.projects.length > 0)
+    thereIsAtLeastOneProjectOnThisLocation(){
+      let pros = this.user.projects
+      let acts = this.user.actions
+
+      let length = pros.length
+      if (length == 0)
+        return false
+      else if (this.place == 'show all')
+        return true
+      for (let i = 0;i < length;i++){
+        let actLength = pros[i].actions.length
+        for (let j =0;j<actLength;j++){
+          let act = acts[pros[i].actions[j]].place
+          if (act == this.place && this.place != 'show all')
+            return true
+        }
+      }
+      return false
     }
   },
   watch: {
@@ -1868,5 +1877,62 @@ Vue.component('double-icon', {
         <slot></slot>
       </div>
     </transition>
+  `
+})
+Vue.component('places', {
+  props: {
+    l: Object,
+    user: Object,
+    temp: Object
+  },
+  data(){
+    return {
+      lastSelected: undefined
+    }
+  },
+  template: `
+  <div class='places'>
+    <div>
+      <select-option :placeholder='l.selectAPlace' class='centralizeContentMargin' :selected='lastSelected' @update='(newPlace)=>{this.lastSelected = newPlace;this.addPlaceToTheList(newPlace)}'>
+        <drop-link v-for='place in user.places' :value='place'></drop-link>
+      </select-option>
+    </div>
+    <list :list='temp' @remove='removePlaceFromTheList'></list>
+  </div>
+  `,
+  methods: {
+    addPlaceToTheList(place){
+      if (!this.temp.includes(place))
+        this.temp.push(place)
+    },
+    removePlaceFromTheList(obj){
+      let length = this.temp.length
+      for (let i =0;i<length;i++)
+        if (this.temp[i] == obj.value){
+          this.temp.splice(i, 1)
+          break
+        }
+    }
+  }
+})
+Vue.component('list', {
+  props: {
+    list: String
+  },
+  template: `
+    <div class='list' v-if='list.length > 0'>
+      <list-element v-for='place in list' :value='place'></list-element>
+    </div>
+  `
+})
+Vue.component('list-element', {
+  props: {
+    value: String
+  },
+  template: `
+    <div class='list-element'>
+      <span>{{value}}<span>
+      <i class='fa fa-times icon-big act-bar-icon' @click='$parent.$emit("remove", { value: value})'></i>
+    </div>
   `
 })

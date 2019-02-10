@@ -401,12 +401,8 @@
           <title-big class='centralizeContent'><%= __('CHANGE PLACE') %></title-big>
         </form-element>
         <form-element class='centralizeContent' animation='pop2'>
-          <div class='form-content'>
-            <select-option :placeholder='l.selectAPlace' class='centralizeContentMargin' :selected='tempPlace' @update='(newPlace)=>this.tempPlace = newPlace'>
-              <drop-link value='show all'></drop-link>
-              <drop-link v-for='place in user.places' :value='place'></drop-link>
-            </select-option>
-          </div>
+          <places v-if='user.places.length > 0' :l='l' :user='user' :temp='tempUser.places'></places>
+          <span v-else><%= __('There are no places yet.') %></span>
         </form-element>
         <form-element class='centralizeContent' animation='pop3'>
           <form-button @click='changeActionPlace'><%= __('Change place') %></form-button>
@@ -452,7 +448,12 @@
     </template>
     <template slot='adds'>
       <adds>
-      
+      <template v-if='user'>
+    <h5>ACTIONS</h5>
+    <p v-for='action in user.actions'>{{action}}</p>
+    <h5>PROJECTS</h5>
+    <p v-for='action in user.projects'>{{action}}</p>
+  </template>
       </adds>
     </template>
   </user-content>

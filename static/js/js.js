@@ -40,7 +40,8 @@ let vm = new Vue({
         id2: '',
         title: '',
         selected: ''
-      }
+      },
+      places: []
     },
     user: undefined,
     currentSectionComponent: 'basket',
@@ -619,8 +620,9 @@ let vm = new Vue({
       addAction(){
         let dt = this.tempUser.action
         let place = this.place
-        if (place == 'show all') place = null
-        this.user.actions.push({ tag: dt.tag, title: dt.title, description: dt.description, id: this.user.actions.length, place: place})
+        if (place == 'show all') 
+          this.user.actions.push({ tag: dt.tag, title: dt.title, description: dt.description, id: this.user.actions.length, place: null})
+        else this.user.actions.push({ tag: dt.tag, title: dt.title, description: dt.description, id: this.user.actions.length, place: [place]})
         if (!this.guest)
           this.POSTrequest('/add-action', 'title='+dt.title+'&description='+dt.description+'&id='+(this.user.actions.length-1)+'&tag='+dt.tag+'&place='+place)
         this.closeActionForm()
@@ -799,6 +801,7 @@ let vm = new Vue({
       u.project.id2 = ''
       u.project.selected = ''
       this.tempPlace = undefined
+      this.tempUser.places = []
     },
     openUserForm(dt, cleanData = true){
       if (cleanData) this.cleanTempData()
@@ -856,7 +859,9 @@ let vm = new Vue({
         a.calendar.date = action.calendar.date
         a.calendar.time = action.calendar.time
       }
-      this.tempPlace = action.place
+      if (action.place == null)
+        this.tempUser.places = []
+      else this.tempUser.places = action.place
     },
     getDataFromProject(project){
       let t = this.tempUser.project

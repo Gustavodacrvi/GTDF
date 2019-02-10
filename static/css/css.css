@@ -1281,6 +1281,36 @@ h2{
   display: flex;
 }
 
+.places{
+  flex-basis: 300px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.places > div{
+  flex-basis: 140px;
+}
+
+.list{
+  box-shadow: 0 10px 10px 3px rgba(40,40,40,0.4);
+  border-radius: 6px;
+}
+
+.list-element{
+  display: block;
+  padding: 6px;
+  position: relative;
+}
+
+.list-element i{
+  position: absolute;
+  right: 6px;
+  top: 50%;
+  transform: translate(0, -50%);
+}
+
+
 @media screen and (min-width: 796px){
   #mobile{
     display: none;
@@ -1324,7 +1354,7 @@ h2{
 
   .action > :first-child > :last-child > div > div, .project > :first-child > :last-child > div > div{
     position: absolute;
-    top: -100%;
+    bottom: 100%;
     padding: 6px;
     right: -15px;
   }
