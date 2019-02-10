@@ -40,7 +40,8 @@ let vm = new Vue({
         id2: '',
         title: '',
         selected: ''
-      }
+      },
+      places: []
     },
     user: undefined,
     currentSectionComponent: 'basket',
@@ -268,7 +269,7 @@ let vm = new Vue({
         let acts = this.user.actions
         let length = acts.length
         for (let i =0;i<length;i++)
-          if (acts[i].projectId == projectId && acts[i].place == this.place)
+          if (acts[i].projectId == projectId && this.includesPlace(acts[i].id, this.place))
             return true
         return false
       },
@@ -426,27 +427,6 @@ let vm = new Vue({
         u.places = []
         this.closeActionForm()
       },
-      changePlaceOfAllActions(){
-        let acts = this.user.actions
-        let ids = this.user.projects[this.tempUser.project.id].actions
-        let length = ids.length
-        for (let i = 0;i < length;i++)
-          acts[ids[i]].place = this.tempPlace
-        if (!this.guest)
-          this.POSTrequest('/change-project-actions-place', 'id='+this.tempUser.project.id+'&place='+this.tempPlace)
-        this.closeActionForm()
-      },
-      allOfTheActionsInThisProjectHasOnlyOnePlace(projectId){
-        let pro = this.user.projects[projectId]
-        let acts = this.user.actions
-        let length = pro.actions.length
-        if (pro.actions[0] == undefined) return false
-        let place = acts[pro.actions[0]].place
-        for (let i = 0;i < length;i++)
-          if ((acts[pro.actions[i]].place != place || acts[pro.actions[i]].place == null))
-            return false
-        return true
-      },
       getCurrentDate(){
         let date = DateM.getCurrentDay()
         this.tempUser.action.calendar.date = date.stringify()
@@ -471,7 +451,7 @@ let vm = new Vue({
         let act = this.user.actions
         let length = act.length
         for (let i = 0;i < length;i++)
-          if (act[i].tag == tag && !act[i].projectId && act[i].projectId != 0 && ((this.place == 'show all') || act[i].place == this.place))
+          if (act[i].tag == tag && !act[i].projectId && act[i].projectId != 0 && ((this.place == 'show all') || this.includesPlace(act[i].id, this.place)))
             return true
         return false
       },
@@ -480,7 +460,7 @@ let vm = new Vue({
         let length = act.length
         for (let i = 0;i < length;i++)
           if (act[i].projectId || act[i].projectId == 0)
-            if (act[i].tag == tag && ((this.place == 'show all') || act[i].place == this.place))
+            if (act[i].tag == tag && ((this.place == 'show all') || this.includesPlace(act[i].id, this.place)))
               return true
         return false
       },
@@ -558,7 +538,6 @@ let vm = new Vue({
         let rt = this
         let dt = rt.tempUser.action
 
-        console.log(rt.tempUser.project.id)
         rt.user.actions[dt.id].projectId = rt.tempUser.project.id
         rt.user.projects[rt.tempUser.project.id].actions.push(dt.id)
         if (!rt.guest)
@@ -619,8 +598,9 @@ let vm = new Vue({
       addAction(){
         let dt = this.tempUser.action
         let place = this.place
-        if (place == 'show all') place = null
-        this.user.actions.push({ tag: dt.tag, title: dt.title, description: dt.description, id: this.user.actions.length, place: place})
+        if (place == 'show all') 
+          this.user.actions.push({ tag: dt.tag, title: dt.title, description: dt.description, id: this.user.actions.length, place: null})
+        else this.user.actions.push({ tag: dt.tag, title: dt.title, description: dt.description, id: this.user.actions.length, place: [place]})
         if (!this.guest)
           this.POSTrequest('/add-action', 'title='+dt.title+'&description='+dt.description+'&id='+(this.user.actions.length-1)+'&tag='+dt.tag+'&place='+place)
         this.closeActionForm()
@@ -681,8 +661,9 @@ let vm = new Vue({
         let length = this.user.actions.length
         let projectId = this.tempUser.project.id
         let place = this.place
-        if (place == 'show all') place = null
-        this.user.actions.push({tag:'basket',id: length, title: dt.title, description: dt.description, projectId: projectId, place: place})
+        if (place == 'show all')
+          this.user.actions.push({tag:'basket',id: length, title: dt.title, description: dt.description, projectId: projectId, place: null})
+        else this.user.actions.push({tag:'basket',id: length, title: dt.title, description: dt.description, projectId: projectId, place: [place]})
         this.user.projects[projectId].actions.push(length)
         if (!this.guest)
           this.POSTrequest('/create-add-action-project', 'id='+length+'&title='+dt.title+'&description='+dt.description+'&projectId='+projectId+'&place='+place)
@@ -776,9 +757,9 @@ let vm = new Vue({
     changeActionPlace(){
       let dt = this.tempUser.action
 
-      if (this.tempPlace == 'show all') this.tempPlace = null
-
-      this.user.actions[dt.id].place = this.tempPlace
+      if (this.tempUser.places.length == 0)
+        this.user.actions[dt.id].place = null
+      else this.user.actions[dt.id].place = this.tempUser.places
 
       if (!this.guest)
         this.POSTrequest('/change-action-place', 'id='+dt.id+'&place='+this.tempPlace)
@@ -799,6 +780,7 @@ let vm = new Vue({
       u.project.id2 = ''
       u.project.selected = ''
       this.tempPlace = undefined
+      this.tempUser.places = []
     },
     openUserForm(dt, cleanData = true){
       if (cleanData) this.cleanTempData()
@@ -856,12 +838,23 @@ let vm = new Vue({
         a.calendar.date = action.calendar.date
         a.calendar.time = action.calendar.time
       }
-      this.tempPlace = action.place
+      if (action.place == null)
+        this.tempUser.places = []
+      else this.tempUser.places = action.place
     },
     getDataFromProject(project){
       let t = this.tempUser.project
       t.title = project.title
       t.id = project.id
+    },
+    includesPlace(actionId, place){
+      let places = this.user.actions[actionId].place
+      if (places == null) return false
+      let length = places.length
+      for (let i = 0;i<length;i++)
+        if (places[i] == place)
+          return true
+      return false
     },
     changeDropdownSate(dt){
       this.openedActionContents[dt.id] = dt.state
@@ -884,8 +877,9 @@ let vm = new Vue({
       if (validDate && validTime){
         let length = act.length
         let place = this.place
-        if (place == 'show all') place = null
-        act.push({id: length, place: place, tag: 'calendar', title: dt.title, description: dt.description, calendar: {time: dt.calendar.time, date: dt.calendar.date}})
+        if (place == 'show all')
+          act.push({id: length, place: null, tag: 'calendar', title: dt.title, description: dt.description, calendar: {time: dt.calendar.time, date: dt.calendar.date}})
+        else act.push({id: length, place: place, tag: 'calendar', title: dt.title, description: dt.description, calendar: {time: dt.calendar.time, date: dt.calendar.date}})
 
         if (!this.guest)
           this.POSTrequest('/add-timed-action', 'tag="calendar"&title='+dt.title+'&description='+dt.description+'&time='+dt.calendar.time+'&date='+dt.calendar.date+'&place='+place)

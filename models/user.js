@@ -245,7 +245,9 @@ module.exports.deleteProject = function(data, id){
 }
 
 module.exports.createAndAddActionToProject = function(user, id, projectId, title, description, place){
-  user.actions.push({tag: 'basket',title: title, description: description, id: id, projectId: projectId, place: place})
+  if (place == 'show all')
+    user.actions.push({tag: 'basket',title: title, description: description, id: id, projectId: projectId, place: null})
+  else user.actions.push({tag: 'basket',title: title, description: description, id: id, projectId: projectId, place: [place]})
   user.projects[projectId].actions.push(id)
 }
 
@@ -285,7 +287,9 @@ module.exports.updateActionsIds = function(data){
 }
 
 module.exports.addTimedAction = function(act, title, description, date, time, place){
-  act.push({id: act.length, place: place, tag: 'calendar', title: title, description: description, calendar: {time: time, date: date}})
+  if (place == 'show all')
+    act.push({id: act.length, place: null, tag: 'calendar', title: title, description: description, calendar: {time: time, date: date}})
+  else act.push({id: act.length, place: place, tag: 'calendar', title: title, description: description, calendar: {time: time, date: date}})
 }
 
 module.exports.editTimedAction = function(act, title, description, date, time, id){
@@ -334,12 +338,4 @@ module.exports.removePlaceFromAllActionsThatHasThePlace = function(data, place){
       break
     }
 
-}
-
-module.exports.changeProjectActionsPlace = function(data, id, place){
-  let acts = data.actions
-  let ids = data.projects[id].actions
-  let length = ids.length
-  for (let i = 0;i < length;i++)
-    acts[ids[i]].place = place
 }

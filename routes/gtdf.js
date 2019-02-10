@@ -59,9 +59,9 @@ router.post('/add-action', (req, res) => {
     if (err) return handleError(err)
     let b = req.body
 
-    if (b.place == 'undefined')
-      b.place = undefined
-    user.data.actions.push({ title: b.title, id: b.id, description: b.description, tag: b.tag, place: b.place})
+    if (b.place == 'show all')
+      user.data.actions.push({ title: b.title, id: b.id, description: b.description, tag: b.tag, place: null})
+    else user.data.actions.push({ title: b.title, id: b.id, description: b.description, tag: b.tag, place: [b.place]})
     
     User.fixStringIdsAndNulls(user.data)
     user.save((err) => {
@@ -533,22 +533,6 @@ router.post('/change-password', (req, res) => {
     req.logOut()
     req.flash('success_msg', 'Changed password with success')
     res.send()
-  })
-})
-
-router.post('/change-project-actions-place', (req, res) => {
-  User.getUserById(req.user.id, (err, user) => {
-    if (err) return handleError(err)
-    let dt = req.body
-
-    User.changeProjectActionsPlace(user.data, dt.id, dt.place)
-
-    user.markModified('data.actions')
-    user.save((err) => {
-      if (err) return handleError(err)
-
-      res.send()
-    })
   })
 })
 
