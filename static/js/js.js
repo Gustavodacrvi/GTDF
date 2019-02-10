@@ -447,6 +447,18 @@ let vm = new Vue({
             return true
         return false
       },
+      projectHasAtLeastOneActionOnTheTag(projectId, tag){
+        let pro = this.user.projects[projectId]
+        let acts = this.user.actions
+        let ids = pro.actions
+        let length = ids.length
+        for (let i = 0;i<length;i++){
+          let act = acts[ids[i]]
+          if (act.tag == tag && ((this.place == 'show all') || this.includesPlace(act[i].id)))
+            return true
+        }
+        return false
+      },
       hasTagAction(tag){
         let act = this.user.actions
         let length = act.length

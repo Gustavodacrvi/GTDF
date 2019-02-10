@@ -580,7 +580,8 @@ Vue.component('basket', {
         </transition-group>
         </template>
         <template v-else>
-          <template v-for='project in user.projects'>
+          <template v-for='project in user.projects' v-if='$root.projectHasAtLeastOneActionOnTheTag(project.id, "basket")'>
+            <div style='height: 6px'></div>
             <draggable v-model='user.actions' :options="{handle:'.draggable', animation: 300}">
             <transition-group name='flip-list' tag='div'> 
               <template v-for='action in user.actions' v-if='(action.projectId || action.projectId == 0) && $root.containsAction(project.id, action.id) && action.tag == "basket" && ((place == "show all") || $root.includesPlace(action.id, place))'>           
@@ -657,8 +658,9 @@ Vue.component('maybe', {
         </transition-group>
         </template>
         <template v-else>
-          <template v-for='project in user.projects'>
+          <template v-for='project in user.projects' v-if='$root.projectHasAtLeastOneActionOnTheTag(project.id, "maybe")'>
             <draggable v-model='user.actions' :options="{handle:'.draggable', animation: 300}">
+            <div style='height: 6px'></div>
             <transition-group name='flip-list' tag='div'> 
               <template v-for='action in user.actions' v-if='(action.projectId || action.projectId == 0) && $root.containsAction(project.id, action.id) && action.tag == "maybe" && ((place == "show all") || $root.includesPlace(action.id, place))'>
                 <project-action :title='action.title' :description='action.description' :key='action' :id='action.id' :dropdown='dropdowns[action.id]' :icongroup='icongroups' :projectId='action.projectId' :showprojectname='true' @changed-dropdown='changeDropdownState' :l='l'>
@@ -734,7 +736,8 @@ Vue.component('waiting', {
         </transition-group>
         </template>
         <template v-else>
-          <template v-for='project in user.projects'>
+          <template v-for='project in user.projects' v-if='$root.projectHasAtLeastOneActionOnTheTag(project.id, "waiting")'>
+            <div style='height: 6px'></div>
             <draggable v-model='user.actions' :options="{handle:'.draggable', animation: 300}">
             <transition-group name='flip-list' tag='div'> 
               <template v-for='action in user.actions' v-if='(action.projectId || action.projectId == 0) && $root.containsAction(project.id, action.id) && action.tag == "waiting" && ((place == "show all") || $root.includesPlace(action.id, place))'>           
@@ -811,8 +814,10 @@ Vue.component('next-actions', {
         </transition-group>
         </template>
         <template v-else>
-          <template v-for='project in user.projects'>
+          <template v-for='project in user.projects' v-if='$root.projectHasAtLeastOneActionOnTheTag(project.id, "nextAction")'>
+            <div style='height: 6px'></div>
             <draggable v-model='user.actions' :options="{handle:'.draggable', animation: 300}">
+            <div style='height: 4px'></div>
             <transition-group name='flip-list' tag='div'> 
               <template v-for='action in user.actions' v-if='(action.projectId || action.projectId == 0) && $root.containsAction(project.id, action.id) && action.tag == "nextAction" && ((place == "show all") || $root.includesPlace(action.id, place))'>           
                 <project-action :title='action.title' :description='action.description' :key='action' :id='action.id' :dropdown='dropdowns[action.id]' :icongroup='icongroups' :projectId='action.projectId' :showprojectname='true' @changed-dropdown='changeDropdownState' :l='l'>
