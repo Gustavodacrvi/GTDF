@@ -454,7 +454,7 @@ let vm = new Vue({
         let length = ids.length
         for (let i = 0;i<length;i++){
           let act = acts[ids[i]]
-          if (act.tag == tag && ((this.place == 'show all') || this.includesPlace(act[i].id)))
+          if (act.tag == tag && ((this.place == 'show all') || this.includesPlace(act.id, this.place)))
             return true
         }
         return false
@@ -657,6 +657,7 @@ let vm = new Vue({
           this.resetIds(act)
           this.decreaseProjectsActionsIdsByOneThatAreBiggerThan(this.id)
         }
+        this.user.projects.push({ id: this.user.projects.length, title: title, actions: []})
         if (!this.guest)
           this.POSTrequest('/transform-action-to-project', 'title='+title+'&actionId='+dt.action.id+'&delete='+delet)
         this.closeActionForm()

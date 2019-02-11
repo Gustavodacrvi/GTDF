@@ -495,9 +495,13 @@ router.post('/change-action-place', (req, res) => {
     if (err) return handleError(err)
     let dt = req.body
 
-    if (dt.place.length == 0)
-      user.data.actions[dt.id].place = null
-    else user.data.actions[dt.id].place = dt.place
+    if (dt.place.constructor === Array){
+      if (dt.place.length == 0)
+        user.data.actions[dt.id].place = null
+      else user.data.actions[dt.id].place = dt.place
+    } else {
+      user.data.actions[dt.id].place = [dt.place]
+    }
 
     User.fixStringIdsAndNulls(user.data)
     user.markModified('data')

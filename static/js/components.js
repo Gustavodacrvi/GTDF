@@ -1039,7 +1039,7 @@ Vue.component('calendar', {
       let length = act.length
       for (let i = 0;i < length;i++)
         if (!act[i].projectId && act[i].projectId != 0)
-          if (act[i].calendar && act[i].calendar.date == selectedDate && ((act[i].place == undefined && this.place == 'show all') || act[i].place == this.place))
+          if (act[i].calendar && act[i].calendar.date == selectedDate && ((this.place == 'show all') || this.$root.includesPlace(act[i].id, this.place)))
             return true
       return false
     },
@@ -1049,7 +1049,7 @@ Vue.component('calendar', {
       let length = act.length
       for (let i = 0;i < length;i++)
         if (act[i].projectId || act[i].projectId == 0)
-          if (act[i].calendar && act[i].calendar.date == selectedDate && ((act[i].place == undefined && this.place == 'show all') || act[i].place == this.place))
+          if (act[i].calendar && act[i].calendar.date == selectedDate && ((this.place == 'show all') || this.$root.includesPlace(act[i].id, this.place)))
             return true
       return false
     },
@@ -1058,7 +1058,7 @@ Vue.component('calendar', {
       let year = parseInt(this.year)
       let length = act.length
       for (let i = 0;i < length;i++)
-        if (!act[i].projectId && act[i].projectId != 0 && act[i].calendar && ((act[i].place == undefined && this.place == 'show all') || act[i].place == this.place)){
+        if (!act[i].projectId && act[i].projectId != 0 && act[i].calendar && ((this.place == 'show all') || this.$root.includesPlace(act[i].id, this.place))){
           let splited = act[i].calendar.date.split('/')
           if (parseInt(splited[2]) > year)
             return true
@@ -1070,7 +1070,7 @@ Vue.component('calendar', {
       let year = parseInt(this.year)
       let length = act.length
       for (let i = 0;i < length;i++)
-        if ((act[i].projectId || act[i].projectId == 0) && act[i].calendar && ((act[i].place == undefined && this.place == 'show all') || act[i].place == this.place)){
+        if ((act[i].projectId || act[i].projectId == 0) && act[i].calendar && ((this.place == 'show all') || this.$root.includesPlace(act[i].id, this.place))){
           let splited = act[i].calendar.date.split('/')
           if (parseInt(splited[2]) > year)
             return true
@@ -1082,7 +1082,7 @@ Vue.component('calendar', {
       let year = parseInt(this.year)
       let length = act.length
       for (let i = 0;i < length;i++)
-        if (!act[i].projectId && act[i].projectId != 0 && act[i].calendar && ((act[i].place == undefined && this.place == 'show all') || act[i].place == this.place)){
+        if (!act[i].projectId && act[i].projectId != 0 && act[i].calendar && ((this.place == 'show all') || this.$root.includesPlace(act[i].id, this.place))){
           let splited = act[i].calendar.date.split('/')
           if (parseInt(splited[2]) < year)
             return true
@@ -1094,7 +1094,7 @@ Vue.component('calendar', {
       let year = parseInt(this.year)
       let length = act.length
       for (let i = 0;i < length;i++)
-        if ((act[i].projectId || act[i].projectId == 0) && act[i].calendar && ((act[i].place == undefined && this.place == 'show all') || act[i].place == this.place)){
+        if ((act[i].projectId || act[i].projectId == 0) && act[i].calendar && ((this.place == 'show all') || this.$root.includesPlace(act[i].id, this.place))){
           let splited = act[i].calendar.date.split('/')
           if (parseInt(splited[2]) < year)
             return true
