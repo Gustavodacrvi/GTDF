@@ -37,7 +37,9 @@ body {
 .formButton,
 .formButton::before,
 .link-button,
+.link-button-back,
 .link-button::before,
+.link-button-back::before,
 .form-input input,
 .form-input span,
 .hamburger-icon, .bar,
@@ -47,6 +49,7 @@ body {
 
 .formButton,
 .link-button,
+.link-button-back,
 .titleBig {
   color: #fe4a49;
 }
@@ -178,7 +181,7 @@ a{
 
 /* FORMS */
 
-.formButton, .link-button{
+.formButton, .link-button, .link-button-back{
   border: 3px solid #fe4a49;
   font-family: 'Work Sans Light';
   font-size: 1em;
@@ -190,7 +193,7 @@ a{
   padding: 10px;
   z-index: 1;
 }
-.formButton::before, .link-button::before{
+.formButton::before, .link-button::before, .link-button-back::before{
   content: '';
   position: absolute;
   width: 100%;
@@ -201,13 +204,24 @@ a{
   border-radius: 6px;
   background: url('/images/cardcolor.png');
 }
-.formButton:hover::before, .link-button:hover::before{
+
+.link-button-back::before{
+  background: url('/images/backcolor.png') !important;
+}
+
+.link-button-back{
+  font-size: 1.3em;
+  margin: 10px;
+}
+
+
+.formButton:hover::before, .link-button:hover::before, .link-button-back:hover::before{
   width: 0;
   height: 0;
   top: 50%;
   left: 50%;
 }
-.formButton:hover, .link-button:hover{
+.formButton:hover, .link-button:hover, .link-button-back:hover{
   color: white;
 }
 
@@ -1309,6 +1323,40 @@ h2{
   transform: translate(0, -50%);
 }
 
+.backcolor{
+  background: url('/images/backcolor.png') !important;
+}
+
+/* LANDPAGE */
+
+#main{
+  height: 550px;
+  display: flex;
+  justify-content: center;
+  margin-top: 60px;
+}
+
+#main > div{
+  flex-basis: 500px;
+  position: relative;
+}
+
+#main > div > :first-child{
+  display: flex;
+  justify-content: center;
+}
+
+#main > div > :nth-child(2){
+  font-size: 1.4em;
+  line-height: 1.6;
+  text-align: center;
+}
+
+#main > div > :last-child{
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
 
 @media screen and (min-width: 796px){
   #mobile{
@@ -1338,6 +1386,7 @@ h2{
   #content > :first-child > div > div{
     margin: 0 10px;
   }
+
 }
 
 @media screen and (max-width: 789px){

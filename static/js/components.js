@@ -103,6 +103,15 @@ Vue.component('link-button', {
     <a :tabindex='tabindex' class='link-button' :href='href'><slot></slot></a>
   `
 })
+Vue.component('link-button-back', {
+  props: {
+    href: String,
+    tabindex: String
+  },
+  template: `
+    <a :tabindex='tabindex' class='link-button-back' :href='href'><slot></slot></a>
+  `
+})
 Vue.component('alert',{
   template: `
     <span class='alert-alert'><slot></slot></span>
