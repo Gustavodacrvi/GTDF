@@ -266,6 +266,18 @@
   }
 }
 
+@keyframes comeFromAbove{
+  0%{
+    position: relative;
+    top: -80px;
+    opacity: .2;
+  }
+  100%{
+    top: 0;
+    opacity: 1;
+  }
+}
+
 .curved-movement-enter-active{
   animation: popLong;
   animation-duration: .3s;
@@ -288,6 +300,12 @@
 
 .flip-list-move{
   transition: transform 0;
+}
+
+.come-from-above{
+  animation: comeFromAbove;
+  animation-duration: 2s;
+  animation-play-state: running;
 }
 
 

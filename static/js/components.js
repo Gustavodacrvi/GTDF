@@ -1,4 +1,3 @@
-
 Vue.component('fixed', {
   template: `
     <div id='fixedElements' class='centralizeContent'>
