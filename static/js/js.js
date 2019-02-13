@@ -5,6 +5,7 @@ let vm = new Vue({
   data: {
     desktop: undefined,
     guest: false,
+    lang: undefined,
     tempPlace: undefined,
     showPasswords: false,
     showSideBar: false,
@@ -64,6 +65,7 @@ let vm = new Vue({
   },
   methods: {
       setLanguage(lang){
+        this.lang = lang
         if (lang == 'en'){
           this.l = {
             lackOfNonProjectActionsBasket: `Your non-project actions with the tag "basket" will show here.</br></br>Click on the <i class='fa fa-plus icon-bif'></i> icon to add an action.`,

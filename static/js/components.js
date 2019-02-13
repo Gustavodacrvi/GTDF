@@ -259,8 +259,8 @@ Vue.component('select-option', {
     <div class='select-option' @mouseover='isDropdownOpened = true' @mouseleave='isDropdownOpened = false' v-if='show'>
       <div>
         <span class='faded'>{{ placeholder }}</span>
-        <a v-if='!isDropdownOpened || temp == undefined'>{{ selected }}</a>
-        <a v-else>{{ temp }}</a>
+        <a v-if='!isDropdownOpened || temp == undefined'>{{ select(selected) }}</a>
+        <a v-else>{{ select(temp) }}</a>
       </div>
       <transition name='pop-long'>
         <div v-show='isDropdownOpened' class='card-shadow'>
@@ -270,6 +270,15 @@ Vue.component('select-option', {
     </div>
     </transition>
   `,
+  methods: {
+    select(selected){
+      if (selected == 'show all' && this.$root.lang == 'en')
+        return selected
+      else if (selected == 'show all')
+        return 'mostrar todos'
+      else return selected
+    }
+  },
   watch: {
     selected(){
       if (this.selected != undefined){
@@ -294,8 +303,8 @@ Vue.component('drop-link',{
     id: String
   },
   template: `
-    <a v-if='!$parent.nonlive' :href='href' class='dropdown-link' @click='send' @mouseover='$parent.temp = value'>{{value}}<slot></slot></a>
-    <a :href='href' class='dropdown-link' @click='send' v-else>{{value}}<slot></slot></a>
+    <a v-if='!$parent.nonlive' :href='href' class='dropdown-link' @click='send' @mouseover='$parent.temp = value'>{{select(value)}}<slot></slot></a>
+    <a :href='href' class='dropdown-link' @click='send' v-else>{{select(value)}}<slot></slot></a>
   `,
   methods: {
     send(){
@@ -305,6 +314,13 @@ Vue.component('drop-link',{
       }else {
         this.$parent.selected = this.value
       }
+    },
+    select(value){
+      if (value == 'show all' && this.$root.lang == 'en')
+        return value
+      else if (value == 'show all')
+        return 'mostrar todos'
+      else return value
     }
   }
 })

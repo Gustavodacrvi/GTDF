@@ -86,5 +86,6 @@
 	"The place name can not be \"show all\".": "The place name can not be \"show all\".",
 	"Create a place": "Create a place",
 	"CHANGE PLACE OF ACTIONS": "CHANGE PLACE OF ACTIONS",
-	"Change places": "Change places"
+	"Change places": "Change places",
+	"You have not created any places yet.": "You have not created any places yet."
 }
