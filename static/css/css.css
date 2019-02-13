@@ -288,7 +288,6 @@ a{
   width: 90%;
   padding: 0 5%;
   pointer-events: all;
-  /* background: url('/images/cardcolor.png'); */
   background: url('/images/cardcolor.png');
   z-index: 20;
   box-shadow: 0 6px 6px 1px rgba(40,40,40,0.4); 
@@ -650,11 +649,13 @@ a{
 }
 
 #content > :first-child{
-  width: 75%;
+  flex-basis: 100%;
 }
 
 #content > :last-child{
-  width: 25%;
+  width: 200px;
+  flex-shrink: 0;
+  background-color: purple;
 }
 
 
@@ -897,8 +898,9 @@ a{
   margin-top: 40px; 
   position: relative;
   overflow: visible;
+  display: flex;
+  justify-content: center;
 }
-
 
 .calendar-graph > h2{
   position: absolute;
@@ -911,7 +913,7 @@ a{
 .calendar-graph > div{
   position: relative;
   height: 66%;
-  width: 97%;
+  width: 750px;
   margin-left: 25px;
   top: 25px;
   overflow: visible;
@@ -1443,7 +1445,7 @@ h2{
   }
 }
 
-@media screen and (max-width: 1355px){
+@media screen and (max-width: 1200px){
   .calendar-graph{
     display: none;
   }
