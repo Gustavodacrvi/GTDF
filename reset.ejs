@@ -3,7 +3,7 @@
 
 <head>
   <% include partials/header %>
-  <title><%= __('Login') %></title>
+  <title><%= __('Reset password') %></title>
 </head>
 
 <body>
@@ -45,34 +45,15 @@
     </navigation-bar>
     <login-form :show='true'>
       <form method='post' action='/login'>
-      <form-element class='centralizeContent' animation='pop1'>
-        <title-big><%= __('LOGIN') %></title-big>
-      </form-element>
-      <form-element class='centralizeContent' animation='pop3'>
-        <input-form tabindex="1" placeholder='<%= __("Username") %>:' name='username'></input-form>
-      </form-element>
-      <form-element class='centralizeContent' animation='pop2'>
-        <input-pass tabindex="2" :opened='showPasswords' name='password' placeholder='<%= __("Password") %>:' @click='togglePasswordVisiblity'></input-pass>
-      </form-element>
-      <% if (locals.success_msg) { %>
-        <form-element animation='pop5'>
-          <success><%= __(String(success_msg)) %></success>
+        <form-element class='centralizeContent' animation='pop1'>
+          <title-big><%= __('RESET PASSWORD') %></title-big>
         </form-element>
-      <% } %>
-      <% if (locals.error) { %>
-        <form-element animation='pop6'>
-          <alert><%= __(String(error)) %></alert>
+        <form-element class='centralizeContent' animation='pop2'>
+          <input-pass tabindex="2" :opened='showPasswords' name='password' placeholder='<%= __("New password") %>:' @click='togglePasswordVisiblity' :value='newPassword' @change='(v) => newPassword = v'></input-pass>
         </form-element>
-      <% } %>
-      <form-element animation='pop5'>
-        <link-blue href='/sign-up'><%= __("Doesn't have an account? Sign up!") %></link-blue>
-      </form-element>
-      <form-element class='centralizeContent' animation='pop6'> 
-        <form-button tabindex="3"><%= __("Get things done") %></form-button>
-      </form-element>
-      <form-element animation='pop7'>
-        <link-blue href='/sendemail'><%= __("Forgot password/username?") %></link-blue>
-      </form-element>
+        <form-element class='centralizeContent' animation='pop2'>
+          <input-pass tabindex="2" :opened='showPasswords' name='password' placeholder='<%= __("Confirm password") %>:' @click='togglePasswordVisiblity' :value='newConfirmPassword' @change='(v) => newConfirmPassword = v'></input-pass>
+        </form-element>
       </form>
     </login-form>
   </fixed>

@@ -91,6 +91,7 @@ router.post('/save-new-action-order', (req, res) => {
 })
 
 router.post('/save-new-project-order', (req, res) => {
+  if (req.deletedProject){
   User.getUserById(req.user.id, (err, user) => {
     if (err) return handleError(err)
     let u = user.data
@@ -108,6 +109,7 @@ router.post('/save-new-project-order', (req, res) => {
       res.send()
     })
   })
+}
 })
 
 router.post('/delete-action', (req, res) => {
@@ -197,6 +199,7 @@ router.post('/delete-project', (req, res) => {
   User.getUserById(req.user.id, (err, user) => {
     if (err) return handleError(err)
     let b = req.body
+    req.deletedProject = false
 
     User.deleteProject(user.data, b.id)
 
@@ -205,6 +208,7 @@ router.post('/delete-project', (req, res) => {
     user.save((err) => {
       if (err) return handleError(err)
 
+      req.deleteProject = true
       res.send()
     })
   })
