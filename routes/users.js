@@ -12,12 +12,13 @@ function checkAndChangeLocale(req, res){
       i18n.setLocale(res, req.session.chosen_locale)
 }
 
-router.get('/reset', function(req, res){
+router.get('/password-or-username', function(req, res){
   checkAndChangeLocale(req, res)
-  res.render('reset', {
+  res.render('passuser', {
     user: req.user
   })
 })
+
 
 // LOGIN
 router.get('/login', function(req, res){

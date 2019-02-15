@@ -109,5 +109,8 @@
 	"show all": "mostrar todas",
 	"By clicking this button all of your data, actions, projects, places, password, etc..., will be gone.": "By clicking this button all of your data, actions, projects, places, password, etc..., will be gone.",
 	"Reset password": "Reset password",
-	"RESET PASSWORD": "RESET PASSWORD"
+	"RESET PASSWORD": "RESET PASSWORD",
+	"Send email": "Send email",
+	"SEND EMAIL": "SEND EMAIL",
+	"I forgot my username": "I forgot my username"
 }

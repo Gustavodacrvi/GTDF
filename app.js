@@ -10,6 +10,10 @@ let cookieParser = require('cookie-parser')
 let expressValidator = require('express-validator')
 let session = require('express-session')
 let flash = require('connect-flash')
+let async = require('async')
+let crypto = require('crypto')
+let nodemailer = require('nodemailer')
+let logger = require('morgan')
 
 // ROUTES
 var users = require('./routes/users')
@@ -81,6 +85,8 @@ app.use(i18n.init)
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cookieParser())
+// LOGGER
+app.use(logger('dev'))
 
 
 app.use('/', users)

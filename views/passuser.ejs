@@ -46,7 +46,10 @@
     <login-form :show='true'>
       <form method='post' action='/login'>
         <form-element class='centralizeContent'>
-          <title-big><%= __('SEND EMAIL') %></title-big>
+          <link-button><%= __('I forgot my password') %></link-button>
+        </form-element>
+        <form-element class='centralizeContent'>
+          <link-button><%= __('I forgot my username') %></link-button>
         </form-element>
       </form>
     </login-form>

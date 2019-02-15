@@ -97,7 +97,7 @@ body {
 
 .icon-tiny{
   font-size: 16px;
-  color: #949494; 
+  color: #949494;
 }
 
 .titleBig{
@@ -880,7 +880,7 @@ a{
 }
 
 .project > :last-child > :last-child{
-  width: 95%;
+  width: 97%;
 }
 
 .faded{
