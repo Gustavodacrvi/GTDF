@@ -894,7 +894,7 @@ let vm = new Vue({
         let place = this.place
         if (place == 'show all')
           act.push({id: length, place: null, tag: 'calendar', title: dt.title, description: dt.description, calendar: {time: dt.calendar.time, date: dt.calendar.date}})
-        else act.push({id: length, place: place, tag: 'calendar', title: dt.title, description: dt.description, calendar: {time: dt.calendar.time, date: dt.calendar.date}})
+        else act.push({id: length, place: [place], tag: 'calendar', title: dt.title, description: dt.description, calendar: {time: dt.calendar.time, date: dt.calendar.date}})
 
         if (!this.guest)
           this.POSTrequest('/add-timed-action', 'tag="calendar"&title='+dt.title+'&description='+dt.description+'&time='+dt.calendar.time+'&date='+dt.calendar.date+'&place='+place)

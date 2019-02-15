@@ -291,7 +291,7 @@ module.exports.updateActionsIds = function(data){
 module.exports.addTimedAction = function(act, title, description, date, time, place){
   if (place == 'show all')
     act.push({id: act.length, place: null, tag: 'calendar', title: title, description: description, calendar: {time: time, date: date}})
-  else act.push({id: act.length, place: place, tag: 'calendar', title: title, description: description, calendar: {time: time, date: date}})
+  else act.push({id: act.length, place: [place], tag: 'calendar', title: title, description: description, calendar: {time: time, date: date}})
 }
 
 module.exports.editTimedAction = function(act, title, description, date, time, id){

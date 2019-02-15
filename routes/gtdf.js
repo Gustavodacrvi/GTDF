@@ -109,7 +109,7 @@ router.post('/save-new-project-order', (req, res) => {
       res.send()
     })
   })
-}
+  } else res.send()
 })
 
 router.post('/delete-action', (req, res) => {
