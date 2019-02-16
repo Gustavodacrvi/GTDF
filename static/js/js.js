@@ -789,6 +789,21 @@ let vm = new Vue({
       }
     },
     changeActionsProjectPlace(){
+      let dt = this.tempUser
+      let pros = this.user.projects
+      let acts = this.user.actions
+      let pro = pros[dt.project.id]
+
+      let length = pro.actions.length
+      if (this.tempUser.places.length == 0){
+        for (let i =0;i<length;i++)
+          acts[pro.actions[i]].place = null
+      }
+      else
+        for (let i =0;i<length;i++)
+          acts[pro.actions[i]].place = this.tempUser.places
+
+      this.closeActionForm()
     },
     changeActionPlace(){
       let dt = this.tempUser.action
