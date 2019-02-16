@@ -43,10 +43,14 @@ module.exports.createUser = function(newUser, caLLback){
     })
 }
 
-module.exports.changePassword = function(user, newPassword, callback){
+module.exports.changePassword = function(user, newPassword, callback, deletePasswordResetTokens = false){
   bcrypt.genSalt(10, function(err, salt){
     bcrypt.hash(newPassword, salt, function(err, hash){
       user.password = hash
+      if (deletePasswordResetTokens){
+        user.resetPasswordToken = undefined;
+        user.resetPasswordExpires = undefined;
+      }
       user.save(callback)
     })
   })
