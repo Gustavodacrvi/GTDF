@@ -819,8 +819,12 @@ let vm = new Vue({
         this.user.actions[dt.id].place = null
       else this.user.actions[dt.id].place = this.tempUser.places
 
-      if (!this.guest)
-        this.POSTrequest('/change-action-place', 'id='+dt.id+'&'+this.parseArrayToHTTPparams(this.tempUser.places, 'place'))
+      if (!this.guest){
+        if (this.tempUser.places != 0)
+          this.POSTrequest('/change-action-place', 'id='+dt.id+'&'+this.parseArrayToHTTPparams(this.tempUser.places, 'place'))
+        else
+          this.POSTrequest('/change-action-place', 'id='+dt.id+'&place='+null)
+      }
 
       this.closeActionForm()
     },

@@ -525,13 +525,12 @@ router.post('/change-action-place', (req, res) => {
     if (err) return handleError(err)
     let dt = req.body
 
-    if (dt.place.constructor === Array){
-      if (dt.place.length == 0)
-        user.data.actions[dt.id].place = null
-      else user.data.actions[dt.id].place = dt.place
-    } else {
+    if (dt.place == 'null')
+      user.data.actions[dt.id].place = null
+    else if (dt.place.constructor === Array)
+      user.data.actions[dt.id].place = dt.place
+    else
       user.data.actions[dt.id].place = [dt.place]
-    }
 
     User.fixStringIdsAndNulls(user.data)
     user.markModified('data')
@@ -559,7 +558,7 @@ router.post('/change-places-of-all-actions', (req, res) => {
         acts[pro.actions[i]].place = dt.places
     else
       for (let i =0;i<length;i++)
-        acts[pro.actions[i]].place = dt.places
+        acts[pro.actions[i]].place = [dt.places]
     
     User.fixStringIdsAndNulls(user.data)
     user.markModified('data.actions')
