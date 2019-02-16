@@ -112,5 +112,7 @@
 	"RESET PASSWORD": "RESET PASSWORD",
 	"Send email": "Send email",
 	"SEND EMAIL": "SEND EMAIL",
-	"I forgot my username": "I forgot my username"
+	"I forgot my username": "I forgot my username",
+	"No account with that email address exists.": "No account with that email address exists.",
+	"An e-mail has been sent to the given email with further instructions.": "An e-mail has been sent to the given email with further instructions."
 }
