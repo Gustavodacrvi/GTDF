@@ -79,11 +79,26 @@ router.post('/send-email', (req, res, next) => {
       });
     }
   ], function(err) {
-    if (err) console.log(err)
     if (err) return next(err);
     res.redirect('/send-email');
   });
 })
+
+router.get('/reset/:token', function(req, res) {
+  User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, function(err, user) {
+    if (!user) {
+      req.flash('error', 'Password reset token is invalid or has expired.');
+      return res.redirect('/forgot');
+    }
+    res.render('resetpass', {
+      user: req.user
+    });
+  });
+});
+
+router.post('/reset/:token', function(req, res) {
+  res.render('index')
+});
 
 // LOGIN
 router.get('/login', function(req, res){
