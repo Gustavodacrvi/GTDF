@@ -802,6 +802,13 @@ let vm = new Vue({
       else
         for (let i =0;i<length;i++)
           acts[pro.actions[i]].place = this.tempUser.places
+      
+      if (!this.guest){
+        if (this.tempUser.places.length != 0)
+          this.POSTrequest('/change-places-of-all-actions', 'projectId='+dt.project.id+'&'+this.parseArrayToHTTPparams(this.tempUser.places, 'places'))
+        else
+          this.POSTrequest('/change-places-of-all-actions', 'projectId='+dt.project.id+'&places='+null)
+      }
 
       this.closeActionForm()
     },
