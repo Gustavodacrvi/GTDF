@@ -3,7 +3,7 @@
 
 <head>
   <% include partials/header %>
-  <title><%= __('Reset password') %></title>
+  <title><%= __('Reset username') %></title>
 </head>
 
 <body>
@@ -46,25 +46,27 @@
     <login-form :show='true'>
       <form method='post'>
         <form-element class='centralizeContent' animation='pop1'>
-          <title-big><%= __('CHANGE PASSWORD') %></title-big>
-        </form-element>
-        <form-element class='centralizeContent' animation='pop2'>
-          <input-pass tabindex="2" :opened='showPasswords' name='password' placeholder='<%= __("New password") %>:' @click='togglePasswordVisiblity' :value='newPasswordForgot' @change='(v) => newPasswordForgot = v'></input-pass>
-        </form-element>
-        <form-element class='centralizeContent' animation='pop2'>
-          <input-pass tabindex="2" :opened='showPasswords' name='confirmPassword' placeholder='<%= __("Confirm password") %>:' @click='togglePasswordVisiblity' :value='newConfirmPasswordForgot' @change='(v) => newConfirmPasswordForgot = v'></input-pass>
-        </form-element>
-        <form-element v-if='hasPasswordError && passwordError == "PasswordsDoesntMatch"'>
-          <alert><%= __('Password not matching.') %></alert>
-        </form-element>
-        <form-element v-if='hasPasswordError && passwordError == "emptyFields"'>
-          <alert><%= __('Missing credentials') %>.</alert>
-        </form-element>
-        <form-element v-if='validPasswords && passwordError == "alright"'>
-          <success><%= __('You can proceed to change the password') %>.</success>
+          <title-big><%= __('RESET USERNAME') %></title-big>
         </form-element>
         <form-element class='centralizeContent'>
-          <form-button tabindex='3' :blocked='!validPasswords'><%= __('Change password') %></form-button>
+          <div class='form-input centralizeContent'>
+            <input autocomplete='off' type='text' placeholder='<%= __("Username") %>:' tabindex='1' v-model='tempUsername'/>
+          </div>
+        </form-element>
+        <form-element v-if='tempUsername == username'>
+          <alert><%= __('Choose another username.') %></alert>
+        </form-element>
+        <form-element class='centralizeContent' v-if='tempUsername != username && tempUsername != ""'>
+          <link-red @click='checkAvailability'><%= __('Check availability') %></link-red>
+        </form-element>
+        <form-element v-if='validUsername == false'>
+          <alert><%= __('Someone else already used that username.') %></alert>
+        </form-element>
+        <form-element v-if='validUsername == true'>
+          <success><%= __('Valid username.') %></success>
+        </form-element>
+        <form-element class='centralizeContent'>
+          <form-button :blocked='!checked' :class='{blocked: !checked}'><%= __('Change username') %></form-button>
         </form-element>
       </form>
     </login-form>

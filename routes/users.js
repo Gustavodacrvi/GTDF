@@ -72,7 +72,7 @@ router.post('/send-email-password', (req, res, next) => {
         subject: 'Getting Things Done for Free(GTDF) password reset',
         text: 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
           'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
-          'http://' + req.headers.host + '/reset/' + token + '\n\n' +
+          'http://' + req.headers.host + '/resetpassword/' + token + '\n\n' +
           'If you did not request this, please ignore this email and your password will remain unchanged.\n'
       };
       smtpTransport.sendMail(mailOptions, function(err) {
@@ -86,7 +86,7 @@ router.post('/send-email-password', (req, res, next) => {
   });
 })
 
-router.get('/reset/:token', function(req, res) {
+router.get('/resetpassword/:token', function(req, res) {
   User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, function(err, user) {
     if (!user) {
       req.flash('error', 'Password reset token is invalid or has expired.');
@@ -98,7 +98,7 @@ router.get('/reset/:token', function(req, res) {
   });
 });
 
-router.post('/reset/:token', function(req, res) {
+router.post('/resetpassword/:token', function(req, res) {
   async.waterfall([
     function(done) {
       User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, function(err, user) {
@@ -192,7 +192,7 @@ router.post('/send-email-username', (req, res, next)=>{
         subject: 'Getting Things Done for Free(GTDF) username reset',
         text: 'You are receiving this because you (or someone else) have requested the reset of the username for your account.\n\n' +
           'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
-          'http://' + req.headers.host + '/reset/' + token + '\n\n' +
+          'http://' + req.headers.host + '/resetusername/' + token + '\n\n' +
           'If you did not request this, please ignore this email and your username will remain unchanged.\n'
       };
       smtpTransport.sendMail(mailOptions, function(err) {
@@ -205,6 +205,19 @@ router.post('/send-email-username', (req, res, next)=>{
     res.redirect('/send-email-username');
   });
 })
+
+router.get('/resetusername/:token', (req, res) => {
+  User.findOne({ resetUsernameToken: req.params.token, resetUsernameExpires: { $gt: Date.now() } }, function(err, user) {
+    if (!user) {
+      req.flash('error', 'Username reset token is invalid or has expired.');
+      return res.redirect('/login');
+    }
+    res.render('resetuser', {
+      user: req.user
+    });
+  });
+})
+
 // LOGIN
 router.get('/login', function(req, res){
   checkAndChangeLocale(req, res)
@@ -216,7 +229,7 @@ router.get('/login', function(req, res){
 router.get('/get-user-data', function(req, res){
   User.findById(req.user.id, (err, user)=>{
     if (err) return handleError(err)
-    res.send(JSON.stringify({email: user.email, username: user.username}))
+    res.send(JSON.stringify({email: user.email, username: user.username.trim()}))
   })
 })
 
@@ -248,7 +261,7 @@ router.post('/login',
 })
 
 router.post('/sign-up', function(req, res){
-  var username = req.body.username
+  var username = req.body.username.trim()
   var email = req.body.email
   var password = req.body.password
   var confirm = req.body.cofirm
@@ -264,7 +277,7 @@ router.post('/sign-up', function(req, res){
 
   let usernameTaken = false
   let emailTaken = false
-  User.countDocuments({username: username}, function(err, count){
+  User.countDocuments({username: username.trim()}, function(err, count){
     if (count > 0) usernameTaken = true
   }).then(function(){
     User.countDocuments({email: email}, function(err, count){
@@ -279,7 +292,7 @@ router.post('/sign-up', function(req, res){
       ]})
       else{
         let newUser = new User({
-          username: username,
+          username: username.trim(),
           password: password,
           email: email
         })
@@ -298,7 +311,7 @@ router.post('/sign-up', function(req, res){
 
 passport.use(new LocalStrategy(
   function(username, password, done){
-      User.getUserByUsername(username, function(err, user){
+      User.getUserByUsername(username.trim(), function(err, user){
           if(err) throw err
           if(!user){
               return done(null, false, {message: 'Unknown username'})
