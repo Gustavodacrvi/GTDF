@@ -408,6 +408,18 @@
           <form-button @click='changeActionPlace'><%= __('Change place') %></form-button>
         </form-element>
       </action-form>
+      <action-form key='changeActionsProjectPlace' v-else-if='displayForm("changeActionsProjectPlace")' @close='closeActionForm' :l='l'>
+        <form-element animation='pop1'>
+          <title-big class='centralizeContent'><%= __('CHANGE PLACES OF ACTIONS') %></title-big>
+        </form-element>
+        <form-element class='centralizeContent' animation='pop2'>
+          <places v-if='user.places.length > 0' :l='l' :user='user' :temp='tempUser.places'></places>
+          <span v-else><%= __('You have not created any places yet.') %></span>
+        </form-element>
+        <form-element class='centralizeContent' animation='pop3'>
+          <form-button @click='changeActionsProjectPlace'><%= __('Change place') %></form-button>
+        </form-element>
+      </action-form>
       <action-form key='addPlace' v-else-if='displayForm("addPlace")' @close='closeActionForm' :l='l'>
         <form-element animation='pop1'>
           <title-big class='centralizeContent'><%= __('CREATE A PLACE') %></title-big>

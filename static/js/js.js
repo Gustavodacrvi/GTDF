@@ -788,6 +788,8 @@ let vm = new Vue({
         this.showIconGroups = false
       }
     },
+    changeActionsProjectPlace(){
+    },
     changeActionPlace(){
       let dt = this.tempUser.action
 
