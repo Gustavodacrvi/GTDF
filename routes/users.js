@@ -22,14 +22,16 @@ router.get('/password-or-username', function(req, res){
   })
 })
 
-router.get('/send-email', (req, res) => {
+// RESET PASSWORD
+
+router.get('/send-email-password', (req, res) => {
   checkAndChangeLocale(req, res)
   res.render('sendemail', {
     user: req.user
   })
 })
 
-router.post('/send-email', (req, res, next) => {
+router.post('/send-email-password', (req, res, next) => {
   async.waterfall([
     function(done) {
       crypto.randomBytes(20, function(err, buf) {
@@ -41,7 +43,7 @@ router.post('/send-email', (req, res, next) => {
       User.findOne({ email: req.body.email }, function(err, user) {
         if (!user) {
           req.flash('error', 'No account with that email address exists.');
-          return res.redirect('/send-email');
+          return res.redirect('/send-email-password');
         }
 
         user.resetPasswordToken = token;
@@ -80,7 +82,7 @@ router.post('/send-email', (req, res, next) => {
     }
   ], function(err) {
     if (err) return next(err);
-    res.redirect('/send-email');
+    res.redirect('/send-email-password');
   });
 })
 
@@ -139,6 +141,15 @@ router.post('/reset/:token', function(req, res) {
     res.redirect('/login');
   });
 });
+
+// RESET USERNAME
+
+router.get('/send-email-username', (req, res) => {
+  checkAndChangeLocale(req, res)
+  res.render('sendemailusername', {
+    user: req.user
+  })
+})
 
 // LOGIN
 router.get('/login', function(req, res){

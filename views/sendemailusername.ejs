@@ -3,7 +3,7 @@
 
 <head>
   <% include partials/header %>
-  <title><%= __('Reset password') %></title>
+  <title><%= __('Reset username') %></title>
 </head>
 
 <body>
@@ -44,9 +44,9 @@
       </template>
     </navigation-bar>
     <login-form :show='true'>
-      <form method='post' action='/send-email-password'>
+      <form method='post' action='/send-email-username'>
         <form-element class='centralizeContent'>
-          <title-big><%= __('RESET PASSWORD') %></title-big>
+          <title-big><%= __('RESET USERNAME') %></title-big>
         </form-element>
         <form-element class='centralizeContent'>
           <input-form tabindex='1' placeholder='<%= __("Email") %>:' name='email'></input-form>

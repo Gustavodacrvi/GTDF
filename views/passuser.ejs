@@ -46,10 +46,10 @@
     <login-form :show='true'>
       <form method='post' action='/login'>
         <form-element class='centralizeContent'>
-          <link-button tabindex='1' href='/send-email'><%= __('I forgot my password') %></link-button>
+          <link-button tabindex='1' href='/send-email-password'><%= __('I forgot my password') %></link-button>
         </form-element>
         <form-element class='centralizeContent'>
-          <link-button tabindex='2'><%= __('I forgot my username') %></link-button>
+          <link-button tabindex='2' href='/send-email-username'><%= __('I forgot my username') %></link-button>
         </form-element>
       </form>
     </login-form>
