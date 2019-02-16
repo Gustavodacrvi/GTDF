@@ -120,5 +120,6 @@
 	"Reset username": "Reset username",
 	"RESET USERNAME": "RESET USERNAME",
 	"Username reset token is invalid or has expired.": "Username reset token is invalid or has expired.",
-	"Your username has been changed.": "Your username has been changed."
+	"Your username has been changed.": "Your username has been changed.",
+	"CHANGE PLACES OF ACTIONS": "CHANGE PLACES OF ACTIONS"
 }

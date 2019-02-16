@@ -1237,9 +1237,10 @@ Vue.component('project', {
           <span>{{ title }}</span>
         </div>
         <div>
-          <icon-group :show='icongroup' @delete='deleteProject' @edit='editProject' @project='addActionToProject'>
+          <icon-group :show='icongroup' @delete='deleteProject' @edit='editProject' @project='addActionToProject' @places='changePlacesOfActions'>
             <action-icon icon='fa fa-times' event='delete' :title='l.deleteProject'></action-icon>
             <action-icon icon='fa fa-edit' event='edit' :title='l.editProjectTitle'></action-icon>
+            <action-icon icon='fas fa-map-marked-alt' event='places' :title='l.changePlaceOfAllActions'></action-icon>
             <action-icon icon='fa fa-plus' event='project' :title='l.addToProject'></action-icon>
           </icon-group>
         </div>
@@ -1261,6 +1262,9 @@ Vue.component('project', {
   methods: {
     changeDropdownState(obj){
       this.dropdowns[obj.id] = obj.state
+    },
+    changePlacesOfActions(){
+      this.openActionForm('changeActionsProjectPlace')
     },
     deleteProject(){
       let rt = this.$root

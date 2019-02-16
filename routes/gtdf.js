@@ -491,29 +491,6 @@ router.post('/check-availability', (req, res) => {
   })
 })
 
-router.post('/change-action-place', (req, res) => {
-  User.getUserById(req.user.id, (err, user) => {
-    if (err) return handleError(err)
-    let dt = req.body
-
-    if (dt.place.constructor === Array){
-      if (dt.place.length == 0)
-        user.data.actions[dt.id].place = null
-      else user.data.actions[dt.id].place = dt.place
-    } else {
-      user.data.actions[dt.id].place = [dt.place]
-    }
-
-    User.fixStringIdsAndNulls(user.data)
-    user.markModified('data')
-    user.save((err) => {
-      if (err) return handleError(err)
-
-      res.send()
-    })
-  })
-})
-
 router.post('/check-password', (req, res) => {
   User.getUserById(req.user.id, (err, user) => {
     if (err) return handleError(err)
@@ -540,6 +517,56 @@ router.post('/change-password', (req, res) => {
     req.logOut()
     req.flash('success_msg', 'Changed password with success')
     res.send()
+  })
+})
+
+router.post('/change-action-place', (req, res) => {
+  User.getUserById(req.user.id, (err, user) => {
+    if (err) return handleError(err)
+    let dt = req.body
+
+    if (dt.place == 'null')
+      user.data.actions[dt.id].place = null
+    else if (dt.place.constructor === Array)
+      user.data.actions[dt.id].place = dt.place
+    else
+      user.data.actions[dt.id].place = [dt.place]
+
+    User.fixStringIdsAndNulls(user.data)
+    user.markModified('data')
+    user.save((err) => {
+      if (err) return handleError(err)
+
+      res.send()
+    })
+  })
+})
+
+router.post('/change-places-of-all-actions', (req, res) => {
+  User.getUserById(req.user.id, (err, user) => {
+    if (err) return handleError(err)
+    let dt = req.body
+    let pro = user.data.projects[dt.projectId]
+    let acts = user.data.actions
+
+    let length = pro.actions.length
+    if (dt.places == 'null')
+      for (let i =0;i<length;i++)
+        acts[pro.actions[i]].place = null
+    else if (dt.places.constructor === Array)
+      for (let i =0;i<length;i++)
+        acts[pro.actions[i]].place = dt.places
+    else
+      for (let i =0;i<length;i++)
+        acts[pro.actions[i]].place = [dt.places]
+    
+    User.fixStringIdsAndNulls(user.data)
+    user.markModified('data.actions')
+    user.save((err) => {
+      if (err) return handleError(err)
+
+      res.send()
+    })
   })
 })
 

@@ -788,6 +788,30 @@ let vm = new Vue({
         this.showIconGroups = false
       }
     },
+    changeActionsProjectPlace(){
+      let dt = this.tempUser
+      let pros = this.user.projects
+      let acts = this.user.actions
+      let pro = pros[dt.project.id]
+
+      let length = pro.actions.length
+      if (this.tempUser.places.length == 0){
+        for (let i =0;i<length;i++)
+          acts[pro.actions[i]].place = null
+      }
+      else
+        for (let i =0;i<length;i++)
+          acts[pro.actions[i]].place = this.tempUser.places
+      
+      if (!this.guest){
+        if (this.tempUser.places.length != 0)
+          this.POSTrequest('/change-places-of-all-actions', 'projectId='+dt.project.id+'&'+this.parseArrayToHTTPparams(this.tempUser.places, 'places'))
+        else
+          this.POSTrequest('/change-places-of-all-actions', 'projectId='+dt.project.id+'&places='+null)
+      }
+
+      this.closeActionForm()
+    },
     changeActionPlace(){
       let dt = this.tempUser.action
 
@@ -795,8 +819,12 @@ let vm = new Vue({
         this.user.actions[dt.id].place = null
       else this.user.actions[dt.id].place = this.tempUser.places
 
-      if (!this.guest)
-        this.POSTrequest('/change-action-place', 'id='+dt.id+'&'+this.parseArrayToHTTPparams(this.tempUser.places, 'place'))
+      if (!this.guest){
+        if (this.tempUser.places != 0)
+          this.POSTrequest('/change-action-place', 'id='+dt.id+'&'+this.parseArrayToHTTPparams(this.tempUser.places, 'place'))
+        else
+          this.POSTrequest('/change-action-place', 'id='+dt.id+'&place='+null)
+      }
 
       this.closeActionForm()
     },
