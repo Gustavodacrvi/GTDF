@@ -46,6 +46,9 @@ router.get('/get-user', (req, res)=>{
     if (err) return handleError(err)
 
     User.fixStringIdsAndNulls(user.data)
+    User.removeProjectActionDuplicates(user.data)
+    User.addProjectIdsToActionsThatDoesntHaveItsProjectProjectIdVariable(user.data)
+    User.deleteActionsProjectIdsVariablesThatAreNotInsideAnyProject(user.data)
     user.markModified('data')
     user.save((err, updatedUser) => {
 

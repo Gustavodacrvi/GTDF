@@ -50,7 +50,7 @@
         </form-element>
         <form-element class='centralizeContent'>
           <div class='form-input centralizeContent'>
-            <input autocomplete='off' type='text' placeholder='<%= __("Username") %>:' tabindex='1' v-model='tempUsername'/>
+            <input name='username' autocomplete='off' type='text' placeholder='<%= __("Username") %>:' tabindex='1' v-model='tempUsername'/>
           </div>
         </form-element>
         <form-element v-if='tempUsername == username'>
@@ -66,7 +66,7 @@
           <success><%= __('Valid username.') %></success>
         </form-element>
         <form-element class='centralizeContent'>
-          <form-button :blocked='!checked' :class='{blocked: !checked}'><%= __('Change username') %></form-button>
+          <form-button tabindex='2' :blocked='!checked' :class='{blocked: !checked}'><%= __('Change username') %></form-button>
         </form-element>
       </form>
     </login-form>

@@ -218,6 +218,53 @@ router.get('/resetusername/:token', (req, res) => {
   });
 })
 
+router.post('/resetusername/:token', function(req, res) {
+  async.waterfall([
+    function(done) {
+      User.findOne({ resetUsernameToken: req.params.token, resetUsernameExpires: { $gt: Date.now() } }, function(err, user) {
+        if (!user) {
+          req.flash('error', 'Username reset token is invalid or has expired.');
+          return res.redirect('back');
+        }
+
+        user.username = req.body.username.trim()
+
+        user.markModified('username')
+        user.save((err, updatedUser)=>{
+          if (err) return handleError(err)
+          done(err, user)
+        })
+      });
+    },
+    function(user, done) {
+      var smtpTransport = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+          type: 'OAuth2',
+          user: 'gettingthingsdoneforfree@gmail.com',
+          clientId: '419231519910-ud5h7i6vlppum2htb8dphsapjnqe1t87.apps.googleusercontent.com',
+          clientSecret: process.env.CSECRET,
+          refreshToken: '1/LLDNO2am9KrK1KACOHlnjq5SsSx1XI47E5JYsRRQIT8',
+          accessToken: 'ya29.GluyBq6s7HtZagS2FknhmE1TxsiFWbqxF8_cx_W-GonYDsxUxPFUxh0ofm-oz4AXoh99W8c3EWkHQ3cSZBUAM0dcj0g5_S6IxGyJ0N1oJDZhcnIf35jWgyJHmcIi'
+        }
+      });
+      var mailOptions = {
+        to: user.email,
+        from: 'gettingthingsdoneforfree@gmail.com',
+        subject: 'Getting Things Done for Free(GTDF) username changed',
+        text: 'Hello,\n\n' +
+          'This is a confirmation that the username for your account ' + user.email + ' has just been changed.\n'
+      };
+      smtpTransport.sendMail(mailOptions, function(err) {
+        req.flash('success_msg', 'Your username has been changed.');
+        done(err);
+      });
+    }
+  ], function(err) {
+    res.redirect('/login');
+  });
+});
+
 // LOGIN
 router.get('/login', function(req, res){
   checkAndChangeLocale(req, res)

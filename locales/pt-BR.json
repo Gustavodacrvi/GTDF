@@ -118,5 +118,7 @@
 	"Password reset token is invalid or has expired.": "Password reset token is invalid or has expired.",
 	"Success! Your password has been changed.": "Success! Your password has been changed.",
 	"Reset username": "Reset username",
-	"RESET USERNAME": "RESET USERNAME"
+	"RESET USERNAME": "RESET USERNAME",
+	"Username reset token is invalid or has expired.": "Username reset token is invalid or has expired.",
+	"Your username has been changed.": "Your username has been changed."
 }
