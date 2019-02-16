@@ -87,10 +87,11 @@ Vue.component('input-form', {
 })
 Vue.component('form-button', {
   props: {
-    tabindex: String
+    tabindex: String,
+    blocked: Boolean
   },
   template: `
-    <button :tabindex='tabindex' type='submit' class='formButton' @click='$emit("click")'><slot></slot></button>
+    <button :class='{blocked: blocked}' :disabled='blocked' :tabindex='tabindex' type='submit' class='formButton' @click='$emit("click")'><slot></slot></button>
   `
 })
 Vue.component('link-button', {

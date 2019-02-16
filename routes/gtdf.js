@@ -16,11 +16,11 @@ router.get('/user', (req, res)=>{
 
   if (!req.isAuthenticated()) {
     res.redirect('/login')
-  } else if (req.user.username != 'guest'){
+  } else if (req.user.username.trim() != 'guest'){
     res.render('user', {
       guest: false
     })
-  } else if (req.user.username == 'guest'){
+  } else if (req.user.username.trim() == 'guest'){
     res.render('user', {
       guest: true
     })
@@ -46,10 +46,13 @@ router.get('/get-user', (req, res)=>{
     if (err) return handleError(err)
 
     User.fixStringIdsAndNulls(user.data)
+    User.removeProjectActionDuplicates(user.data)
+    User.addProjectIdsToActionsThatDoesntHaveItsProjectProjectIdVariable(user.data)
+    User.deleteActionsProjectIdsVariablesThatAreNotInsideAnyProject(user.data)
     user.markModified('data')
     user.save((err, updatedUser) => {
 
-      res.send({ user: updatedUser.data, username: updatedUser.username, email: updatedUser.email })
+      res.send({ user: updatedUser.data, username: updatedUser.username.trim(), email: updatedUser.email })
     })
   })
 })
@@ -401,7 +404,7 @@ router.post('/change-username', (req, res) => {
     if (err) return handleError(err)
     let dt = req.body
     
-    user.username = dt.username
+    user.username = dt.username.trim()
 
     user.markModified('username')
     user.save((err) => {
@@ -416,7 +419,7 @@ router.post('/delete-account', (req, res) => {
   User.getUserById(req.user.id, (err, user) => {
     if (err) return handleError(err)
 
-    User.deleteOne({ username: req.body.username }, function (err) {
+    User.deleteOne({ username: req.body.username.trim() }, function (err) {
       if (err) return handleError(err)
     })
   })
@@ -477,20 +480,14 @@ router.post('/delete-data', (req, res) => {
 })
 
 router.post('/check-availability', (req, res) => {
-  User.getUserById(req.user.id, (err, user) => {
-    if (err) return handleError(err)
-    let dt = req.body
+  let dt = req.body
 
-    let taken = false
-    User.countDocuments({ username: dt.username }, (count) => {
-      if (count > 0) taken = true 
-    })
+  let taken = false
+  User.countDocuments({ username: dt.username.trim() }, (err, count) => {
+    if (err) {console.log(err);taken = true}
+    else if (count > 0) taken = true
 
-    user.save((err) => {
-      if (err) return handleError(err)
-
-      res.send(JSON.stringify({ valid: !taken }))
-    })
+    res.send(JSON.stringify({ valid: !taken }))
   })
 })
 

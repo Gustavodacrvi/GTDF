@@ -17,6 +17,8 @@ let vm = new Vue({
     tempOldPassword: '',
     newPassword: '',
     newConfirmPassword: '',
+    newPasswordForgot: '',
+    newConfirmPasswordForgot: '',
     hasPasswordError: false,
     passwordError: '',
     validUsername: undefined,
@@ -510,6 +512,23 @@ let vm = new Vue({
           this.checked = false
         }
       },
+      checkPasswordsForgot(){
+        let newp = this.newPasswordForgot
+        let newc = this.newConfirmPasswordForgot
+
+        this.hasPasswordError = false
+        if (newp == '' || newc == ''){
+          this.hasPasswordError = true
+          this.passwordError = 'emptyFields'
+        } else if (newp != newc){
+          this.hasPasswordError = true
+          this.passwordError = 'PasswordsDoesntMatch'
+        }
+        if (!this.hasPasswordError){
+          this.validPasswords = true
+          this.passwordError = 'alright'
+        }
+      },
       checkPasswords(){
         let old = this.tempOldPassword
         let newp = this.newPassword
@@ -934,6 +953,12 @@ let vm = new Vue({
     newConfirmPassword(){
       this.validPasswords = false
       this.passwordError = ''
+    },
+    newPasswordForgot(){
+      this.checkPasswordsForgot()
+    },
+    newConfirmPasswordForgot(){
+      this.checkPasswordsForgot()
     }
   }
 })

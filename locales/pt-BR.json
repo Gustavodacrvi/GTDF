@@ -93,7 +93,7 @@
 	"Checking availability...": "Checando disponibilidade...",
 	"Check availability": "Checar disponibilidade",
 	"Someone else already used that username.": "Alguém já usou este nome de usuário.",
-	"Valid username.": "Senha válida.",
+	"Valid username.": "Nome de usuário válido.",
 	"CHANGE PASSWORD": "MUDAR SENHA",
 	"Old password": "Senha antiga",
 	"New password": "Nova senha",
@@ -112,5 +112,13 @@
 	"RESET PASSWORD": "RESET PASSWORD",
 	"Send email": "Send email",
 	"SEND EMAIL": "SEND EMAIL",
-	"I forgot my username": "I forgot my username"
+	"I forgot my username": "I forgot my username",
+	"No account with that email address exists.": "No account with that email address exists.",
+	"An e-mail has been sent to the given email with further instructions.": "An e-mail has been sent to the given email with further instructions.",
+	"Password reset token is invalid or has expired.": "Password reset token is invalid or has expired.",
+	"Success! Your password has been changed.": "Success! Your password has been changed.",
+	"Reset username": "Reset username",
+	"RESET USERNAME": "RESET USERNAME",
+	"Username reset token is invalid or has expired.": "Username reset token is invalid or has expired.",
+	"Your username has been changed.": "Your username has been changed."
 }

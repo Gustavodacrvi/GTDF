@@ -17,6 +17,8 @@ var userSchema = mongoose.Schema({
     },
     resetPasswordToken: String,
     resetPasswordExpires: Date,
+    resetUsernameToken: String,
+    resetUsernameExpires: Date,
     data: {
       actions: [
 
@@ -43,10 +45,14 @@ module.exports.createUser = function(newUser, caLLback){
     })
 }
 
-module.exports.changePassword = function(user, newPassword, callback){
+module.exports.changePassword = function(user, newPassword, callback, deletePasswordResetTokens = false){
   bcrypt.genSalt(10, function(err, salt){
     bcrypt.hash(newPassword, salt, function(err, hash){
       user.password = hash
+      if (deletePasswordResetTokens){
+        user.resetPasswordToken = undefined;
+        user.resetPasswordExpires = undefined;
+      }
       user.save(callback)
     })
   })
@@ -319,6 +325,63 @@ module.exports.fixStringIdsAndNulls = function(data){
     let actionsLength = pros[i].actions.length
     for (let j = 0;j < actionsLength;j++){
       pros[i].actions[j] = parseInt(pros[i].actions[j])
+    }
+  }
+}
+
+module.exports.deleteActionsProjectIdsVariablesThatAreNotInsideAnyProject = function(data){
+  let pros = data.projects
+  let acts = data.actions
+
+  let length = acts.length
+  let proLength = pros.length
+  for (let i = 0;i<length;i++){
+    if (!acts[i].projectId && acts[i].projectId != 0)
+      continue
+    if (acts[i].projectId < 0 || acts[i].projectId + 1 > proLength) {
+      delete acts[i].projectId
+      continue
+    }
+    let pro = pros[acts[i].projectId]
+    let projectsLength = pro.actions.length
+    let hasId = false
+    for (let j = 0;j < projectsLength;j++){
+      if (pro.actions[j] == acts[i].id){
+        hasId = true
+        break
+      }
+    }
+    if (!hasId)
+      delete acts[i].projectId
+  }
+}
+
+module.exports.addProjectIdsToActionsThatDoesntHaveItsProjectProjectIdVariable = function(data){
+  let pros = data.projects
+  let acts = data.actions
+
+  let length = pros.length
+  for (let i = 0;i< length;i++){
+    let ids = pros[i].actions
+    let actsLenght = ids.length
+    for (let j = 0;j<actsLenght;j++){
+      acts[ids[j]].projectId = pros[i].id
+    }
+  }
+}
+
+module.exports.removeProjectActionDuplicates = function(data){
+  let pros = data.projects
+ 
+  let length = pros.length
+  for (let i = 0;i < length;i++){
+    let actionsLength = pros[i].actions.length
+    let duplicate = new Set()
+    for (let j = 0;j < actionsLength;j++){
+      if (!duplicate.has(pros[i].actions[j]))
+        duplicate.add(pros[i].actions[j])
+      else 
+        pros[i].actions.splice(j, 1)
     }
   }
 }
