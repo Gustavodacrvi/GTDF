@@ -151,6 +151,60 @@ router.get('/send-email-username', (req, res) => {
   })
 })
 
+router.post('/send-email-username', (req, res, next)=>{
+  async.waterfall([
+    function(done) {
+      crypto.randomBytes(20, function(err, buf) {
+        var token = buf.toString('hex');
+        done(err, token);
+      });
+    },
+    function(token, done) {
+      User.findOne({ email: req.body.email }, function(err, user) {
+        if (!user) {
+          req.flash('error', 'No account with that email address exists.');
+          return res.redirect('/send-email-username');
+        }
+
+        user.resetUsernameToken = token;
+        user.resetUsernameExpires = Date.now() + 3600000; // 1 hour
+
+        user.save(function(err) {
+          done(err, token, user);
+        });
+      });
+    },
+    function(token, user, done) {
+      var smtpTransport = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+          type: 'OAuth2',
+          user: 'gettingthingsdoneforfree@gmail.com',
+          clientId: '419231519910-ud5h7i6vlppum2htb8dphsapjnqe1t87.apps.googleusercontent.com',
+          clientSecret: process.env.CSECRET,
+          refreshToken: '1/LLDNO2am9KrK1KACOHlnjq5SsSx1XI47E5JYsRRQIT8',
+          accessToken: 'ya29.GluyBq6s7HtZagS2FknhmE1TxsiFWbqxF8_cx_W-GonYDsxUxPFUxh0ofm-oz4AXoh99W8c3EWkHQ3cSZBUAM0dcj0g5_S6IxGyJ0N1oJDZhcnIf35jWgyJHmcIi'
+        }
+      });
+      var mailOptions = {
+        to: user.email,
+        from: 'gettingthingsdoneforfree@gmail.com',
+        subject: 'Getting Things Done for Free(GTDF) username reset',
+        text: 'You are receiving this because you (or someone else) have requested the reset of the username for your account.\n\n' +
+          'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
+          'http://' + req.headers.host + '/reset/' + token + '\n\n' +
+          'If you did not request this, please ignore this email and your username will remain unchanged.\n'
+      };
+      smtpTransport.sendMail(mailOptions, function(err) {
+        req.flash('success_msg', 'An e-mail has been sent to the given email with further instructions.');
+        done(err, 'done');
+      });
+    }
+  ], function(err) {
+    if (err) return next(err);
+    res.redirect('/send-email-username');
+  });
+})
 // LOGIN
 router.get('/login', function(req, res){
   checkAndChangeLocale(req, res)
