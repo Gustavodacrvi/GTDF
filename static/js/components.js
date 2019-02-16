@@ -1240,6 +1240,7 @@ Vue.component('project', {
           <icon-group :show='icongroup' @delete='deleteProject' @edit='editProject' @project='addActionToProject'>
             <action-icon icon='fa fa-times' event='delete' :title='l.deleteProject'></action-icon>
             <action-icon icon='fa fa-edit' event='edit' :title='l.editProjectTitle'></action-icon>
+            <action-icon icon='fas fa-map-marked-alt' event='places' :title='l.changePlaceOfAllActions'></action-icon>
             <action-icon icon='fa fa-plus' event='project' :title='l.addToProject'></action-icon>
           </icon-group>
         </div>
