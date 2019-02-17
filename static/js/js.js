@@ -135,9 +135,11 @@ let vm = new Vue({
             deleteCurrentPlace: `Delete current place`,
             showAllProjectsDespiteOfLocation: 'Show all projects despite of location.',
             changePlaceOfAllActions: `Change place of all actions in this project`,
+            changeTagOfAllActions: `Change tag of all actions in this project`
           }
         } else if (lang == 'pt-BR'){
           this.l = {
+            changeTagOfAllActions: `Mudar a tag de todas ações neste projeto`,
             changePlaceOfAllActions: `Mudar o local de todas ações neste projeto`,
             showAllProjectsDespiteOfLocation: 'Mostrar todos os projetos independentemente de local.',
             deleteCurrentPlace: `Deletar local atual`,
@@ -647,9 +649,40 @@ let vm = new Vue({
           this.POSTrequest('/edit-action', 'title='+dt.title+'&description='+dt.description+'&id='+dt.id)
         this.closeActionForm()
       },
+      editProjectActionsTag(){
+        let dt = this.tempUser
+        let pro = this.user.projects[dt.project.id]
+        let acts = this.user.actions
+
+        let ids = pro.actions
+        let length = ids.length
+        if (dt.action.tag != 'calendar'){
+          for (let i =0;i<length;i++){
+            if (acts[ids[i]].tag == 'calendar')
+              delete acts[ids[i]].calendar
+            acts[ids[i]].tag = dt.action.tag
+          }
+          if (!this.guest)
+            this.POSTrequest('/edit-tag-all', 'projectId='+dt.project.id+'&tag='+dt.action.tag)
+        }
+        else if (dt.action.calendar.validDate && dt.action.calendar.validTime){
+          for (let i =0;i<length;i++){
+            acts[ids[i]].tag = 'calendar'
+            acts[ids[i]].calendar = {
+              date: dt.action.calendar.date,
+              time: dt.action.calendar.time
+            }
+          }
+          if (!this.guest)
+            this.POSTrequest('/tag-to-calendar-all', 'projectId='+dt.project.id+'&tag='+dt.action.tag+'&date='+dt.action.calendar.date+'&time='+dt.action.calendar.time)
+        }
+        this.closeActionForm()
+      },
       editTag(){
         let dt = this.tempUser.action
         if (dt.tag != "calendar"){
+          if (this.user.actions[dt.id].tag == 'calendar')
+            delete this.user.actions[dt.id].calendar
           this.user.actions[dt.id].tag = dt.tag
           if (!this.guest)
             this.POSTrequest('/edit-tag', 'id='+dt.id+'&tag='+dt.tag)

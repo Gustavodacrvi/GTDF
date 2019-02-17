@@ -220,7 +220,22 @@ module.exports.editAction = function(title, desc, id, arr){
 }
 
 module.exports.editTag = function(id, tag, arr){
+  if (arr[id].tag == 'calendar')
+    delete arr[id].calendar
   arr[id].tag = tag
+}
+
+module.exports.editTagAll = function(data, projectId, tag){
+  let pro = data.projects[projectId]
+  let acts = data.actions
+
+  let ids = pro.actions
+  let length = ids.length
+  for (let i =0;i<length;i++){
+    if (acts[ids[i]].tag == 'calendar')
+      delete acts[ids[i]].calendar
+    acts[ids[i]].tag = tag
+  }
 }
 
 module.exports.addProject = function(arr, title){
