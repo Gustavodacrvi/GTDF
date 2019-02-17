@@ -650,11 +650,35 @@ let vm = new Vue({
         this.closeActionForm()
       },
       editProjectActionsTag(){
+        let dt = this.tempUser
+        let pro = this.user.projects[dt.project.id]
+        let acts = this.user.actions
 
+        let ids = pro.actions
+        let length = ids.length
+        if (dt.action.tag != 'calendar')
+          for (let i =0;i<length;i++){
+            if (acts[ids[i]].tag == 'calendar')
+              delete acts[ids[i]].calendar
+            acts[ids[i]].tag = dt.action.tag
+          }
+          // POSTrequest
+          else if (dt.action.calendar.validDate && dt.action.calendar.validTime)
+          for (let i =0;i<length;i++){
+            acts[ids[i]].tag = 'calendar'
+            acts[ids[i]].calendar = {
+              date: dt.action.calendar.date,
+              time: dt.action.calendar.time
+            }
+            // POSTrequest
+          }
+        this.closeActionForm()
       },
       editTag(){
         let dt = this.tempUser.action
         if (dt.tag != "calendar"){
+          if (this.user.actions[dt.id].tag == 'calendar')
+            delete this.user.actions[dt.id].calendar
           this.user.actions[dt.id].tag = dt.tag
           if (!this.guest)
             this.POSTrequest('/edit-tag', 'id='+dt.id+'&tag='+dt.tag)
