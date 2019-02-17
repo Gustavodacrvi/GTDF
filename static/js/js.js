@@ -656,22 +656,26 @@ let vm = new Vue({
 
         let ids = pro.actions
         let length = ids.length
-        if (dt.action.tag != 'calendar')
+        if (dt.action.tag != 'calendar'){
           for (let i =0;i<length;i++){
             if (acts[ids[i]].tag == 'calendar')
               delete acts[ids[i]].calendar
             acts[ids[i]].tag = dt.action.tag
           }
-          // POSTrequest
-          else if (dt.action.calendar.validDate && dt.action.calendar.validTime)
+          if (!this.guest)
+            this.POSTrequest('/edit-tag-all', 'projectId='+dt.project.id+'&tag='+dt.action.tag)
+        }
+        else if (dt.action.calendar.validDate && dt.action.calendar.validTime){
           for (let i =0;i<length;i++){
             acts[ids[i]].tag = 'calendar'
             acts[ids[i]].calendar = {
               date: dt.action.calendar.date,
               time: dt.action.calendar.time
             }
-            // POSTrequest
           }
+          if (!this.guest)
+            this.POSTrequest('/tag-to-calendar-all', 'projectId='+dt.project.id+'&tag='+dt.action.tag+'&date='+dt.action.calendar.date+'&time='+dt.action.calendar.time)
+        }
         this.closeActionForm()
       },
       editTag(){

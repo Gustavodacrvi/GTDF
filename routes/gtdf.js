@@ -181,6 +181,23 @@ router.post('/edit-tag', (req, res) => {
   })
 })
 
+router.post('/edit-tag-all', (req, res) => {
+  User.getUserById(req.user.id, (err, user) => {
+    if (err) return handleError(err)
+    let b = req.body
+
+    User.editTagAll(user.data, b.projectId, b.tag)
+
+    User.fixStringIdsAndNulls(user.data)
+    user.markModified('data')
+    user.save((err) => {
+      if (err) return handleError(err)
+
+      res.send()
+    })
+  })
+})
+
 router.post('/add-project', (req, res) => {
   User.getUserById(req.user.id, (err, user) => {
     if (err) return handleError(err)
@@ -387,6 +404,32 @@ router.post('/tag-to-calendar', (req, res) => {
     act.calendar = {
       date: dt.date,
       time: dt.time
+    }
+
+    User.fixStringIdsAndNulls(user.data)
+    user.markModified('data.actions')
+    user.save((err) => {
+      if (err) return handleError(err)
+
+      res.send()
+    })
+  })
+})
+
+router.post('/tag-to-calendar-all', (req, res) => {
+  User.getUserById(req.user.id, (err, user) => {
+    if (err) handleError(err)
+    let dt = req.body
+    let acts = user.data.actions
+
+    let ids = user.data.projects[dt.projectId].actions
+    let length = ids.length
+    for (let i =0;i<length;i++){
+      acts[ids[i]].tag = 'calendar'
+      acts[ids[i]].calendar = {
+        date: dt.date,
+        time: dt.time
+      }
     }
 
     User.fixStringIdsAndNulls(user.data)
