@@ -110,7 +110,7 @@
           </div>
         </form-element>
         <form-element class='centralizeContent column' animation='pop3'>
-          <link-red><%= __('I forgot my password') %></link-red>
+          <link-red href='/send-email-password'><%= __('I forgot my password') %></link-red>
           <link-red @click='openUserForm({ id: "changePassword" })'><%= __('Change password') %></link-red>
           <link-red @click='openUserForm({ id: "deleteData" })'><%= __('Delete data') %></link-red>
           <link-red @click='openUserForm({ id: "deleteAccount" })'><%= __('Delete account') %></link-red>
@@ -121,13 +121,13 @@
           <title-big><%= __('CHANGE PASSWORD') %></title-big>
         </form-element>
         <form-element class='centralizeContent' animation='pop2'>
-          <input-pass tabindex="1" :opened='showPasswords' name='password' placeholder='<%= __("Old password") %>:' @click='togglePasswordVisiblity' :value='tempOldPassword' @change='(v) => tempOldPassword = v'></input-pass>
+          <input-pass :opened='showPasswords' name='password' placeholder='<%= __("Old password") %>:' @click='togglePasswordVisiblity' :value='tempOldPassword' @change='(v) => tempOldPassword = v'></input-pass>
         </form-element>
         <form-element class='centralizeContent' animation='pop2'>
-          <input-pass tabindex="2" :opened='showPasswords' name='password' placeholder='<%= __("New password") %>:' @click='togglePasswordVisiblity' :value='newPassword' @change='(v) => newPassword = v'></input-pass>
+          <input-pass :opened='showPasswords' name='password' placeholder='<%= __("New password") %>:' @click='togglePasswordVisiblity' :value='newPassword' @change='(v) => newPassword = v'></input-pass>
         </form-element>
         <form-element class='centralizeContent' animation='pop2'>
-          <input-pass tabindex="2" :opened='showPasswords' name='password' placeholder='<%= __("Confirm password") %>:' @click='togglePasswordVisiblity' :value='newConfirmPassword' @change='(v) => newConfirmPassword = v'></input-pass>
+          <input-pass :opened='showPasswords' name='password' placeholder='<%= __("Confirm password") %>:' @click='togglePasswordVisiblity' :value='newConfirmPassword' @change='(v) => newConfirmPassword = v'></input-pass>
         </form-element>
         <form-element v-if='hasPasswordError && passwordError == "sameOldPassword"'>
           <alert><%= __('Choose another password.') %></alert>
@@ -157,7 +157,7 @@
         </form-element>
         <form-element class='centralizeContent'>
           <div class='form-input centralizeContent'>
-            <input autocomplete='off' type='text' placeholder='<%= __("Username") %>:' tabindex='1' v-model='tempUsername'/>
+            <input autocomplete='off' type='text' placeholder='<%= __("Username") %>:' v-model='tempUsername'/>
           </div>
         </form-element>
         <form-element v-if='tempUsername == username'>

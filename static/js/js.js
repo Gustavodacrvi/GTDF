@@ -135,10 +135,12 @@ let vm = new Vue({
             deleteCurrentPlace: `Delete current place`,
             showAllProjectsDespiteOfLocation: 'Show all projects despite of location.',
             changePlaceOfAllActions: `Change place of all actions in this project`,
-            changeTagOfAllActions: `Change tag of all actions in this project`
+            changeTagOfAllActions: `Change tag of all actions in this project`,
+            timeOptional: `time(optional)`,
           }
         } else if (lang == 'pt-BR'){
           this.l = {
+            timeOptional: `hora(opcional)`,
             changeTagOfAllActions: `Mudar a tag de todas ações neste projeto`,
             changePlaceOfAllActions: `Mudar o local de todas ações neste projeto`,
             showAllProjectsDespiteOfLocation: 'Mostrar todos os projetos independentemente de local.',

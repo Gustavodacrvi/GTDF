@@ -49,7 +49,7 @@
           <title-big><%= __('RESET USERNAME') %></title-big>
         </form-element>
         <form-element class='centralizeContent'>
-          <input-form tabindex='1' placeholder='<%= __("Email") %>:' name='email'></input-form>
+          <input-form placeholder='<%= __("Email") %>:' name='email'></input-form>
         </form-element>
         <% if (locals.success_msg) { %>
           <form-element animation='pop5'>
@@ -62,7 +62,7 @@
           </form-element>
         <% } %>
         <form-element class='centralizeContent'>
-          <form-button tabindex='2'><%= __('Send email') %></form-button>
+          <form-button><%= __('Send email') %></form-button>
         </form-element>
       </form>
     </login-form>

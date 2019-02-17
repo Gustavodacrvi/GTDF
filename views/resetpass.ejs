@@ -49,10 +49,10 @@
           <title-big><%= __('CHANGE PASSWORD') %></title-big>
         </form-element>
         <form-element class='centralizeContent' animation='pop2'>
-          <input-pass tabindex="2" :opened='showPasswords' name='password' placeholder='<%= __("New password") %>:' @click='togglePasswordVisiblity' :value='newPasswordForgot' @change='(v) => newPasswordForgot = v'></input-pass>
+          <input-pass :opened='showPasswords' name='password' placeholder='<%= __("New password") %>:' @click='togglePasswordVisiblity' :value='newPasswordForgot' @change='(v) => newPasswordForgot = v'></input-pass>
         </form-element>
         <form-element class='centralizeContent' animation='pop2'>
-          <input-pass tabindex="2" :opened='showPasswords' name='confirmPassword' placeholder='<%= __("Confirm password") %>:' @click='togglePasswordVisiblity' :value='newConfirmPasswordForgot' @change='(v) => newConfirmPasswordForgot = v'></input-pass>
+          <input-pass :opened='showPasswords' name='confirmPassword' placeholder='<%= __("Confirm password") %>:' @click='togglePasswordVisiblity' :value='newConfirmPasswordForgot' @change='(v) => newConfirmPasswordForgot = v'></input-pass>
         </form-element>
         <form-element v-if='hasPasswordError && passwordError == "PasswordsDoesntMatch"'>
           <alert><%= __('Password not matching.') %></alert>
@@ -64,7 +64,7 @@
           <success><%= __('You can proceed to change the password') %>.</success>
         </form-element>
         <form-element class='centralizeContent'>
-          <form-button tabindex='3' :blocked='!validPasswords'><%= __('Change password') %></form-button>
+          <form-button :blocked='!validPasswords'><%= __('Change password') %></form-button>
         </form-element>
       </form>
     </login-form>

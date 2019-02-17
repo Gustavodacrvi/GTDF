@@ -22,11 +22,10 @@ Vue.component('login-form', {
 Vue.component('form-element', {
   props: {
     animation: String,
-    tabindex: String
   },
   template: `
     <transition :name='animation' appear>
-      <div class='formElement' :tabindex='tabindex'>
+      <div class='formElement'>
         <slot></slot>
       </div>
     </transition>
@@ -47,7 +46,6 @@ Vue.component('input-pass', {
     placeholder: String,
     name: String,
     opened: Boolean,
-    tabindex: String,
     value: String
   },
   data(){
@@ -60,7 +58,7 @@ Vue.component('input-pass', {
   },
   template: `
     <div class='form-input centralizeContent'>
-      <input :name='name' autocomplete='off' class='passwordField' type='password' autocomplete='off' :placeholder='placeholder' :tabindex='tabindex' v-model='model' />
+      <input :name='name' autocomplete='off' class='passwordField' type='password' autocomplete='off' :placeholder='placeholder' v-model='model' />
       <span @click='$emit("click", !opened)'>
         <i class="fas fa-eye icon-tiny" v-show='opened'></i>
         <i class="fas fa-eye-slash icon-tiny" v-show='!opened'></i>
@@ -77,39 +75,35 @@ Vue.component('input-form', {
   props: {
     placeholder: String,
     name: String,
-    tabindex: String
   },
   template: `
     <div class='form-input centralizeContent'>
-      <input :name='name' autocomplete='off' type='text' :placeholder='placeholder' :tabindex='tabindex'/>
+      <input :name='name' autocomplete='off' type='text' :placeholder='placeholder'/>
     </div>
   `
 })
 Vue.component('form-button', {
   props: {
-    tabindex: String,
     blocked: Boolean
   },
   template: `
-    <button :class='{blocked: blocked}' :disabled='blocked' :tabindex='tabindex' type='submit' class='formButton' @click='$emit("click")'><slot></slot></button>
+    <button :class='{blocked: blocked}' :disabled='blocked' type='submit' class='formButton' @click='$emit("click")'><slot></slot></button>
   `
 })
 Vue.component('link-button', {
   props: {
-    tabindex: String,
     href: String
   },
   template: `
-    <a :tabindex='tabindex' class='link-button' :href='href'><slot></slot></a>
+    <a class='link-button' :href='href'><slot></slot></a>
   `
 })
 Vue.component('link-button-back', {
   props: {
     href: String,
-    tabindex: String
   },
   template: `
-    <a :tabindex='tabindex' class='link-button-back' :href='href'><slot></slot></a>
+    <a class='link-button-back' :href='href'><slot></slot></a>
   `
 })
 Vue.component('alert',{
@@ -502,7 +496,7 @@ Vue.component('datetime-form', {
       <div>
         <div>
           <input class='calendar-input' v-model='date'></input>
-          <input class='calendar-input' v-model='time' placeholder='Time(Optional)'></input>
+          <input class='calendar-input' v-model='time' :placeholder='$root.l.timeOptional'></input>
         </div>
         <div class='centralizeContent' v-if='!validDate'>
           <alert>Invalid date.</alert>
