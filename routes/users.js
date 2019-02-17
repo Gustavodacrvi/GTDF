@@ -318,7 +318,7 @@ router.post('/sign-up', function(req, res){
   req.checkBody('email', 'Invalid email').isEmail()
   req.checkBody('password', 'Password required').notEmpty()
   req.checkBody('confirm', 'Confirm password').notEmpty()
-  req.checkBody('confirm', 'Password not matching').equals(password)
+  req.checkBody('confirm', 'Passwords not matching').equals(password)
 
   var errors = req.validationErrors()
 

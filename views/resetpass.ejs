@@ -55,7 +55,7 @@
           <input-pass :opened='showPasswords' name='confirmPassword' placeholder='<%= __("Confirm password") %>:' @click='togglePasswordVisiblity' :value='newConfirmPasswordForgot' @change='(v) => newConfirmPasswordForgot = v'></input-pass>
         </form-element>
         <form-element v-if='hasPasswordError && passwordError == "PasswordsDoesntMatch"'>
-          <alert><%= __('Password not matching.') %></alert>
+          <alert><%= __('Passwords not matching') %>.</alert>
         </form-element>
         <form-element v-if='hasPasswordError && passwordError == "emptyFields"'>
           <alert><%= __('Missing credentials') %>.</alert>

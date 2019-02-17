@@ -130,10 +130,10 @@
           <input-pass :opened='showPasswords' name='password' placeholder='<%= __("Confirm password") %>:' @click='togglePasswordVisiblity' :value='newConfirmPassword' @change='(v) => newConfirmPassword = v'></input-pass>
         </form-element>
         <form-element v-if='hasPasswordError && passwordError == "sameOldPassword"'>
-          <alert><%= __('Choose another password.') %></alert>
+          <alert><%= __('Choose another password') %>.</alert>
         </form-element>
         <form-element v-if='hasPasswordError && passwordError == "PasswordsDoesntMatch"'>
-          <alert><%= __('Password not matching.') %></alert>
+          <alert><%= __('Passwords not matching') %>.</alert>
         </form-element>
         <form-element v-if='hasPasswordError && passwordError == "emptyFields"'>
           <alert><%= __('Missing credentials') %>.</alert>
@@ -161,16 +161,16 @@
           </div>
         </form-element>
         <form-element v-if='tempUsername == username'>
-          <alert><%= __('Choose another username.') %></alert>
+          <alert><%= __('Choose another username') %>.</alert>
         </form-element>
         <form-element class='centralizeContent' v-if='tempUsername != username && tempUsername != ""'>
           <link-red @click='checkAvailability'><%= __('Check availability') %></link-red>
         </form-element>
         <form-element v-if='validUsername == false'>
-          <alert><%= __('Someone else already used that username.') %></alert>
+          <alert><%= __('Someone else already used that username') %>.</alert>
         </form-element>
         <form-element v-if='validUsername == true'>
-          <success><%= __('Valid username.') %></success>
+          <success><%= __('Valid username') %>.</success>
         </form-element>
         <form-element class='centralizeContent'>
           <form-button :class='{blocked: !checked}' @click='changeAccountUsername'><%= __('Change username') %></form-button>
@@ -181,7 +181,7 @@
           <title-big><%= __('DELETE DATA') %></title-big>
         </form-element>
         <form-element class='centralizeContent'>
-          <alert><%= __("By clicking this button all of your actions, projects and places will be gone. Your account will not be deleted though.") %></alert>
+          <alert><%= __("By clicking this button all of your actions, projects and places will be gone. Your account will not be deleted though") %>.</alert>
         </form-element>
         <form-element class='centralizeContent'>
           <form-button @click='deleteAccountData'><%= __('Delete data') %></form-button>
@@ -192,7 +192,7 @@
           <title-big><%= __('DELETE ACCOUNT') %></title-big>
         </form-element>
         <form-element class='centralizeContent'>
-          <alert><%= __('By clicking this button all of your data, actions, projects, places, password, etc..., will be gone.') %></alert>
+          <alert><%= __('By clicking this button all of your data, actions, projects, places, password, etc..., will be gone') %>.</alert>
         </form-element>
         <form-element class='centralizeContent'>
           <form-button @click='deleteAccount()'><%= __('Delete account') %></form-button>
@@ -422,7 +422,7 @@
         </form-element>
         <form-element class='centralizeContent' animation='pop2'>
           <places v-if='user.places.length > 0' :l='l' :user='user' :temp='tempUser.places'></places>
-          <span v-else><%= __('You have not created any places yet.') %></span>
+          <span v-else><%= __('You have not created any places yet') %>.</span>
         </form-element>
         <form-element class='centralizeContent' animation='pop3'>
           <form-button @click='changeActionPlace'><%= __('Change place') %></form-button>
@@ -434,7 +434,7 @@
         </form-element>
         <form-element class='centralizeContent' animation='pop2'>
           <places v-if='user.places.length > 0' :l='l' :user='user' :temp='tempUser.places'></places>
-          <span v-else><%= __('You have not created any places yet.') %></span>
+          <span v-else><%= __('You have not created any places yet') %>.</span>
         </form-element>
         <form-element class='centralizeContent' animation='pop3'>
           <form-button @click='changeActionsProjectPlace'><%= __('Change place') %></form-button>
@@ -448,7 +448,7 @@
           <text-box placeholder='<%= __("PLACE NAME") %>' :rows='2' :value='tempPlace' @change='(v) => tempPlace = v'></text-box>
         </form-element class='centralizeContent'>
         <form-element>
-          <alert v-if='tempPlace == "show all"'><%= __('The place name can not be "show all".') %></alert>
+          <alert v-if='tempPlace == "show all"'><%= __('The place name can not be "show all"') %>.</alert>
         </form-element>
         <form-element class='centralizeContent' animation='pop3'>
           <form-button @click='createPlace'><%= __('Create a place') %></form-button>
