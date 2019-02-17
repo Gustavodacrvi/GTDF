@@ -124,5 +124,8 @@
 	"Your username has been changed": "Seu nome de usuário foi mudado",
 	"CHANGE PLACES OF ACTIONS": "MUDAR LOCAIS DAS AÇÕES",
 	"CHANGE/ADD TAG OF ACTIONS": "MUDAR/ADICIONAR TAG DAS AÇÕES",
-	"Your password has been changed": "Sua senha foi mudada com sucesso"
+  "Your password has been changed": "Sua senha foi mudada com sucesso",
+  "metatag description": "Sistema de gerenciamente de tempo simples, prático e responsivo drag and drop baseado no livro \"Getting Things Done\" de David Allen.",
+  "metatag keywords": "David Allen, GTD, GTDF, Getting Things Done, Getting Things Done for Free, gerenciamento de tempo, organização, ação, metodologia GTD, drag and drop, trello a gtd, crar um gtd notebook, ter um gtd, gtd agenda, rotina diária gtd, getting things done de david allen, getting things done app, getting things done planner, o melhor getting things done app, getting things done david allen app",
+  "Getting Things Done for Free app: manage your time and your actions": "Getting Things Done for Free app: organize seu tempo e suas ações"
 }

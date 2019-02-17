@@ -88,7 +88,7 @@ body {
 }
 
 .card-shadow{
-  box-shadow: 0 10px 10px 3px rgba(40,40,40,0.4);
+  box-shadow: 0 10px 10px 3px rgba(40,40,40,0.2);
 }
 
 .card-border{
@@ -290,7 +290,7 @@ a{
   pointer-events: all;
   background: url('/images/cardcolor.png');
   z-index: 20;
-  box-shadow: 0 6px 6px 1px rgba(40,40,40,0.4); 
+  box-shadow: 0 6px 6px 1px rgba(40,40,40,0.2); 
 }
 
 #navBar > div{
@@ -548,7 +548,7 @@ a{
   height: 100vh;
   left: 0;
   background: url('/images/cardcolor.png');
-  box-shadow: 10px 0 6px 1px rgba(40,40,40,0.4);
+  box-shadow: 6px 0 6px 1px rgba(40,40,40,0.2);
   pointer-events: all;
   overflow-x: hidden;
   overflow-y: auto;
@@ -741,7 +741,7 @@ a{
 }
 
 .action-icon{
-  margin: 0 4px;
+  margin: 0 3px;
 }
 
 .action, .project{
@@ -1067,7 +1067,7 @@ a{
   white-space: nowrap;
   padding: 6px;
   border-radius: 8px;
-  box-shadow: 0 10px 6px 1px rgba(40,40,40,0.4);
+  box-shadow: 0 10px 6px 1px rgba(40,40,40,0.2);
   z-index: 10;
 }
 
@@ -1109,6 +1109,10 @@ a{
   background-color: #fe4a49;
   color: white;
   border: none;
+}
+
+.zero-action{
+  background-color: #B9B9B9 !important;
 }
 
 .one-action{
