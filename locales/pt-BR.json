@@ -122,5 +122,6 @@
 	"Username reset token is invalid or has expired.": "Username reset token is invalid or has expired.",
 	"Your username has been changed.": "Your username has been changed.",
 	"CHANGE PLACES OF ACTIONS": "CHANGE PLACES OF ACTIONS",
-	"CHANGE/ADD TAG OF ACTIONS": "CHANGE/ADD TAG OF ACTIONS"
+	"CHANGE/ADD TAG OF ACTIONS": "CHANGE/ADD TAG OF ACTIONS",
+	"Your password has been changed.": "Your password has been changed."
 }

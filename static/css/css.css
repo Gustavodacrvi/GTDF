@@ -390,6 +390,11 @@ a{
   font-size: 1.1em;
 }
 
+.datetime-alert{
+  font-size: 1.3em;
+  margin-top: 25px;
+}
+
 .double-icon{
   display: flex;
   justify-content: space-around;

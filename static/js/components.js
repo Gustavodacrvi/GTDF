@@ -498,11 +498,14 @@ Vue.component('datetime-form', {
           <input class='calendar-input' v-model='date'></input>
           <input class='calendar-input' v-model='time' :placeholder='$root.l.timeOptional'></input>
         </div>
-        <div class='centralizeContent' v-if='!validDate'>
+        <div class='centralizeContent datetime-alert' v-if='!validDate'>
           <alert>Invalid date.</alert>
         </div>
-        <div class='centralizeContent' v-if='!validTime'>
+        <div class='centralizeContent datetime-alert' v-if='!validTime'>
           <alert>Invalid time.</alert>
+        </div>
+        <div class='centralizeContent datetime-alert' v-if='validTime && validDate'>
+          <success>{{ this.$root.l[getDayOfWeek()] }}</success>
         </div>
       </div>
     </div>
@@ -520,6 +523,20 @@ Vue.component('datetime-form', {
     },
     change(){
       this.$emit('change', {date: this.date, time: this.time})
+    },
+    getDayOfWeek(){
+      let week = new DateM(this.date).getWeekDay()
+      switch (week) {
+        case 0: return 'Sunday'
+        case 1: return 'Monday'
+        case 2: return 'Tuesday'
+        case 3: return 'Wednesday'
+        case 4: return 'Thursday'
+        case 5: return 'Friday'
+        case 6: return 'Saturday'
+        default:
+          break;
+      }
     }
   },
   watch: {

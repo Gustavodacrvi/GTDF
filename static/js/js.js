@@ -137,9 +137,23 @@ let vm = new Vue({
             changePlaceOfAllActions: `Change place of all actions in this project`,
             changeTagOfAllActions: `Change tag of all actions in this project`,
             timeOptional: `time(optional)`,
+            Sunday: `Sunday`,
+            Monday: `Monday`,
+            Tuesday: `Tuesday`,
+            Wednesday: `Wednesday`,
+            Thursday: `Thursday`,
+            Friday: `Friday`,
+            Saturday: `Saturday`,
           }
         } else if (lang == 'pt-BR'){
           this.l = {
+            Sunday: `Domingo`,
+            Monday: `Segunda`,
+            Tuesday: `Terça`,
+            Wednesday: `Quarta`,
+            Thursday: `Quinta`,
+            Friday: `Sexta`,
+            Saturday: `Sábado`,
             timeOptional: `hora(opcional)`,
             changeTagOfAllActions: `Mudar a tag de todas ações neste projeto`,
             changePlaceOfAllActions: `Mudar o local de todas ações neste projeto`,
