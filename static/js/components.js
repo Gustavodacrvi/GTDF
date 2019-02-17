@@ -1237,9 +1237,10 @@ Vue.component('project', {
           <span>{{ title }}</span>
         </div>
         <div>
-          <icon-group :show='icongroup' @delete='deleteProject' @edit='editProject' @project='addActionToProject' @places='changePlacesOfActions'>
+          <icon-group :show='icongroup' @delete='deleteProject' @edit='editProject' @project='addActionToProject' @places='changePlacesOfActions' @tags='changeTags'>
             <action-icon icon='fa fa-times' event='delete' :title='l.deleteProject'></action-icon>
             <action-icon icon='fa fa-edit' event='edit' :title='l.editProjectTitle'></action-icon>
+            <action-icon icon='fas fa-tag' event='tags' :title='l.changeTagOfAllActions'></action-icon>
             <action-icon icon='fas fa-map-marked-alt' event='places' :title='l.changePlaceOfAllActions'></action-icon>
             <action-icon icon='fa fa-plus' event='project' :title='l.addToProject'></action-icon>
           </icon-group>
@@ -1278,6 +1279,9 @@ Vue.component('project', {
 
       if (!this.$root.guest)
         this.$root.POSTrequest('/delete-project', 'id='+this.id)
+    },
+    changeTags(){
+      this.openActionForm('changeActionsProjectTag')
     },
     isOnProject(actionId){
       let pro = this.user.projects[this.id]

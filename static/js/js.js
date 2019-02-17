@@ -135,9 +135,11 @@ let vm = new Vue({
             deleteCurrentPlace: `Delete current place`,
             showAllProjectsDespiteOfLocation: 'Show all projects despite of location.',
             changePlaceOfAllActions: `Change place of all actions in this project`,
+            changeTagOfAllActions: `Change tag of all actions in this project`
           }
         } else if (lang == 'pt-BR'){
           this.l = {
+            changeTagOfAllActions: `Mudar a tag de todas ações neste projeto`,
             changePlaceOfAllActions: `Mudar o local de todas ações neste projeto`,
             showAllProjectsDespiteOfLocation: 'Mostrar todos os projetos independentemente de local.',
             deleteCurrentPlace: `Deletar local atual`,
@@ -646,6 +648,9 @@ let vm = new Vue({
         if (!this.guest)
           this.POSTrequest('/edit-action', 'title='+dt.title+'&description='+dt.description+'&id='+dt.id)
         this.closeActionForm()
+      },
+      editProjectActionsTag(){
+
       },
       editTag(){
         let dt = this.tempUser.action

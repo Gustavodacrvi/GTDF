@@ -257,6 +257,26 @@
           <form-button @click='editTag'><%= __('Edit tag') %></form-button>
         </form-element>
       </action-form>
+      <action-form key='changeActionsProjectTag' v-else-if='displayForm("changeActionsProjectTag")' @close='closeActionForm' :l='l'>
+        <form-element animation='pop1'>
+          <title-big class='centralizeContent'><%= __('CHANGE/ADD TAG OF ACTIONS') %></title-big>
+        </form-element>
+        <form-element class='centralizeContent' animation='pop2'>
+          <icon-selection :selected='tempUser.action.tag'>
+            <icon-option icon='fa fa-hourglass-half' option='waiting'  :title='l.waiting'></icon-option>
+            <icon-option icon='fa fa-question' option='maybe' :title='l.somedaymaybe'></icon-option>
+            <icon-option icon='fa fa-forward' option='nextAction' :title='l.nextAction'></icon-option>
+            <icon-option icon='fa fa-calendar-alt' option='calendar' :title='l.calendar'></icon-option>
+          </icon-selection>
+        </form-element>
+        <form-element animation='pop3' v-if='tempUser.action.tag == "calendar"'>
+          <datetime-form :date='tempUser.action.calendar.date' :time='tempUser.action.calendar.time' @change='(dt) => {tempUser.action.calendar.date = dt.date;tempUser.action.calendar.time = dt.time}' @update='(dt) => {tempUser.action.calendar.validDate = dt.date;tempUser.action.calendar.validTime = dt.time}' :openedform='currentOpenedUserForm'>
+          </datetime-form>
+        </form-element>
+        <form-element class='centralizeContent' animation='pop4'>
+          <form-button @click='editProjectActionsTag'><%= __('Edit tag') %></form-button>
+        </form-element>
+      </action-form>
       <action-form key='projectAddAction' v-else-if='displayForm("projectAddAction")' @close='closeActionForm' :l='l'>
         <form-element class='centralizeContent' animation='pop1'>
           <title-big><%= __('ADD TO EXISTING PROJECT') %></title-big>
@@ -444,12 +464,6 @@
     </template>
     <template slot='adds'>
       <adds>
-      <template v-if='user'>
-      <h5>ACTIONS</h5>
-      <p v-for='action in user.actions'>{{action}}</p>
-      <h5>PROJECTS</h5>
-      <p v-for='action in user.projects'>{{action}}</p>
-    </template>
       </adds>
     </template>
   </user-content>
