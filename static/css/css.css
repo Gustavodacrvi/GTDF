@@ -132,7 +132,7 @@ body {
 
 .icon-big{
   color: #B9B9B9;
-  font-size: 26px;
+  font-size: 22px;
 }
 
 
@@ -673,7 +673,7 @@ a{
 .action-bar{
   margin-top: 40px;
   margin-bottom: 60px;
-  height: 36px;
+  height: 30px;
   padding: 0 10px;
   display: flex;
   align-items: center; 
@@ -763,7 +763,7 @@ a{
 
 .action > :first-child > :first-child, .project > :first-child > :first-child{
   flex-basis: 90%;
-  min-height: 36px;
+  min-height: 30px;
   display: flex;
   align-items: center;
 }
@@ -1000,7 +1000,7 @@ a{
 .calendar-action-bar{
   background: url('/images/cardcolor.png');
   border-radius: 6px;
-  min-height: 32px;
+  min-height: 30px;
   margin: 2px 0 40px 0;
   display: flex;
   justify-content: space-between;
