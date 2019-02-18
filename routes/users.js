@@ -291,13 +291,13 @@ router.get('/sign-up', function(req, res){
 // LOGOUT
 router.get('/logout', function(req, res){
   req.logOut()
-  req.flash('success_msg', 'You logged out.')
+  req.flash('success_msg', 'You logged out')
   res.redirect('/login')
 })
 
 router.get('/logout-create', function(req, res){
   req.logOut()
-  req.flash('success_msg', 'You logged out.')
+  req.flash('success_msg', 'You logged out')
   res.redirect('/sign-up')
 })
 

@@ -18,11 +18,13 @@ router.get('/user', (req, res)=>{
     res.redirect('/login')
   } else if (req.user.username.trim() != 'guest'){
     res.render('user', {
-      guest: false
+      guest: false,
+      user: req.user
     })
   } else if (req.user.username.trim() == 'guest'){
     res.render('user', {
-      guest: true
+      guest: true,
+      user: req.user
     })
   }
 })
