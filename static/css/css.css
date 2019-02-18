@@ -789,7 +789,7 @@ cursor: pointer;
 
 .action-form{
 position: relative;
-z-index: 3;
+z-index: 40;
 }
 
 .close-icon{
