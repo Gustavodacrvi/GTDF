@@ -1,10 +1,10 @@
 {
   "name": "gtdf",
   "version": "1.0.0",
-  "description": "Time management system based on the book \"Getting Things Done\".",
+  "description": "A time management system based on the book \"Getting Things Done\" by David Allen.",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node app"
   },
   "repository": {
     "type": "git",

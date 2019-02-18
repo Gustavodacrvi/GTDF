@@ -28,7 +28,7 @@ i18n.configure({
   defaultLocale: 'en',
 });
 // MONGOOSE
-mongoose.connect('mongodb://localhost/GTDF', { useNewUrlParser: true})
+mongoose.connect(process.env.DATABASE, { useNewUrlParser: true})
 var mongoose = mongoose.connection
 // APP
 let app = express()
