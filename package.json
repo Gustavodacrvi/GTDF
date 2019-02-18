@@ -4,7 +4,7 @@
   "description": "A time management system based on the book \"Getting Things Done\" by David Allen.",
   "main": "app.js",
   "scripts": {
-    "start": "node app"
+    "start": "node app.js"
   },
   "repository": {
     "type": "git",
