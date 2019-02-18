@@ -464,6 +464,12 @@
     </template>
     <template slot='adds'>
       <adds>
+      <template v-if='user'>
+        <h3>ACTIONS</h3>
+        <span v-for='action in user.actions'>{{action}}</span>
+        <h3>PROJECTS</h3>
+        <span v-for='action in user.aprojects'>{{actions}}</span>
+      </template>
       </adds>
     </template>
   </user-content>
