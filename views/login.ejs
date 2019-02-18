@@ -43,7 +43,9 @@
         </transition>
       </template>
     </navigation-bar>
-    <login-form :show='true'>
+  </fixed>
+    <div class='centralizeContent'>
+          <login-form :show='true' style='margin-top: 160px;'>
       <form method='post' action='/login'>
       <form-element class='centralizeContent' animation='pop1'>
         <title-big><%= __('LOGIN') %></title-big>
@@ -75,7 +77,8 @@
       </form-element>
       </form>
     </login-form>
-  </fixed>
+    </div>
+    <div class='login-form-margin'></div>
 </div>
 
 

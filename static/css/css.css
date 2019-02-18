@@ -1668,6 +1668,16 @@ display: flex;
   position: relative;
 }
 
+.login-form-margin{
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translate(0,-50%);
+  -ms-transform: translate(0,-50%);
+          transform: translate(0,-50%);
+  height: 900px;
+  width: 10px;
+}
+
 .action > :first-child > :last-child > div > div, .project > :first-child > :last-child > div > div{
   position: absolute;
   bottom: 100%;
