@@ -30,16 +30,6 @@ router.get('/user', (req, res)=>{
 router.get('/user-guest', (req, res)=>{
   checkAndChangeLocale(req, res)
 
-  let newUser = new User({
-    username: 'guest',
-    password: process.env.CSECRET,
-    email: 'guestguestguestguestguest@gmai.com'
-  })
-
-  User.createUser(newUser, (err) => {
-    console.log(err)
-  })
-
   User.getUserByUsername('guest', (err, user) => {
     if (err) return handleError(err)
 
