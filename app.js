@@ -126,6 +126,6 @@ app.use(function(error, req, res, next){
   res.render('500')
 });
 
-app.listen(3000, '0.0.0.0', function(req, res){
+app.listen(process.env.PORT || 5000, '0.0.0.0', function(req, res){
   console.log('Server started at port 3000...')
 })
