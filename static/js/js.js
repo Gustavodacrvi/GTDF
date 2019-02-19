@@ -1038,7 +1038,7 @@ let vm = new Vue({
       if (!this.desktop){
         setTimeout(() => {
           this.showSideBar = false
-        }, 100)
+        }, 50)
       }
     },
     tempUsername(){
