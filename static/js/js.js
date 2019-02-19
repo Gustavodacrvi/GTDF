@@ -1036,7 +1036,9 @@ let vm = new Vue({
   watch: {
     currentSectionComponent(){
       if (!this.desktop){
-        this.toggleSideNav()
+        setTimeout(() => {
+          this.showSideBar = false
+        }, 100)
       }
     },
     tempUsername(){
