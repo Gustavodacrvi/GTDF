@@ -12,6 +12,7 @@ let vm = new Vue({
     email: undefined,
     username: undefined,
     wrongPlace: false,
+    mouseToggleIconLeaved: undefined,
     tempUsername: '',
     checked: false,
     tempOldPassword: '',
@@ -127,14 +128,14 @@ let vm = new Vue({
             loggedAs: `Logged as`,
             username: `guest`,
             selectAProject: `select a project:`,
-            addChangePlace: `add/change place`,
-            placeSpan: `Current place:`,
-            selectAPlace: `select a place:`,
+            addChangePlace: `add/change context`,
+            placeSpan: `Current context:`,
+            selectAPlace: `select a context:`,
             selectAnAction: `select an action:`,
-            createAPlace: `Create a place`,
-            deleteCurrentPlace: `Delete current place`,
+            createAPlace: `Create a context`,
+            deleteCurrentPlace: `Delete current context`,
             showAllProjectsDespiteOfLocation: 'Show all projects despite of location.',
-            changePlaceOfAllActions: `Change place of all actions in this project`,
+            changePlaceOfAllActions: `Change context of all actions in this project`,
             changeTagOfAllActions: `Change tag of all actions in this project`,
             timeOptional: `time(optional)`,
             Sunday: `Sunday`,
@@ -156,14 +157,14 @@ let vm = new Vue({
             Saturday: `Sábado`,
             timeOptional: `hora(opcional)`,
             changeTagOfAllActions: `Mudar a tag de todas ações neste projeto`,
-            changePlaceOfAllActions: `Mudar o local de todas ações neste projeto`,
-            showAllProjectsDespiteOfLocation: 'Mostrar todos os projetos independentemente de local.',
-            deleteCurrentPlace: `Deletar local atual`,
-            createAPlace: `Criar um local`,
+            changePlaceOfAllActions: `Mudar o contexto de todas ações neste projeto`,
+            showAllProjectsDespiteOfLocation: 'Mostrar todos os projetos independentemente de contexto.',
+            deleteCurrentPlace: `Deletar contexto atual`,
+            createAPlace: `Criar um contexto`,
             selectAnAction: `selecione uma ação:`,
-            selectAPlace: `selecione um local:`,
-            placeSpan: `Local atual:`,
-            addChangePlace: `adicionar/mudar local`,
+            selectAPlace: `selecione um contexto:`,
+            placeSpan: `Contexto atual:`,
+            addChangePlace: `adicionar/mudar contexto`,
             selectAProject: `selecione um projeto:`,
             username: `convidado`,
             loggedAs: `Conectado como`,
@@ -257,6 +258,29 @@ let vm = new Vue({
       toggleSideNav(){
         this.showSideBar = !this.showSideBar
         this.applyAnimationsToUnderlineLinksEventHandler()
+      },
+      hideNavBar(){
+        if (!this.desktop){
+          this.showSideBar = false
+        }
+      },
+      toggleIconMouseLeaved(){
+        setTimeout(() => {
+          if (!this.mouseToggleIconLeaved)
+            this.showSideBar = false
+          this.mouseToggleIconLeaved = true
+        }, 20)
+      },
+      mouseOverSideNav(){
+        if (!this.desktop){
+          setTimeout(() => {
+            this.showSideBar = true
+            this.mouseToggleIconLeaved = true
+            setTimeout(() => {
+              this.mouseToggleIconLeaved = false
+            }, 25)
+          }, 10)
+        }
       },
       changeSectionComponent(dt){
         this.currentSectionComponent = dt.compo

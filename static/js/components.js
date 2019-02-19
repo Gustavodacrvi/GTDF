@@ -237,7 +237,8 @@ Vue.component('select-option', {
     placeholder: String,
     id: String,
     nonlive: Boolean,
-    animation: String
+    animation: String,
+    sidebar: Boolean
   },
   data(){
     return {
@@ -258,7 +259,10 @@ Vue.component('select-option', {
         <a v-else>{{ select(temp) }}</a>
       </div>
       <transition name='pop-long'>
-        <div v-show='isDropdownOpened' class='card-shadow'>
+        <div v-show='isDropdownOpened' class='card-shadow' v-if='sidebar' id='sidebar-mobile-margin'>
+          <slot></slot>
+        </div>
+        <div v-show='isDropdownOpened' class='card-shadow' v-else>
           <slot></slot>
         </div>
       </transition>
@@ -325,7 +329,7 @@ Vue.component('side-nav', {
   },
   template: `
     <transition name='left-to-right-bounce-side-nav'>
-      <div id='side-nav' v-show='show'>
+      <div id='side-nav' v-show='show' @mouseleave='$root.hideNavBar' @mouseover='$root.mouseOverSideNav'>
         <div></div>
         <slot></slot>
       </div>
@@ -386,7 +390,7 @@ Vue.component('toggle-icon', {
     show: Boolean
   },
   template: `
-    <div class='toggle-icon' @click='$emit("toggle");show = !show'>
+    <div class='toggle-icon' @mouseover='$root.showSideBar = true' @mouseleave='$root.toggleIconMouseLeaved'>
       <i id='mobile-side-bar-icon' :class='icon + " icon-big"'></i>
     </div>
   `

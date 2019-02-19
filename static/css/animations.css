@@ -618,11 +618,11 @@
 }
 
 .flip-list-move{
-  -webkit-transition: -webkit-transform 0 !important;
-  transition: -webkit-transform 0 !important;
-  -o-transition: transform 0 !important;
-  transition: transform 0 !important;
-  transition: transform 0, -webkit-transform 0 !important;
+  -webkit-transition: -webkit-transform 0s !important;
+  transition: -webkit-transform 0s !important;
+  -o-transition: transform 0s !important;
+  transition: transform 0s !important;
+  transition: transform 0s, -webkit-transform 0s !important; 
 }
 
 .come-from-above{

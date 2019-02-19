@@ -4,6 +4,7 @@
 <head>
   <% include partials/header %>
   <title><%= __('User') %></title>
+  <meta http-equiv="refresh" content="1800" />
 </head>
 
 <body>
@@ -89,11 +90,11 @@
         </side-link>
       <% } %>
       </br>
-      <select-option v-if='user' :placeholder='l.placeSpan' :selected='place' @update='(newPlace)=>this.place = newPlace' animation='pop9'>
+      <select-option v-if='user' :placeholder='l.placeSpan' :selected='place' @update='(newPlace)=>this.place = newPlace' animation='pop9' :sidebar='true'>
         <drop-link value='show all'></drop-link>
         <drop-link v-for='place in user.places' :value='place'></drop-link>
       </select-option>
-      <double-icon animation='pop9'>
+      <double-icon id='margin-select-button-mobile' animation='pop9'>
         <action-bar-icon icon='fa fa-times' id='deletePlace' @click='deletePlace' :title='l.deleteCurrentPlace'></action-bar-icon>
         <action-bar-icon icon='fa fa-plus' id='addPlace' @click='openUserForm' :title='l.createAPlace'></action-bar-icon>
       </double-icon>
