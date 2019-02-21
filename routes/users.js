@@ -81,7 +81,7 @@ router.post('/send-email-password', (req, res, next) => {
           'If you did not request this, please ignore this email and your password will remain unchanged.\n'
       };
       smtpTransport.sendMail(mailOptions, function(err) {
-        req.flash('success_msg', 'An e-mail has been sent to the given email with further instructions.');
+        req.flash('success_msg', 'An e-mail has been sent to the given email with further instructions');
         done(err, 'done');
       });
     }
@@ -201,7 +201,7 @@ router.post('/send-email-username', (req, res, next)=>{
           'If you did not request this, please ignore this email and your username will remain unchanged.\n'
       };
       smtpTransport.sendMail(mailOptions, function(err) {
-        req.flash('success_msg', 'An e-mail has been sent to the given email with further instructions.');
+        req.flash('success_msg', 'An e-mail has been sent to the given email with further instructions');
         done(err, 'done');
       });
     }

@@ -1,3 +1,5 @@
+MAX_USERNAME_LENGTH = 30
+
 var express = require('express')
 var router = express.Router()
 var passport = require('passport')
@@ -527,13 +529,19 @@ router.post('/delete-data', (req, res) => {
 router.post('/check-availability', (req, res) => {
   let dt = req.body
 
-  let taken = false
-  User.countDocuments({ username: dt.username.trim() }, (err, count) => {
-    if (err) {console.log(err);taken = true}
-    else if (count > 0) taken = true
+  let name = dt.username.trim()
 
-    res.send(JSON.stringify({ valid: !taken }))
-  })
+  if (name.length > MAX_USERNAME_LENGTH)
+    res.send(JSON.stringify({ valid: false, passedMaxChar: true}))
+  else {
+    let taken = false
+    User.countDocuments({ username: dt.username.trim() }, (err, count) => {
+      if (err) {console.log(err);taken = true}
+      else if (count > 0) taken = true
+
+      res.send(JSON.stringify({ valid: !taken }))
+    })
+  }
 })
 
 router.post('/check-password', (req, res) => {

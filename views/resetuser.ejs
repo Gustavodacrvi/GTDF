@@ -63,14 +63,17 @@
         <form-element class='centralizeContent' v-if='tempUsername != username && tempUsername != ""'>
           <link-red @click='checkAvailability'><%= __('Check availability') %></link-red>
         </form-element>
-        <form-element v-if='validUsername == false'>
+        <form-element v-if='!validUsername && error == "username taken"'>
           <alert><%= __('Someone else already used that username') %>.</alert>
+        </form-element>
+        <form-element v-if='!validUsername && error == "passed max char"'>
+          <alert><%= __('Username length has to be less than 31 characters') %></alert>
         </form-element>
         <form-element v-if='validUsername == true'>
           <success><%= __('Valid username') %>.</success>
         </form-element>
         <form-element class='centralizeContent'>
-          <form-button :blocked='!checked' :class='{blocked: !checked}'><%= __('Change username') %></form-button>
+          <form-button :blocked='!validUsername' :class='{blocked: !validUsername}'><%= __('Change username') %></form-button>
         </form-element>
       </form>
     </login-form>

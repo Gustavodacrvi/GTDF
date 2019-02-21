@@ -22,6 +22,7 @@ let vm = new Vue({
     newConfirmPasswordForgot: '',
     hasPasswordError: false,
     passwordError: '',
+    error: '',
     validUsername: undefined,
     validPasswords: false,
     tempUser: {
@@ -64,7 +65,8 @@ let vm = new Vue({
     openedActionContents: undefined,
     openedProjectDropdowns: undefined,
     transformActionProject: 'create-project',
-    place: undefined
+    place: undefined,
+    passedMaxChar: undefined
   },
   methods: {
       setLanguage(lang){
@@ -537,11 +539,15 @@ let vm = new Vue({
         if (this.tempUsername != this.username && this.tempUsername != "")
           this.POSTrequestData('/check-availability', 'username='+this.tempUsername, (data) => {
             let dt = JSON.parse(data)
-            if (dt.valid){
-              this.checked = true
+            this.error = ''
+            this.validUsername = false
+            if (dt.passedMaxChar){
+              this.error = 'passed max char'
+            }
+            else if (dt.valid){
               this.validUsername = true
             } else {
-              this.validUsername = false
+              this.error = 'username taken'
             }
           })
       },
