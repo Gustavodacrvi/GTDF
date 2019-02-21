@@ -90,7 +90,7 @@
         </side-link>
       <% } %>
       </br>
-      <select-option v-if='user' :placeholder='l.placeSpan' :selected='place' @update='(newPlace)=>this.place = newPlace' animation='pop9' :sidebar='true'>
+      <select-option v-if='user' :placeholder='l.placeSpan' :selected='place' @update='(newPlace)=>{this.place = newPlace;saveNewPlace(newPlace)}' animation='pop9' :sidebar='true'>
         <drop-link value='show all'></drop-link>
         <drop-link v-for='place in user.places' :value='place'></drop-link>
       </select-option>

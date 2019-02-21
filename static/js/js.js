@@ -1027,11 +1027,20 @@ let vm = new Vue({
     mayHideSideBar(){
       if (!this.desktop)
         this.showSideBar = false
+    },
+    saveNewPlace(place){
+      if (!this.guest)
+        this.POSTrequest('/save-place', 'place='+place)
     }
   },
   mounted(){
     this.getCurrentDate()
     this.place = 'show all'
+    this.GETrequest('/get-place', (data)=>{
+      let dt = JSON.parse(data)
+      if (dt.place != undefined)
+        this.place = dt.place
+    })
   },
   watch: {
     currentSectionComponent(){
@@ -1062,6 +1071,9 @@ let vm = new Vue({
     },
     newConfirmPasswordForgot(){
       this.checkPasswordsForgot()
+    },
+    saveNewPlace(place){
+      this.POSTrequest('/save-place', 'place='+place)
     }
   }
 })

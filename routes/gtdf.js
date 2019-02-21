@@ -615,4 +615,27 @@ router.post('/change-places-of-all-actions', (req, res) => {
   })
 })
 
+router.post('/save-place', (req, res)=>{
+  User.getUserById(req.user.id, (err, user)=>{
+    if (err) return handleError(err)
+
+    user.currentplace = req.body.place
+
+    user.markModified('currentplace')
+    user.save((err) => {
+      if (err) return handleError(err)
+
+      res.send()
+    })
+  })
+})
+
+router.get('/get-place', (req, res)=>{
+  User.getUserById(req.user.id, (err, user)=>{
+    if (err) return handleError(err)
+
+    res.send(JSON.stringify({ place: user.currentplace }))
+  })
+})
+
 module.exports = router

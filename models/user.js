@@ -19,6 +19,7 @@ var userSchema = mongoose.Schema({
     resetPasswordExpires: Date,
     resetUsernameToken: String,
     resetUsernameExpires: Date,
+    currentplace: String,
     data: {
       actions: [
 
