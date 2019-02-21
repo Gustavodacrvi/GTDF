@@ -16,7 +16,6 @@
         <nav-element animation='pop1'><link-red href='/'><%= __("Home") %></link-red></nav-element>
         <% if (locals.user) {%>
           <nav-element animation='pop2'><link-red href='/logout'><%= __("Logout") %></link-red></nav-element>          
-          <nav-element animation='pop2'><link-red href='/user'><%= __("User") %></link-red></nav-element>
         <% } else { %>
           <nav-element animation='pop2'><link-red href='/login'><%= __("Login") %></link-red></nav-element>
         <% } %>
@@ -40,7 +39,6 @@
             <drop-link href='/' value='<%= __("Home") %>'></drop-link>
             <% if (locals.user) {%>
               <drop-link href='/logout' value='<%= __("Logout") %>'></drop-link>
-              <drop-link href='/user' value='<%= __("User") %>'></drop-link>
             <% } else {%>
               <drop-link href='/login' value='<%= __("Login") %>'></drop-link>
             <% } %>

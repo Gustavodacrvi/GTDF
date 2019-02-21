@@ -27,7 +27,7 @@ i18n.configure({
   queryParameter: 'lang',
   defaultLocale: 'en',
 });
-// MONGOOSE
+// MONGOOSE process.env.DATABASE 'mongodb://localhost/GTDF'
 mongoose.connect(process.env.DATABASE, { useNewUrlParser: true})
 var mongoose = mongoose.connection
 // APP
@@ -126,6 +126,6 @@ app.use(function(error, req, res, next){
   res.render('500')
 });
 
-app.listen(process.env.PORT || 8000, function(req, res){
+app.listen(process.env.PORT || 3000, function(req, res){
   console.log('Server started at port 3000...')
 })
