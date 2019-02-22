@@ -1,3 +1,8 @@
+const MAX_USERNAME_LENGTH = 30
+const MAX_EMAIL_LENGTH = 50
+const MAX_PASSWORD_LENGTH = 30
+
+
 var express = require('express')
 var router = express.Router()
 var passport = require('passport')
@@ -76,7 +81,7 @@ router.post('/send-email-password', (req, res, next) => {
           'If you did not request this, please ignore this email and your password will remain unchanged.\n'
       };
       smtpTransport.sendMail(mailOptions, function(err) {
-        req.flash('success_msg', 'An e-mail has been sent to the given email with further instructions.');
+        req.flash('success_msg', 'An e-mail has been sent to the given email with further instructions');
         done(err, 'done');
       });
     }
@@ -196,7 +201,7 @@ router.post('/send-email-username', (req, res, next)=>{
           'If you did not request this, please ignore this email and your username will remain unchanged.\n'
       };
       smtpTransport.sendMail(mailOptions, function(err) {
-        req.flash('success_msg', 'An e-mail has been sent to the given email with further instructions.');
+        req.flash('success_msg', 'An e-mail has been sent to the given email with further instructions');
         done(err, 'done');
       });
     }
@@ -311,7 +316,7 @@ router.post('/sign-up', function(req, res){
   var username = req.body.username.trim()
   var email = req.body.email
   var password = req.body.password
-  var confirm = req.body.cofirm
+  var confirm = req.body.confirm
 
   req.checkBody('username', 'Username required').notEmpty()
   req.checkBody('email', 'Email required').notEmpty()
@@ -332,11 +337,14 @@ router.post('/sign-up', function(req, res){
     }).then(function(){
       if (errors) res.render('signup', {errors: errors})
       else if (usernameTaken) res.render('signup', {errors: [
-        {msg: 'Someone already used that username.'}
+        {msg: 'Someone already used that username'}
       ]})
       else if (emailTaken) res.render('signup', {errors: [
-        {msg: 'Someone already used that email.'}
+        {msg: 'Someone already used that email'}
       ]})
+      else if (username.length > MAX_USERNAME_LENGTH) res.render('signup', {errors: [ {msg: 'Username length has to be less than 31 characters'} ]})
+      else if (email.length > MAX_EMAIL_LENGTH) res.render('signup', {errors: [ {msg: 'Email length has to be less than 51 characters'} ]})
+      else if (password.length > MAX_PASSWORD_LENGTH || confirm.length > MAX_PASSWORD_LENGTH) res.render('signup', {errors: [ {msg: 'Password length has to be less than 31 characters'} ]})
       else{
         let newUser = new User({
           username: username.trim(),

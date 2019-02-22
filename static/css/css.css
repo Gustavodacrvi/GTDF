@@ -1490,6 +1490,10 @@ h1.title{
 font-size: 3em;
 }
 
+.wrong-text{
+color: #fcb150 !important;
+}
+
 p.text{
 font-size: 1.2em;
 }

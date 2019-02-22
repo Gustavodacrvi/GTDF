@@ -6,7 +6,7 @@ let vm = new Vue({
     desktop: undefined,
     guest: false,
     lang: undefined,
-    tempPlace: undefined,
+    tempPlace: '',
     showPasswords: false,
     showSideBar: false,
     email: undefined,
@@ -22,6 +22,7 @@ let vm = new Vue({
     newConfirmPasswordForgot: '',
     hasPasswordError: false,
     passwordError: '',
+    error: '',
     validUsername: undefined,
     validPasswords: false,
     tempUser: {
@@ -64,7 +65,10 @@ let vm = new Vue({
     openedActionContents: undefined,
     openedProjectDropdowns: undefined,
     transformActionProject: 'create-project',
-    place: undefined
+    place: undefined,
+    passedMaxChar: undefined,
+    passedMaxCharTitle: undefined,
+    passedMaxCharDesc: undefined
   },
   methods: {
       setLanguage(lang){
@@ -224,6 +228,15 @@ let vm = new Vue({
             addCreateProject: `Criar/adicionar no projeto`            
           }
         }
+      },
+      achievedNumberOfActionsLimit(){
+        return (this.user.actions.length + 1 > 200)
+      },
+      achievedNumberOfProjectsLimit(){
+        return (this.user.projects.length + 1 > 200)
+      },
+      achievedNumberOfPlacesLimit(){
+        return (this.user.places.length + 1 > 15)
       },
     // PASSWORDS
       togglePasswordVisiblity(opened){
@@ -537,16 +550,21 @@ let vm = new Vue({
         if (this.tempUsername != this.username && this.tempUsername != "")
           this.POSTrequestData('/check-availability', 'username='+this.tempUsername, (data) => {
             let dt = JSON.parse(data)
-            if (dt.valid){
-              this.checked = true
+            this.error = ''
+            this.validUsername = false
+            if (dt.passedMaxChar){
+              this.error = 'passed max char'
+            }
+            else if (dt.valid){
               this.validUsername = true
             } else {
-              this.validUsername = false
+              this.error = 'username taken'
             }
+            this.checked = true
           })
       },
       changeAccountUsername(){
-        if (this.checked){
+        if (this.validUsername){
           this.POSTrequestData('/change-username', 'username='+this.tempUsername, (data) => {
             location.reload()
           })
@@ -562,6 +580,9 @@ let vm = new Vue({
         if (newp == '' || newc == ''){
           this.hasPasswordError = true
           this.passwordError = 'emptyFields'
+        } else if (newp.length > 30 || newc.length > 30){
+          this.hasPasswordError = true
+          this.passwordError = 'characterLimit'
         } else if (newp != newc){
           this.hasPasswordError = true
           this.passwordError = 'PasswordsDoesntMatch'
@@ -583,6 +604,9 @@ let vm = new Vue({
         } else if (old == newp){
           this.hasPasswordError = true
           this.passwordError = 'sameOldPassword'
+        } else if (newp.length > 30 || newc.length > 30){
+          this.hasPasswordError = true
+          this.passwordError = 'charLimit'
         } else if (newp != newc){
           this.hasPasswordError = true
           this.passwordError = 'PasswordsDoesntMatch'
@@ -914,7 +938,7 @@ let vm = new Vue({
       u.project.id = ''
       u.project.id2 = ''
       u.project.selected = ''
-      this.tempPlace = undefined
+      this.tempPlace = ''
       this.tempUser.places = []
     },
     openUserForm(dt, cleanData = true){
@@ -933,6 +957,8 @@ let vm = new Vue({
         this.closeActionForm()
         seconds = 400
       }
+      this.passedMaxCharTitle = false
+      this.passedMaxCharDesc = false
       setTimeout(()=> {
         this.openUserForm({id: '' + id})
         this.getDataFromAction(this.user.actions[actionId])
