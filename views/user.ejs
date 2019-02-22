@@ -448,13 +448,13 @@
           <title-big class='centralizeContent'><%= __('CREATE A PLACE') %></title-big>
         </form-element>
         <form-element>
-          <text-box placeholder='<%= __("PLACE NAME") %>' :rows='2' :value='tempPlace' @change='(v) => tempPlace = v'></text-box>
+          <text-box :max='15' placeholder='<%= __("PLACE NAME") %>' :rows='1' :value='tempPlace' @change='(dt) => {tempPlace = dt.value;passedMaxCharTitle = dt.passedLimit}'></text-box>
         </form-element class='centralizeContent'>
         <form-element>
           <alert v-if='tempPlace == "show all"'><%= __('The place name can not be "show all"') %>.</alert>
         </form-element>
         <form-element class='centralizeContent' animation='pop3'>
-          <form-button @click='createPlace'><%= __('Create a place') %></form-button>
+          <form-button :blocked='passedMaxCharTitle' @click='createPlace'><%= __('Create a place') %></form-button>
         </form-element>
       </action-form>
     </transition>

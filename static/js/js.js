@@ -6,7 +6,7 @@ let vm = new Vue({
     desktop: undefined,
     guest: false,
     lang: undefined,
-    tempPlace: undefined,
+    tempPlace: '',
     showPasswords: false,
     showSideBar: false,
     email: undefined,
@@ -925,7 +925,7 @@ let vm = new Vue({
       u.project.id = ''
       u.project.id2 = ''
       u.project.selected = ''
-      this.tempPlace = undefined
+      this.tempPlace = ''
       this.tempUser.places = []
     },
     openUserForm(dt, cleanData = true){
