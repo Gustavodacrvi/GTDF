@@ -135,5 +135,6 @@
 	"You have achieved the maximum number of actions available, delete actions to add more": "You have achieved the maximum number of actions available, delete actions to add more",
 	"You have achieved the maximum number of actions available, delete projects to add more": "You have achieved the maximum number of actions available, delete projects to add more",
 	"You have achieved the maximum number of projects available, delete projects to add more": "You have achieved the maximum number of projects available, delete projects to add more",
-	"You have achieved the maximum number of contexts available, delete contexts to add more": "You have achieved the maximum number of contexts available, delete contexts to add more"
+	"You have achieved the maximum number of contexts available, delete contexts to add more": "You have achieved the maximum number of contexts available, delete contexts to add more",
+	"You created an account and can now login.": "You created an account and can now login."
 }

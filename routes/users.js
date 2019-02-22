@@ -316,7 +316,7 @@ router.post('/sign-up', function(req, res){
   var username = req.body.username.trim()
   var email = req.body.email
   var password = req.body.password
-  var confirm = req.body.cofirm
+  var confirm = req.body.confirm
 
   req.checkBody('username', 'Username required').notEmpty()
   req.checkBody('email', 'Email required').notEmpty()

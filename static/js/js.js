@@ -560,10 +560,11 @@ let vm = new Vue({
             } else {
               this.error = 'username taken'
             }
+            this.checked = true
           })
       },
       changeAccountUsername(){
-        if (this.checked){
+        if (this.validUsername){
           this.POSTrequestData('/change-username', 'username='+this.tempUsername, (data) => {
             location.reload()
           })
@@ -603,6 +604,9 @@ let vm = new Vue({
         } else if (old == newp){
           this.hasPasswordError = true
           this.passwordError = 'sameOldPassword'
+        } else if (newp.length > 30 || newc.length > 30){
+          this.hasPasswordError = true
+          this.passwordError = 'charLimit'
         } else if (newp != newc){
           this.hasPasswordError = true
           this.passwordError = 'PasswordsDoesntMatch'

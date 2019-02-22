@@ -144,6 +144,9 @@
         <form-element v-if='hasPasswordError && passwordError == "wrongOldPassword"'>
           <alert><%= __('Wrong old password') %>.</alert>
         </form-element>
+        <form-element v-if='hasPasswordError && passwordError == "charLimit"'>
+          <alert><%= __('Password length has to be less than 31 characters') %></alert>
+        </form-element>
         <form-element v-if='validPasswords && passwordError == "alright"'>
           <success><%= __('You can proceed to change the password') %>.</success>
         </form-element>
@@ -169,14 +172,17 @@
         <form-element class='centralizeContent' v-if='tempUsername != username && tempUsername != ""'>
           <link-red @click='checkAvailability'><%= __('Check availability') %></link-red>
         </form-element>
-        <form-element v-if='validUsername == false'>
+        <form-element v-if='!validUsername && error == "username taken"'>
           <alert><%= __('Someone else already used that username') %>.</alert>
+        </form-element>
+        <form-element v-if='!validUsername && error == "passed max char"'>
+          <alert><%= __('Password length has to be less than 31 characters') %></aler>
         </form-element>
         <form-element v-if='validUsername == true'>
           <success><%= __('Valid username') %>.</success>
         </form-element>
         <form-element class='centralizeContent'>
-          <form-button :class='{blocked: !checked}' @click='changeAccountUsername'><%= __('Change username') %></form-button>
+          <form-button :class='{blocked: !checked || !validUsername}' @click='changeAccountUsername'><%= __('Change username') %></form-button>
         </form-element>
       </action-form>
       <action-form v-if='displayForm("deleteData")' key='deleteData' @close='closeActionForm' :l='l'>
