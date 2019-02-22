@@ -1815,18 +1815,24 @@ Vue.component('text-box',{
   props: {
     placeholder: String,
     rows: Number,
-    value: String
+    value: String,
+    max: Number
   },
   template: `
     <div class='text-box'>
       <span>{{placeholder}}</span>
-      <textarea :rows='rows' v-model='value'>
+      <textarea :class='{ "wrong-text": passedLimit() }' :rows='rows' v-model='value'>
       </textarea>
     </div>
   `,
+  methods: {
+    passedLimit(){
+      return (this.value.length > this.max)
+    }
+  },
   watch: {
     value: function(){
-      this.$emit('change', this.value)
+      this.$emit('change', { value: this.value, passedLimit: this.value.length > this.max})
     }
   }
 })

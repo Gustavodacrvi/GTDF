@@ -66,7 +66,9 @@ let vm = new Vue({
     openedProjectDropdowns: undefined,
     transformActionProject: 'create-project',
     place: undefined,
-    passedMaxChar: undefined
+    passedMaxChar: undefined,
+    passedMaxCharTitle: undefined,
+    passedMaxCharDesc: undefined
   },
   methods: {
       setLanguage(lang){
@@ -942,6 +944,8 @@ let vm = new Vue({
         this.closeActionForm()
         seconds = 400
       }
+      this.passedMaxCharTitle = false
+      this.passedMaxCharDesc = false
       setTimeout(()=> {
         this.openUserForm({id: '' + id})
         this.getDataFromAction(this.user.actions[actionId])
