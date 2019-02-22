@@ -233,7 +233,10 @@ let vm = new Vue({
         return (this.user.actions.length + 1 > 200)
       },
       achievedNumberOfProjectsLimit(){
-        return (this.user.projects.length + 1 > 2)
+        return (this.user.projects.length + 1 > 200)
+      },
+      achievedNumberOfPlacesLimit(){
+        return (this.user.places.length + 1 > 15)
       },
     // PASSWORDS
       togglePasswordVisiblity(opened){

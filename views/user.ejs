@@ -482,15 +482,22 @@
         <form-element animation='pop1'>
           <title-big class='centralizeContent'><%= __('CREATE A PLACE') %></title-big>
         </form-element>
-        <form-element>
-          <text-box :max='15' placeholder='<%= __("PLACE NAME") %>' :rows='1' :value='tempPlace' @change='(dt) => {tempPlace = dt.value;passedMaxCharTitle = dt.passedLimit}'></text-box>
-        </form-element class='centralizeContent'>
-        <form-element>
-          <alert v-if='tempPlace == "show all"'><%= __('The place name can not be "show all"') %>.</alert>
-        </form-element>
-        <form-element class='centralizeContent' animation='pop3'>
-          <form-button :blocked='passedMaxCharTitle' @click='createPlace'><%= __('Create a place') %></form-button>
-        </form-element>
+        <template v-if='!achievedNumberOfPlacesLimit()'>
+          <form-element>
+            <text-box :max='15' placeholder='<%= __("PLACE NAME") %>' :rows='1' :value='tempPlace' @change='(dt) => {tempPlace = dt.value;passedMaxCharTitle = dt.passedLimit}'></text-box>
+          </form-element class='centralizeContent'>
+          <form-element>
+            <alert v-if='tempPlace == "show all"'><%= __('The place name can not be "show all"') %>.</alert>
+          </form-element>
+          <form-element class='centralizeContent' animation='pop3'>
+            <form-button :blocked='passedMaxCharTitle' @click='createPlace'><%= __('Create a place') %></form-button>
+          </form-element>
+        </template>
+        <template v-else>
+          <form-element animation='pop2'>
+          <alert><%= __('You have achieved the maximum number of contexts available, delete contexts to add more') %>.</alert>
+          </form-element>
+        </template>
       </action-form>
     </transition>
   </fixed>
