@@ -356,7 +356,7 @@ router.post('/sign-up', function(req, res){
           if (err) throw err
         })
 
-        req.flash('success_msg', 'You created an account and can now login.')
+        req.flash('success_msg', 'You created an account and can now login')
 
         res.redirect('/login')
       }
