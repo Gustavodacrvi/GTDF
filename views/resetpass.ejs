@@ -64,6 +64,9 @@
         <form-element v-if='hasPasswordError && passwordError == "emptyFields"'>
           <alert><%= __('Missing credentials') %>.</alert>
         </form-element>
+        <form-element v-if='hasPasswordError && passwordError == "characterLimit"'>
+          <alert><%= __('Password length has to be less than 31 characters') %></alert>
+        </form-element>
         <form-element v-if='validPasswords && passwordError == "alright"'>
           <success><%= __('You can proceed to change the password') %>.</success>
         </form-element>

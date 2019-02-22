@@ -568,6 +568,9 @@ let vm = new Vue({
         if (newp == '' || newc == ''){
           this.hasPasswordError = true
           this.passwordError = 'emptyFields'
+        } else if (newp.length > 30 || newc.length > 30){
+          this.hasPasswordError = true
+          this.passwordError = 'characterLimit'
         } else if (newp != newc){
           this.hasPasswordError = true
           this.passwordError = 'PasswordsDoesntMatch'
