@@ -133,5 +133,5 @@
 	"Password length has to be less than 31 characters": "A senha deve ter menos de 31 caracteres",
 	"You have achieved the maximum number of actions available, delete actions to add more": "Você atingiu o limite máximo de ações disponíveis",
 	"You have achieved the maximum number of projects available, delete projects to add more": "Você atingiu o limite máximo de projetos disponíveis",
-	"You have achieved the maximum number of contexts available, delete contexts to add more": "Você atingiu o limite máximo de contextos disponíveis",
+	"You have achieved the maximum number of contexts available, delete contexts to add more": "Você atingiu o limite máximo de contextos disponíveis"
 }
