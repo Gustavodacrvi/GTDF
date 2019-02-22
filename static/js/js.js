@@ -232,6 +232,9 @@ let vm = new Vue({
       achievedNumberOfActionsLimit(){
         return (this.user.actions.length + 1 > 200)
       },
+      achievedNumberOfProjectsLimit(){
+        return (this.user.projects.length + 1 > 2)
+      },
     // PASSWORDS
       togglePasswordVisiblity(opened){
         (opened) ? this.displayPasswords() : this.hidePasswords()

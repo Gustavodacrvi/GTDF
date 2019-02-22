@@ -226,12 +226,19 @@
         <form-element animation='pop1'>
           <title-big class='centralizeContent'><%= __('ADD PROJECT') %></title-big>
         </form-element>
-        <form-element animation='pop2'>
-          <text-box :max='86' :rows='2' placeholder='<%= __("TITLE") %>' :value='tempUser.project.title' @change='(dt) => {tempUser.project.title = dt.value;passedMaxCharTitle = dt.passedLimit}'></text-box>
-        </form-element>
-        <form-element animation='pop3' class='centralizeContent'>
-          <form-button :blocked='passedMaxCharTitle' @click='addProject'><%= __('Add project') %></form-button>
-        </form-element>
+        <template v-if='!achievedNumberOfProjectsLimit()'>
+          <form-element animation='pop2'>
+            <text-box :max='86' :rows='2' placeholder='<%= __("TITLE") %>' :value='tempUser.project.title' @change='(dt) => {tempUser.project.title = dt.value;passedMaxCharTitle = dt.passedLimit}'></text-box>
+          </form-element>
+          <form-element animation='pop3' class='centralizeContent'>
+            <form-button :blocked='passedMaxCharTitle' @click='addProject'><%= __('Add project') %></form-button>
+          </form-element>
+        </template>
+        <template v-else>
+          <form-element animation='pop2'>
+            <alert><%= __('You have achieved the maximum number of projects available, delete projects to add more') %>.</alert>
+          </form-element>
+        </template>
       </action-form>
       <action-form key='editAction' v-else-if='displayForm("editAction")' @close='closeActionForm' :l='l'>
         <form-element animation='pop1'>
@@ -343,12 +350,19 @@
         <form-element class='centralizeContent' animation='pop1'>
           <title-big><%= __('CREATE PROJECT') %></title-big>
         </form-element>
-        <form-element animation='pop3' class='centralizeContent'>
-          <check-box :value='tempUser.project.delete' @change='invertValue' :placeholder='l.deleteAction'></check-box>
-        </form-element>
-        <form-element class='centralizeContent' animation='pop4'>
-          <form-button @click='transformActionToProject'>{{l.createProject}}</form-button>
-        </form-element>
+        <template v-if='!achievedNumberOfProjectsLimit()'>
+          <form-element animation='pop3' class='centralizeContent'>
+            <check-box :value='tempUser.project.delete' @change='invertValue' :placeholder='l.deleteAction'></check-box>
+          </form-element>
+          <form-element class='centralizeContent' animation='pop4'>
+            <form-button @click='transformActionToProject'>{{l.createProject}}</form-button>
+          </form-element>
+        </template>
+        <template v-else>
+          <form-element animation='pop2'>
+            <alert><%= __('You have achieved the maximum number of projects available, delete projects to add more') %>.</alert>
+          </form-element>
+        </template>
       </action-form>
       <action-form key='projectCreateActionFromProject' v-else-if='displayForm("projectCreateActionFromProject")' @close='closeActionForm' :l='l'>
         <form-element class='centralizeContent' animation='pop1'>
