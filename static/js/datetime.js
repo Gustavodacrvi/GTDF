@@ -24,7 +24,8 @@ class DateM {
   static isValidDate(date_str){
       let splited = date_str.split('/')
 
-      if (splited[2].length > 4 || splited[0].length > 2 || splited[1].length > 2) return false
+      if (typeof splited[0] !== "undefined" && typeof splited[1] !== "undefined" && typeof splited[2] !== "undefined")
+        if (splited[2].length > 4 || splited[0].length > 2 || splited[1].length > 2) return false
 
       let length = splited.length
       for (let i = 0;i < length;i++)
@@ -178,7 +179,8 @@ class TimeM {
   static isValidTime(time_str){
       let splited = time_str.split(':')
 
-      if (splited[1].length > 2 || splited[1].length > 2) return false
+      if (typeof splited[0] !== "undefined" && typeof splited[1] !== "undefined" && typeof splited[2] !== "undefined")
+        if (splited[1].length > 2 || splited[1].length > 2) return false
 
       let length = splited.length
       for (let i = 0;i < length;i++)
