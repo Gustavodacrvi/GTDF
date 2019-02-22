@@ -38,7 +38,7 @@
           <nav-dropdown>
             <drop-link href='/' value='<%= __("Home") %>'></drop-link>
             <% if (locals.user) {%>
-              <drop-link href='/logout' value='<%= __("Logout") %>'></drop-link>
+              <drop-link href='/Logout' value='<%= __("Logout") %>'></drop-link>
             <% } else {%>
               <drop-link href='/login' value='<%= __("Login") %>'></drop-link>
             <% } %>
@@ -76,7 +76,7 @@
       <% if (!locals.guest) { %>
         <side-link animation='pop7' @click='mayHideSideBar();openUserForm({ id: "settings" })'><%= __('settings') %></side-link>
         <side-link href='/logout' animation='pop8'>
-          <%= __('logout') %>
+          <%= __('Logout') %>
         </side-link>
       <% } %>
       <% if (locals.guest) { %>
