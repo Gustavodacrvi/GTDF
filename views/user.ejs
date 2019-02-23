@@ -154,7 +154,7 @@
           <link-red @click='checkPasswords'><%= __('Check passwords') %></link-red>
         </form-element>
         <form-element class='centralizeContent'>
-          <form-button @click='changePassword' :class='{ blocked: !validPasswords}'><%= __('Change password') %></form-button>
+          <form-button @click='changePassword' :class='{ blocked: !validPasswords}' :blocked='!validPasswords'><%= __('Change password') %></form-button>
         </form-element>
       </action-form>
       <action-form v-if='displayForm("changeUsername")' key='changeUsername' @close='closeActionForm' :l='l'>

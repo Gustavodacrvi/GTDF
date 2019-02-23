@@ -598,6 +598,7 @@ let vm = new Vue({
         let newc = this.newConfirmPassword
 
         this.hasPasswordError = false
+        this.validPasswords = false
         if (old == "" || newp == '' || newc == '') {
           this.hasPasswordError = true
           this.passwordError = 'emptyFields'
