@@ -589,6 +589,30 @@
   }
 }
 
+@keyframes comeFromLeft{
+  0%{
+    position: relative;
+    left: -80px;
+    opacity: .2;
+  }
+  100%{
+    left: 0;
+    opacity: 1;
+  }
+}
+
+@keyframes comeFromRigth{
+  0%{
+    position: relative;
+    right: -80px;
+    opacity: .2;
+  }
+  100%{
+    right: 0;
+    opacity: 1;
+  }
+}
+
 .curved-movement-enter-active{
   -webkit-animation: popLong;
           animation: popLong;
@@ -632,6 +656,18 @@
           animation-duration: 2s;
   -webkit-animation-play-state: running;
           animation-play-state: running;
+}
+
+.come-from-right{
+  animation: comeFromRigth;
+  animation-duration: 2s;
+  animation-play-state: running;
+}
+
+.come-from-left{
+  animation: comeFromLeft;
+  animation-duration: 2s;
+  animation-play-state: running; 
 }
 
 

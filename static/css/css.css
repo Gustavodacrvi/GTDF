@@ -1590,7 +1590,7 @@ background: url('/images/backcolor.png') !important;
 /* LANDPAGE */
 
 #main{
-height: 600px;
+height: 550px;
 display: -webkit-box;
 display: -ms-flexbox;
 display: flex;
@@ -1603,11 +1603,17 @@ display: flex;
 -ms-flex-preferred-size: 500px;
     flex-basis: 500px;
 position: relative;
-margin-top: 60px;
+margin-top: 40px;
 }
 
 #main > div > div {
-margin-top: 60px;
+margin-top: 40px;
+}
+
+#main h1{
+  text-align: center;
+  font-size: 1.7em;
+  line-height: 30px;
 }
 
 #main > div > :first-child{
@@ -1629,6 +1635,124 @@ display: flex;
     flex-wrap: wrap;
 }
 
+.grid{
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 60px;
+  position: relative;
+}
+
+.grid > div{
+  flex-basis: 50%;
+}
+
+.grid > div > div{
+  margin: 10px;
+  padding: 15px 0;
+  overflow: visible !important;
+}
+
+.overflow-hidden{
+  overflow: hidden !important;
+}
+
+.land-card{
+  position: relative;
+  top: 0;
+  margin: 5px 0;
+  transition-duration: .4s;
+  overflow: auto;
+}
+.land-card > :last-child{
+  margin-bottom: 20px;
+}
+
+.land-card > div{
+  text-align: justify;
+}
+
+.land-card > div p{
+  font-size: 1.2em;
+  margin: 0 20px;
+}
+
+.land-card:hover{
+  top: -5px;
+}
+
+.land-title{
+  text-align: center;
+  margin: 70px 0;
+  position: relative;
+  overflow: auto;
+}
+
+.land-title h2{
+  position: relative;
+  font-size: 4em;
+  margin: 0;
+  margin-top: 20px;
+}
+
+.demo-actions{
+  margin-top: 20px;
+  display: flex;
+  width: 100%;
+}
+
+.demo-select-options{
+  margin-top: 20px;
+}
+
+.demo-actions > div{
+  width: 80%;
+  margin-right: auto;
+  margin-left: auto;
+  flex-direction: column;
+  display: flex;
+}
+
+.demo-card{
+  background: url('/images/democolor.png');
+  border-radius: 6px;
+}
+
+#demo-contexts{
+  display: flex;
+  justify-content: center;
+}
+
+#demo-contexts > div{
+  width: 200px;
+}
+
+.demo-action{
+  flex-basis: 100%;
+}
+
+.land-sub-title h3{
+  font-size: 1.5em;
+  margin: 20px 0;
+  text-align: center;
+  color: #fe4a49;
+}
+
+#footer{
+  height: 200px;
+  margin-top: 150px;
+  background: url('/images/cardcolor.png');
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+#footer > div{
+  flex-basis: 600px;
+  margin: 10px;
+  height: 150px;
+}
+
 @media screen and (min-width: 796px){
 #mobile{
   display: none;
@@ -1637,6 +1761,23 @@ display: flex;
 @media screen and (max-width: 795px){
 #desktop{
   display: none;
+}
+
+.land-title h2{
+  font-size: 3em;
+  margin-top: 40px;
+}
+
+#main{
+  height: 500px;
+}
+
+.grid{
+  margin: 10px 0;
+}
+
+.grid > div{
+  flex-basis: 100%;
 }
 
 .form{
