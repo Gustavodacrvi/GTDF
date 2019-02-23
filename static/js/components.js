@@ -1571,6 +1571,32 @@ Vue.component('timed-action', {
     }
   }
 })
+Vue.component('demo-action', {
+  props: {
+    title: String,
+    description: String,
+    dropdown: false,
+    id: Number,
+    l: Object,
+  },
+  template: `
+    <div class='action demo-action'>
+      <div class='demo-card'>
+        <div @click='dropdown = !dropdown'>
+          <i class='fa fa-sort icon-tiny draggable'></i>
+          <span> {{ title }}</span>
+        </div>
+        <div>
+        </div>
+      </div>
+      <transition name='pop-long'>
+        <div class='demo-card' v-show='dropdown'>
+          <span>{{ description }}</span>
+        </div>
+      </transition>
+    </div>
+  `
+})
 Vue.component('action',{
   props: {
     title: String,
