@@ -620,10 +620,10 @@ let vm = new Vue({
               this.passwordError = 'alright'
               this.validPasswords = true
             }
+            if (!this.hasPasswordError){
+              this.validPasswords = true
+            }
           })
-        }
-        if (!this.hasPasswordError){
-          this.validPasswords = true
         }
       },
       changePassword(){
