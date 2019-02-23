@@ -70,10 +70,10 @@
     <div class='grid come-from-right'>
       <div>
         <div class='land-sub-title card-shadow land-card'>
-          <h3>drag and drop</h3>
+          <h3>Drag and drop</h3>
           <div>
             <p>Reorder your stuff with ease using intuitive drag and drop!</p>
-            <div id='demo-actions'>
+            <div class='demo-actions'>
               <draggable :options="{handle:'.draggable', animation: 300}">
                 <transition-group name='flip-list' tag='div'>
                   <demo-action title='Enter as a guest' description='Click on the enter as a guest button' :key='0' :id='0'>
@@ -95,8 +95,35 @@
 
       <div>
         <div class='land-sub-title card-shadow land-card'>
-          <h3>calendar</h3>
-          <p></p>
+          <h3>Contexts</h3>
+          <div>
+            <p>Show different action lists in different contexts or locations!</p>
+            <div id='demo-actions'>
+              <div id='demo-contexts'>
+                <div class='demo-select-options'>
+                  <select-option placeholder='current context:' :selected='place' @update='(newPlace)=>{this.place = newPlace;saveNewPlace(newPlace)}' animation='pop9' :sidebar='true'>
+                    <drop-link value='show all'></drop-link>
+                    <drop-link value='Home'></drop-link>
+                    <drop-link value='Work'></drop-link>
+                  </select-option>
+                </div>
+              </div>
+              <div class='demo-actions overflow-hidden'>
+                <div>
+                <draggable :options="{handle:'.draggable', animation: 300}">
+                  <transition-group name='flip-list' tag='div'>
+                    <demo-action v-if='place == "Home" || place == "show all"' title='Make calls' description='Call and ask Karen about the kids' :key='0' :id='0'>
+                    </demo-action>
+                    <demo-action v-if='place == "Home" || place == "show all"' title='Fix the door' description='Door stoped working after the party for unknown reasons' :key='0' :id='0'>
+                    </demo-action>
+                    <demo-action v-if='place == "Work" || place == "show all"' title='Get your money back' description='Michael stole your money before going on vacation' :key='0' :id='0'>
+                    </demo-action>
+                  </transition-group>
+                </draggable>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
