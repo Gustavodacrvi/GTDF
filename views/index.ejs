@@ -56,7 +56,7 @@
           <img src='/images/logobig.png' alt='Getting Things Done Logo' />
         </div>
         <div>
-          <h1>GTD or "Getting Things Done" is a time management framework for organizing and tracking your tasks, projects and ideas.</h1>
+          <h1><%= __('GTD or "Getting Things Done" is a time management framework for organizing and tracking your tasks, projects and ideas.') %></h1>
         </div>
         <div>
           <link-button-back tabindex='1' href='/user-guest'><%= __('Enter as a guest') %></link-button-back>
@@ -65,26 +65,26 @@
       </div>
     </div>
     <div class='land-title come-from-left'>
-      <h2>What can I get from this web app?</h2>
+      <h2><%= __('How does it work?') %></h2>
     </div>
     <div class='grid come-from-right'>
       <div>
         <div class='land-sub-title card-shadow land-card'>
           <h3>Drag and drop</h3>
           <div>
-            <p>Reorder your stuff with ease using intuitive drag and drop!</p>
+            <p><%= __('Reorder your stuff with ease using intuitive drag and drop') %>!</p>
             <div class='demo-actions'>
               <draggable :options="{handle:'.draggable', animation: 300}">
                 <transition-group name='flip-list' tag='div'>
-                  <demo-action title='Enter as a guest' description='Click on the enter as a guest button' :key='0' :id='0'>
+                  <demo-action title='<%= __("Enter as a guest") %>' description='<%= __("Click on the enter as a guest button") %>' :key='0' :id='0'>
                   </demo-action>
-                  <demo-action title='Test web app' description='Get in touch with all the functionalities' :key='0' :id='0'>
+                  <demo-action title='<%= __("Test web app") %>' description='<%= __("Get in touch with all the functionalities") %>' :key='0' :id='0'>
                   </demo-action>
-                  <demo-action title='Create account' description='Click on the create account link' :key='0' :id='0'>
+                  <demo-action title='<%= __("Create account") %>' description='<%= __("Click on the create account link") %>' :key='0' :id='0'>
                   </demo-action>
-                  <demo-action title='Login' description='Enter with the created account' :key='0' :id='0'>
+                  <demo-action title='<%= __("Login") %>' description='<%= __("Enter with the created account") %>' :key='0' :id='0'>
                   </demo-action>
-                  <demo-action title='Start getting your stuff together!' description='Use the app anywhere forever!' :key='0' :id='0'>
+                  <demo-action title='<%= __("Start getting your stuff together!") %>' description='<%= __("Use the app anywhere forever!") %>' :key='0' :id='0'>
                   </demo-action>
                 </transition-group>
               </draggable>
@@ -95,16 +95,16 @@
 
       <div>
         <div class='land-sub-title card-shadow land-card'>
-          <h3>Contexts</h3>
+          <h3><%= __('Contexts') %></h3>
           <div>
-            <p>Show different action lists in different contexts or locations!</p>
+            <p><%= __('Show different action lists in different contexts or locations!') %></p>
             <div id='demo-actions'>
               <div id='demo-contexts'>
                 <div class='demo-select-options'>
-                  <select-option placeholder='current context:' :selected='place' @update='(newPlace)=>{this.place = newPlace;saveNewPlace(newPlace)}' animation='pop9' :sidebar='true'>
+                  <select-option placeholder='<%= __("current context:") %>' :selected='place' @update='(newPlace)=>{this.place = newPlace;saveNewPlace(newPlace)}' animation='pop9' :sidebar='true'>
                     <drop-link value='show all'></drop-link>
-                    <drop-link value='Home'></drop-link>
-                    <drop-link value='Work'></drop-link>
+                    <drop-link value='<%= __("Home") %>'></drop-link>
+                    <drop-link value='<%= __("Work") %>'></drop-link>
                   </select-option>
                 </div>
               </div>
@@ -112,11 +112,11 @@
                 <div>
                 <draggable :options="{handle:'.draggable', animation: 300}">
                   <transition-group name='flip-list' tag='div'>
-                    <demo-action v-if='place == "Home" || place == "show all"' title='Make calls' description='Call and ask Karen about the kids' :key='0' :id='0'>
+                    <demo-action v-if='place == "<%= __('Home') %>" || place == "show all"' title='<%= __("Make calls") %>' description='<%= __("Call and talk to Karen about the kids") %>' :key='0' :id='0'>
                     </demo-action>
-                    <demo-action v-if='place == "Home" || place == "show all"' title='Fix the door' description='Door stoped working after the party for unknown reasons' :key='0' :id='0'>
+                    <demo-action v-if='place == "<%= __('Home') %>" || place == "show all"' title='<%= __("Fix the door") %>' description='<%= __("Door stoped working after the party for unknown reasons") %>' :key='0' :id='0'>
                     </demo-action>
-                    <demo-action v-if='place == "Work" || place == "show all"' title='Get your money back' description='Michael stole your money before going on vacation' :key='0' :id='0'>
+                    <demo-action v-if='place == "<%= __('Work') %>" || place == "show all"' title='<%= __("Get your money back") %>' description='<%= __("Michael stole your money before going on vacation") %>' :key='0' :id='0'>
                     </demo-action>
                   </transition-group>
                 </draggable>
@@ -126,52 +126,16 @@
           </div>
         </div>
       </div>
-
-      <div>
-        <div class='land-sub-title card-shadow land-card'>
-          <h3>projects</h3>
-          <p></p>
-        </div>
-      </div>
-
-      <div>
-        <div class='land-sub-title card-shadow land-card'>
-          <h3>contexts</h3>
-          <p></p>
+    </div>
+    
+      <div id='footer'>
+        <div style='margin-top: 30px;'><%= __('This is an open source project, feel free to contribute:') %> <link-blue href='https://github.com/Gustavodacrvi/GTDF' target='_blank'>https://github.com/Gustavodacrvi/GTDF</link-blue></div>
+        <div>
+          <%= __('Made by') %>: Gustavo da Cruz Vieira</br>
+          <%= __('Contact') %>: gettingthingsdoneforfree@gmail.com
         </div>
       </div>
     </div>
-
-    <p>asfdddddddddddddddddddddddddddddddddddddddddddddddd</p>
-    <p>asfdddddddddddddddddddddddddddddddddddddddddddddddd</p>
-    <p>asfdddddddddddddddddddddddddddddddddddddddddddddddd</p>
-    <p>asfdddddddddddddddddddddddddddddddddddddddddddddddd</p>
-    <p>asfdddddddddddddddddddddddddddddddddddddddddddddddd</p>
-    <p>asfdddddddddddddddddddddddddddddddddddddddddddddddd</p>
-    <p>asfdddddddddddddddddddddddddddddddddddddddddddddddd</p>
-    <p>asfdddddddddddddddddddddddddddddddddddddddddddddddd</p>
-    <p>asfdddddddddddddddddddddddddddddddddddddddddddddddd</p>
-    <p>asfdddddddddddddddddddddddddddddddddddddddddddddddd</p>
-    <p>asfdddddddddddddddddddddddddddddddddddddddddddddddd</p>
-    <p>asfdddddddddddddddddddddddddddddddddddddddddddddddd</p>
-    <p>asfdddddddddddddddddddddddddddddddddddddddddddddddd</p>
-    <p>asfdddddddddddddddddddddddddddddddddddddddddddddddd</p>
-    <p>asfdddddddddddddddddddddddddddddddddddddddddddddddd</p>
-    <p>asfdddddddddddddddddddddddddddddddddddddddddddddddd</p>
-    <p>asfdddddddddddddddddddddddddddddddddddddddddddddddd</p>
-    <p>asfdddddddddddddddddddddddddddddddddddddddddddddddd</p>
-    <p>asfdddddddddddddddddddddddddddddddddddddddddddddddd</p>
-    <p>asfdddddddddddddddddddddddddddddddddddddddddddddddd</p>
-    <p>asfdddddddddddddddddddddddddddddddddddddddddddddddd</p>
-    <p>asfdddddddddddddddddddddddddddddddddddddddddddddddd</p>
-    <p>asfdddddddddddddddddddddddddddddddddddddddddddddddd</p>
-    <p>asfdddddddddddddddddddddddddddddddddddddddddddddddd</p>
-    <p>asfdddddddddddddddddddddddddddddddddddddddddddddddd</p>
-    <p>asfdddddddddddddddddddddddddddddddddddddddddddddddd</p>
-    <p>asfdddddddddddddddddddddddddddddddddddddddddddddddd</p>
-    <p>asfdddddddddddddddddddddddddddddddddddddddddddddddd</p>
-    </div>
-    <p>asfdddddddddddddddddddddddddddddddddddddddddddddddd</p>
 
 <% include partials/footer %>
 </body>

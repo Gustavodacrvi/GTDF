@@ -1590,7 +1590,7 @@ background: url('/images/backcolor.png') !important;
 /* LANDPAGE */
 
 #main{
-height: 450px;
+height: 550px;
 display: -webkit-box;
 display: -ms-flexbox;
 display: flex;
@@ -1735,6 +1735,22 @@ display: flex;
   margin: 20px 0;
   text-align: center;
   color: #fe4a49;
+}
+
+#footer{
+  height: 200px;
+  margin-top: 150px;
+  background: url('/images/cardcolor.png');
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+#footer > div{
+  flex-basis: 600px;
+  margin: 10px;
+  height: 150px;
 }
 
 @media screen and (min-width: 796px){
