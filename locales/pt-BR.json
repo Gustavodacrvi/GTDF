@@ -156,5 +156,9 @@
 	"Michael stole your money before going on vacation": "Michael roubou seu dinheiro antes de ficar de férias",
 	"This is an open source project, feel free to contribute:": "Este é um projeto de código aberto, sinta-se livre para contribuir: ",
 	"Made by": "Feito por",
-	"Contact": "Contato"
+	"Contact": "Contato",
+	"Synchronization": "Sincronização",
+	"All of your stuff are synchronized with the database, that way, any changes on the desktop will also appear on mobile and vice-versa!": "Todas as suas tarefas são sincronizadas com o banco de dados, assim, todas as mudanças feitas em desktop também estarão no celular e vice-versa!",
+	"Mobile support": "Suporte para mobile",
+	"UI meticously crafted for max mobile user experience!": "Interface do usuário meticulosamente feita para funcionar em todos os aparelhos!"
 }
