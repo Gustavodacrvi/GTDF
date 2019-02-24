@@ -295,6 +295,7 @@ router.get('/sign-up', function(req, res){
 
 function toLowerCase(req, res, next){
   req.body.username = req.body.username.toLowerCase()
+  req.body.username = req.body.username.trim()
   next()
 }
 
