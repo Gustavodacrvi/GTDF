@@ -293,6 +293,11 @@ router.get('/sign-up', function(req, res){
   })
 })
 
+function toLowerCase(req, res, next){
+  req.body.username = req.body.username.toLowerCase()
+  next()
+}
+
 // LOGOUT
 router.get('/logout', function(req, res){
   req.logOut()
@@ -306,8 +311,7 @@ router.get('/logout-create', function(req, res){
   res.redirect('/sign-up')
 })
 
-router.post('/login',
-  passport.authenticate('local', {successRedirect:'/user', failureRedirect:'/login', failureFlash: true}),
+router.post('/login', toLowerCase,passport.authenticate('local', {successRedirect:'/user', failureRedirect:'/login', failureFlash: true}),
   function(req, res){
       res.redirect('/user')
 })
@@ -346,6 +350,7 @@ router.post('/sign-up', function(req, res){
       else if (email.length > MAX_EMAIL_LENGTH) res.render('signup', {errors: [ {msg: 'Email length has to be less than 51 characters'} ]})
       else if (password.length > MAX_PASSWORD_LENGTH || confirm.length > MAX_PASSWORD_LENGTH) res.render('signup', {errors: [ {msg: 'Password length has to be less than 31 characters'} ]})
       else{
+        username = username.toLowerCase()
         let newUser = new User({
           username: username.trim(),
           password: password,
