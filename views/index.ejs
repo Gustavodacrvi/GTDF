@@ -101,7 +101,7 @@
             <div id='demo-actions'>
               <div id='demo-contexts'>
                 <div class='demo-select-options'>
-                  <select-option placeholder='<%= __("current context:") %>' :selected='place' @update='(newPlace)=>{this.place = newPlace;saveNewPlace(newPlace)}' animation='pop9' :sidebar='true'>
+                  <select-option placeholder='<%= __("current context:") %>' :selected='place' @update='(newPlace)=>{this.place = newPlace}' animation='pop9' :sidebar='true'>
                     <drop-link value='show all'></drop-link>
                     <drop-link value='<%= __("Home") %>'></drop-link>
                     <drop-link value='<%= __("Work") %>'></drop-link>
