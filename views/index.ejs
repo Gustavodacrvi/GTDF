@@ -10,6 +10,7 @@
 <div id='app'>
   <fixed>
   <navigation-bar>
+    {{ setLanguage("<%= __('lang') %>") }}
       <template slot='desktop-left'>
         <nav-element animation='pop1'><link-red href='/'><%= __("Home") %></link-red></nav-element>
         <% if (locals.user) {%>
