@@ -1100,7 +1100,8 @@ let vm = new Vue({
       this.checkPasswordsForgot()
     },
     saveNewPlace(place){
-      this.POSTrequest('/save-place', 'place='+place)
+      if (!this.guest)
+        this.POSTrequest('/save-place', 'place='+place)
     }
   }
 })
