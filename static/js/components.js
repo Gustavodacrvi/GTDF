@@ -977,6 +977,7 @@ Vue.component('calendar', {
         </template>
         <template v-else>
           <template v-for='project in user.projects'>
+            <div style='height: 6px'></div>
             <draggable v-model='user.actions' :options="{handle:'.draggable', animation: 300}">
             <transition-group name='flip-list' tag='div'> 
               <template v-for='action in user.actions' v-if='(action.projectId || action.projectId == 0) && $root.containsAction(project.id, action.id) && action.tag == "calendar" && action.calendar.date.split("/")[2] < year && ((place == "show all") || $root.includesPlace(action.id, place))'>
@@ -999,6 +1000,7 @@ Vue.component('calendar', {
         </template>
         <template v-else>
           <template v-for='project in user.projects'>
+            <div style='height: 6px'></div>
             <draggable v-model='user.actions' :options="{handle:'.draggable', animation: 300}">
             <transition-group name='flip-list' tag='div'> 
               <template v-for='action in user.actions' v-if='(action.projectId || action.projectId == 0) && $root.containsAction(project.id, action.id) && action.tag == "calendar" && action.calendar.date.split("/")[2] > year && ((place == "show all") || $root.includesPlace(action.id, place))'>
@@ -1021,6 +1023,7 @@ Vue.component('calendar', {
         </template>
         <template v-else>
           <template v-for='project in user.projects'>
+            <div style='height: 6px'></div>
             <draggable v-model='user.actions' :options="{handle:'.draggable', animation: 300}">
             <transition-group name='flip-list' tag='div'> 
               <template v-for='action in user.actions' v-if='(action.projectId || action.projectId == 0) && $root.containsAction(project.id, action.id) && action.tag == "calendar" && action.calendar.date == date && ((place == "show all") || $root.includesPlace(action.id, place))'>           
