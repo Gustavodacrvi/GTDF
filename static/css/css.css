@@ -1590,7 +1590,7 @@ background: url('/images/backcolor.png') !important;
 /* LANDPAGE */
 
 #main{
-height: 550px;
+height: 500px;
 display: -webkit-box;
 display: -ms-flexbox;
 display: flex;
@@ -1691,7 +1691,6 @@ display: flex;
   position: relative;
   font-size: 4em;
   margin: 0;
-  margin-top: 20px;
 }
 
 .demo-actions{
@@ -1743,18 +1742,25 @@ display: flex;
   background: url('/images/cardcolor.png');
   display: flex;
   justify-content: center;
-  flex-direction: column;
-  align-items: center;
 }
 
 #footer > div{
+  flex-basis: 700px;
+  display: flex;
+  justify-content: left;
+  flex-direction: column;
+}
+
+#footer > div > div{
   flex-basis: 600px;
+  display: flex;
+  flex-direction: column;
   margin: 10px;
   height: 150px;
 }
 
-.fa-sync{
-  font-size: 50px;
+.fa-sync, .fa-mobile{
+  font-size: 70px;
   margin-top: 30px;
 }
 
@@ -1770,7 +1776,7 @@ display: flex;
 
 .land-title h2{
   font-size: 3em;
-  margin-top: 40px;
+  margin-top: 100px;
 }
 
 #main{
