@@ -15,7 +15,8 @@
       <template slot='desktop-left'>
         <nav-element animation='pop1'><link-red href='/'><%= __("Home") %></link-red></nav-element>
         <% if (locals.user) {%>
-          <nav-element animation='pop2'><link-red href='/logout'><%= __("Logout") %></link-red></nav-element>          
+          <nav-element v-if='!guest' animation='pop2'><link-red href='/logout'><%= __("Logout") %></link-red></nav-element>
+          <nav-element v-else animation='pop2'><link-red href='/login'><%= __('Login') %></link-red></nav-element>         
         <% } else { %>
           <nav-element animation='pop2'><link-red href='/login'><%= __("Login") %></link-red></nav-element>
         <% } %>
@@ -38,7 +39,8 @@
           <nav-dropdown>
             <drop-link href='/' value='<%= __("Home") %>'></drop-link>
             <% if (locals.user) {%>
-              <drop-link href='/Logout' value='<%= __("Logout") %>'></drop-link>
+              <drop-link v-if='!guest' href='/Logout' value='<%= __("Logout") %>'></drop-link>
+              <drop-link v-else href='/login' value='<%= __("Login") %>'></drop-link>
             <% } else {%>
               <drop-link href='/login' value='<%= __("Login") %>'></drop-link>
             <% } %>
