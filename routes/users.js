@@ -1,6 +1,6 @@
 const MAX_USERNAME_LENGTH=30
-const MAX_EMAIL_LENGTH=50
-const MAX_PASSWORD_LENGTH=30
+const MAX_EMAIL_LENGTH=100
+const MAX_PASSWORD_LENGTH=50
 var express=require('express')
 var router=express.Router()
 var passport=require('passport')

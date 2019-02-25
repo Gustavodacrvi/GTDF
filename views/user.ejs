@@ -213,10 +213,10 @@
         </form-element>
         <template v-if='!achievedNumberOfActionsLimit()'>
           <form-element animation='pop2'>
-            <text-box :max='40' placeholder='<%= __("TITLE") %>' :rows='1' :value='tempUser.action.title' @change='(dt) => {tempUser.action.title = dt.value;passedMaxCharTitle = dt.passedLimit}'></text-box>
+            <text-box :max='60' placeholder='<%= __("TITLE") %>' :rows='1' :value='tempUser.action.title' @change='(dt) => {tempUser.action.title = dt.value;passedMaxCharTitle = dt.passedLimit}'></text-box>
           </form-element>
           <form-element animation='pop3'>
-            <text-box :max='160' placeholder='<%= __("DESCRIPTION") %>' :rows='4' :value='tempUser.action.description' @change='(dt) => {tempUser.action.description = dt.value;passedMaxCharDesc = dt.passedLimit}'></text-box>
+            <text-box :max='200' placeholder='<%= __("DESCRIPTION") %>' :rows='4' :value='tempUser.action.description' @change='(dt) => {tempUser.action.description = dt.value;passedMaxCharDesc = dt.passedLimit}'></text-box>
           </form-element animation='pop4'>
           <form-element class='centralizeContent' animation='pop5'>
             <form-button :blocked='passedMaxCharTitle || passedMaxCharDesc' @click='addAction'><%= __('Add action') %></form-button>
@@ -251,10 +251,10 @@
           <title-big class='centralizeContent'><%= __('EDIT ACTION') %></title-big>
         </form-element>
         <form-element animation='pop2'>
-          <text-box :max='40' placeholder='<%= __("TITLE") %>' :rows='1' :value='tempUser.action.title' @change='(dt) => {tempUser.action.title = dt.value;passedMaxCharTitle = dt.passedLimit}'></text-box>
+          <text-box :max='60' placeholder='<%= __("TITLE") %>' :rows='1' :value='tempUser.action.title' @change='(dt) => {tempUser.action.title = dt.value;passedMaxCharTitle = dt.passedLimit}'></text-box>
         </form-element>
         <form-element animation='pop3'>
-          <text-box :max='160' placeholder='<%= __("DESCRIPTION") %>' :rows='4' :value='tempUser.action.description' @change='(dt) => {tempUser.action.description = dt.value;passedMaxCharDesc = dt.passedLimit}'></text-box>
+          <text-box :max='200' placeholder='<%= __("DESCRIPTION") %>' :rows='4' :value='tempUser.action.description' @change='(dt) => {tempUser.action.description = dt.value;passedMaxCharDesc = dt.passedLimit}'></text-box>
         </form-element animation='pop4'>
         <form-element class='centralizeContent' animation='pop5'>
           <form-button :blocked='passedMaxCharDesc || passedMaxCharTitle' @click='editAction'><%= __('Edit action') %></form-button>
@@ -376,10 +376,10 @@
         </form-element>
         <template v-if='!achievedNumberOfActionsLimit()'>
           <form-element animation='pop2'>
-            <text-box :max='40' :rows='1' placeholder='<%= __("TITLE") %>' :value='tempUser.action.title' @change='(dt) => {tempUser.action.title = dt.value;passedMaxCharTitle = dt.passedLimit}'></text-box>
+            <text-box :max='60' :rows='1' placeholder='<%= __("TITLE") %>' :value='tempUser.action.title' @change='(dt) => {tempUser.action.title = dt.value;passedMaxCharTitle = dt.passedLimit}'></text-box>
           </form-element>
           <form-element animation='pop3'>
-            <text-box :max='160' placeholder='<%= __("DESCRIPTION") %>' :rows='4' :value='tempUser.action.description' @change='(dt) => {tempUser.action.description = dt.value;passedMaxCharDesc = dt.passedLimit}'></text-box>
+            <text-box :max='200' placeholder='<%= __("DESCRIPTION") %>' :rows='4' :value='tempUser.action.description' @change='(dt) => {tempUser.action.description = dt.value;passedMaxCharDesc = dt.passedLimit}'></text-box>
           </form-element animation='pop4'>
           <form-element class='centralizeContent' animation='pop3'>
             <form-button :blocked='passedMaxCharTitle || passedMaxCharDesc' @click='projectCreateAndAddAction'><%= __('Add action') %></form-button>
@@ -408,10 +408,10 @@
         </form-element>
         <template v-if='!achievedNumberOfActionsLimit()'>
           <form-element animation='pop2'>
-            <text-box :max='40' placeholder='<%= __("TITLE") %>' :rows='1' :value='tempUser.action.title' @change='(dt) => {tempUser.action.title = dt.value;passedMaxCharTitle = dt.passedLimit}'></text-box>
+            <text-box :max='60' placeholder='<%= __("TITLE") %>' :rows='1' :value='tempUser.action.title' @change='(dt) => {tempUser.action.title = dt.value;passedMaxCharTitle = dt.passedLimit}'></text-box>
           </form-element>
           <form-element animation='pop3'>
-            <text-box :max='160' placeholder='<%= __("DESCRIPTION") %>' :rows='4' :value='tempUser.action.description' @change='(dt) => {tempUser.action.description = dt.value;passedMaxCharDesc = dt.passedLimit}'></text-box>
+            <text-box :max='200' placeholder='<%= __("DESCRIPTION") %>' :rows='4' :value='tempUser.action.description' @change='(dt) => {tempUser.action.description = dt.value;passedMaxCharDesc = dt.passedLimit}'></text-box>
           </form-element animation='pop4'>
           <form-element animation='pop5'>
             <datetime-form :date='tempUser.action.calendar.date' :time='tempUser.action.calendar.time' @change='(dt) => {tempUser.action.calendar.date = dt.date;tempUser.action.calendar.time = dt.time}' @update='(dt) => {tempUser.action.calendar.validDate = dt.date;tempUser.action.calendar.validTime = dt.time}' :openedform='currentOpenedUserForm'>
@@ -432,10 +432,10 @@
           <title-big><%= __('EDIT TIMED ACTION') %></title-big>
         </form-element>
         <form-element animation='pop2'>
-          <text-box :max='40' placeholder='<%= __("TITLE") %>' :rows='1' :value='tempUser.action.title' @change='(dt) => {tempUser.action.title = dt.value;passedMaxCharTitle = dt.passedLimit}'></text-box>
+          <text-box :max='60' placeholder='<%= __("TITLE") %>' :rows='1' :value='tempUser.action.title' @change='(dt) => {tempUser.action.title = dt.value;passedMaxCharTitle = dt.passedLimit}'></text-box>
         </form-element>
         <form-element animation='pop3'>
-          <text-box :max='160' placeholder='<%= __("DESCRIPTION") %>' :rows='4' :value='tempUser.action.description' @change='(dt) => {tempUser.action.description = dt.value;passedMaxCharDesc = dt.passedLimit}'></text-box>
+          <text-box :max='200' placeholder='<%= __("DESCRIPTION") %>' :rows='4' :value='tempUser.action.description' @change='(dt) => {tempUser.action.description = dt.value;passedMaxCharDesc = dt.passedLimit}'></text-box>
         </form-element animation='pop4'>
         <form-element animation='pop5'>
           <datetime-form :date='tempUser.action.calendar.date' :time='tempUser.action.calendar.time' @change='(dt) => {tempUser.action.calendar.date = dt.date;tempUser.action.calendar.time = dt.time}' @update='(dt) => {tempUser.action.calendar.validDate = dt.date;tempUser.action.calendar.validTime = dt.time}' :openedform='currentOpenedUserForm'>
