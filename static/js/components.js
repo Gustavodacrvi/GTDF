@@ -1,62 +1,27 @@
-Vue.component('fixed', {
-  template: `
+Vue.component('fixed',{template:`
     <div id='fixedElements' class='centralizeContent'>
       <slot></slot>
     </div>
-  `
-})
-Vue.component('login-form', {
-  props: {
-    show: false
-  },
-  template: `
+  `})
+Vue.component('login-form',{props:{show:!1},template:`
     {{repairTransition}}
     <transition name='double-slide-bounce' appear>
       <div class='card form'><slot></slot></div>
     </transition>
-  `,
-  mounted(){
-    setTimeout(() => this.show = true, 1)
-  }
-})
-Vue.component('form-element', {
-  props: {
-    animation: String,
-  },
-  template: `
+  `,mounted(){setTimeout(()=>this.show=!0,1)}})
+Vue.component('form-element',{props:{animation:String,},template:`
     <transition :name='animation' appear>
       <div class='formElement'>
         <slot></slot>
       </div>
     </transition>
-  `
-})
-Vue.component('title-big', {
-  props: {
-    class: String
-  },
-  template: `
+  `})
+Vue.component('title-big',{props:{class:String},template:`
     <div class='class'>
       <h1 class='titleBig'><slot></slot></h1>
     </div>
-  `
-})
-Vue.component('input-pass', {
-  props: {
-    placeholder: String,
-    name: String,
-    opened: Boolean,
-    value: String
-  },
-  data(){
-    return {
-      model: undefined
-    }
-  },
-  mounted(){
-    this.model = this.value
-  },
-  template: `
+  `})
+Vue.component('input-pass',{props:{placeholder:String,name:String,opened:Boolean,value:String},data(){return{model:undefined}},mounted(){this.model=this.value},template:`
     <div class='form-input centralizeContent'>
       <input :name='name' autocomplete='off' class='passwordField' type='password' autocomplete='off' :placeholder='placeholder' v-model='model' />
       <span @click='$emit("click", !opened)'>
@@ -64,60 +29,28 @@ Vue.component('input-pass', {
         <i class="fas fa-eye-slash icon-tiny" v-show='!opened'></i>
       <span>
     </div>
-  `,
-  watch: {
-    model(){
-      this.$emit('change', this.model)
-    }
-  }
-})
-Vue.component('input-form', {
-  props: {
-    placeholder: String,
-    name: String,
-  },
-  template: `
+  `,watch:{model(){this.$emit('change',this.model)}}})
+Vue.component('input-form',{props:{placeholder:String,name:String,},template:`
     <div class='form-input centralizeContent'>
       <input :name='name' autocomplete='off' type='text' :placeholder='placeholder'/>
     </div>
-  `
-})
-Vue.component('form-button', {
-  props: {
-    blocked: Boolean
-  },
-  template: `
+  `})
+Vue.component('form-button',{props:{blocked:Boolean},template:`
     <button :class='{blocked: blocked}' :disabled='blocked' type='submit' class='formButton' @click='$emit("click")'><slot></slot></button>
-  `
-})
-Vue.component('link-button', {
-  props: {
-    href: String
-  },
-  template: `
+  `})
+Vue.component('link-button',{props:{href:String},template:`
     <a class='link-button' :href='href'><slot></slot></a>
-  `
-})
-Vue.component('link-button-back', {
-  props: {
-    href: String,
-  },
-  template: `
+  `})
+Vue.component('link-button-back',{props:{href:String,},template:`
     <a class='link-button-back' :href='href'><slot></slot></a>
-  `
-})
-Vue.component('alert',{
-  template: `
+  `})
+Vue.component('alert',{template:`
     <span class='alert-alert'><slot></slot></span>
-  `
-})
-Vue.component('success', {
-  template: `
+  `})
+Vue.component('success',{template:`
     <span class='alert-success'><slot></slot></span>
-  `
-})
-Vue.component('navigation-bar', {
-  template: `
+  `})
+Vue.component('navigation-bar',{template:`
     <transition name='slide-from-top-bounce' appear>
       <nav id='navBar' class='alignContent'>
         <div id='desktop' class='alignContent'>
@@ -140,47 +73,21 @@ Vue.component('navigation-bar', {
         </div>
       </nav>
     </transition>
-  `
-})
-Vue.component('nav-element', {
-  props: {
-    animation: String
-  },
-  template: `
+  `})
+Vue.component('nav-element',{props:{animation:String},template:`
     <transition :name='animation'>
       <div class='nav-element'>
         <slot></slot>
       </div>
     </transition>
-  `
-})
-Vue.component('link-red', {
-  props: {
-    href: String
-  },
-  template: `
+  `})
+Vue.component('link-red',{props:{href:String},template:`
     <a class='link-red' :href='href' @click='$emit("click")'><slot></slot></a>
-  `
-})
-Vue.component('link-blue', {
-  props: {
-    href: String
-  },
-  template: `
+  `})
+Vue.component('link-blue',{props:{href:String},template:`
     <a class='link-blue' :href='href'><slot></slot></a>
-  `
-})
-Vue.component('dropdown', {
-  props: {
-    placeholder: String,
-    type: String
-  },
-  data: () => {
-    return {
-      opened: false
-    }
-  },
-  template: `
+  `})
+Vue.component('dropdown',{props:{placeholder:String,type:String},data:()=>{return{opened:!1}},template:`
     <div class='dropdown' @mouseleave='opened = false' @mouseover='opened = true'>
       <a :class='type'>{{ placeholder }}</a>
       <div class='centered'>
@@ -191,13 +98,8 @@ Vue.component('dropdown', {
       </transition>
       </div>
     </div>
-  `
-})
-Vue.component('nav-dropdown',{
-  props: {
-    opened: false
-  },
-  template: `
+  `})
+Vue.component('nav-dropdown',{props:{opened:!1},template:`
     <div class='dropdown' @mouseleave='opened = false' @mouseover='opened = true'>
       <button class='reset-button'>
         <div class="hamburger-icon">
@@ -212,14 +114,8 @@ Vue.component('nav-dropdown',{
         </div>
       </transition>
     </div>
-  `
-})
-Vue.component('sub-dropdown',{
-  props: {
-    placeholder: String,
-    show: false
-  },
-  template: `
+  `})
+Vue.component('sub-dropdown',{props:{placeholder:String,show:!1},template:`
     <article class='sub-dropdown'  @mouseleave='show = false' @mouseover='show = true'>
       <a class='dropdown-link'>{{placeholder}}</a>
       <transition name='right-to-left-bounce-nav-drop'>
@@ -229,28 +125,8 @@ Vue.component('sub-dropdown',{
       </div>
       </transition>
     </article>
-  `
-})
-Vue.component('select-option', {
-  props: {
-    selected: String,
-    placeholder: String,
-    id: String,
-    nonlive: Boolean,
-    animation: String,
-    sidebar: Boolean
-  },
-  data(){
-    return {
-      isDropdownOpened: false,
-      temp: undefined,
-      show: false,
-    }
-  },
-  mounted(){
-    this.show = true
-  },
-  template: `
+  `})
+Vue.component('select-option',{props:{selected:String,placeholder:String,id:String,nonlive:Boolean,animation:String,sidebar:Boolean},data(){return{isDropdownOpened:!1,temp:undefined,show:!1,}},mounted(){this.show=!0},template:`
     <transition :name='animation'>
     <div class='select-option' @mouseover='isDropdownOpened = true' @mouseleave='isDropdownOpened = false' v-if='show'>
       <div>
@@ -268,135 +144,59 @@ Vue.component('select-option', {
       </transition>
     </div>
     </transition>
-  `,
-  methods: {
-    select(selected){
-      if (selected == 'show all' && this.$root.lang == 'en')
-        return selected
-      else if (selected == 'show all')
-        return 'mostrar todos'
-      else return selected
-    }
-  },
-  watch: {
-    selected(){
-      if (this.selected != undefined){
-        if (this.id == undefined){
-          this.$emit('update', this.selected)
-        }
-        else {
-          this.$emit('update', {value: this.selected, id: this.id})
-          this.id = undefined
-        }
-      }
-    },
-    isDropdownOpened(){
-      if (!this.isDropdownOpened) this.temp = undefined
-    }
-  }
-})
-Vue.component('drop-link',{
-  props: {
-    href: String,
-    value: String,
-    id: String
-  },
-  template: `
+  `,methods:{select(selected){if(selected=='show all'&&this.$root.lang=='en')
+return selected
+else if(selected=='show all')
+return'mostrar todos'
+else return selected}},watch:{selected(){if(this.selected!=undefined){if(this.id==undefined){this.$emit('update',this.selected)}
+else{this.$emit('update',{value:this.selected,id:this.id})
+this.id=undefined}}},isDropdownOpened(){if(!this.isDropdownOpened)this.temp=undefined}}})
+Vue.component('drop-link',{props:{href:String,value:String,id:String},template:`
     <a v-if='!$parent.nonlive' :href='href' class='dropdown-link' @click='send' @mouseover='$parent.temp = value'>{{select(value)}}<slot></slot></a>
     <a :href='href' class='dropdown-link' @click='send' v-else>{{select(value)}}<slot></slot></a>
-  `,
-  methods: {
-    send(){
-      if (this.id != undefined){
-        this.$parent.id = this.id
-        this.$parent.selected = this.value
-      }else {
-        this.$parent.selected = this.value
-      }
-    },
-    select(value){
-      if (value == 'show all' && this.$root.lang == 'en')
-        return value
-      else if (value == 'show all')
-        return 'mostrar todos'
-      else return value
-    }
-  }
-})
-Vue.component('side-nav', {
-  props: {
-    show: Boolean,
-  },
-  template: `
+  `,methods:{send(){if(this.id!=undefined){this.$parent.id=this.id
+this.$parent.selected=this.value}else{this.$parent.selected=this.value}},select(value){if(value=='show all'&&this.$root.lang=='en')
+return value
+else if(value=='show all')
+return'mostrar todos'
+else return value}}})
+Vue.component('side-nav',{props:{show:Boolean,},template:`
     <transition name='left-to-right-bounce-side-nav'>
       <div id='side-nav' v-show='show' @mouseleave='$root.hideNavBar' @mouseover='$root.mouseOverSideNav'>
         <div></div>
         <slot></slot>
       </div>
     </transition>
-  `
-})
-Vue.component('side-title', {
-  props: {
-    username: String
-  },
-  template: `
+  `})
+Vue.component('side-title',{props:{username:String},template:`
     <transition name='pop1'>
       <div class='side-title' v-if='$parent.show'>
         <span class='faded' style='margin-left: -4px;top:margin-top: -4px'>{{ this.$root.l.loggedAs }}</span><span class='red'>{{ translate() }}</span>
       </div>
     </transition>
-  `,
-  methods: {
-    translate(){
-      if (this.username == 'guest')
-        return this.$root.l.username
-      return this.username
-    }
-  }
-})
-Vue.component('side-link', {
-  props: {
-    href: String,
-    animation: String,
-    compo: String,
-    active: false,
-    i: Number
-  },
-  template: `
+  `,methods:{translate(){if(this.username=='guest')
+return this.$root.l.username
+return this.username}}})
+Vue.component('side-link',{props:{href:String,animation:String,compo:String,active:!1,i:Number},template:`
     <transition :name='animation'>
       <div class='side-link' v-if='$parent.show'>
         <a :class='{"underline-link": !active, "active-underline-link": active}' :href='href' @click='$emit("click", {compo, i})'><slot></slot></a>
       </div>
     </transition>
-  `
-})
-Vue.component('blocked-side-link', {
-  props: {
-    animation: String
-  },
-  template: `
+  `})
+Vue.component('blocked-side-link',{props:{animation:String},template:`
     <transition :name='animation'>
       <div class='side-link-blocked faded' v-if='$parent.show'>
         <a><slot></slot></a>
       </div>
     </transition>
-  ` 
-})
-Vue.component('toggle-icon', {
-  props: {
-    elid: String,
-    icon: String,
-    show: Boolean
-  },
-  template: `
+  `})
+Vue.component('toggle-icon',{props:{elid:String,icon:String,show:Boolean},template:`
     <div class='toggle-icon' @mouseover='$root.showSideBar = true' @mouseleave='$root.toggleIconMouseLeaved'>
       <i id='mobile-side-bar-icon' :class='icon + " icon-big"'></i>
     </div>
-  `
-})
-Vue.component('user-content', {
-  template: `
+  `})
+Vue.component('user-content',{template:`
     <div id='content'>
       <div>
         <slot name='content'>
@@ -406,39 +206,21 @@ Vue.component('user-content', {
         <slot name='adds'></slot>
       </div>
     </div>
-  `
-})
-Vue.component('adds', {
-  template: `
+  `})
+Vue.component('adds',{template:`
     <div id='adds'>
       <slot></slot>
     </div>
-  `
-})
-Vue.component('action-bar',{
-  template: `
+  `})
+Vue.component('action-bar',{template:`
     <div class='action-bar card'>
       <slot></slot>
     </div>
-  `
-})
-Vue.component('action-bar-icon',{
-  props: {
-    icon: String,
-    id: String,
-    tag: String,
-    title: String
-  },
-  template: `
+  `})
+Vue.component('action-bar-icon',{props:{icon:String,id:String,tag:String,title:String},template:`
     <i :class='icon + " icon-big user-icon"' @click="$emit('click', {id, tag})" :data-title='title'></i>
-  `
-})
-Vue.component('icon-group', {
-  props: {
-    show: Boolean,
-    dropdown: false
-  },
-  template: `
+  `})
+Vue.component('icon-group',{props:{show:Boolean,dropdown:!1},template:`
     <div @mouseover='dropdown = true' @mouseleave='dropdown = false'>
       <action-icon icon='fa fa-ellipsis-h' v-show='!show' ></action-icon>
       <transition name='pop-long'>
@@ -447,55 +229,21 @@ Vue.component('icon-group', {
         </div>
       </transition>
     </div>
-  `,
-  methods: {
-    dropdownShow(){
-      if (this.dropdown){
-        return true
-      }
-      else if (this.show == true){
-        this.dropdown = true
-        return true
-      }
-    }
-  }
-})
-Vue.component('action-icon', {
-  props: {
-    icon: String,
-    event: String,
-    title: String
-  },
-  template: `
+  `,methods:{dropdownShow(){if(this.dropdown){return!0}
+else if(this.show==!0){this.dropdown=!0
+return!0}}}})
+Vue.component('action-icon',{props:{icon:String,event:String,title:String},template:`
     <i :class='icon + " icon-big user-icon action-icon"' @click='$parent.$emit(event)' :data-title='title'></i>
-  `
-})
-Vue.component('action-form', {
-  props: {
-    show: false
-  },
-  template: `
+  `})
+Vue.component('action-form',{props:{show:!1},template:`
     <div class='card-shadow form action-form'>
       <transition name='pop1'>
       <i class='fa fa-times icon-big user-icon close-icon' @click='$emit("close")'></i>
       </transition>
       <slot></slot>
     </div>
-  `
-})
-Vue.component('datetime-form', {
-  props: {
-    date: String,
-    time: String,
-    openedform: Boolean
-  },
-  data(){
-    return {
-      validDate: true,
-      validTime: true
-    }
-  },
-  template: `
+  `})
+Vue.component('datetime-form',{props:{date:String,time:String,openedform:Boolean},data(){return{validDate:!0,validTime:!0}},template:`
     <div class='datetime-form'>
       <div>
         <div>
@@ -513,81 +261,27 @@ Vue.component('datetime-form', {
         </div>
       </div>
     </div>
-  `,
-  mounted(){
-    this.analise()
-    this.change()
-  },
-  methods: {
-    analise(){
-      this.validDate = DateM.isValidDate(this.date)
-      this.validTime = TimeM.isValidTime(this.time)
-      if (this.time == '') this.validTime = true
-      this.$emit('update', {date: this.validDate, time: this.validTime})
-    },
-    change(){
-      this.$emit('change', {date: this.date, time: this.time})
-    },
-    getDayOfWeek(){
-      let week = new DateM(this.date).getWeekDay()
-      switch (week) {
-        case 0: return 'Sunday'
-        case 1: return 'Monday'
-        case 2: return 'Tuesday'
-        case 3: return 'Wednesday'
-        case 4: return 'Thursday'
-        case 5: return 'Friday'
-        case 6: return 'Saturday'
-        default:
-          break;
-      }
-    }
-  },
-  watch: {
-    date(){
-      this.analise()
-      this.change()
-    },
-    time(){
-      this.analise()
-      this.change()
-    },
-    openedform(){
-      this.analise()
-      this.change()
-    }
-  }
-})
-Vue.component('date', {
-})
-Vue.component('link-yellow', {
-  props: {
-    active: false,
-    argument: String
-  },
-  template: `
+  `,mounted(){this.analise()
+this.change()},methods:{analise(){this.validDate=DateM.isValidDate(this.date)
+this.validTime=TimeM.isValidTime(this.time)
+if(this.time=='')this.validTime=!0
+this.$emit('update',{date:this.validDate,time:this.validTime})},change(){this.$emit('change',{date:this.date,time:this.time})},getDayOfWeek(){let week=new DateM(this.date).getWeekDay()
+switch(week){case 0:return'Sunday'
+case 1:return'Monday'
+case 2:return'Tuesday'
+case 3:return'Wednesday'
+case 4:return'Thursday'
+case 5:return'Friday'
+case 6:return'Saturday'
+default:break}}},watch:{date(){this.analise()
+this.change()},time(){this.analise()
+this.change()},openedform(){this.analise()
+this.change()}}})
+Vue.component('date',{})
+Vue.component('link-yellow',{props:{active:!1,argument:String},template:`
     <span :class='{"link-yellow": true,"link-yellow-active": isActive()}' @click='$emit("click", argument)'><slot></slot></span>
-  `,
-  methods: {
-    isActive(){
-      return (this.active == this.argument)
-    }
-  }
-})
-Vue.component('basket', {
-  props: {
-    icongroups: Boolean,
-    user: Object,
-    dropdowns: Object,
-    l: Object,
-    place: String
-  },
-  data(){
-    return {
-      showOnlyFirstProjectAction: false
-    }
-  },
-  template: `
+  `,methods:{isActive(){return(this.active==this.argument)}}})
+Vue.component('basket',{props:{icongroups:Boolean,user:Object,dropdowns:Object,l:Object,place:String},data(){return{showOnlyFirstProjectAction:!1}},template:`
   <div>
     <div>
       <action-bar>
@@ -636,36 +330,9 @@ Vue.component('basket', {
       <div class='space'></div>
     </div>
   </div>
-  `,
-  methods: {
-    openUserForm(id){
-      this.$emit('openform', id)
-    },
-    changeDropdownState(data){
-      this.$emit('dropdown-state', {state: data.state, id: data.id})
-    }
-  },
-  watch: {
-    'user.actions': function(){
-      let ids = this.$root.calculateIds()
-      this.$emit('rearrange', ids)
-    }
-  }
-})
-Vue.component('maybe', {
-  props: {
-    icongroups: Boolean,
-    user: Object,
-    dropdowns: Object,
-    l: Object,
-    place: String
-  },
-  data(){
-    return {
-      showOnlyFirstProjectAction: false
-    }
-  },
-  template: `
+  `,methods:{openUserForm(id){this.$emit('openform',id)},changeDropdownState(data){this.$emit('dropdown-state',{state:data.state,id:data.id})}},watch:{'user.actions':function(){let ids=this.$root.calculateIds()
+this.$emit('rearrange',ids)}}})
+Vue.component('maybe',{props:{icongroups:Boolean,user:Object,dropdowns:Object,l:Object,place:String},data(){return{showOnlyFirstProjectAction:!1}},template:`
   <div>
     <div>
       <action-bar>
@@ -714,36 +381,9 @@ Vue.component('maybe', {
       <div class='space'></div>
     </div>
   </div>
-  `,
-  methods: {
-    openUserForm(id){
-      this.$emit('openform', id)
-    },
-    changeDropdownState(data){
-      this.$emit('dropdown-state', {state: data.state, id: data.id})
-    }
-  },
-  watch: {
-    'user.actions': function(){
-      let ids = this.$root.calculateIds()
-      this.$emit('rearrange', ids)
-    }
-  }
-})
-Vue.component('waiting', {
-  props: {
-    icongroups: Boolean,
-    user: Object,
-    dropdowns: Object,
-    l: Object,
-    place: String
-  },
-  data(){
-    return {
-      showOnlyFirstProjectAction: false
-    }
-  },
-  template: `
+  `,methods:{openUserForm(id){this.$emit('openform',id)},changeDropdownState(data){this.$emit('dropdown-state',{state:data.state,id:data.id})}},watch:{'user.actions':function(){let ids=this.$root.calculateIds()
+this.$emit('rearrange',ids)}}})
+Vue.component('waiting',{props:{icongroups:Boolean,user:Object,dropdowns:Object,l:Object,place:String},data(){return{showOnlyFirstProjectAction:!1}},template:`
   <div>
     <div>
       <action-bar>
@@ -792,36 +432,9 @@ Vue.component('waiting', {
       <div class='space'></div>
     </div>
   </div>
-  `,
-  methods: {
-    openUserForm(id){
-      this.$emit('openform', id)
-    },
-    changeDropdownState(data){
-      this.$emit('dropdown-state', {state: data.state, id: data.id})
-    }
-  },
-  watch: {
-    'user.actions': function(){
-      let ids = this.$root.calculateIds()
-      this.$emit('rearrange', ids)
-    }
-  }
-})
-Vue.component('next-actions', {
-  props: {
-    icongroups: Boolean,
-    user: Object,
-    dropdowns: Object,
-    l: Object,
-    place: String
-  },
-  data(){
-    return {
-      showOnlyFirstProjectAction: false
-    }
-  },
-  template: `
+  `,methods:{openUserForm(id){this.$emit('openform',id)},changeDropdownState(data){this.$emit('dropdown-state',{state:data.state,id:data.id})}},watch:{'user.actions':function(){let ids=this.$root.calculateIds()
+this.$emit('rearrange',ids)}}})
+Vue.component('next-actions',{props:{icongroups:Boolean,user:Object,dropdowns:Object,l:Object,place:String},data(){return{showOnlyFirstProjectAction:!1}},template:`
   <div>
     <div>
       <action-bar>
@@ -871,39 +484,9 @@ Vue.component('next-actions', {
       <div class='space'></div>
     </div>
   </div>
-  `,
-  methods: {
-    openUserForm(id){
-      this.$emit('openform', id)
-    },
-    changeDropdownState(data){
-      this.$emit('dropdown-state', {state: data.state, id: data.id})
-    }
-  },
-  watch: {
-    'user.actions': function(){
-      let ids = this.$root.calculateIds()
-      this.$emit('rearrange', ids)
-    }
-  }
-})
-Vue.component('calendar', {
-  props: {
-    user: Object,
-    icongroups: Boolean,
-    dropdowns: Boolean,
-    l: Object,
-    place: String
-  },
-  data() {
-    return {
-      date: '',
-      year: '',
-      beforeafter: undefined,
-      showOnlyFirstProjectAction: false
-    }
-  },
-  template: `
+  `,methods:{openUserForm(id){this.$emit('openform',id)},changeDropdownState(data){this.$emit('dropdown-state',{state:data.state,id:data.id})}},watch:{'user.actions':function(){let ids=this.$root.calculateIds()
+this.$emit('rearrange',ids)}}})
+Vue.component('calendar',{props:{user:Object,icongroups:Boolean,dropdowns:Boolean,l:Object,place:String},data(){return{date:'',year:'',beforeafter:undefined,showOnlyFirstProjectAction:!1}},template:`
   <div>
     <div>
       <graph @dateselected='selectDate' :l='l'>
@@ -1037,133 +620,55 @@ Vue.component('calendar', {
       <div class='space'></div>
     </div>
   </div>
-  `,
-  mounted(){
-    let splited = this.date.split('/')
-    this.year = splited[2]
-  },
-  afterUpdate(){
-    let splited = this.date.split('/')
-    this.year = splited[2]
-  },
-  methods: {
-    activateFirstOneVar(){
-      this.firstOne = true
-    },
-    disableFirstOneVar(){
-      this.firstOne = false
-    },
-    selectButton(arg){
-      this.date = ''
-      setTimeout(() => this.beforeafter = arg, 10)
-    },
-    changeDropdownState(data){
-      this.$emit('dropdown-state', {state: data.state, id: data.id})
-    },
-    selectDate(date){
-      this.date = date
-    },
-    openUserForm(id){
-      this.$emit('openform', id)
-      this.$root.tempUser.action.calendar.date = this.date
-    },
-    thereIsAtLeastOneNonProjectTimedActionWithTheSelectedDate(){
-      let act = this.user.actions
-      let selectedDate = this.date
-      let length = act.length
-      for (let i = 0;i < length;i++)
-        if (!act[i].projectId && act[i].projectId != 0)
-          if (act[i].calendar && act[i].calendar.date == selectedDate && ((this.place == 'show all') || this.$root.includesPlace(act[i].id, this.place)))
-            return true
-      return false
-    },
-    thereIsAtLeastOneProjectTimedActionWithTheSelectedDate(){
-      let act = this.user.actions
-      let selectedDate = this.date
-      let length = act.length
-      for (let i = 0;i < length;i++)
-        if (act[i].projectId || act[i].projectId == 0)
-          if (act[i].calendar && act[i].calendar.date == selectedDate && ((this.place == 'show all') || this.$root.includesPlace(act[i].id, this.place)))
-            return true
-      return false
-    },
-    thereIsAtLeastOneNonProjectTimedActionAfterThisYear(){
-      let act = this.user.actions
-      let year = parseInt(this.year)
-      let length = act.length
-      for (let i = 0;i < length;i++)
-        if (!act[i].projectId && act[i].projectId != 0 && act[i].calendar && ((this.place == 'show all') || this.$root.includesPlace(act[i].id, this.place))){
-          let splited = act[i].calendar.date.split('/')
-          if (parseInt(splited[2]) > year)
-            return true
-        }
-      return false
-    },
-    thereIsAtLeastOneProjectTimedActionAfterThisYear(){
-      let act = this.user.actions
-      let year = parseInt(this.year)
-      let length = act.length
-      for (let i = 0;i < length;i++)
-        if ((act[i].projectId || act[i].projectId == 0) && act[i].calendar && ((this.place == 'show all') || this.$root.includesPlace(act[i].id, this.place))){
-          let splited = act[i].calendar.date.split('/')
-          if (parseInt(splited[2]) > year)
-            return true
-        }
-      return false
-    },
-    thereIsAtLeastOneNonProjectTimedActionBeforeThisYear(){
-      let act = this.user.actions
-      let year = parseInt(this.year)
-      let length = act.length
-      for (let i = 0;i < length;i++)
-        if (!act[i].projectId && act[i].projectId != 0 && act[i].calendar && ((this.place == 'show all') || this.$root.includesPlace(act[i].id, this.place))){
-          let splited = act[i].calendar.date.split('/')
-          if (parseInt(splited[2]) < year)
-            return true
-        }
-      return false
-    },
-    thereIsAtLeastOneProjectTimedActionBeforeThisYear(){
-      let act = this.user.actions
-      let year = parseInt(this.year)
-      let length = act.length
-      for (let i = 0;i < length;i++)
-        if ((act[i].projectId || act[i].projectId == 0) && act[i].calendar && ((this.place == 'show all') || this.$root.includesPlace(act[i].id, this.place))){
-          let splited = act[i].calendar.date.split('/')
-          if (parseInt(splited[2]) < year)
-            return true
-        }
-      return false
-    }
-  },
-  watch: {
-    date(){
-      this.$root.tempUser.action.calendar.date = this.date
-      this.beforeafter = undefined
-    },
-    user:{
-      handler(){
-        this.$forceUpdate()
-      },
-      deep: true
-    }
-  }
-})
-Vue.component('projects', {
-  props: {
-    dropdowns: Object,
-    icongroups: Boolean,
-    user: Object,
-    projectdropdowns: Object,
-    l: Object,
-    place: String
-  },
-  data(){
-    return {
-      showAllProjectsDespiteOfLocation: false
-    }
-  },
-  template: `
+  `,mounted(){let splited=this.date.split('/')
+this.year=splited[2]},afterUpdate(){let splited=this.date.split('/')
+this.year=splited[2]},methods:{activateFirstOneVar(){this.firstOne=!0},disableFirstOneVar(){this.firstOne=!1},selectButton(arg){this.date=''
+setTimeout(()=>this.beforeafter=arg,10)},changeDropdownState(data){this.$emit('dropdown-state',{state:data.state,id:data.id})},selectDate(date){this.date=date},openUserForm(id){this.$emit('openform',id)
+this.$root.tempUser.action.calendar.date=this.date},thereIsAtLeastOneNonProjectTimedActionWithTheSelectedDate(){let act=this.user.actions
+let selectedDate=this.date
+let length=act.length
+for(let i=0;i<length;i++)
+if(!act[i].projectId&&act[i].projectId!=0)
+if(act[i].calendar&&act[i].calendar.date==selectedDate&&((this.place=='show all')||this.$root.includesPlace(act[i].id,this.place)))
+return!0
+return!1},thereIsAtLeastOneProjectTimedActionWithTheSelectedDate(){let act=this.user.actions
+let selectedDate=this.date
+let length=act.length
+for(let i=0;i<length;i++)
+if(act[i].projectId||act[i].projectId==0)
+if(act[i].calendar&&act[i].calendar.date==selectedDate&&((this.place=='show all')||this.$root.includesPlace(act[i].id,this.place)))
+return!0
+return!1},thereIsAtLeastOneNonProjectTimedActionAfterThisYear(){let act=this.user.actions
+let year=parseInt(this.year)
+let length=act.length
+for(let i=0;i<length;i++)
+if(!act[i].projectId&&act[i].projectId!=0&&act[i].calendar&&((this.place=='show all')||this.$root.includesPlace(act[i].id,this.place))){let splited=act[i].calendar.date.split('/')
+if(parseInt(splited[2])>year)
+return!0}
+return!1},thereIsAtLeastOneProjectTimedActionAfterThisYear(){let act=this.user.actions
+let year=parseInt(this.year)
+let length=act.length
+for(let i=0;i<length;i++)
+if((act[i].projectId||act[i].projectId==0)&&act[i].calendar&&((this.place=='show all')||this.$root.includesPlace(act[i].id,this.place))){let splited=act[i].calendar.date.split('/')
+if(parseInt(splited[2])>year)
+return!0}
+return!1},thereIsAtLeastOneNonProjectTimedActionBeforeThisYear(){let act=this.user.actions
+let year=parseInt(this.year)
+let length=act.length
+for(let i=0;i<length;i++)
+if(!act[i].projectId&&act[i].projectId!=0&&act[i].calendar&&((this.place=='show all')||this.$root.includesPlace(act[i].id,this.place))){let splited=act[i].calendar.date.split('/')
+if(parseInt(splited[2])<year)
+return!0}
+return!1},thereIsAtLeastOneProjectTimedActionBeforeThisYear(){let act=this.user.actions
+let year=parseInt(this.year)
+let length=act.length
+for(let i=0;i<length;i++)
+if((act[i].projectId||act[i].projectId==0)&&act[i].calendar&&((this.place=='show all')||this.$root.includesPlace(act[i].id,this.place))){let splited=act[i].calendar.date.split('/')
+if(parseInt(splited[2])<year)
+return!0}
+return!1}},watch:{date(){this.$root.tempUser.action.calendar.date=this.date
+this.beforeafter=undefined},user:{handler(){this.$forceUpdate()},deep:!0}}})
+Vue.component('projects',{props:{dropdowns:Object,icongroups:Boolean,user:Object,projectdropdowns:Object,l:Object,place:String},data(){return{showAllProjectsDespiteOfLocation:!1}},template:`
   <div>
     <div>
       <action-bar>
@@ -1190,64 +695,25 @@ Vue.component('projects', {
       <div class='space'></div>
     </div>
   </div>
-  `,
-  methods: {
-    changeProjectDropdownState(obj){
-      this.projectdropdowns[obj.id] = obj.state
-    },
-    openUserForm(id){
-      this.$emit('openform', id)
-    },
-    calculateProjectIds(){
-      let ids = []
-      let length = this.user.projects.length
-      for (let i = 0;i < length;i++)
-        ids.push(this.user.projects[i].id)
-      return ids
-    },
-    thereIsAtLeastOneProjectOnThisLocation(){
-      let pros = this.user.projects
-      let acts = this.user.actions
-
-      let length = pros.length
-      if (length == 0)
-        return false
-      else if (this.place == 'show all')
-        return true
-      for (let i = 0;i < length;i++){
-        let actLength = pros[i].actions.length
-        for (let j =0;j<actLength;j++){
-          let act = acts[pros[i].actions[j]]
-          if (this.$root.includesPlace(act.id, this.place))
-            return true
-        }
-      }
-      return false
-    }
-  },
-  watch: {
-    'user.projects'(){
-      let ids = this.calculateProjectIds()
-      this.$emit('rearrangeproject', ids)
-    },
-    'user.actions'(){
-      let ids = this.$root.calculateIds()
-      this.$emit('rearrange', ids)
-    }
-  }
-})
-Vue.component('project', {
-  props: {
-    id: Number,
-    dropdown: false,
-    dropdowns: Object,
-    title: String,
-    icongroup: Boolean,
-    user: Object,
-    l: Object,
-    place: String
-  },
-  template: `
+  `,methods:{changeProjectDropdownState(obj){this.projectdropdowns[obj.id]=obj.state},openUserForm(id){this.$emit('openform',id)},calculateProjectIds(){let ids=[]
+let length=this.user.projects.length
+for(let i=0;i<length;i++)
+ids.push(this.user.projects[i].id)
+return ids},thereIsAtLeastOneProjectOnThisLocation(){let pros=this.user.projects
+let acts=this.user.actions
+let length=pros.length
+if(length==0)
+return!1
+else if(this.place=='show all')
+return!0
+for(let i=0;i<length;i++){let actLength=pros[i].actions.length
+for(let j=0;j<actLength;j++){let act=acts[pros[i].actions[j]]
+if(this.$root.includesPlace(act.id,this.place))
+return!0}}
+return!1}},watch:{'user.projects'(){let ids=this.calculateProjectIds()
+this.$emit('rearrangeproject',ids)},'user.actions'(){let ids=this.$root.calculateIds()
+this.$emit('rearrange',ids)}}})
+Vue.component('project',{props:{id:Number,dropdown:!1,dropdowns:Object,title:String,icongroup:Boolean,user:Object,l:Object,place:String},template:`
     <div class='project'>
       <div class='card'>
         <div @click='dropdown = !dropdown'>
@@ -1277,68 +743,22 @@ Vue.component('project', {
         </div>
       </transition>
     </div>
-  `,
-  methods: {
-    changeDropdownState(obj){
-      this.dropdowns[obj.id] = obj.state
-    },
-    changePlacesOfActions(){
-      this.openActionForm('changeActionsProjectPlace')
-    },
-    deleteProject(){
-      let rt = this.$root
-      let pro = rt.user.projects
-
-      rt.removeActionsFromProject(this.id)
-      pro.splice(this.id, 1)
-      let oldProjectIds = rt.getIds(pro)
-      rt.resetIds(pro)
-      rt.updateActionsIds(oldProjectIds)
-
-      if (!this.$root.guest)
-        this.$root.POSTrequest('/delete-project', 'id='+this.id)
-    },
-    changeTags(){
-      this.openActionForm('changeActionsProjectTag')
-    },
-    isOnProject(actionId){
-      let pro = this.user.projects[this.id]
-      let length = pro.actions.length
-      for (let i = 0;i < length;i++)
-        if (pro.actions[i] == actionId)
-          return true
-      return false
-    },
-    openActionForm(id){
-      this.$root.openUserForm({id: '' + id})
-      this.$root.getDataFromProject(this.$root.user.projects[this.id])
-    },
-    editProject(){
-      this.openActionForm('editProject')
-    },
-    addActionToProject(){
-      this.openActionForm('addActionToProject')
-    }
-  },
-  watch: {
-    dropdown(){
-      this.$emit('projectopened', {id: this.id, state: this.dropdown})
-    }
-  }
-})
-Vue.component('project-timed-action', {
-  props: {
-    title: String,
-    description: String,
-    id: Number,
-    icongroup: Boolean,
-    dropdown: Boolean,
-    time: String,
-    date: String,
-    projectid: Number,
-    l: Object
-  },
-  template: `
+  `,methods:{changeDropdownState(obj){this.dropdowns[obj.id]=obj.state},changePlacesOfActions(){this.openActionForm('changeActionsProjectPlace')},deleteProject(){let rt=this.$root
+let pro=rt.user.projects
+rt.removeActionsFromProject(this.id)
+pro.splice(this.id,1)
+let oldProjectIds=rt.getIds(pro)
+rt.resetIds(pro)
+rt.updateActionsIds(oldProjectIds)
+if(!this.$root.guest)
+this.$root.POSTrequest('/delete-project','id='+this.id)},changeTags(){this.openActionForm('changeActionsProjectTag')},isOnProject(actionId){let pro=this.user.projects[this.id]
+let length=pro.actions.length
+for(let i=0;i<length;i++)
+if(pro.actions[i]==actionId)
+return!0
+return!1},openActionForm(id){this.$root.openUserForm({id:''+id})
+this.$root.getDataFromProject(this.$root.user.projects[this.id])},editProject(){this.openActionForm('editProject')},addActionToProject(){this.openActionForm('addActionToProject')}},watch:{dropdown(){this.$emit('projectopened',{id:this.id,state:this.dropdown})}}})
+Vue.component('project-timed-action',{props:{title:String,description:String,id:Number,icongroup:Boolean,dropdown:Boolean,time:String,date:String,projectid:Number,l:Object},template:`
     <div class='action'>
       <div class='card'>
         <div @click='dropdown = !dropdown'>
@@ -1364,61 +784,17 @@ Vue.component('project-timed-action', {
         </div>
       </transition>
     </div>
-  `,
-  methods: {
-    changePlace(){
-      this.$root.openActionForm('changePlace', this.id)
-    },
-    deleteTimedProjectAction(){
-      let rt = this.$root
-      let acts = rt.user.actions
-      let pros = rt.user.projects
-
-      let j = rt.getIndexOfProjectActionThatHasTheGivenActionId(this.projectid, this.id)
-      pros[this.projectid].actions.splice(j, 1)
-      acts.splice(this.id, 1)
-
-      rt.decreaseProjectsActionsIdsByOneThatAreBiggerThan(this.id)
-      rt.resetIds(acts)
-      if (!this.$root.guest)
-        this.$root.POSTrequest('/delete-project-action', 'id=' + this.id)
-    },
-    editTimedProjectActionTag(){
-      this.$root.openActionForm('editTimedTag', this.id)
-    },
-    removeProjectTimedActionFromProject(){
-      this.$root.removeActionFromProject(this.id)
-    },
-    editProjectTimedAction(){
-      this.$root.openActionForm('editTimedAction', this.id)
-    }
-  },
-  computed: {
-    getprojectname(){
-      return this.$root.user.projects[this.projectid].title
-    }
-  },
-  watch: {
-    dropdown(){
-      this.$emit('changed-dropdown', {state: this.dropdown, id: this. id})
-    }
-  }
-})
-Vue.component('project-action', {
-  props: {
-    title: String,
-    description: String,
-    icongroup: Boolean,
-    dropdown: false,
-    id: Number,
-    projectId: Number,
-    showtagicon: false,
-    showprojectname: true,
-    tag: String,
-    calendar: Object,
-    l: Object
-  },
-  template: `
+  `,methods:{changePlace(){this.$root.openActionForm('changePlace',this.id)},deleteTimedProjectAction(){let rt=this.$root
+let acts=rt.user.actions
+let pros=rt.user.projects
+let j=rt.getIndexOfProjectActionThatHasTheGivenActionId(this.projectid,this.id)
+pros[this.projectid].actions.splice(j,1)
+acts.splice(this.id,1)
+rt.decreaseProjectsActionsIdsByOneThatAreBiggerThan(this.id)
+rt.resetIds(acts)
+if(!this.$root.guest)
+this.$root.POSTrequest('/delete-project-action','id='+this.id)},editTimedProjectActionTag(){this.$root.openActionForm('editTimedTag',this.id)},removeProjectTimedActionFromProject(){this.$root.removeActionFromProject(this.id)},editProjectTimedAction(){this.$root.openActionForm('editTimedAction',this.id)}},computed:{getprojectname(){return this.$root.user.projects[this.projectid].title}},watch:{dropdown(){this.$emit('changed-dropdown',{state:this.dropdown,id:this.id})}}})
+Vue.component('project-action',{props:{title:String,description:String,icongroup:Boolean,dropdown:!1,id:Number,projectId:Number,showtagicon:!1,showprojectname:!0,tag:String,calendar:Object,l:Object},template:`
     <div class='action'>
       <div class='card'>
         <div @click='dropdown = !dropdown'>
@@ -1443,78 +819,32 @@ Vue.component('project-action', {
         </div>
       </transition>
     </div>
-  `,
-  methods: {
-    changePlace(){
-      this.$root.openActionForm('changePlace', this.id)
-    },
-    deleteProjectAction(){
-      let rt = this.$root
-      let act = rt.user.actions
-      let pro = rt.user.projects
-
-      let j = rt.getIndexOfProjectActionThatHasTheGivenActionId(this.projectId, this.id)
-      pro[this.projectId].actions.splice(j, 1)
-      act.splice(this.id, 1)
-
-      rt.decreaseProjectsActionsIdsByOneThatAreBiggerThan(this.id)
-      rt.resetIds(act)
-      if (!this.$root.guest)
-        this.$root.POSTrequest('/delete-project-action', 'id=' + this.id)
-    },
-    removeActionFromProject(){
-      let rt = this.$root
-
-      rt.removeActionFromProject(this.id)
-    },
-    editAction(){
-      if (!this.calendar)
-        this.$root.openActionForm('editAction', this.id)
-      else 
-        this.$root.openActionForm('editTimedAction', this.id)
-    },
-    editActionTag(){
-      if (!this.calendar)
-        this.$root.openActionForm('editTag', this.id)
-      else this.$root.openActionForm('editTimedTag', this.id)
-    }
-  },
-  computed: {
-    returnTheClassIcon(){
-      let tag = this.tag
-      if (tag == 'basket')
-        return ''
-      else if (tag == 'nextAction')
-        return 'fa fa-forward icon-big'
-      else if (tag == 'maybe')
-        return 'fa fa-question icon-big'
-      else if (tag == 'waiting')
-        return 'fa fa-hourglass-half icon-big'
-      else if (tag == 'calendar')
-        return 'fa fa-calendar-alt icon-big'
-    },
-    getprojectname(){
-      return this.$root.user.projects[this.projectId].title
-    }
-  },
-  watch: {
-    dropdown(){
-      this.$emit('changed-dropdown', {state: this.dropdown, id: this. id})
-    }
-  }
-})
-Vue.component('timed-action', {
-  props: {
-    title: String,
-    description: String,
-    id: Number,
-    icongroup: Boolean,
-    dropdown: Boolean,
-    time: String,
-    date: String,
-    l: Object
-  },
-  template: `
+  `,methods:{changePlace(){this.$root.openActionForm('changePlace',this.id)},deleteProjectAction(){let rt=this.$root
+let act=rt.user.actions
+let pro=rt.user.projects
+let j=rt.getIndexOfProjectActionThatHasTheGivenActionId(this.projectId,this.id)
+pro[this.projectId].actions.splice(j,1)
+act.splice(this.id,1)
+rt.decreaseProjectsActionsIdsByOneThatAreBiggerThan(this.id)
+rt.resetIds(act)
+if(!this.$root.guest)
+this.$root.POSTrequest('/delete-project-action','id='+this.id)},removeActionFromProject(){let rt=this.$root
+rt.removeActionFromProject(this.id)},editAction(){if(!this.calendar)
+this.$root.openActionForm('editAction',this.id)
+else this.$root.openActionForm('editTimedAction',this.id)},editActionTag(){if(!this.calendar)
+this.$root.openActionForm('editTag',this.id)
+else this.$root.openActionForm('editTimedTag',this.id)}},computed:{returnTheClassIcon(){let tag=this.tag
+if(tag=='basket')
+return''
+else if(tag=='nextAction')
+return'fa fa-forward icon-big'
+else if(tag=='maybe')
+return'fa fa-question icon-big'
+else if(tag=='waiting')
+return'fa fa-hourglass-half icon-big'
+else if(tag=='calendar')
+return'fa fa-calendar-alt icon-big'},getprojectname(){return this.$root.user.projects[this.projectId].title}},watch:{dropdown(){this.$emit('changed-dropdown',{state:this.dropdown,id:this.id})}}})
+Vue.component('timed-action',{props:{title:String,description:String,id:Number,icongroup:Boolean,dropdown:Boolean,time:String,date:String,l:Object},template:`
     <div class='action'>
       <div class='card'>
         <div @click='dropdown = !dropdown'>
@@ -1540,49 +870,15 @@ Vue.component('timed-action', {
         </div>
       </transition>
     </div>
-  `,
-  methods: {
-    changePlace(){
-      this.$root.openActionForm('changePlace', this.id)
-    },
-    editTag(){
-      this.$root.openActionForm('editTimedTag', this.id)
-    },
-    deleteAction(){
-      let data = this.$root
-      let act = data.user.actions
-      let rt = this.$root
-
-      act.splice(this.id, 1)
-    
-      rt.decreaseProjectsActionsIdsByOneThatAreBiggerThan(this.id)
-      rt.resetIds(act)
-
-      if (!this.$root.guest)
-        this.$root.POSTrequest('/delete-action', 'id=' + this.id)
-    },
-    editAction(){
-      this.$root.openActionForm('editTimedAction', this.id)
-    },
-    manajeProject(){
-      this.$root.openActionForm('actionToProject', this.id)
-    }
-  },
-  watch: {
-    dropdown() {
-      this.$emit('changed-dropdown', {state: this.dropdown, id: this. id})
-    }
-  }
-})
-Vue.component('demo-action', {
-  props: {
-    title: String,
-    description: String,
-    dropdown: false,
-    id: Number,
-    l: Object,
-  },
-  template: `
+  `,methods:{changePlace(){this.$root.openActionForm('changePlace',this.id)},editTag(){this.$root.openActionForm('editTimedTag',this.id)},deleteAction(){let data=this.$root
+let act=data.user.actions
+let rt=this.$root
+act.splice(this.id,1)
+rt.decreaseProjectsActionsIdsByOneThatAreBiggerThan(this.id)
+rt.resetIds(act)
+if(!this.$root.guest)
+this.$root.POSTrequest('/delete-action','id='+this.id)},editAction(){this.$root.openActionForm('editTimedAction',this.id)},manajeProject(){this.$root.openActionForm('actionToProject',this.id)}},watch:{dropdown(){this.$emit('changed-dropdown',{state:this.dropdown,id:this.id})}}})
+Vue.component('demo-action',{props:{title:String,description:String,dropdown:!1,id:Number,l:Object,},template:`
     <div class='action demo-action'>
       <div class='demo-card'>
         <div @click='dropdown = !dropdown'>
@@ -1598,18 +894,8 @@ Vue.component('demo-action', {
         </div>
       </transition>
     </div>
-  `
-})
-Vue.component('action',{
-  props: {
-    title: String,
-    description: String,
-    icongroup: Boolean,
-    dropdown: false,
-    id: Number,
-    l: Object
-  },
-  template: `
+  `})
+Vue.component('action',{props:{title:String,description:String,icongroup:Boolean,dropdown:!1,id:Number,l:Object},template:`
     <div class='action'>
       <div class='card'>
         <div @click='dropdown = !dropdown'>
@@ -1632,70 +918,26 @@ Vue.component('action',{
         </div>
       </transition>
     </div>
-  `,
-  methods: {
-    changePlace(){
-      this.$root.openActionForm('changePlace', this.id)
-    },
-    deleteAction(){
-      let data = this.$root
-      let act = data.user.actions
-      let rt = this.$root
-
-      act.splice(this.id, 1)
-    
-      rt.decreaseProjectsActionsIdsByOneThatAreBiggerThan(this.id)
-      rt.resetIds(act)
-
-      if (!this.$root.guest)
-        this.$root.POSTrequest('/delete-action', 'id=' + this.id)
-    },
-    editAction(){
-      this.$root.openActionForm('editAction', this.id)
-    },
-    editActionTag(){
-      this.$root.openActionForm('editTag', this.id)
-    },
-    manajeProject(){
-      this.$root.openActionForm('actionToProject', this.id)
-    }
-  },
-  watch: {
-    dropdown(){
-      this.$emit('changed-dropdown', {state: this.dropdown, id: this. id})
-    }
-  }
-})
-Vue.component('calendar-action-bar', {
-  template: `
+  `,methods:{changePlace(){this.$root.openActionForm('changePlace',this.id)},deleteAction(){let data=this.$root
+let act=data.user.actions
+let rt=this.$root
+act.splice(this.id,1)
+rt.decreaseProjectsActionsIdsByOneThatAreBiggerThan(this.id)
+rt.resetIds(act)
+if(!this.$root.guest)
+this.$root.POSTrequest('/delete-action','id='+this.id)},editAction(){this.$root.openActionForm('editAction',this.id)},editActionTag(){this.$root.openActionForm('editTag',this.id)},manajeProject(){this.$root.openActionForm('actionToProject',this.id)}},watch:{dropdown(){this.$emit('changed-dropdown',{state:this.dropdown,id:this.id})}}})
+Vue.component('calendar-action-bar',{template:`
     <div class='calendar-action-bar'><slot></slot></div>
-  `
-})
-Vue.component('graph', {
-  props: {
-    l: Object
-  },
-  data(){
-    return {
-      numberOfDaysInYear: 365,
-      created: false
-    }
-  },
-  mounted(){
-    this.date = DateM.getCurrentDay()
-    this.currentDate = this.date.stringify()
-
-    this.currentYear = this.date.year
-    this.date.year = this.date.year
-    this.date.month = 1
-    this.date.day = 1
-
-    this.numberOfDaysUntilFirstMonday = new DateM('1/1/'+this.date.year).getWeekDay()
-
-    this.created = true
-    this.$emit('dateselected', this.currentDate)
-  },
-  template: `
+  `})
+Vue.component('graph',{props:{l:Object},data(){return{numberOfDaysInYear:365,created:!1}},mounted(){this.date=DateM.getCurrentDay()
+this.currentDate=this.date.stringify()
+this.currentYear=this.date.year
+this.date.year=this.date.year
+this.date.month=1
+this.date.day=1
+this.numberOfDaysUntilFirstMonday=new DateM('1/1/'+this.date.year).getWeekDay()
+this.created=!0
+this.$emit('dateselected',this.currentDate)},template:`
     <div class='calendar-graph card'>
       <h2 v-if='created'>{{date.year}}</h2>
       <div>
@@ -1742,234 +984,80 @@ Vue.component('graph', {
         </div>
       </div>
     </div>
-  `,
-  methods: {
-    returnDate(){
-      let date = this.date.stringify()
-      return date
-    },
-    returnAndAddDate(){
-      let date = this.date.stringify()
-      this.date.addDay(1)
-      if (this.date.year == this.currentYear + 1){
-        this.date.year = this.currentYear
-        this.date.month = 1
-        this.date.day = 1
-      }
-      return date
-    },
-    getNumberOfActionsWithTheSpecifiedDate(date){
-      let acts = this.$root.user.actions
-      let length = acts.length
-      let numberOfActions = 0
-      for (let i = 0;i < length;i++)
-        if (acts[i].calendar && new DateM(acts[i].calendar.date).isEqual(new DateM(date)))
-          numberOfActions += 1
-      return numberOfActions
-    },
-  }
-})
-Vue.component('square', {
-  props: {
-    date: String,
-    numberofactions: Number,
-    l: Object
-  },
-  data(){
-    return {
-      d: false
-    }
-  },
-  template: `
+  `,methods:{returnDate(){let date=this.date.stringify()
+return date},returnAndAddDate(){let date=this.date.stringify()
+this.date.addDay(1)
+if(this.date.year==this.currentYear+1){this.date.year=this.currentYear
+this.date.month=1
+this.date.day=1}
+return date},getNumberOfActionsWithTheSpecifiedDate(date){let acts=this.$root.user.actions
+let length=acts.length
+let numberOfActions=0
+for(let i=0;i<length;i++)
+if(acts[i].calendar&&new DateM(acts[i].calendar.date).isEqual(new DateM(date)))
+numberOfActions+=1
+return numberOfActions},}})
+Vue.component('square',{props:{date:String,numberofactions:Number,l:Object},data(){return{d:!1}},template:`
     <div :class='[isSelected() ? "selected-square" : "" , !d ? "square" : "", atLeastOneAction() ? "one-action": "", moreThanTwo() ? "four-actions": "", moreThanSix() ? "six-actions": "", moreThanNine() ? "nine-actions": "", moreThanTwelve() ? "twelve-actions": ""]' :data-title='date + " " + numberofactions + " " + l.actions' @click='$parent.$emit("dateselected",date)'></div>
-  `,
-  methods: {
-    isSelected(){
-      this.d = (this.date == this.$parent.$parent.date)
-      return this.d
-    },
-    atLeastOneAction(){
-      let n = this.numberofactions
-      if (n > 0 && n < 4) return true
-    },
-    moreThanTwo(){
-      let n = this.numberofactions
-      if (n > 3 && n < 6) return true
-    },
-    moreThanSix(){
-      let n = this.numberofactions
-      if (n > 5 && n < 9) return true
-    },
-    moreThanNine(){
-      let n = this.numberofactions
-      if (n > 7 && n < 12) return true
-    },
-    moreThanTwelve(){
-      let n = this.numberofactions
-      if (n > 11) return true
-    }
-  }
-})
-Vue.component('dark-square', {
-  template: `
+  `,methods:{isSelected(){this.d=(this.date==this.$parent.$parent.date)
+return this.d},atLeastOneAction(){let n=this.numberofactions
+if(n>0&&n<4)return!0},moreThanTwo(){let n=this.numberofactions
+if(n>3&&n<6)return!0},moreThanSix(){let n=this.numberofactions
+if(n>5&&n<9)return!0},moreThanNine(){let n=this.numberofactions
+if(n>7&&n<12)return!0},moreThanTwelve(){let n=this.numberofactions
+if(n>11)return!0}}})
+Vue.component('dark-square',{template:`
     <div class='dark-square'></div>
-  `
-})
-Vue.component('action-bar-option', {
-  props: {
-    icon: String,
-    active: Boolean,
-    title: String
-  },
-  template: `
+  `})
+Vue.component('action-bar-option',{props:{icon:String,active:Boolean,title:String},template:`
     <i :class='[this.active ? "action-bar-active" : "", "" + icon + " icon-big act-bar-icon user-icon"]' @click='toggleOption' :data-title='title'></i>
-  `,
-  methods:{
-    toggleOption(){
-      if (this.active){
-        this.active = false
-        this.$emit('off')
-      }
-      else {
-        this.active = true
-        this.$emit('on')
-      }
-    },
-    classIcon(){
-      return '' + this.icon + 'icon-big user-icon'
-    }
-  }
-})
-Vue.component('text-box',{
-  props: {
-    placeholder: String,
-    rows: Number,
-    value: String,
-    max: Number
-  },
-  template: `
+  `,methods:{toggleOption(){if(this.active){this.active=!1
+this.$emit('off')}
+else{this.active=!0
+this.$emit('on')}},classIcon(){return''+this.icon+'icon-big user-icon'}}})
+Vue.component('text-box',{props:{placeholder:String,rows:Number,value:String,max:Number},template:`
     <div class='text-box'>
       <span>{{placeholder}}</span>
       <textarea :class='{ "wrong-text": passedLimit() }' :rows='rows' v-model='value'>
       </textarea>
     </div>
-  `,
-  methods: {
-    passedLimit(){
-      return (this.value.length > this.max)
-    }
-  },
-  watch: {
-    value: function(){
-      this.$emit('change', { value: this.value, passedLimit: this.value.length > this.max})
-    }
-  }
-})
-Vue.component('icon-selection', {
-  props: {
-    selected: String
-  },
-  template: `
+  `,methods:{passedLimit(){return(this.value.length>this.max)}},watch:{value:function(){this.$emit('change',{value:this.value,passedLimit:this.value.length>this.max})}}})
+Vue.component('icon-selection',{props:{selected:String},template:`
     <div class='icon-selection'>
       <slot></slot>
     </div>
-  `,
-  watch: {
-    selected(){
-      this.$root.tempUser.action.tag = this.selected
-    }
-  }
-})
-Vue.component('icon-option',{
-  props: {
-    icon: String,
-    option: String,
-    title: String
-  },
-  template: `
+  `,watch:{selected(){this.$root.tempUser.action.tag=this.selected}}})
+Vue.component('icon-option',{props:{icon:String,option:String,title:String},template:`
     <div :class='{selected: selected}' @click='$parent.selected = option' :title='title'>
       <i :class='icon + " icon-extra-big"'></i>
     </div>
-  `,
-  computed: {
-    selected(){
-      return (this.option == this.$parent.selected) ? true : false
-    }
-  }
-})
-Vue.component('comp-option', {
-  props: {
-    compname: String
-  },
-  template: `
+  `,computed:{selected(){return(this.option==this.$parent.selected)?!0:!1}}})
+Vue.component('comp-option',{props:{compname:String},template:`
     {{selected}}
     <span :class='{selected: selected}' @click='$parent.selected = compname'><slot></slot></span>
-  `,
-  computed: {
-    selected(){
-      return (this.compname == this.$parent.selected) ? true : false
-    }
-  }
-})
-Vue.component('check-box', {
-  props: {
-    value: Boolean,
-    placeholder: String
-  },
-  template: `
+  `,computed:{selected(){return(this.compname==this.$parent.selected)?!0:!1}}})
+Vue.component('check-box',{props:{value:Boolean,placeholder:String},template:`
     <div class='checkbox' @click='$emit("change")'>
       <div>
         <i v-show='value' class='fa fa-check icon-extra-tiny'></i>
       </div>
       <span>{{placeholder}}</span>
     </div>
-  `
-})
-Vue.component('faded-action-icon', {
-  props: {
-    icon: String
-  },
-  template: `
+  `})
+Vue.component('faded-action-icon',{props:{icon:String},template:`
     <i :class='icon + " icon-big action-icon faded"'></i>
-  `
-})
-Vue.component('massive-title',{
-  template: `
+  `})
+Vue.component('massive-title',{template:`
     <h1 style='font-size:4em'><slot></slot></h1>
-  `
-})
-Vue.component('double-icon', {
-  props: {
-    animation: String
-  },
-  data(){
-    return {
-      show: false
-    }
-  },
-  mounted(){
-    this.show = true
-  },
-  template: `
+  `})
+Vue.component('double-icon',{props:{animation:String},data(){return{show:!1}},mounted(){this.show=!0},template:`
     <transition :name='animation'>
       <div class='double-icon' v-if='show'>
         <slot></slot>
       </div>
     </transition>
-  `
-})
-Vue.component('places', {
-  props: {
-    l: Object,
-    user: Object,
-    temp: Object
-  },
-  data(){
-    return {
-      lastSelected: undefined
-    }
-  },
-  template: `
+  `})
+Vue.component('places',{props:{l:Object,user:Object,temp:Object},data(){return{lastSelected:undefined}},template:`
   <div class='places'>
     <div>
       <select-option :placeholder='l.selectAPlace' class='centralizeContentMargin' :selected='lastSelected' @update='(newPlace)=>{this.lastSelected = newPlace;this.addPlaceToTheList(newPlace)}'>
@@ -1978,40 +1066,19 @@ Vue.component('places', {
     </div>
     <list :list='temp' @remove='removePlaceFromTheList'></list>
   </div>
-  `,
-  methods: {
-    addPlaceToTheList(place){
-      if (!this.temp.includes(place))
-        this.temp.push(place)
-    },
-    removePlaceFromTheList(obj){
-      let length = this.temp.length
-      for (let i =0;i<length;i++)
-        if (this.temp[i] == obj.value){
-          this.temp.splice(i, 1)
-          break
-        }
-    }
-  }
-})
-Vue.component('list', {
-  props: {
-    list: String
-  },
-  template: `
+  `,methods:{addPlaceToTheList(place){if(!this.temp.includes(place))
+this.temp.push(place)},removePlaceFromTheList(obj){let length=this.temp.length
+for(let i=0;i<length;i++)
+if(this.temp[i]==obj.value){this.temp.splice(i,1)
+break}}}})
+Vue.component('list',{props:{list:String},template:`
     <div class='list' v-if='list.length > 0'>
       <list-element v-for='place in list' :value='place'></list-element>
     </div>
-  `
-})
-Vue.component('list-element', {
-  props: {
-    value: String
-  },
-  template: `
+  `})
+Vue.component('list-element',{props:{value:String},template:`
     <div class='list-element'>
       <span>{{value}}<span>
       <i class='fa fa-times icon-big act-bar-icon' @click='$parent.$emit("remove", { value: value})'></i>
     </div>
-  `
-})
+  `})
