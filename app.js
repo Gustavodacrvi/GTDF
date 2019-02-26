@@ -12,8 +12,8 @@ let session=require('express-session')
 let flash=require('connect-flash')
 var users=require('./routes/users')
 var gtdf=require('./routes/gtdf')
-i18n.configure({locales:['en','pt-BR'],cookie:'localeCookie',directory:path.join(__dirname,'locales'),queryParameter:'lang',defaultLocale:'en',});mongoose.connect(process.env.DATABASE,{useNewUrlParser:!0})
-var mongoose=mongoose.connection
+i18n.configure({locales:['en','pt-BR'],cookie:'localeCookie',directory:path.join(__dirname,'locales'),queryParameter:'lang',defaultLocale:'en',});mongoose.connect('mongodb://localhost/GTDF',{useNewUrlParser:!0})
+var mongoose=mongoose.connection // process.env.DATABASE
 let app=express()
 app.use(cookieParser())
 app.use(session({secret:'secret',saveUninitialized:!0,resave:!0}))
