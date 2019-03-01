@@ -3,11 +3,12 @@
 
 <head>
   <% include partials/header %>
-  <title>404</title>
+  <title><%= __('Privacy Policy') %></title>
 </head>
 
 <body>
 <div id='app'>
+{{ setLanguage("<%= __('lang') %>") }}
 <fixed>
   <navigation-bar>
       <template slot='desktop-left'>
