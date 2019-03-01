@@ -44,6 +44,8 @@ app.get('/',function(req,res){checkAndChangeLocale(req,res)
 res.render('index',{user:req.user})})
 app.get('/begin',function(req,res){checkAndChangeLocale(req,res)
 res.render('begin')})
+app.get('/privacy-policy',function(req,res){checkAndChangeLocale(req,res)
+res.render('privacy')})
 app.get('/en',function(req,res){req.session.chosen_locale='en'
 res.redirect('/')})
 app.get('/pt-BR',function(req,res){req.session.chosen_locale='pt-BR'
