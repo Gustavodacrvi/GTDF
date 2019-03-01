@@ -58,7 +58,7 @@ Vue.component('navigation-bar',{template:`
             <slot name='desktop-left'></slot>
           </div>
           <div id='nav-logo'></div>
-          <div id='right' class='rowReversed'>
+          <div id='right' class='rowReversed alignContent'>
             <slot name='desktop-right'></slot>
           </div>
         </div>
